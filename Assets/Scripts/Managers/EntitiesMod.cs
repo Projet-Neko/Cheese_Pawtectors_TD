@@ -8,10 +8,12 @@ public class EntitiesMod : MonoBehaviour
     public CatSO[] Cats => _cats;
     public MouseSO[] Mouses => _mouses;
     public int MouseLevel => _mouseLevel;
+    public bool CanSpawnAlbino => _canSpawnAlbino;
 
     private CatSO[] _cats;
     private MouseSO[] _mouses;
     private int _mouseLevel = 1;
+    private bool _canSpawnAlbino = true;
 
     private void Start()
     {
@@ -27,5 +29,20 @@ public class EntitiesMod : MonoBehaviour
 
         c = Instantiate(_catPrefab).GetComponent<Cat>();
         c.Init(2);
+
+        for (int i = 0; i < 50; i++)
+        {
+            Instantiate(_mousePrefab);
+        }
+    }
+
+    public void AlbinoHasSpawned()
+    {
+        _canSpawnAlbino = false;
+    }
+
+    public void AlbinoCanSpawn()
+    {
+        _canSpawnAlbino = true;
     }
 }

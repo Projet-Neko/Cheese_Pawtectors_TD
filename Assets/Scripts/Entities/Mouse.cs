@@ -1,12 +1,14 @@
+using UnityEngine;
+
 public class Mouse : Entity
 {
     private MouseSO _data;
 
     private void Awake()
     {
-        _data = GameManager.Instance.Mouses[0];
+        _data = GameManager.Instance.Mouses[IsAlbino()];
 
-        // TODO -> random for albino mouse, queen if wave%10
+        // TODO -> is queen if wave % 10
 
         _level = GameManager.Instance.MouseLevel;
 
@@ -15,5 +17,18 @@ public class Mouse : Entity
         _speed = _data.Speed;
 
         //_renderer.sprite = _data.Sprite;
+
+        gameObject.name = _data.Name;
+    }
+
+    private int IsAlbino()
+    {
+        if (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1)
+        {
+            GameManager.Instance.AlbinoHasSpawned();
+            return 1;
+        }
+
+        return 0;
     }
 }

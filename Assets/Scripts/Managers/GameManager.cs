@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     public CatSO[] Cats => _entitiesManager.Cats;
     public MouseSO[] Mouses => _entitiesManager.Mouses;
     public int MouseLevel => _entitiesManager.MouseLevel;
+    public bool CanSpawnAlbino => _entitiesManager.CanSpawnAlbino;
+
+    public void AlbinoHasSpawned() => _entitiesManager.AlbinoHasSpawned();
     #endregion
 
     private void Awake()

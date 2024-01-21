@@ -21,11 +21,6 @@ public abstract class Entity : MonoBehaviour
         if (_currentHealth == 0) Death(source);
     }
 
-    protected virtual void LevelUp()
-    {
-        _level++;
-    }
-
     protected virtual void Death(Entity source)
     {
         source.TakeDamage(this, _damage);

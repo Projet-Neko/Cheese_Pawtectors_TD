@@ -1,18 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Cat : MonoBehaviour
+public class Cat : Entity
 {
-    // Start is called before the first frame update
-    void Start()
+    public Color CatColor => ColorPalette.GetColor(_data.Color);
+    public float DPS => 3.6f - (_data.Level * 0.1f);
+
+    private CatSO _data;
+
+    private void Awake()
     {
-        
+        _speed = 1;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Init(int level)
     {
-        
+        _level = _damage = level;
+        _data = GameManager.Instance.Cats[_level - 1];
+        _baseHealth = _currentHealth = 50 + (_level * 2) - 2;
+
+        //_renderer.sprite = _data.SpriteAbove;
+        // TODO -> check sprite to use
+
+        // Waiting for sprites
+        _renderer.color = CatColor;
+
+        gameObject.name = _data.Name;
+    }
+
+    public void LevelUp()
+    {
+        _level++;
+        Init(_level);
+    }
+
+    protected override void Death(Entity source)
+    {
+        // TODO -> State mode repos
     }
 }

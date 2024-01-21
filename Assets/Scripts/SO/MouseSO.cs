@@ -1,18 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseSO : MonoBehaviour
+[CreateAssetMenu(fileName = "NewMouse", menuName = "Projet Neko/Mouse")]
+public class MouseSO : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int Health;
+    public float Speed;
+    public int SatiationRate;
+    public Sprite Sprite;
 }

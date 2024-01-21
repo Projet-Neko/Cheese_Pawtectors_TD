@@ -1,18 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Cheese : MonoBehaviour
+public class Cheese : Entity
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        _baseHealth = _currentHealth = 30;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Death(Entity source)
     {
-        
+        // TODO -> event game over
     }
 }

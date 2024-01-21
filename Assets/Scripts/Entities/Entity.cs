@@ -1,18 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] protected SpriteRenderer _renderer;
+
+    protected int _level;
+    protected float _speed;
+    protected float _baseHealth;
+    protected float _currentHealth;
+    protected int _damage;
+
+    // TODO -> add ui
+
+    public void TakeDamage(Entity source, int damage)
     {
-        
+        _currentHealth -= damage;
+
+        Mathf.Clamp(_currentHealth, 0f, _baseHealth);
+
+        if (_currentHealth == 0) Death(source);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void LevelUp()
     {
-        
+        _level++;
+    }
+
+    protected virtual void Death(Entity source)
+    {
+        source.TakeDamage(this, _damage);
+        Destroy(this);
     }
 }

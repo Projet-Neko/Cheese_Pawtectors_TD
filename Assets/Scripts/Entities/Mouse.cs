@@ -4,7 +4,7 @@ public class Mouse : Entity
 {
     private MouseSO _data;
 
-    private void Awake()
+    private void Start()
     {
         _data = GameManager.Instance.Mouses[IsAlbino()];
 

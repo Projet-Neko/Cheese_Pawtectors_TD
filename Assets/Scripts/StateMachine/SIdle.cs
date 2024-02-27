@@ -1,4 +1,4 @@
-public class IdleState : State
+public class SIdle : State
 {
     //
 }

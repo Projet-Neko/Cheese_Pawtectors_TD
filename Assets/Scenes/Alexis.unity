@@ -2245,7 +2245,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1040506988}
-        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
+        m_TargetAssemblyTypeName: BTN_Adopt, Assembly-CSharp
         m_MethodName: OnButtonClick
         m_Mode: 1
         m_Arguments:
@@ -4386,7 +4386,6 @@ GameObject:
   - component: {fileID: 1867545869}
   - component: {fileID: 1867545868}
   - component: {fileID: 1867545870}
-  - component: {fileID: 1867545871}
   m_Layer: 6
   m_Name: Discard
   m_TagString: Untagged
@@ -4497,18 +4496,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 80.03078, y: 80.26419}
   m_EdgeRadius: 0
---- !u!114 &1867545871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1867545866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a65eddc1982931847bf4666370ee1eb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1965664263
 GameObject:
   m_ObjectHideFlags: 0

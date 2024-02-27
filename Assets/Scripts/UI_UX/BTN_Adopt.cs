@@ -1,8 +1,7 @@
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonScript : MonoBehaviour
+public class BTN_Adopt : MonoBehaviour
 {
     [SerializeField] private GameObject _catPrefabSF;
     [SerializeField] private GridLayoutGroup _slotsSF;

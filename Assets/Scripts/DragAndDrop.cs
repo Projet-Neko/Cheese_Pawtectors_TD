@@ -5,6 +5,7 @@ public class DragAndDrop : MonoBehaviour
     [SerializeField] private Rigidbody2D _rbCat;
 
     private bool _isBeingDragged = false;
+    private GameObject _target;
 
     private void OnMouseDown()
     {
@@ -30,4 +31,17 @@ public class DragAndDrop : MonoBehaviour
 
         if (_rbCat.IsTouching(cf)) Destroy(gameObject);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 7) _target = collision.gameObject;
+    }
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (true)
+    //    {
+
+    //    }
+    //}
 }

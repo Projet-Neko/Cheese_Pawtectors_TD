@@ -15,7 +15,7 @@ public class EntitiesMod : MonoBehaviour
     private int _mouseLevel = 1;
     private bool _canSpawnAlbino = true;
 
-    private void Start()
+    public void Init()
     {
         _cats = Resources.LoadAll<CatSO>("SO/Cats");
         _mouses = Resources.LoadAll<MouseSO>("SO/Mouses");
@@ -24,16 +24,16 @@ public class EntitiesMod : MonoBehaviour
         _mouses.OrderBy(x => x.name);
 
         // Testing only
-        Cat c = Instantiate(_catPrefab).GetComponent<Cat>();
-        c.Init(1);
+        //Cat c = Instantiate(_catPrefab).GetComponent<Cat>();
+        //c.Init(1);
 
-        c = Instantiate(_catPrefab).GetComponent<Cat>();
-        c.Init(2);
+        //c = Instantiate(_catPrefab).GetComponent<Cat>();
+        //c.Init(2);
 
-        for (int i = 0; i < 50; i++)
-        {
-            Instantiate(_mousePrefab);
-        }
+        //for (int i = 0; i < 10; i++)
+        //{
+        //    Instantiate(_mousePrefab);
+        //}
     }
 
     public void AlbinoHasSpawned()

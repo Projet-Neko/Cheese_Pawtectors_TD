@@ -5,15 +5,15 @@ using UnityEngine.SceneManagement;
 public class ScenesLoader : MonoBehaviour
 {
     [Scene]
-    public string Scenes;
+    public string Scene;
 
-    //private void Start()
-    //{
-    //    SceneManager.LoadScene("LoginPopup", LoadSceneMode.Additive);
-    //}
+    public void OnButtonClickAdd()
+    {
+        SceneManager.LoadScene(Scene, LoadSceneMode.Additive);
+    }
 
-    //public void OnSettingsButtonClick()
-    //{
-    //    SceneManager.LoadScene("Settings", LoadSceneMode.Additive);
-    //}
+    public void OnButtonClick()
+    {
+        SceneManager.LoadScene(Scene);
+    }
 }

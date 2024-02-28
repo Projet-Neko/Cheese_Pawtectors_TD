@@ -10,6 +10,7 @@ public abstract class Entity : MonoBehaviour
     public float Damage => _damage;
     public float BaseHealth => _baseHealth;
     public float CurrentHealth => _currentHealth;
+    public int Level => _level;
 
     protected float _speed;
     protected float _baseHealth;

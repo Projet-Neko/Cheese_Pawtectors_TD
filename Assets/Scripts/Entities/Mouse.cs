@@ -1,8 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Mouse : Entity
 {
     private MouseSO _data;
+
+    public int _maxHealth = 5;
+
+    public Slider _slider;
+    public Mouse _healthBar;
 
     private void Start()
     {
@@ -13,6 +19,7 @@ public class Mouse : Entity
         _level = GameManager.Instance.MouseLevel;
 
         _baseHealth = _currentHealth = _data.Health + (_level * 1) - 1;
+        _healthBar.SetMaxHealth(_maxHealth);
         _damage = _data.SatiationRate;
         _speed = _data.Speed;
 
@@ -21,6 +28,13 @@ public class Mouse : Entity
         gameObject.name = _data.Name;
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            TakeDamage(2);
+        }
+    }
     private int IsAlbino()
     {
         if (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1)
@@ -30,5 +44,21 @@ public class Mouse : Entity
         }
 
         return 0;
+    }
+
+    public void SetMaxHealth(int health)
+    {
+        _slider.maxValue = health;
+        _slider.value = health;
+    }
+
+    public void SetHealth(int health)
+    {
+        _slider.value = health;
+    }
+
+    void TakeDamage(int damage)
+    {
+        _currentHealth -= damage;
     }
 }

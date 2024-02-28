@@ -13,7 +13,7 @@ public class Mouse : Entity
     private float _distance;
     private Vector3 _destination;
     private Rigidbody2D _rb;
-    private bool _arrived;
+    private bool _stop;
 
 
     private void Start()
@@ -27,17 +27,19 @@ public class Mouse : Entity
 
         _baseHealth = _currentHealth = _data.Health + (_level * 1) - 1;
         _damage = _data.SatiationRate;
-        _speed = _data.Speed;
+        _speed = _data.Speed * 3;
         //_speed = 10;
 
         _rb = GetComponent<Rigidbody2D>();
-        _nextPoint = 1;
+        _nextPoint = 0;
 
         //_renderer.sprite = _data.Sprite;
 
         gameObject.name = _data.Name;
 
-        _rb.velocity = _destination.normalized * _speed;
+        _destination = (_checkPoint[_nextPoint] - transform.position).normalized;
+        _rb.velocity = _destination * _speed;
+        _stop = false;
     }
 
     private int IsAlbino()
@@ -52,32 +54,36 @@ public class Mouse : Entity
     }
     private void FixedUpdate()
     {
-        if (!_arrived) Move();
+        if (!_stop) Move();
         else { } //Attack 
     }
     private void Move()
     {
-        if (!_arrived)
+        _speed = _data.Speed * 3;
+
+        _distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
+        _destination = (_checkPoint[_nextPoint] - transform.position).normalized;
+
+        _rb.velocity = _destination * _speed ; //---J'ai augmenté la vitesse // A ENLEVER
+
+        if (_distance < 0.05f)
         {
+            _nextPoint++;
 
-            _distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
-            _destination = _checkPoint[_nextPoint] - transform.position;
-
-            _rb.velocity = _destination.normalized * (_speed+3); //---J'ai augmenté la vitesse // A ENLEVER
-
-            if (_distance < 1f)
+            if (_nextPoint == _checkPoint.Count)
             {
-                _nextPoint++;
-
-                if (_nextPoint == _checkPoint.Count)
-                {
-                    _rb.velocity = new Vector2(0, 0);
-                    _arrived = true;
-                    //Attack Fromage;
-                }
-                else _rb.velocity = _destination.normalized * _speed;
+                _rb.velocity = new Vector2(0, 0);
+                _stop = true;
+                //Attack Fromage;
             }
+            else _rb.velocity = _destination * _speed;
         }
 
     }
+
+    public void Stop()
+    {
+        _stop = true;
+    }
+
 }

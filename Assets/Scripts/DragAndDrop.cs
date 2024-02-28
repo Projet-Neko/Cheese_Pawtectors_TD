@@ -7,10 +7,13 @@ public class DragAndDrop : MonoBehaviour
 
     private bool _isBeingDragged = false;
     private GameObject _target;
+    //private Vector3 _initialSlot;
     private Transform _initialSlot;
+
 
     private void Start()
     {
+        //_initialSlot = transform.position;
         _initialSlot = transform.parent;
     }
 
@@ -39,6 +42,7 @@ public class DragAndDrop : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+
             else if (_target.layer == 7)
             {
                 Cat targetCat = _target.GetComponent<Cat>();
@@ -50,8 +54,21 @@ public class DragAndDrop : MonoBehaviour
 
                 _target.GetComponent<Cat>().LevelUp();
             }
+
+            else if (_target.layer == 9)
+            {
+                transform.SetParent(_target.transform);
+                transform.position = _target.transform.position;
+            }
         }
-        else { transform.position = _initialSlot; } 
+
+        else 
+        {
+            //transform.position = _initialPosition;
+
+            transform.SetParent(_initialSlot);
+            transform.position = _initialSlot.position;
+        } 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

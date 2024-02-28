@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class EntitiesMod : MonoBehaviour
+public class M_Entities : MonoBehaviour
 {
     [SerializeField] private GameObject _catPrefab, _mousePrefab;
 

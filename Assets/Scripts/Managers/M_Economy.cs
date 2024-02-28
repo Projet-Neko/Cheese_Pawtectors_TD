@@ -8,7 +8,7 @@ public class M_Economy : MonoBehaviour
 
     public void Init()
     {
-        _meat = 0;
+        _meat = 0; // TODO -> get from database
     }
 
     public void AddMeat(int amount)

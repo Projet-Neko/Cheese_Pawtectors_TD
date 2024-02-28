@@ -2571,7 +2571,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 819977922}
         m_TargetAssemblyTypeName: ScenesLoader, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: OnButtonClickAdd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2593,7 +2593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Scene: Settings
+  Scene: BlockOut_UI_Settings
 --- !u!1 &823810153
 GameObject:
   m_ObjectHideFlags: 0

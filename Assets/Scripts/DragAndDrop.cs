@@ -39,6 +39,7 @@ public class DragAndDrop : MonoBehaviour
             if (_target.layer == 6)
             {
                 Destroy(gameObject);
+                return;
             }
 
             else if (_target.layer == 7)
@@ -49,21 +50,26 @@ public class DragAndDrop : MonoBehaviour
                 {
                     targetCat.LevelUp();
                     Destroy(gameObject);
+                    return;
                 }
+
             }
 
-            else if (_target.layer == 9)
+            else if (_target.layer == 9 && _target.transform.childCount == 0)
             {
                 transform.SetParent(_target.transform);
                 transform.position = _target.transform.position;
+                return;
             }
         }
 
-        else 
-        {
-            transform.SetParent(_initialSlot);
-            transform.position = _initialSlot.position;
-        } 
+        BackSlot();
+    }
+
+    private void BackSlot()
+    {
+        transform.SetParent(_initialSlot);
+        transform.position = _initialSlot.position;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

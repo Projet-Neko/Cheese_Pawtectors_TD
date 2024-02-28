@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 118208770}
   - component: {fileID: 118208772}
   - component: {fileID: 118208771}
+  - component: {fileID: 118208773}
   m_Layer: 5
   m_Name: Storage
   m_TagString: Untagged
@@ -200,6 +201,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118208769}
   m_CullTransparentMesh: 1
+--- !u!114 &118208773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118208769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626d3fe5f83d79f4d84f07293318ab84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _catPrefab: {fileID: 6983453442427492931, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
+  _slots:
+  - {fileID: 508274678}
+  - {fileID: 421567613}
+  - {fileID: 1106596326}
+  - {fileID: 1406237417}
+  - {fileID: 732268165}
+  - {fileID: 151662832}
+  - {fileID: 2056066913}
+  - {fileID: 1692638702}
 --- !u!224 &151662832 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2249338756212329598, guid: e50d6fb12d02f5d40963a0c988ddd791, type: 3}

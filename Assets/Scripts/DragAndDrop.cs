@@ -43,14 +43,13 @@ public class DragAndDrop : MonoBehaviour
 
             else if (_target.layer == 7)
             {
-                Cat targetCat = _target.GetComponent<Cat>();
-                if (targetCat.Level != _entity.Level)
+                Cat targetCat = _target.GetComponentInParent<Cat>();
+                Debug.Log(targetCat.name);
+                if (targetCat.Level == _entity.Level)
                 {
                     targetCat.LevelUp();
+                    Destroy(gameObject);
                 }
-                Destroy(gameObject);
-
-                _target.GetComponent<Cat>().LevelUp();
             }
 
             else if (_target.layer == 9)
@@ -70,6 +69,7 @@ public class DragAndDrop : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         _target = collision.gameObject;
+        Debug.Log(_target.name);
     }
 
     private void OnTriggerExit2D(Collider2D collision)

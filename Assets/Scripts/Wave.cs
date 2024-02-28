@@ -18,22 +18,21 @@ public class Wave : MonoBehaviour
     {
         _waveNumber = 0; // TODO -> get from database
         MouseNBR = 10;
-        SpawnPos = GetComponent<Transform>().position;
-        SpawnPos.z = -3;
+        SpawnPos = transform.position;
+        //SpawnPos.z = -3;
     }
 
     private void Start()
     {
-        //Init();
+        Init();
         StartWave();
     }
 
     public void StartWave()
     {
-        for (int i = 0; i <= MouseNBR; i++)
-        {
+       
             StartCoroutine(SpawnEnemies());
-        }
+        
     }
 
     public IEnumerator SpawnEnemies()
@@ -41,7 +40,7 @@ public class Wave : MonoBehaviour
         if (_enemies.Count == 10) yield return null;
 
         Instantiate(mouse, SpawnPos, Quaternion.identity);
-        //_enemies.Add(new());
+        _enemies.Add(new());
         yield return new WaitForSeconds(1);
     }
 

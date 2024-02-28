@@ -11,6 +11,7 @@ public abstract class Entity : MonoBehaviour
     public float Damage => _damage;
     public float BaseHealth => _baseHealth;
     public float CurrentHealth => _currentHealth;
+
     public int Level => _level;
 
     protected float _speed;
@@ -27,7 +28,7 @@ public abstract class Entity : MonoBehaviour
         Mathf.Clamp(_currentHealth, 0f, _baseHealth);
         Debug.Log($"Current health after damages : {_currentHealth}");
 
-        if (_currentHealth == 0) Death(source);
+        if (_currentHealth <= 0) Death(source);
     }
 
     protected virtual void Death(Entity source)

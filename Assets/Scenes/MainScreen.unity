@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 32646878}
   - component: {fileID: 32646879}
   m_Layer: 0
-  m_Name: SceneManager
+  m_Name: SceneLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Scenes: LoginPopup
 --- !u!1 &55169887
 GameObject:
   m_ObjectHideFlags: 0

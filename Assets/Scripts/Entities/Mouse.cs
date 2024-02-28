@@ -59,12 +59,12 @@ public class Mouse : Entity
     }
     private void Move()
     {
-        _speed = _data.Speed * 3;
+        _speed = _data.Speed * 3; //---J'ai augmenté la vitesse // A ENLEVER
 
         _distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
         _destination = (_checkPoint[_nextPoint] - transform.position).normalized;
 
-        _rb.velocity = _destination * _speed ; //---J'ai augmenté la vitesse // A ENLEVER
+        _rb.velocity = _destination * _speed ; 
 
         if (_distance < 0.05f)
         {

@@ -7,6 +7,13 @@ public class DragAndDrop : MonoBehaviour
 
     private bool _isBeingDragged = false;
     private GameObject _target;
+    private Transform _initialSlot;
+
+
+    private void Start()
+    {
+        _initialSlot = transform.parent;
+    }
 
     private void OnMouseDown()
     {
@@ -33,6 +40,7 @@ public class DragAndDrop : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+
             else if (_target.layer == 7)
             {
                 Cat targetCat = _target.GetComponent<Cat>();
@@ -44,7 +52,19 @@ public class DragAndDrop : MonoBehaviour
 
                 _target.GetComponent<Cat>().LevelUp();
             }
+
+            else if (_target.layer == 9)
+            {
+                transform.SetParent(_target.transform);
+                transform.position = _target.transform.position;
+            }
         }
+
+        else 
+        {
+            transform.SetParent(_initialSlot);
+            transform.position = _initialSlot.position;
+        } 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

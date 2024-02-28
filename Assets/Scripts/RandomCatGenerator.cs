@@ -3,11 +3,11 @@ using System.Collections;
 
 public class RandomCatGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject _catPrefab; // Prefab du chat à générer
-    [SerializeField] private Transform[] _slots; // Tableau des emplacements des slots
+    [SerializeField] private GameObject _catPrefab;
+    [SerializeField] private Transform[] _slots;
 
-    private float minSpawnTime = 15f; // Temps minimum entre deux apparitions de chats
-    private float maxSpawnTime = 20f; // Temps maximum entre deux apparitions de chats
+    private float minSpawnTime = 2f;
+    private float maxSpawnTime = 5f;
 
     private void Start()
     {
@@ -21,13 +21,13 @@ public class RandomCatGenerator : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(minSpawnTime, maxSpawnTime)); // Attente du délai aléatoire
 
-            int randomSlotIndex = Random.Range(0, _slots.Length); // Sélection d'un slot aléatoire
+            int randomSlotIndex = Random.Range(0, _slots.Length);
             Transform selectedSlot = _slots[randomSlotIndex];
 
-            if (selectedSlot.childCount == 0) // Vérification si le slot est vide
+            if (selectedSlot.childCount == 0)
             {
-                // Instanciation du prefab du chat dans le slot sélectionné
-                Instantiate(_catPrefab, selectedSlot);
+                GameObject go = Instantiate(_catPrefab, selectedSlot);
+                go.transform.localScale = new Vector3(100, 100, 100);
             }
         }
     }

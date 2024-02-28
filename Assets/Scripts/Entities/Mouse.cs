@@ -14,7 +14,7 @@ public class Mouse : Entity
     private Vector3 _destination;
 
 
-    private void Awake()
+    private void Start()
     {
 
         _data = GameManager.Instance.Mouses[IsAlbino()];

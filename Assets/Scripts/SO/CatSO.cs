@@ -10,7 +10,7 @@ public enum CatFur
 public class CatSO : ScriptableObject
 {
     public string Name => name.Split("_")[1];
-    public int Level => Int32.Parse(name.Split('_')[0]);
+    public int Level => int.Parse(name.Split('_')[0]);
     public CatFur Fur;
     public CatColor Color;
     public Sprite SpriteAbove;

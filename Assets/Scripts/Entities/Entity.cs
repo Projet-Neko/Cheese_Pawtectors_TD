@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
@@ -31,7 +32,20 @@ public abstract class Entity : MonoBehaviour
 
     protected virtual void Death(Entity source)
     {
+        /* 
+        Handle death logic
+        - source : entity that killed (cat)
+        - this : dying entity (mouse)
+        */
+
+        // Verify if "this" is a mouse
         if (this is not Mouse) return;
+        if (source is Cat)
+        {
+            // Call the AddMeat function for the cat
+            GameManager.Instance.AddMeat(1);
+        }
+        // When a mouse die add satiety to cat
         source.TakeDamage(this);
         OnDeath?.Invoke(this);
         Destroy(gameObject);

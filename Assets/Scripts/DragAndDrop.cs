@@ -7,6 +7,12 @@ public class DragAndDrop : MonoBehaviour
 
     private bool _isBeingDragged = false;
     private GameObject _target;
+    private Transform _initialSlot;
+
+    private void Start()
+    {
+        _initialSlot = transform.parent;
+    }
 
     private void OnMouseDown()
     {
@@ -45,6 +51,7 @@ public class DragAndDrop : MonoBehaviour
                 _target.GetComponent<Cat>().LevelUp();
             }
         }
+        else { transform.position = _initialSlot; } 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

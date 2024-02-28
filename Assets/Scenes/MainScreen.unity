@@ -2042,8 +2042,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ff38e98150c1594d8186ce33243013f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _catPrefabSF: {fileID: 6983453442427492931, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
-  _slotsSF: {fileID: 473152869}
+  _catPrefab: {fileID: 6983453442427492931, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
+  _slots: {fileID: 473152869}
 --- !u!114 &572290374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2089,7 +2089,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 572290373}
-        m_TargetAssemblyTypeName: BTN_Adopt, Assembly-CSharp
+        m_TargetAssemblyTypeName: Adopt, Assembly-CSharp
         m_MethodName: OnButtonClick
         m_Mode: 1
         m_Arguments:

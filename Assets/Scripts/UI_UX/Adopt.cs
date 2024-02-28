@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BTN_Adopt : MonoBehaviour
+public class Adopt : MonoBehaviour
 {
     [SerializeField] private GameObject _catPrefab;
     [SerializeField] private GridLayoutGroup _slots;

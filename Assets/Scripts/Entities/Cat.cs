@@ -38,6 +38,7 @@ public class Cat : Entity
     {
         _level++;
         Init(_level);
+        Debug.Log($"Level up to lvl {_level}");
     }
 
     public override void TakeDamage(Entity source)

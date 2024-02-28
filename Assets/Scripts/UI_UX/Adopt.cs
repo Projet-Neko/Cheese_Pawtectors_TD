@@ -15,7 +15,8 @@ public class Adopt : MonoBehaviour
             if (slot.childCount == 0)
             {
                 // S'il n'y a pas de chat, instancie un nouveau chat dans ce slot
-                Instantiate(_catPrefab, slot);
+                GameObject go = Instantiate(_catPrefab, slot);
+                go.transform.localScale = new Vector3(100, 100, 100);
                 return; // Sort de la fonction après avoir placé le chat
             }
         }

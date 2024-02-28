@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 15
   Speed: 0.5
-  SatiationRate: 0
+  SatiationRate: 50
   Sprite: {fileID: 0}

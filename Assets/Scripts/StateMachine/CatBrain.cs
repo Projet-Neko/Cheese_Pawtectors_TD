@@ -1,37 +1,51 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CatBrain : MonoBehaviour
 {
-    private State _currentState;
-    protected GameObject _target;
+    //[SerializeField] private NavMeshAgent _agent;
+    [SerializeField] private Collider2D _collider;
+    [SerializeField] private Cat _cat;
 
-    private State _idle = new SIdle();
-    private State _follow = new SFollow();
-    private State _attack = new SAttack();
-    private State _sleep = new SSleep();
+    public GameObject Target {  get; set; }
+    //public NavMeshAgent Agent => _agent;
+    public Collider2D Collider => _collider;
+    public Cat Cat => _cat;
+    public float AttackRange => transform.localScale.x / 1.5f;
+    public float FollowRange => transform.localScale.x * 4;
+
+    private State _currentState;
+
+    // All states
+    public State Idle = new SIdle();
+    public State Follow = new SFollow();
+    public State Attack = new SAttack();
+    public State Sleep = new SSleep();
 
     private void Awake()
     {
-        ChangeState(_idle);
+        ChangeState(Idle);
     }
 
     private void Update()
     {
         _currentState?.OnUpdate();
-
-        Collider[] targets = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, 4);
-        //Debug.Log(targets.Length);
-
-        if (_currentState != _idle && targets.Length == 0) return;
-        _target = targets[0].gameObject;
-        ChangeState(_follow);
-        Debug.Log($"New state : {_currentState}.");
     }
 
-    private void ChangeState(State newState)
+    public void ChangeState(State newState)
     {
         _currentState?.OnExit();
         _currentState = newState;
-        _currentState.OnEnter();
+        _currentState.OnEnter(this);
+        Debug.Log($"New state : {_currentState}.");
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, AttackRange);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, FollowRange);
     }
 }

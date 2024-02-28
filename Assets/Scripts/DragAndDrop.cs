@@ -3,7 +3,7 @@ using UnityEngine;
 public class DragAndDrop : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rbCat;
-    [SerializeField] private Cat cat;
+    [SerializeField] private Entity _entity;
 
     private bool _isBeingDragged = false;
     private GameObject _target;
@@ -35,8 +35,14 @@ public class DragAndDrop : MonoBehaviour
             }
             else if (_target.layer == 7)
             {
-                _target.GetComponent<Cat>().LevelUp();
+                Cat targetCat = _target.GetComponent<Cat>();
+                if (targetCat.Level != _entity.Level)
+                {
+                    targetCat.LevelUp();
+                }
                 Destroy(gameObject);
+
+                _target.GetComponent<Cat>().LevelUp();
             }
         }
     }

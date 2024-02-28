@@ -6,8 +6,8 @@ public class RandomCatGenerator : MonoBehaviour
     [SerializeField] private GameObject _catPrefab;
     [SerializeField] private Transform[] _slots;
 
-    private float minSpawnTime = 2f;
-    private float maxSpawnTime = 5f;
+    private float minSpawnTime = 15f;
+    private float maxSpawnTime = 20f;
 
     private void Start()
     {

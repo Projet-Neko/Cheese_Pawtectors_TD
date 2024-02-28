@@ -5,16 +5,22 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     #region Modules
-    [SerializeField] private EntitiesMod _entitiesManager;
-    [SerializeField] private PlayerMod _playerManager;
+    [SerializeField] private M_Entities _entities;
+    [SerializeField] private M_Economy _economy;
 
     // EntitiesMod
-    public CatSO[] Cats => _entitiesManager.Cats;
-    public MouseSO[] Mouses => _entitiesManager.Mouses;
-    public int MouseLevel => _entitiesManager.MouseLevel;
-    public bool CanSpawnAlbino => _entitiesManager.CanSpawnAlbino;
+    public CatSO[] Cats => _entities.Cats;
+    public MouseSO[] Mouses => _entities.Mouses;
+    public int MouseLevel => _entities.MouseLevel;
+    public bool CanSpawnAlbino => _entities.CanSpawnAlbino;
 
-    public void AlbinoHasSpawned() => _entitiesManager.AlbinoHasSpawned();
+    public void AlbinoHasSpawned() => _entities.AlbinoHasSpawned();
+
+    // EconomyMod
+    public int Meat => _economy.Meat;
+
+    public void AddMeat(int amount) => _economy.AddMeat(amount);
+    public void RemoveMeat(int amount) => _economy.RemoveMeat(amount);
     #endregion
 
     private void Awake()
@@ -29,6 +35,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
         Debug.Log("Game Manager created.");
 
-        _entitiesManager.Init();
+        _entities.Init();
+        _economy.Init();
     }
 }

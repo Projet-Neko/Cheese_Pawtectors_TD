@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8132ba88d426bb41a173dd723ea18b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entitiesManager: {fileID: 8386388096323966852}
-  _playerManager: {fileID: 2732286174534552492}
+  _entities: {fileID: 8386388096323966852}
+  _economy: {fileID: 2732286174534552492}
 --- !u!114 &8386388096323966852
 MonoBehaviour:
   m_ObjectHideFlags: 0

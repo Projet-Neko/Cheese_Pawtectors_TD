@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Scenes: LoginPopup
+  Scene: LoadingScreen
 --- !u!1 &55169887
 GameObject:
   m_ObjectHideFlags: 0
@@ -2459,6 +2459,7 @@ GameObject:
   - component: {fileID: 819977920}
   - component: {fileID: 819977919}
   - component: {fileID: 819977921}
+  - component: {fileID: 819977922}
   m_Layer: 5
   m_Name: BTN_Settings
   m_TagString: Untagged
@@ -2568,9 +2569,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 32646879}
-        m_TargetAssemblyTypeName: ScenesMod, Assembly-CSharp
-        m_MethodName: OnSettingsButtonClick
+      - m_Target: {fileID: 819977922}
+        m_TargetAssemblyTypeName: ScenesLoader, Assembly-CSharp
+        m_MethodName: OnButtonClickAdd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2580,6 +2581,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &819977922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819977917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scene: BlockOut_UI_Settings
 --- !u!1 &823810153
 GameObject:
   m_ObjectHideFlags: 0

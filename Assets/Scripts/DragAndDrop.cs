@@ -3,8 +3,10 @@ using UnityEngine;
 public class DragAndDrop : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rbCat;
+    [SerializeField] private Cat cat;
 
     private bool _isBeingDragged = false;
+    private GameObject _target;
 
     private void OnMouseDown()
     {
@@ -25,9 +27,23 @@ public class DragAndDrop : MonoBehaviour
     {
         _isBeingDragged = false;
 
-        LayerMask lm = new() { value = 6 };
-        ContactFilter2D cf = new() { layerMask = lm, useTriggers = true };
+        if (_target != null)
+        {
+            if (_target.layer == 6)
+            {
+                Destroy(gameObject);
+            }
+            else if (_target.layer == 7)
+            {
+                cat.LevelUp();
 
-        if (_rbCat.IsTouching(cf)) Destroy(gameObject);
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        _target = collision.gameObject;
     }
 }

@@ -1,22 +1,21 @@
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonScript : MonoBehaviour
+public class Adopt : MonoBehaviour
 {
-    [SerializeField] private GameObject _catPrefabSF;
-    [SerializeField] private GridLayoutGroup _slotsSF;
+    [SerializeField] private GameObject _catPrefab;
+    [SerializeField] private GridLayoutGroup _slots;
 
     public void OnButtonClick()
     {
         // Parcoure tous les enfants (slots) de l'objet Slots
-        foreach (Transform slot in _slotsSF.transform)
+        foreach (Transform slot in _slots.transform)
         {
             // Vérifie s'il n'y a pas déjà un chat dans le slot
             if (slot.childCount == 0)
             {
                 // S'il n'y a pas de chat, instancie un nouveau chat dans ce slot
-                Instantiate(_catPrefabSF, slot);
+                Instantiate(_catPrefab, slot);
                 return; // Sort de la fonction après avoir placé le chat
             }
         }

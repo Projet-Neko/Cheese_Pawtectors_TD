@@ -7,13 +7,11 @@ public class DragAndDrop : MonoBehaviour
 
     private bool _isBeingDragged = false;
     private GameObject _target;
-    //private Vector3 _initialSlot;
     private Transform _initialSlot;
 
 
     private void Start()
     {
-        //_initialSlot = transform.position;
         _initialSlot = transform.parent;
     }
 
@@ -64,8 +62,6 @@ public class DragAndDrop : MonoBehaviour
 
         else 
         {
-            //transform.position = _initialPosition;
-
             transform.SetParent(_initialSlot);
             transform.position = _initialSlot.position;
         } 

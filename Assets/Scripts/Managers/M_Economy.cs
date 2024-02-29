@@ -14,10 +14,12 @@ public class M_Economy : MonoBehaviour
     public void AddMeat(int amount)
     {
         //
+        _meat += amount;
+        Debug.Log($"Add Meat ! Amount = {amount}, Meat = {_meat}");
     }
 
     public void RemoveMeat(int amount)
     {
-        //
+        //_meat -= amount;
     }
 }

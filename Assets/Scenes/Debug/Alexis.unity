@@ -1561,7 +1561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Scene: BlockOut_UI_Settings
+  Scene: BlockOut_TitleScreen
 --- !u!114 &1156478840
 MonoBehaviour:
   m_ObjectHideFlags: 0

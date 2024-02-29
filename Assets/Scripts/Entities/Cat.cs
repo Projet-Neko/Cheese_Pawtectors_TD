@@ -32,7 +32,7 @@ public class Cat : Entity
         _baseSatiety = 50 + (_level * 2) - 2;
         _currentSatiety = 0;
 
-        //_renderer.sprite = _data.SpriteAbove;
+        _renderer.sprite = _data.SpriteAbove;
         // TODO -> check sprite to use
 
         // Waiting for sprites

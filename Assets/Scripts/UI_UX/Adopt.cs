@@ -26,7 +26,7 @@ public class Adopt : MonoBehaviour
                 GameManager.Instance.RemoveMeat(_catPrice);
                 GameObject go = Instantiate(_catPrefab, slot);
                 go.transform.localScale = new Vector3(100, 100, 100);
-                go.GetComponent<Cat>().SetStorageMode(true);
+                go.GetComponent<Cat>().SetStorageMode(true); // Permet de cacher le HUD
                 return;
             }
         }

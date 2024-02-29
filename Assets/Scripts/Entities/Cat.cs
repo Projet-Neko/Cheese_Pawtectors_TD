@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 public class Cat : Entity
 {
     [SerializeField] CatBrain _brain;
+    [SerializeField] TMP_Text _catLevel;
 
     public Color CatColor => _catColor;
     public bool IsSleeping => _currentSatiety == _baseSatiety;
@@ -52,6 +54,7 @@ public class Cat : Entity
     public void LevelUp()
     {
         _level++;
+        _catLevel.text = _level.ToString();
         Init(_level);
         Debug.Log($"Level up to lvl {_level}");
     }

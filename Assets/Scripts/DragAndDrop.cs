@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] private GameObject _hud;
     [SerializeField] private Rigidbody2D _rbCat;
     [SerializeField] private Entity _entity;
 
@@ -19,6 +21,8 @@ public class DragAndDrop : MonoBehaviour
     {
         Debug.Log("on mouse down");
         _isBeingDragged = true;
+        _sprite.sortingOrder = 99;
+        _hud.SetActive(false);
     }
 
     private void OnMouseDrag()
@@ -34,6 +38,8 @@ public class DragAndDrop : MonoBehaviour
     private void OnMouseUp()
     {
         _isBeingDragged = false;
+        _sprite.sortingOrder = 6;
+        _hud.SetActive(true);
 
         if (_target == null)
         {

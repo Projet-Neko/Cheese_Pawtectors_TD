@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-
+    [SerializeField] private Wave _waveSpawner;
+    private Timer _timer;
+    private bool _restartWait;
     #region Modules
     [SerializeField] private M_Entities _entities;
     [SerializeField] private M_Economy _economy;
@@ -45,5 +48,41 @@ public class GameManager : MonoBehaviour
         //GameObject gameObject = Instantiate(_catPrefab, transform.position, Quaternion.identity);
         //Cat catComponent = gameObject.GetComponent<Cat>();
         //catComponent
+        InitWave();
+        Cheese.CheeseDeath += StopWave;
+        _timer = new Timer(3f);
     }
+
+    private void InitWave()
+    {
+
+    }
+
+    private void Update()
+    {
+        if (_restartWait)
+        {
+
+            if (_timer.HasEnded())
+            {
+                RestartWave();
+            }
+        }
+    }
+
+
+    private void StopWave()
+    {
+        _waveSpawner.ReloadWave();
+        _timer.Start();
+        _restartWait = true;   
+    }
+    private void RestartWave()
+    {
+        _waveSpawner.StartWave();
+        //autre feedback ?
+        _restartWait = false;
+
+    }
+
 }

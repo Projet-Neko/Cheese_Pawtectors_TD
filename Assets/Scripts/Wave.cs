@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class Wave : MonoBehaviour
 {
+    [SerializeField] private Mouse _mouse;
+    [SerializeField] private Cheese _cheese;
+
     public int WaveNumber => _waveNumber;
 
     private int _waveNumber;
     private readonly List<Mouse> _enemies = new();
-    public Mouse mouse;
-    private int MouseNBR;
+    
+
     // TODO -> subscribe to cheese death event
 
-    private Vector3 SpawnPos;
-
+    private Vector3 _SpawnPos;
+    
     public void Init()
     {
         _waveNumber = 0; // TODO -> get from database
-        MouseNBR = 10;
-        SpawnPos = transform.position;
-        //SpawnPos.z = -3;
+        _SpawnPos = transform.position;
+        
     }
 
     private void Start()
@@ -30,28 +32,38 @@ public class Wave : MonoBehaviour
 
     public void StartWave()
     {
-       
-            StartCoroutine(SpawnEnemies());
-        
+
+        StartCoroutine(SpawnEnemies());
+
     }
 
     public IEnumerator SpawnEnemies()
     {
-        
-        if (_enemies.Count == 10) yield return null;
 
-        Instantiate(mouse, SpawnPos, Quaternion.identity);
-        //_enemies.Add(new());
-        yield return new WaitForSeconds(1);
+        while (_enemies.Count < 10)
+        {
+            yield return new WaitForSeconds(1);
+           CreateMouse();
+
+        }
+    }
+
+    private void CreateMouse()
+    {
+        Instantiate(_mouse, _SpawnPos, Quaternion.identity);
+        _enemies.Add(_mouse);
+        _mouse.SetCheese(_cheese);
     }
 
     public void NextWave()
     {
         _waveNumber++;
     }
-    
+
     public void ReloadWave()
     {
+        StopCoroutine(SpawnEnemies());
+        foreach (var enemy in _enemies) Destroy(enemy);
 
     }
 }

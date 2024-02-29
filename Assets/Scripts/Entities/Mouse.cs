@@ -1,8 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections.Generic;
-
-using UnityEngine.UI;
 
 public class Mouse : Entity
 {
@@ -15,6 +12,7 @@ public class Mouse : Entity
     private Vector3 _destination;
     private Rigidbody2D _rb;
     private bool _stop;
+    private Cheese _cheese;
 
     private void Start()
     {
@@ -27,8 +25,7 @@ public class Mouse : Entity
 
         _baseHealth = _currentHealth = _data.Health + (_level * 1) - 1;
         _damage = _data.SatiationRate;
-        _speed = _data.Speed * 3;
-        //_speed = 10;
+        _speed = _data.Speed * 20;
 
         _rb = GetComponent<Rigidbody2D>();
         _nextPoint = 0;
@@ -36,6 +33,7 @@ public class Mouse : Entity
         
         _currentHealth = 5;
         //_renderer.sprite = _data.Sprite;
+        _cheese = GameManager.Instance.Cheese;
         SetMaxHealth();
 
 
@@ -44,6 +42,7 @@ public class Mouse : Entity
         _destination = (_checkPoint[_nextPoint] - transform.position).normalized;
         _rb.velocity = _destination * _speed;
         _stop = false;
+
     }
 
     private int IsAlbino()
@@ -59,7 +58,7 @@ public class Mouse : Entity
     private void FixedUpdate()
     {
         if (!_stop) Move();
-        else { } //Attack 
+       
     }
     private void Move()
     {
@@ -73,11 +72,12 @@ public class Mouse : Entity
         {
             _nextPoint++;
 
-            if (_nextPoint == _checkPoint.Count)
+            if (_nextPoint == _checkPoint.Count) //arrivé au fromage 
             {
                 _rb.velocity = new Vector2(0, 0);
                 _stop = true;
-                //Attack Fromage;
+                
+                Attack();
             }
             else
             {
@@ -93,6 +93,9 @@ public class Mouse : Entity
         _stop = true;
     }
 
-
+    private void Attack()
+    {
+        _cheese.TakeDamage(this);
+    }
 
 }

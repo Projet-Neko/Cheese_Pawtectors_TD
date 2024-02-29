@@ -7,13 +7,20 @@ public class M_Entities : MonoBehaviour
 
     public CatSO[] Cats => _cats;
     public MouseSO[] Mouses => _mouses;
+    public Cheese Cheese => _cheese;
     public int MouseLevel => _mouseLevel;
     public bool CanSpawnAlbino => _canSpawnAlbino;
 
     private CatSO[] _cats;
     private MouseSO[] _mouses;
+    private Cheese _cheese;
     private int _mouseLevel = 1;
     private bool _canSpawnAlbino = true;
+
+    private void OnDestroy()
+    {
+        Cheese.OnInit -= Cheese_OnInit;
+    }
 
     public void Init()
     {
@@ -22,6 +29,8 @@ public class M_Entities : MonoBehaviour
 
         _cats.OrderBy(x => x.name);
         _mouses.OrderBy(x => x.name);
+
+        Cheese.OnInit += Cheese_OnInit;
 
         // Testing only
         //Cat c = Instantiate(_catPrefab).GetComponent<Cat>();
@@ -34,6 +43,11 @@ public class M_Entities : MonoBehaviour
         //{
         //    Instantiate(_mousePrefab);
         //}
+    }
+
+    private void Cheese_OnInit(Cheese cheese)
+    {
+        _cheese = cheese;
     }
 
     public void AlbinoHasSpawned()

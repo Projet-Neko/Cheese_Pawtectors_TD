@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +14,7 @@ public abstract class Entity : MonoBehaviour
 
     public int Level => _level;
 
-    public float _speed;
+    protected float _speed;
     protected float _baseHealth;
     protected float _currentHealth;
     protected float _damage;
@@ -68,5 +67,7 @@ public abstract class Entity : MonoBehaviour
     {
         _slider.value = _currentHealth;
     }
+
+    protected virtual void OnDeathEvent(Entity source) => OnDeath?.Invoke(source);
 
 }

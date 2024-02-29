@@ -1,9 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections.Generic;
-
-using UnityEngine.UI;
-using System.Collections;
 
 public class Mouse : Entity
 {
@@ -29,7 +25,7 @@ public class Mouse : Entity
 
         _baseHealth = _currentHealth = _data.Health + (_level * 1) - 1;
         _damage = _data.SatiationRate;
-        _speed = _data.Speed * 7;
+        _speed = _data.Speed * 20;
 
         _rb = GetComponent<Rigidbody2D>();
         _nextPoint = 0;
@@ -37,6 +33,7 @@ public class Mouse : Entity
         
         _currentHealth = 5;
         //_renderer.sprite = _data.Sprite;
+        _cheese = GameManager.Instance.Cheese;
         SetMaxHealth();
 
 
@@ -46,11 +43,6 @@ public class Mouse : Entity
         _rb.velocity = _destination * _speed;
         _stop = false;
 
-    }
-
-    public void SetCheese(Cheese cheese)
-    {
-        _cheese = cheese;
     }
 
     private int IsAlbino()
@@ -103,10 +95,7 @@ public class Mouse : Entity
 
     private void Attack()
     {
-
         _cheese.TakeDamage(this);
-       
-
     }
 
 }

@@ -2,37 +2,31 @@ using System;
 
 public class Cheese : Entity
 {
-    public static event Action CheeseDeath;
-
+    public static event Action<Cheese> OnInit;
 
     private void Awake()
     {
-        _baseHealth = _currentHealth = 3;
+        M_Wave.OnWaveReload += OnWaveReload;
     }
 
-    protected override void Death(Entity source)
+    private void OnWaveReload()
     {
-        // TODO -> event game over
-        
-        CheeseDeath?.Invoke();
+        _currentHealth = _baseHealth;
+    }
 
-        //Destroy effect ?
-        Restart();
+    private void Start()
+    {
+        _baseHealth = _currentHealth = 3;
+        OnInit?.Invoke(this);
     }
 
     public override void TakeDamage(Entity source) 
     {
+        if (_currentHealth <= 0) return;
         _currentHealth--;
-        SetHealth();
-        if (_currentHealth <= 0)
-        {
-            CheeseDeath?.Invoke();
-            Restart() ;
-        }
-    }
 
-    private void Restart()
-    {
-        _currentHealth = _baseHealth;
+        //SetHealth();
+
+        if (_currentHealth <= 0) OnDeathEvent(this);
     }
 }

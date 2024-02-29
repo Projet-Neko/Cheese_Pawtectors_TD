@@ -37,6 +37,7 @@ public class M_Wave : MonoBehaviour
     {
         _waveNumber = 0; // TODO -> get from database
         _SpawnPos = transform.position;
+        _SpawnPos.z = -4;
         _hasCompleteSpawning = false;
     }
 

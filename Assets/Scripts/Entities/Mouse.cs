@@ -2,6 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections.Generic;
 
+using UnityEngine.UI;
 
 public class Mouse : Entity
 {
@@ -15,6 +16,10 @@ public class Mouse : Entity
     private Rigidbody2D _rb;
     private bool _stop;
 
+    public int _maxHealth = 5;
+
+    public Slider _slider;
+    public Mouse _healthBar;
 
     private void Start()
     {
@@ -33,7 +38,10 @@ public class Mouse : Entity
         _rb = GetComponent<Rigidbody2D>();
         _nextPoint = 0;
 
+        
+        _currentHealth = 5;
         //_renderer.sprite = _data.Sprite;
+        _healthBar.SetMaxHealth();
 
         gameObject.name = _data.Name;
 
@@ -42,6 +50,16 @@ public class Mouse : Entity
         _stop = false;
     }
 
+    void Update()
+    {
+        Entity mouse = this;
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            mouse.TakeDamage(_healthBar);
+            SetHealth();
+        }
+    }
     private int IsAlbino()
     {
         if (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1)
@@ -59,7 +77,7 @@ public class Mouse : Entity
     }
     private void Move()
     {
-        _speed = _data.Speed * 3; //---J'ai augmenté la vitesse // A ENLEVER
+        _speed = _data.Speed * 3; //---J'ai augmentï¿½ la vitesse // A ENLEVER
 
         _distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
 
@@ -89,4 +107,15 @@ public class Mouse : Entity
         _stop = true;
     }
 
+
+    public void SetMaxHealth()
+    {
+        _slider.maxValue = _maxHealth;
+        _slider.value = _maxHealth;
+    }
+
+    public void SetHealth()
+    {
+        _slider.value = _currentHealth;
+    }
 }

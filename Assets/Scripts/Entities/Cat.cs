@@ -20,6 +20,7 @@ public class Cat : Entity
         _speed = 1;
         Init(_level);
         SetMaxSatiety();
+        _isInStorageMode = false;
     }
 
     public void Init(int level)
@@ -30,14 +31,12 @@ public class Cat : Entity
         _catColor = ColorPalette.GetColor(_data.Color);
         _baseSatiety = 50 + (_level * 2) - 2;
         _currentSatiety = 0;
-        _isInStorageMode = false;
 
         //_renderer.sprite = _data.SpriteAbove;
         // TODO -> check sprite to use
 
         // Waiting for sprites
         _renderer.color = CatColor;
-        Debug.Log(CatColor);
 
         gameObject.name = _data.Name;
     }

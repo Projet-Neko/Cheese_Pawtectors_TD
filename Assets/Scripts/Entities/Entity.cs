@@ -68,4 +68,5 @@ public abstract class Entity : MonoBehaviour
     {
         _slider.value = _currentHealth;
     }
+
 }

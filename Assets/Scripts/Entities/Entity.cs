@@ -35,8 +35,6 @@ public abstract class Entity : MonoBehaviour
         SetHealth();
 
         if (_currentHealth <= 0) Death(source);
-
-
     }
 
     protected virtual void Death(Entity source)

@@ -45,7 +45,9 @@ public class Cat : Entity
     public void SetStorageMode(bool mode)
     {
         _isInStorageMode = mode;
-        if (_isInStorageMode) _brain.ChangeState(new SStorage());
+        if (!_isInStorageMode) return;
+        _brain.ChangeState(new SStorage());
+        _slider.gameObject.SetActive(false);
     }
 
     public void LevelUp()

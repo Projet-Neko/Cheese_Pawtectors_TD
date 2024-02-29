@@ -584,6 +584,7 @@ MonoBehaviour:
   _level: 1
   _speed: 0
   _slider: {fileID: 4350467533428996827}
+  _brain: {fileID: 8914369612130805977}
 --- !u!58 &5172104183863307691
 CircleCollider2D:
   m_ObjectHideFlags: 0

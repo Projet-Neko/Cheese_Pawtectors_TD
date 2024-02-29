@@ -6,8 +6,8 @@ public class DragAndDrop : MonoBehaviour
     [SerializeField] private Entity _entity;
 
     [SerializeField] private bool _isBeingDragged = false;
-    private GameObject _target;
-    private Transform _initialSlot;
+    [SerializeField] private GameObject _target;
+    [SerializeField] private Transform _initialSlot;
 
 
     private void Start()
@@ -35,33 +35,34 @@ public class DragAndDrop : MonoBehaviour
     {
         _isBeingDragged = false;
 
-        if (_target == null) return;
-
-        if (_target.layer == 6)
+        if (_target == null)
         {
-            Destroy(gameObject);
+            BackSlot();
             return;
         }
 
-        else if (_target.layer == 7)
+        switch (_target.layer)
         {
-            Cat targetCat = _target.GetComponentInParent<Cat>();
-            Debug.Log(targetCat.name);
-            if (targetCat.Level == _entity.Level)
-            {
-                targetCat.LevelUp();
+            case 6:
                 Destroy(gameObject);
-                return;
-            }
+                break;
+            case 7:
+                Cat targetCat = _target.GetComponentInParent<Cat>();
+                Debug.Log(targetCat.name);
 
-        }
+                if (targetCat.Level == _entity.Level)
+                {
+                    targetCat.LevelUp();
+                    Destroy(gameObject);
+                }
+                break;
+            case 9:
+                if (_target.transform.childCount != 0) break;
 
-        else if (_target.layer == 9 && _target.transform.childCount == 0)
-        {
-            _initialSlot = _target.transform;
-            transform.SetParent(_target.transform);
-            transform.position = _target.transform.position;
-            return;
+                _initialSlot = _target.transform;
+                transform.SetParent(_target.transform);
+                transform.position = _target.transform.position;
+                break;
         }
 
         BackSlot();

@@ -8,18 +8,20 @@ public class M_Economy : MonoBehaviour
 
     public void Init()
     {
-        _meat = 0; // TODO -> get from database
+        _meat = 2; // TODO -> get from database
     }
 
     public void AddMeat(int amount)
     {
         //
         _meat += amount;
-        Debug.Log($"Add Meat ! Amount = {amount}, Meat = {_meat}");
+        Debug.Log($"Add Meat ! Amount = {amount}, NewMeat = {_meat}");
     }
 
     public void RemoveMeat(int amount)
     {
-        //_meat -= amount;
+        //
+        _meat -= amount;
+        Debug.Log($"Remove Meat ! Amount = {amount}, NewMeat = {_meat}");
     }
 }

@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private M_Entities _entities;
     [SerializeField] private M_Economy _economy;
 
+    [SerializeField] private GameObject _catPrefab;
+
     // EntitiesMod
     public CatSO[] Cats => _entities.Cats;
     public MouseSO[] Mouses => _entities.Mouses;
@@ -36,5 +38,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Manager created.");
         _entities.Init();
         _economy.Init();
+    }
+
+    private void Start()
+    {
+        //GameObject gameObject = Instantiate(_catPrefab, transform.position, Quaternion.identity);
+        //Cat catComponent = gameObject.GetComponent<Cat>();
+        //catComponent
     }
 }

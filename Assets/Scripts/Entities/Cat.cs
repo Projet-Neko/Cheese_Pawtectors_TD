@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Cat : Entity
 {
+    [SerializeField] CatBrain _brain;
+
     public Color CatColor => _catColor;
     public bool IsSleeping => _currentSatiety == _baseSatiety;
     public float DPS => 3.6f - (_level * 0.1f);
@@ -9,6 +11,7 @@ public class Cat : Entity
     private Color _catColor;
     private float _baseSatiety;
     private float _currentSatiety;
+    private bool _isInStorageMode;
 
     private CatSO _data;
 
@@ -26,6 +29,7 @@ public class Cat : Entity
         _catColor = ColorPalette.GetColor(_data.Color);
         _baseSatiety = 50 + (_level * 2) - 2;
         _currentSatiety = 0;
+        _isInStorageMode = false;
 
         //_renderer.sprite = _data.SpriteAbove;
         // TODO -> check sprite to use
@@ -35,6 +39,12 @@ public class Cat : Entity
         Debug.Log(CatColor);
 
         gameObject.name = _data.Name;
+    }
+
+    public void SetStorageMode(bool mode)
+    {
+        _isInStorageMode = mode;
+        if (_isInStorageMode) _brain.ChangeState(new SStorage());
     }
 
     public void LevelUp()

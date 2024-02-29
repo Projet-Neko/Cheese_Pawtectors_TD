@@ -16,15 +16,11 @@ public class CatBrain : MonoBehaviour
     private State _currentState;
 
     // All states
+    public State Storage = new SStorage();
     public State Idle = new SIdle();
     public State Follow = new SFollow();
     public State Attack = new SAttack();
     public State Sleep = new SSleep();
-
-    private void Awake()
-    {
-        ChangeState(Idle);
-    }
 
     private void Update()
     {

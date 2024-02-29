@@ -37,15 +37,21 @@ public class Wave : MonoBehaviour
 
     public IEnumerator SpawnEnemies()
     {
+        
         if (_enemies.Count == 10) yield return null;
 
         Instantiate(mouse, SpawnPos, Quaternion.identity);
-        _enemies.Add(new());
+        //_enemies.Add(new());
         yield return new WaitForSeconds(1);
     }
 
     public void NextWave()
     {
-        //
+        _waveNumber++;
+    }
+    
+    public void ReloadWave()
+    {
+
     }
 }

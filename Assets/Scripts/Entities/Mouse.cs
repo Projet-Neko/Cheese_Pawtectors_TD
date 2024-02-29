@@ -95,7 +95,7 @@ public class Mouse : Entity
 
     private void Attack()
     {
-        _cheese.TakeDamage(this);
+        _cheese?.TakeDamage(this);
     }
 
 }

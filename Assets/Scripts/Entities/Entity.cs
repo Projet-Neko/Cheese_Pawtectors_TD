@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
@@ -10,6 +11,7 @@ public abstract class Entity : MonoBehaviour
     public float Damage => _damage;
     public float BaseHealth => _baseHealth;
     public float CurrentHealth => _currentHealth;
+
     public int Level => _level;
 
     protected float _speed;
@@ -26,12 +28,25 @@ public abstract class Entity : MonoBehaviour
         Mathf.Clamp(_currentHealth, 0f, _baseHealth);
         Debug.Log($"Current health after damages : {_currentHealth}");
 
-        if (_currentHealth == 0) Death(source);
+        if (_currentHealth <= 0) Death(source);
     }
 
     protected virtual void Death(Entity source)
     {
+        /* 
+        Handle death logic
+        - source : entity that killed (cat)
+        - this : dying entity (mouse)
+        */
+
+        // Verify if "this" is a mouse
         if (this is not Mouse) return;
+        if (source is Cat)
+        {
+            // Call the AddMeat function for the cat
+            GameManager.Instance.AddMeat(1);
+        }
+        // When a mouse die add satiety to cat
         source.TakeDamage(this);
         OnDeath?.Invoke(this);
         Destroy(gameObject);

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class SFollow : State
 {
     public override void OnEnter(CatBrain brain)

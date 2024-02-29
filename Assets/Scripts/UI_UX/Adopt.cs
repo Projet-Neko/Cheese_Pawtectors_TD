@@ -49,6 +49,7 @@ public class Adopt : MonoBehaviour
                 DeductCatPrice();
                 GameObject go = Instantiate(_catPrefab, slot);
                 go.transform.localScale = new Vector3(100, 100, 100);
+                go.GetComponent<Cat>().SetStorageMode(true);
                 return;
             }
         }

@@ -16,11 +16,6 @@ public class Mouse : Entity
     private Rigidbody2D _rb;
     private bool _stop;
 
-    public int _maxHealth = 5;
-
-    public Slider _slider;
-    public Mouse _healthBar;
-
     private void Start()
     {
 
@@ -41,7 +36,7 @@ public class Mouse : Entity
         
         _currentHealth = 5;
         //_renderer.sprite = _data.Sprite;
-        _healthBar.SetMaxHealth();
+        SetMaxHealth();
 
         gameObject.name = _data.Name;
 
@@ -50,16 +45,6 @@ public class Mouse : Entity
         _stop = false;
     }
 
-    void Update()
-    {
-        Entity mouse = this;
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            mouse.TakeDamage(_healthBar);
-            SetHealth();
-        }
-    }
     private int IsAlbino()
     {
         if (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1)
@@ -108,14 +93,5 @@ public class Mouse : Entity
     }
 
 
-    public void SetMaxHealth()
-    {
-        _slider.maxValue = _maxHealth;
-        _slider.value = _maxHealth;
-    }
 
-    public void SetHealth()
-    {
-        _slider.value = _currentHealth;
-    }
 }

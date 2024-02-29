@@ -28,6 +28,7 @@ public class RandomCatGenerator : MonoBehaviour
             {
                 GameObject go = Instantiate(_catPrefab, selectedSlot);
                 go.transform.localScale = new Vector3(100, 100, 100);
+                go.GetComponent<Cat>().SetStorageMode(true); // Permet de cacher le HUD
             }
         }
     }

@@ -39,6 +39,7 @@ public class Mouse : Entity
         //_renderer.sprite = _data.Sprite;
         SetMaxHealth();
 
+
         gameObject.name = _data.Name;
 
         _destination = (_checkPoint[_nextPoint] - transform.position).normalized;

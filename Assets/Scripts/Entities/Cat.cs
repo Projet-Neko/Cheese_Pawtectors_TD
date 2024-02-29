@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Cat : Entity
 {
+    [SerializeField] CatBrain _brain;
+
     public Color CatColor => _catColor;
     public bool IsSleeping => _currentSatiety == _baseSatiety;
     public float DPS => 3.6f - (_level * 0.1f);
@@ -9,6 +11,7 @@ public class Cat : Entity
     private Color _catColor;
     private float _baseSatiety;
     private float _currentSatiety;
+    private bool _isInStorageMode;
 
     private CatSO _data;
 
@@ -16,6 +19,8 @@ public class Cat : Entity
     {
         _speed = 1;
         Init(_level);
+        SetMaxSatiety();
+        _isInStorageMode = false;
     }
 
     public void Init(int level)
@@ -32,9 +37,16 @@ public class Cat : Entity
 
         // Waiting for sprites
         _renderer.color = CatColor;
-        Debug.Log(CatColor);
 
         gameObject.name = _data.Name;
+    }
+
+    public void SetStorageMode(bool mode)
+    {
+        _isInStorageMode = mode;
+        if (!_isInStorageMode) return;
+        _brain.ChangeState(new SStorage());
+        _slider.gameObject.SetActive(false);
     }
 
     public void LevelUp()
@@ -51,11 +63,24 @@ public class Cat : Entity
         Mathf.Clamp(_currentSatiety, 0f, _baseSatiety);
         Debug.Log($"Cat current satiety : {_currentSatiety}/{_baseSatiety}");
 
+        SetSatiety();
+
         if (_currentSatiety == _baseSatiety) Sleep();
     }
 
     private void Sleep()
     {
         //
+    }
+
+    public void SetMaxSatiety()
+    {
+        _slider.maxValue = _baseSatiety;
+        _slider.value = _currentSatiety;
+    }
+
+    public void SetSatiety()
+    {
+        _slider.value = _currentSatiety;
     }
 }

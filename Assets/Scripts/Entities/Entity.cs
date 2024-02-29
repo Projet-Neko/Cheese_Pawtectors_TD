@@ -1,6 +1,7 @@
 using System;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Entity : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public abstract class Entity : MonoBehaviour
     protected float _currentHealth;
     protected float _damage;
 
+
+    public Slider _slider;
+
     // TODO -> add ui
 
     public virtual void TakeDamage(Entity source)
@@ -28,7 +32,11 @@ public abstract class Entity : MonoBehaviour
         Mathf.Clamp(_currentHealth, 0f, _baseHealth);
         Debug.Log($"Current health after damages : {_currentHealth}");
 
+        SetHealth();
+
         if (_currentHealth <= 0) Death(source);
+
+
     }
 
     protected virtual void Death(Entity source)
@@ -50,5 +58,16 @@ public abstract class Entity : MonoBehaviour
         source.TakeDamage(this);
         OnDeath?.Invoke(this);
         Destroy(gameObject);
+    }
+
+    public void SetMaxHealth()
+    {
+        _slider.maxValue = _baseHealth;
+        _slider.value = _baseHealth;
+    }
+
+    public void SetHealth()
+    {
+        _slider.value = _currentHealth;
     }
 }

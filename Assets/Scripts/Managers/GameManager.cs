@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(this);
         Debug.Log("Game Manager created.");
-
         _entities.Init();
         _economy.Init();
     }

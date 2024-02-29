@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class Cat : Entity
 {
-    public Color CatColor => ColorPalette.GetColor(_data.Color);
+    public Color CatColor => _catColor;
     public bool IsSleeping => _currentSatiety == _baseSatiety;
     public float DPS => 3.6f - (_level * 0.1f);
 
+    private Color _catColor;
     private float _baseSatiety;
     private float _currentSatiety;
 
@@ -22,6 +23,7 @@ public class Cat : Entity
         _level = level;
         _damage = level; // TODO -> change formula
         _data = GameManager.Instance.Cats[_level - 1];
+        _catColor = ColorPalette.GetColor(_data.Color);
         _baseSatiety = 50 + (_level * 2) - 2;
         _currentSatiety = 0;
 
@@ -30,6 +32,7 @@ public class Cat : Entity
 
         // Waiting for sprites
         _renderer.color = CatColor;
+        Debug.Log(CatColor);
 
         gameObject.name = _data.Name;
     }

@@ -5,6 +5,13 @@ public class Adopt : MonoBehaviour
 {
     [SerializeField] private GameObject _catPrefab;
     [SerializeField] private GridLayoutGroup _slots;
+    private int _price; // TODO : get the real price of the cat we want to buy
+
+    public bool CanAdoptCat()
+    {
+        int meat = GameManager.Instance.Meat;
+        return true;
+    }
 
     public void OnButtonClick()
     {

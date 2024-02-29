@@ -1,9 +1,20 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections.Generic;
+
 using UnityEngine.UI;
 
 public class Mouse : Entity
 {
+    [SerializeField] private List<Vector3> _checkPoint;
+
     private MouseSO _data;
+
+    private int _nextPoint;
+    private float _distance;
+    private Vector3 _destination;
+    private Rigidbody2D _rb;
+    private bool _stop;
 
     public int _maxHealth = 5;
 
@@ -12,6 +23,7 @@ public class Mouse : Entity
 
     private void Start()
     {
+
         _data = GameManager.Instance.Mouses[IsAlbino()];
 
         // TODO -> is queen if wave % 10
@@ -19,20 +31,33 @@ public class Mouse : Entity
         _level = GameManager.Instance.MouseLevel;
 
         _baseHealth = _currentHealth = _data.Health + (_level * 1) - 1;
-        _healthBar.SetMaxHealth(_maxHealth);
         _damage = _data.SatiationRate;
-        _speed = _data.Speed;
+        _speed = _data.Speed * 3;
+        //_speed = 10;
 
+        _rb = GetComponent<Rigidbody2D>();
+        _nextPoint = 0;
+
+        
+        _currentHealth = 5;
         //_renderer.sprite = _data.Sprite;
+        _healthBar.SetMaxHealth();
 
         gameObject.name = _data.Name;
+
+        _destination = (_checkPoint[_nextPoint] - transform.position).normalized;
+        _rb.velocity = _destination * _speed;
+        _stop = false;
     }
 
     void Update()
     {
+        Entity mouse = this;
+
         if (Input.GetKeyDown(KeyCode.I))
         {
-            TakeDamage(2);
+            mouse.TakeDamage(_healthBar);
+            SetHealth();
         }
     }
     private int IsAlbino()
@@ -45,20 +70,52 @@ public class Mouse : Entity
 
         return 0;
     }
-
-    public void SetMaxHealth(int health)
+    private void FixedUpdate()
     {
-        _slider.maxValue = health;
-        _slider.value = health;
+        if (!_stop) Move();
+        else { } //Attack 
+    }
+    private void Move()
+    {
+        _speed = _data.Speed * 3; //---J'ai augment� la vitesse // A ENLEVER
+
+        _distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
+
+        _rb.velocity = _destination * _speed ;
+
+        if (_distance < 0.05f)
+        {
+            _nextPoint++;
+
+            if (_nextPoint == _checkPoint.Count)
+            {
+                _rb.velocity = new Vector2(0, 0);
+                _stop = true;
+                //Attack Fromage;
+            }
+            else
+            {
+                _destination = (_checkPoint[_nextPoint] - transform.position).normalized;
+                _rb.velocity = _destination * _speed;
+            }
+        }
+
     }
 
-    public void SetHealth(int health)
+    public void Stop()
     {
-        _slider.value = health;
+        _stop = true;
     }
 
-    void TakeDamage(int damage)
+
+    public void SetMaxHealth()
     {
-        _currentHealth -= damage;
+        _slider.maxValue = _maxHealth;
+        _slider.value = _maxHealth;
+    }
+
+    public void SetHealth()
+    {
+        _slider.value = _currentHealth;
     }
 }

@@ -19,6 +19,7 @@ public class Cat : Entity
     {
         _speed = 1;
         Init(_level);
+        SetMaxSatiety();
     }
 
     public void Init(int level)
@@ -61,11 +62,24 @@ public class Cat : Entity
         Mathf.Clamp(_currentSatiety, 0f, _baseSatiety);
         Debug.Log($"Cat current satiety : {_currentSatiety}/{_baseSatiety}");
 
+        SetSatiety();
+
         if (_currentSatiety == _baseSatiety) Sleep();
     }
 
     private void Sleep()
     {
         //
+    }
+
+    public void SetMaxSatiety()
+    {
+        _slider.maxValue = _baseSatiety;
+        _slider.value = _currentSatiety;
+    }
+
+    public void SetSatiety()
+    {
+        _slider.value = _currentSatiety;
     }
 }

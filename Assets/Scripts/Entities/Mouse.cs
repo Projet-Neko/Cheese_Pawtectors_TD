@@ -63,12 +63,11 @@ public class Mouse : Entity
 
         _distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
 
-        _rb.velocity = _destination * _speed ; 
+        _rb.velocity = _destination * _speed ;
 
         if (_distance < 0.05f)
         {
             _nextPoint++;
-            _destination = (_checkPoint[_nextPoint] - transform.position).normalized;
 
             if (_nextPoint == _checkPoint.Count)
             {
@@ -76,7 +75,11 @@ public class Mouse : Entity
                 _stop = true;
                 //Attack Fromage;
             }
-            else _rb.velocity = _destination * _speed;
+            else
+            {
+                _destination = (_checkPoint[_nextPoint] - transform.position).normalized;
+                _rb.velocity = _destination * _speed;
+            }
         }
 
     }

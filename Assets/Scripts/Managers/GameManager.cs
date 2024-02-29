@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,10 +8,12 @@ public class GameManager : MonoBehaviour
     #region Modules
     [SerializeField] private M_Entities _entities;
     [SerializeField] private M_Economy _economy;
+    [SerializeField] private M_Wave _wave;
 
     // EntitiesMod
     public CatSO[] Cats => _entities.Cats;
     public MouseSO[] Mouses => _entities.Mouses;
+    public Cheese Cheese => _entities.Cheese;
     public int MouseLevel => _entities.MouseLevel;
     public bool CanSpawnAlbino => _entities.CanSpawnAlbino;
 
@@ -34,7 +37,11 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(this);
         Debug.Log("Game Manager created.");
+
         _entities.Init();
         _economy.Init();
+        _wave.Init();
+
+        _wave.StartWave();
     }
 }

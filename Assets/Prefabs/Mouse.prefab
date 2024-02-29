@@ -106,7 +106,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 4363232312380465801}
   _level: 1
+  _speed: 0
   _slider: {fileID: 150389790728409663}
+  _checkPoint:
+  - {x: -3.25, y: 2.75, z: 0}
+  - {x: -3.25, y: 0.25, z: 0}
+  - {x: -7.75, y: 0.25, z: 0}
+  - {x: -7.75, y: -4.25, z: 0}
+  - {x: 3.75, y: -4.25, z: 0}
+  - {x: 3.75, y: 0.5, z: 0}
+  - {x: 6, y: 0.5, z: 0}
+  - {x: 6, y: 2.75, z: 0}
 --- !u!58 &2686780708187659866
 CircleCollider2D:
   m_ObjectHideFlags: 0

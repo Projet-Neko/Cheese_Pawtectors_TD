@@ -22,12 +22,12 @@ public class Adopt : MonoBehaviour
         if (meat >= _catPrice)
         {
             _canAdoptCat = true;
-            Debug.Log($" Congratulation, you've adopted a cat ! CanAdopt : {_canAdoptCat}");
+            Debug.Log($" Congratulation, you've adopted a cat !");
         }
         else
         {
             _canAdoptCat = false;
-            Debug.Log($" You can't adopt this cat not enough money! CanAdopt : {_canAdoptCat}");
+            Debug.Log($" You can't adopt this cat not enough money!");
         }
     }
 

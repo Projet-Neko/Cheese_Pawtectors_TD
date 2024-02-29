@@ -474,6 +474,14 @@ PrefabInstance:
       propertyPath: m_WholeNumbers
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4077753257217231768, guid: 1c4d78e56a21db14eba23b39d26d78ab, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077753257217231768, guid: 1c4d78e56a21db14eba23b39d26d78ab, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4534475606971793035, guid: 1c4d78e56a21db14eba23b39d26d78ab, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

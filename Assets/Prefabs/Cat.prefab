@@ -661,6 +661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rbCat: {fileID: -5839205541506047822}
   _entity: {fileID: 1033424655005935924}
+  _isBeingDragged: 0
 --- !u!114 &8914369612130805977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -682,7 +683,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6983453442427492931}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5

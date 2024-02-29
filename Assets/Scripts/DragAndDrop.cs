@@ -57,6 +57,7 @@ public class DragAndDrop : MonoBehaviour
 
             else if (_target.layer == 9 && _target.transform.childCount == 0)
             {
+                _initialSlot = _target.transform;
                 transform.SetParent(_target.transform);
                 transform.position = _target.transform.position;
                 return;

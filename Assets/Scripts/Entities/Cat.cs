@@ -32,13 +32,13 @@ public class Cat : Entity
         _baseSatiety = 50 + (_level * 2) - 2;
         _currentSatiety = 0;
 
-        //_renderer.sprite = _data.SpriteAbove;
+        gameObject.name = _data.Name;
+
+        _renderer.sprite = _data.SpriteAbove;
         // TODO -> check sprite to use
 
-        // Waiting for sprites
-        _renderer.color = CatColor;
-
-        gameObject.name = _data.Name;
+        // Waiting for sprite
+        if (_data.SpriteAbove == null) _renderer.color = CatColor;
     }
 
     public void SetStorageMode(bool mode)

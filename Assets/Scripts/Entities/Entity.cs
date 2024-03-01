@@ -35,8 +35,6 @@ public abstract class Entity : MonoBehaviour
         SetHealth();
 
         if (_currentHealth <= 0) Death(source);
-
-
     }
 
     protected virtual void Death(Entity source)
@@ -70,4 +68,5 @@ public abstract class Entity : MonoBehaviour
     {
         _slider.value = _currentHealth;
     }
+
 }

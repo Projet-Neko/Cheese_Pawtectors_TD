@@ -8,6 +8,7 @@ public class M_Wave : MonoBehaviour
     public static event Action OnWaveReload;
 
     [SerializeField] private GameObject _mousePrefab;
+    [SerializeField] private bool _enableWaves = false;
 
     public int WaveNumber => _waveNumber;
 
@@ -44,7 +45,7 @@ public class M_Wave : MonoBehaviour
     public void StartWave()
     {
         _spawn = SpawnEnemies(false);
-        StartCoroutine(_spawn);
+        if (_enableWaves) StartCoroutine(_spawn);
     }
 
     public IEnumerator SpawnEnemies(bool cooldown)

@@ -9,7 +9,7 @@ public class Mouse : Entity
 
     private int _nextPoint;
     private float _distance;
-    private Vector3 _destination;
+    private Vector2 _destination;
     private Rigidbody2D _rb;
     private bool _stop;
     private Cheese _cheese;
@@ -25,7 +25,7 @@ public class Mouse : Entity
 
         _baseHealth = _currentHealth = _data.Health + (_level * 1) - 1;
         _damage = _data.SatiationRate;
-        _speed = _data.Speed * 20;
+        _speed = _data.Speed;
 
         _rb = GetComponent<Rigidbody2D>();
         _nextPoint = 0;
@@ -39,8 +39,11 @@ public class Mouse : Entity
 
         gameObject.name = _data.Name;
 
-        _destination = (_checkPoint[_nextPoint] - transform.position).normalized;
-        _rb.velocity = _destination * _speed;
+        _destination = (_checkPoint[_nextPoint] - transform.position);
+        _destination.Normalize();
+        _rb.velocity = _destination.normalized * _speed;
+        
+
         _stop = false;
 
     }
@@ -62,11 +65,12 @@ public class Mouse : Entity
     }
     private void Move()
     {
-        _speed = _data.Speed * 3; //---J'ai augment� la vitesse // A ENLEVER
-
         _distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
 
         _rb.velocity = _destination * _speed ;
+        
+
+
 
         if (_distance < 0.05f)
         {
@@ -81,8 +85,10 @@ public class Mouse : Entity
             }
             else
             {
-                _destination = (_checkPoint[_nextPoint] - transform.position).normalized;
-                _rb.velocity = _destination * _speed;
+                _destination = (_checkPoint[_nextPoint] - transform.position);
+                _destination.Normalize();
+                _rb.velocity = _destination.normalized * _speed;
+
             }
         }
 

@@ -7,7 +7,7 @@ public class M_Economy : MonoBehaviour
     public List<int> CatPrices => _catPrices;
 
     private int _meat;
-    private List<int> _amountOfPurchases;
+    private List<int> _amountOfPurchases; // Store the number of purchases for each cat
     private List<int> _catPrices;
 
     public void Init()
@@ -51,7 +51,9 @@ public class M_Economy : MonoBehaviour
 
     private void IncreasePrice(int level)
     {
+        // _amountOfPurchases = index:levelduchat value: nbrd'achatduduchatdeceniveau
         _amountOfPurchases[level - 1]++;
+        // Calculation and update of new cat price (5% increase over current price)
         _catPrices[level - 1] = _catPrices[level - 1] + (_catPrices[level - 1] / 100 * 5);
     }
 }

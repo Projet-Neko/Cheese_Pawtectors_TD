@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -21,7 +22,9 @@ public class GameManager : MonoBehaviour
 
     // EconomyMod
     public int Meat => _economy.Meat;
+    public List<int> CatPrices => _economy.CatPrices;
 
+    public bool Adopt(int level) => _economy.Adopt(level);
     public void AddMeat(int amount) => _economy.AddMeat(amount);
     public void RemoveMeat(int amount) => _economy.RemoveMeat(amount);
     #endregion

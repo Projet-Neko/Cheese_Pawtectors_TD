@@ -3285,6 +3285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ff38e98150c1594d8186ce33243013f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _catPrice: {fileID: 1940486639}
   _catPrefab: {fileID: 6983453442427492931, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
   _slots: {fileID: 473152869}
 --- !u!114 &572290374

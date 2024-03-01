@@ -57,6 +57,7 @@ public class M_Wave : MonoBehaviour
         {
             yield return new WaitForSeconds(1);
             Mouse m = Instantiate(_mousePrefab, _SpawnPos, Quaternion.identity).GetComponent<Mouse>();
+            m.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             _enemies.Add(m);
         }
 

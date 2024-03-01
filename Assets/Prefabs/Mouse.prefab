@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 7288019319597273094}
   - component: {fileID: 2686780708187659866}
   - component: {fileID: 3761325325547743946}
+  - component: {fileID: 7562806154012630528}
   m_Layer: 8
   m_Name: Mouse
   m_TagString: Untagged
@@ -255,6 +256,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7562806154012630528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732585812547385431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c374a37627f9e428851ce2f203c3a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 2686780708187659866}
+  _entity: {fileID: 7288019319597273094}
 --- !u!1 &2380435575385992518
 GameObject:
   m_ObjectHideFlags: 0

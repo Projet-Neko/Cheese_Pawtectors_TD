@@ -1,17 +1,19 @@
 using UnityEngine;
 
-public class CatBrain : MonoBehaviour
+public class Brain : MonoBehaviour
 {
-    //[SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Collider2D _collider;
-    [SerializeField] private Cat _cat;
+    [SerializeField] private Entity _entity;
 
-    public GameObject Target {  get; set; }
-    //public NavMeshAgent Agent => _agent;
+    public GameObject Target { get; set; }
     public Collider2D Collider => _collider;
-    public Cat Cat => _cat;
-    public float AttackRange => (transform.localScale.x / .6f) * 8;
-    public float FollowRange => (transform.localScale.x * 4) * 8;
+    public Entity Entity => _entity;
+
+    public float AttackRange => _attackRange;
+    public float FollowRange => _followRange;
+
+    protected float _attackRange;
+    protected float _followRange;
 
     private State _currentState;
 
@@ -21,6 +23,7 @@ public class CatBrain : MonoBehaviour
     public State Follow = new SFollow();
     public State Attack = new SAttack();
     public State Sleep = new SSleep();
+    public State Walk = new SWalk();
 
     private void Update()
     {

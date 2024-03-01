@@ -2,9 +2,9 @@ using UnityEngine;
 
 public abstract class State
 {
-    protected CatBrain _brain;
+    protected Brain _brain;
 
-    public virtual void OnEnter(CatBrain brain)
+    public virtual void OnEnter(Brain brain)
     {
         _brain = brain;
     }
@@ -21,6 +21,8 @@ public abstract class State
 
     protected bool IsInFollowRange()
     {
+        if (_brain.Entity is not Cat) return false;
+
         Collider2D[] targets = Physics2D.OverlapCircleAll(_brain.transform.position, _brain.FollowRange);
 
         foreach (Collider2D target in targets)
@@ -45,5 +47,10 @@ public abstract class State
         }
 
         return false;
+    }
+
+    protected void FollowTarget()
+    {
+        _brain.transform.position = Vector3.MoveTowards(_brain.transform.position, _brain.Target.transform.position, _brain.Entity.Speed * Time.deltaTime);
     }
 }

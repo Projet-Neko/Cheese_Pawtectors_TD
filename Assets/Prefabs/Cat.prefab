@@ -666,7 +666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 3451225875688782824}
-  _cat: {fileID: 1033424655005935924}
+  _entity: {fileID: 1033424655005935924}
 --- !u!195 &1570095663809491416
 NavMeshAgent:
   m_ObjectHideFlags: 0

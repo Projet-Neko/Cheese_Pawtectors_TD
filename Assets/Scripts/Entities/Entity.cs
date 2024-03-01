@@ -9,10 +9,11 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected int _level = 1;
 
     public float Damage => _damage;
+    public float DPS => 3.6f - (_level * 0.1f);
     public float BaseHealth => _baseHealth;
     public float CurrentHealth => _currentHealth;
-
     public int Level => _level;
+    public float Speed => _speed;
 
     protected float _speed;
     protected float _baseHealth;
@@ -69,5 +70,10 @@ public abstract class Entity : MonoBehaviour
     }
 
     protected virtual void OnDeathEvent(Entity source) => OnDeath?.Invoke(source);
+
+    public virtual bool IsAlive()
+    {
+        return _currentHealth > 0;
+    }
 
 }

@@ -3,20 +3,20 @@ using System.Collections.Generic;
 
 public class Mouse : Entity
 {
-    [SerializeField] private List<Vector3> _checkPoint;
+    //[SerializeField] private List<Vector3> _checkPoint;
+    [SerializeField] private bool _forceAlbino = false;
 
     private MouseSO _data;
 
-    private int _nextPoint;
+    /*private int _nextPoint;
     private float _distance;
     private Vector2 _destination;
-    private Rigidbody2D _rb;
+    private Rigidbody2D _rb;*/
     private bool _stop;
     private Cheese _cheese;
 
     private void Start()
     {
-
         _data = GameManager.Instance.Mouses[IsAlbino()];
 
         // TODO -> is queen if wave % 10
@@ -27,8 +27,8 @@ public class Mouse : Entity
         _damage = _data.SatiationRate;
         _speed = _data.Speed;
 
-        _rb = GetComponent<Rigidbody2D>();
-        _nextPoint = 0;
+        //_rb = GetComponent<Rigidbody2D>();
+        //_nextPoint = 0;
 
         
         _currentHealth = 5;
@@ -39,18 +39,16 @@ public class Mouse : Entity
 
         gameObject.name = _data.Name;
 
-        _destination = (_checkPoint[_nextPoint] - transform.position);
+        /*_destination = (_checkPoint[_nextPoint] - transform.position);
         _destination.Normalize();
-        _rb.velocity = _destination.normalized * _speed;
-        
-
-        _stop = false;
+        _rb.velocity = _destination.normalized * _speed;*/
+        _stop = false;/**/
 
     }
 
     private int IsAlbino()
     {
-        if (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1)
+        if (_forceAlbino || (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1))
         {
             GameManager.Instance.AlbinoHasSpawned();
             return 1;
@@ -58,14 +56,16 @@ public class Mouse : Entity
 
         return 0;
     }
+
     private void FixedUpdate()
     {
         if (!_stop) Move();
        
     }
+
     private void Move()
     {
-        _distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
+        /*_distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
 
         _rb.velocity = _destination * _speed ;
         
@@ -90,8 +90,7 @@ public class Mouse : Entity
                 _rb.velocity = _destination.normalized * _speed;
 
             }
-        }
-
+        }*/
     }
 
     public void Stop()
@@ -103,5 +102,4 @@ public class Mouse : Entity
     {
         _cheese?.TakeDamage(this);
     }
-
 }

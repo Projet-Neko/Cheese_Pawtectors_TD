@@ -12,7 +12,7 @@ public class M_Economy : MonoBehaviour
 
     public void Init()
     {
-        _meat = 1000; // TODO -> get from database
+        _meat = 10000; // TODO -> get from database
         _amountOfPurchases = new();
         _catPrices = new();
 

@@ -7,19 +7,15 @@ public class Cat : Entity
     [SerializeField] TMP_Text _catLevel;
 
     public Color CatColor => _catColor;
-    public bool IsSleeping => _currentSatiety == _baseSatiety;
-    public float DPS => 3.6f - (_level * 0.1f);
 
     private Color _catColor;
-    private float _baseSatiety;
-    private float _currentSatiety;
     private bool _isInStorageMode;
 
     private CatSO _data;
 
     private void Start()
     {
-        _speed = 1;
+        _speed = 5;
         Init(_level);
         SetMaxSatiety();
         _isInStorageMode = false;
@@ -31,8 +27,8 @@ public class Cat : Entity
         _damage = level; // TODO -> change formula
         _data = GameManager.Instance.Cats[_level - 1];
         _catColor = ColorPalette.GetColor(_data.Color);
-        _baseSatiety = 50 + (_level * 2) - 2;
-        _currentSatiety = 0;
+        _baseHealth = 50 + (_level * 2) - 2;
+        _currentHealth = 0;
 
         gameObject.name = _data.Name;
 
@@ -61,14 +57,14 @@ public class Cat : Entity
 
     public override void TakeDamage(Entity source)
     {
-        _currentSatiety += source.Damage;
+        _currentHealth += source.Damage;
 
-        Mathf.Clamp(_currentSatiety, 0f, _baseSatiety);
-        Debug.Log($"Cat current satiety : {_currentSatiety}/{_baseSatiety}");
+        Mathf.Clamp(_currentHealth, 0f, _baseHealth);
+        Debug.Log($"Cat current satiety : {_currentHealth}/{_baseHealth}");
 
         SetSatiety();
 
-        if (_currentSatiety == _baseSatiety) Sleep();
+        if (_currentHealth == _baseHealth) Sleep();
     }
 
     private void Sleep()
@@ -78,12 +74,17 @@ public class Cat : Entity
 
     public void SetMaxSatiety()
     {
-        _slider.maxValue = _baseSatiety;
-        _slider.value = _currentSatiety;
+        _slider.maxValue = _baseHealth;
+        _slider.value = _currentHealth;
     }
 
     public void SetSatiety()
     {
-        _slider.value = _currentSatiety;
+        _slider.value = _currentHealth;
+    }
+
+    public override bool IsAlive()
+    {
+        return _currentHealth < _baseHealth;
     }
 }

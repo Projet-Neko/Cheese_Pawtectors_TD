@@ -14,8 +14,7 @@ public class Brain : MonoBehaviour
 
     protected float _attackRange;
     protected float _followRange;
-
-    private State _currentState;
+    protected State _currentState;
 
     // All states
     public State Storage = new SStorage();
@@ -25,7 +24,7 @@ public class Brain : MonoBehaviour
     public State Sleep = new SSleep();
     public State Walk = new SWalk();
 
-    private void Update()
+    protected virtual void Update()
     {
         _currentState?.OnUpdate();
     }

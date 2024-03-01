@@ -1,3 +1,5 @@
+using System;
+
 public class SAttack : State
 {
     private Timer t;

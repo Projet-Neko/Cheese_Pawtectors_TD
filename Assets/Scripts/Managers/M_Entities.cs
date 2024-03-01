@@ -47,6 +47,7 @@ public class M_Entities : MonoBehaviour
 
     private void Cheese_OnInit(Cheese cheese)
     {
+        Debug.Log("Cheese found.");
         _cheese = cheese;
     }
 

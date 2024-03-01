@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] private GameObject _hud;
     [SerializeField] private Rigidbody2D _rbCat;
     [SerializeField] private Entity _entity;
 
-    private bool _isBeingDragged = false;
-    private GameObject _target;
-    private Transform _initialSlot;
+    [SerializeField] private bool _isBeingDragged = false;
+    [SerializeField] private GameObject _target;
+    [SerializeField] private Transform _initialSlot;
 
 
     private void Start()
@@ -17,7 +19,10 @@ public class DragAndDrop : MonoBehaviour
 
     private void OnMouseDown()
     {
+        Debug.Log("on mouse down");
         _isBeingDragged = true;
+        _sprite.sortingOrder = 99;
+        _hud.SetActive(false);
     }
 
     private void OnMouseDrag()
@@ -33,34 +38,37 @@ public class DragAndDrop : MonoBehaviour
     private void OnMouseUp()
     {
         _isBeingDragged = false;
+        _sprite.sortingOrder = 6;
+        _hud.SetActive(true);
 
-        if (_target != null)
+        if (_target == null)
         {
-            if (_target.layer == 6)
-            {
-                Destroy(gameObject);
-                return;
-            }
+            BackSlot();
+            return;
+        }
 
-            else if (_target.layer == 7)
-            {
+        switch (_target.layer)
+        {
+            case 6:
+                Destroy(gameObject);
+                break;
+            case 7:
                 Cat targetCat = _target.GetComponentInParent<Cat>();
                 Debug.Log(targetCat.name);
+
                 if (targetCat.Level == _entity.Level)
                 {
                     targetCat.LevelUp();
                     Destroy(gameObject);
-                    return;
                 }
+                break;
+            case 9:
+                if (_target.transform.childCount != 0) break;
 
-            }
-
-            else if (_target.layer == 9 && _target.transform.childCount == 0)
-            {
+                _initialSlot = _target.transform;
                 transform.SetParent(_target.transform);
                 transform.position = _target.transform.position;
-                return;
-            }
+                break;
         }
 
         BackSlot();
@@ -75,7 +83,7 @@ public class DragAndDrop : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         _target = collision.gameObject;
-        Debug.Log(_target.name);
+        //Debug.Log(_target.name);
     }
 
     private void OnTriggerExit2D(Collider2D collision)

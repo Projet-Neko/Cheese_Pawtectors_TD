@@ -1,7 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public class Cat : Entity
 {
+    [SerializeField] CatBrain _brain;
+    [SerializeField] TMP_Text _catLevel;
+
     public Color CatColor => _catColor;
     public bool IsSleeping => _currentSatiety == _baseSatiety;
     public float DPS => 3.6f - (_level * 0.1f);
@@ -9,6 +13,7 @@ public class Cat : Entity
     private Color _catColor;
     private float _baseSatiety;
     private float _currentSatiety;
+    private bool _isInStorageMode;
 
     private CatSO _data;
 
@@ -17,6 +22,7 @@ public class Cat : Entity
         _speed = 1;
         Init(_level);
         SetMaxSatiety();
+        _isInStorageMode = false;
     }
 
     public void Init(int level)
@@ -28,19 +34,27 @@ public class Cat : Entity
         _baseSatiety = 50 + (_level * 2) - 2;
         _currentSatiety = 0;
 
-        //_renderer.sprite = _data.SpriteAbove;
+        gameObject.name = _data.Name;
+
+        _renderer.sprite = _data.SpriteAbove;
         // TODO -> check sprite to use
 
-        // Waiting for sprites
-        _renderer.color = CatColor;
-        Debug.Log(CatColor);
+        // Waiting for sprite
+        if (_data.SpriteAbove == null) _renderer.color = CatColor;
+    }
 
-        gameObject.name = _data.Name;
+    public void SetStorageMode(bool mode)
+    {
+        _isInStorageMode = mode;
+        if (!_isInStorageMode) return;
+        _brain.ChangeState(new SStorage());
+        _slider.gameObject.SetActive(false);
     }
 
     public void LevelUp()
     {
         _level++;
+        _catLevel.text = _level.ToString();
         Init(_level);
         Debug.Log($"Level up to lvl {_level}");
     }

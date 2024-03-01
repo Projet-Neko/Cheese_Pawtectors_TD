@@ -1,8 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections.Generic;
-
-using UnityEngine.UI;
 
 public class Mouse : Entity
 {
@@ -12,9 +9,10 @@ public class Mouse : Entity
 
     private int _nextPoint;
     private float _distance;
-    private Vector3 _destination;
+    private Vector2 _destination;
     private Rigidbody2D _rb;
     private bool _stop;
+    private Cheese _cheese;
 
     private void Start()
     {
@@ -27,8 +25,7 @@ public class Mouse : Entity
 
         _baseHealth = _currentHealth = _data.Health + (_level * 1) - 1;
         _damage = _data.SatiationRate;
-        _speed = _data.Speed * 3;
-        //_speed = 10;
+        _speed = _data.Speed;
 
         _rb = GetComponent<Rigidbody2D>();
         _nextPoint = 0;
@@ -36,14 +33,19 @@ public class Mouse : Entity
         
         _currentHealth = 5;
         //_renderer.sprite = _data.Sprite;
+        _cheese = GameManager.Instance.Cheese;
         SetMaxHealth();
 
 
         gameObject.name = _data.Name;
 
-        _destination = (_checkPoint[_nextPoint] - transform.position).normalized;
-        _rb.velocity = _destination * _speed;
+        _destination = (_checkPoint[_nextPoint] - transform.position);
+        _destination.Normalize();
+        _rb.velocity = _destination.normalized * _speed;
+        
+
         _stop = false;
+
     }
 
     private int IsAlbino()
@@ -59,30 +61,34 @@ public class Mouse : Entity
     private void FixedUpdate()
     {
         if (!_stop) Move();
-        else { } //Attack 
+       
     }
     private void Move()
     {
-        _speed = _data.Speed * 3; //---J'ai augment� la vitesse // A ENLEVER
-
         _distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
 
         _rb.velocity = _destination * _speed ;
+        
+
+
 
         if (_distance < 0.05f)
         {
             _nextPoint++;
 
-            if (_nextPoint == _checkPoint.Count)
+            if (_nextPoint == _checkPoint.Count) //arrivé au fromage 
             {
                 _rb.velocity = new Vector2(0, 0);
                 _stop = true;
-                //Attack Fromage;
+                
+                Attack();
             }
             else
             {
-                _destination = (_checkPoint[_nextPoint] - transform.position).normalized;
-                _rb.velocity = _destination * _speed;
+                _destination = (_checkPoint[_nextPoint] - transform.position);
+                _destination.Normalize();
+                _rb.velocity = _destination.normalized * _speed;
+
             }
         }
 
@@ -93,6 +99,9 @@ public class Mouse : Entity
         _stop = true;
     }
 
-
+    private void Attack()
+    {
+        _cheese?.TakeDamage(this);
+    }
 
 }

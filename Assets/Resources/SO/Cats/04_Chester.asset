@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 04_Chester
   m_EditorClassIdentifier: 
-  Name: 
+  BasePrice: 400
   Fur: 0
   Color: 3
+  SpriteAbove: {fileID: 0}
+  SpriteFront: {fileID: 0}
+  Description: 

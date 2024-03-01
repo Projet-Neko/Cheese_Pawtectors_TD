@@ -10,21 +10,17 @@ public class CatBrain : MonoBehaviour
     //public NavMeshAgent Agent => _agent;
     public Collider2D Collider => _collider;
     public Cat Cat => _cat;
-    public float AttackRange => transform.localScale.x / 1.5f;
-    public float FollowRange => transform.localScale.x * 4;
+    public float AttackRange => (transform.localScale.x / .6f) * 8;
+    public float FollowRange => (transform.localScale.x * 4) * 8;
 
     private State _currentState;
 
     // All states
+    public State Storage = new SStorage();
     public State Idle = new SIdle();
     public State Follow = new SFollow();
     public State Attack = new SAttack();
     public State Sleep = new SSleep();
-
-    private void Awake()
-    {
-        ChangeState(Idle);
-    }
 
     private void Update()
     {

@@ -70,8 +70,8 @@ public class M_Economy : MonoBehaviour
             if (_catPrices[i] < cheapestPrice)
             {
                 // Update the price of the cheapest cat and its index
-                cheapestPrice = _catPrices[i];
                 cheapestIndex = i;
+                cheapestPrice = _catPrices[cheapestIndex];
             }
         }
 

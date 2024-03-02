@@ -31,7 +31,7 @@ public class DragAndDrop : MonoBehaviour
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = transform.position.z;
-            transform.position = mousePosition;
+            transform.position = new Vector3 (mousePosition.x, mousePosition.y, transform.position.z);
         }
     }
 
@@ -49,10 +49,10 @@ public class DragAndDrop : MonoBehaviour
 
         switch (_target.layer)
         {
-            case 6:
+            case 6: // Discard
                 Destroy(gameObject);
                 break;
-            case 7:
+            case 7: //merge chat
                 Cat targetCat = _target.GetComponentInParent<Cat>();
                 Debug.Log(targetCat.name);
 
@@ -62,12 +62,12 @@ public class DragAndDrop : MonoBehaviour
                     Destroy(gameObject);
                 }
                 break;
-            case 9:
+            case 9: //Déplacement des chats dans d'autre slots
                 if (_target.transform.childCount != 0) break;
 
                 _initialSlot = _target.transform;
                 transform.SetParent(_target.transform);
-                transform.position = _target.transform.position;
+                transform.position = new Vector3(_target.transform.position.x, _target.transform.position.y, transform.position.z);
                 break;
         }
 
@@ -77,7 +77,7 @@ public class DragAndDrop : MonoBehaviour
     private void BackSlot()
     {
         transform.SetParent(_initialSlot);
-        transform.position = _initialSlot.position;
+        transform.position = new Vector3(_initialSlot.transform.position.x, _initialSlot.transform.position.y, transform.position.z);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

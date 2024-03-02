@@ -20,7 +20,7 @@ public class M_Economy : MonoBehaviour
         for (int i = 0 ; i < GameManager.Instance.Cats.Length; i++)
         {
             _amountOfPurchases.Add(1); // TODO -> use database
-            _catPrices.Add(GameManager.Instance.Cats[i].BasePrice); // TODO -> set base price with database
+            _catPrices.Add(GameManager.Instance.Cats[i].Level * 100); // TODO -> set base price with database
         }
     }
 

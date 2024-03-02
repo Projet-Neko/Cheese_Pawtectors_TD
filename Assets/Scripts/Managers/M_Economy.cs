@@ -11,6 +11,21 @@ public class M_Economy : MonoBehaviour
     private List<int> _amountOfPurchases; 
     private List<int> _catPrices;
 
+    private void Awake()
+    {
+        Entity.OnDeath += Entity_OnDeath;
+    }
+
+    private void OnDestroy()
+    {
+        Entity.OnDeath -= Entity_OnDeath;
+    }
+
+    private void Entity_OnDeath(Entity obj)
+    {
+        if (obj is Mouse) AddMeat(obj.Level);
+    }
+
     public void Init()
     {
         _meat = 10000; // TODO -> get from database

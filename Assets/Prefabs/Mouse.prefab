@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09c374a37627f9e428851ce2f203c3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collider: {fileID: 0}
+  _renderer: {fileID: 4363232312380465801}
   _entity: {fileID: 7288019319597273094}
 --- !u!70 &4609475984340217094
 CapsuleCollider2D:

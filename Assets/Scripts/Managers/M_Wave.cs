@@ -107,10 +107,4 @@ public class M_Wave : MonoBehaviour
         _spawn = SpawnEnemies(true);
         StartCoroutine(_spawn);
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, 1);
-    }
 }

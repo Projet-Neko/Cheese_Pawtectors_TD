@@ -13,12 +13,12 @@ public class Cat : Entity
 
     private CatSO _data;
 
-    private void Start()
+    protected override void Start()
     {
         _speed = 5;
         Init(_level);
-        SetMaxSatiety();
         _isInStorageMode = false;
+        base.Start();
     }
 
     public void Init(int level)
@@ -62,7 +62,7 @@ public class Cat : Entity
         Mathf.Clamp(_currentHealth, 0f, _baseHealth);
         Debug.Log($"Cat current satiety : {_currentHealth}/{_baseHealth}");
 
-        SetSatiety();
+        SetHealth();
 
         if (_currentHealth == _baseHealth) Sleep();
     }
@@ -70,17 +70,6 @@ public class Cat : Entity
     private void Sleep()
     {
         //
-    }
-
-    public void SetMaxSatiety()
-    {
-        _slider.maxValue = _baseHealth;
-        _slider.value = _currentHealth;
-    }
-
-    public void SetSatiety()
-    {
-        _slider.value = _currentHealth;
     }
 
     public override bool IsAlive()

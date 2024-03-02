@@ -17,7 +17,7 @@ public class MouseBrain : Brain
 
     private void Start()
     {
-        _attackRange = (transform.localScale.x / 1.5f) * 8;
+        _attackRange = _renderer.sprite.bounds.size.x/5;
         _followRange = 0;
         ChangeState(Walk);
     }
@@ -27,5 +27,10 @@ public class MouseBrain : Brain
         base.Update();
 
         if (_currentState is not SSleep && Entity.IsAttacked) ChangeState(Sleep);
+    }
+
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
     }
 }

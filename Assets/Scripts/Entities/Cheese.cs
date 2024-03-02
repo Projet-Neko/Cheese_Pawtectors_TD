@@ -14,19 +14,10 @@ public class Cheese : Entity
         _currentHealth = _baseHealth;
     }
 
-    private void Start()
+    protected override void Start()
     {
-        _baseHealth = _currentHealth = 3;
+        _baseHealth = _currentHealth = 30;
         OnInit?.Invoke(this);
-    }
-
-    public override void TakeDamage(Entity source) 
-    {
-        if (_currentHealth <= 0) return;
-        _currentHealth--;
-
-        //SetHealth();
-
-        if (_currentHealth <= 0) OnDeathEvent(this);
+        base.Start();
     }
 }

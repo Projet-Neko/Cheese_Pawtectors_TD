@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class Brain : MonoBehaviour
 {
-    [SerializeField] private Collider2D _collider;
+    [SerializeField] protected SpriteRenderer _renderer;
     [SerializeField] private Entity _entity;
 
     public GameObject Target { get; set; }
-    public Collider2D Collider => _collider;
     public Entity Entity => _entity;
 
     public float AttackRange => _attackRange;
@@ -37,12 +36,12 @@ public class Brain : MonoBehaviour
         Debug.Log($"New state : {_currentState}.");
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, AttackRange);
+        Gizmos.DrawWireSphere(transform.position, _attackRange);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, FollowRange);
+        Gizmos.DrawWireSphere(transform.position, _followRange);
     }
 }

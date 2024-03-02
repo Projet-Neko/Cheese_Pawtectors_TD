@@ -24,10 +24,15 @@ public abstract class Entity : MonoBehaviour
 
     public Slider _slider;
 
-    // TODO -> add ui
+    protected virtual void Start()
+    {
+        SetMaxHealth();
+        SetHealth();
+    }
 
     public virtual void TakeDamage(Entity source)
     {
+        if (_currentHealth <= 0) return;
         _isAttacked = true;
         _currentHealth -= source.Damage;
 
@@ -36,10 +41,10 @@ public abstract class Entity : MonoBehaviour
 
         SetHealth();
 
-        if (_currentHealth <= 0) Death(source);
+        if (_currentHealth <= 0) Die(source);
     }
 
-    protected virtual void Death(Entity source)
+    public virtual void Die(Entity source)
     {
         /* 
         Handle death logic
@@ -47,16 +52,10 @@ public abstract class Entity : MonoBehaviour
         - this : dying entity (mouse)
         */
 
-        // Verify if "this" is a mouse
-        if (this is not Mouse) return;
-        if (source is Cat)
-        {
-            // Call the AddMeat function for the cat
-            GameManager.Instance.AddMeat(1);
-        }
-        // When a mouse die add satiety to cat
-        source.TakeDamage(this);
-        OnDeath?.Invoke(this);
+        if (source != null) OnDeath?.Invoke(this);
+
+        if (this is not Mouse) return; // Verify if "this" is a mouse
+        if (source is Cat) source.TakeDamage(this); // When a mouse die add satiety to cat
         Destroy(gameObject);
     }
 
@@ -77,5 +76,4 @@ public abstract class Entity : MonoBehaviour
     {
         return _currentHealth > 0;
     }
-
 }

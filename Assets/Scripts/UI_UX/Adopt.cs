@@ -34,7 +34,7 @@ public class Adopt : MonoBehaviour
         {
             GameObject go = Instantiate(_catPrefab, freeSlot);
             Cat cat = go.GetComponent<Cat>();
-            cat.Init(catIndex);
+            cat.Init(catIndex + 1);
             go.transform.localScale = new Vector3(10, 10, 10);
             go.GetComponent<Cat>().SetStorageMode(true); // Permet de cacher le HUD
             SetCheapestCatIndex();

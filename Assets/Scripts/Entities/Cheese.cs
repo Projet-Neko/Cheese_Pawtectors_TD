@@ -14,10 +14,10 @@ public class Cheese : Entity
         _currentHealth = _baseHealth;
     }
 
-    protected override void Start()
+    public override void Init()
     {
         _baseHealth = _currentHealth = 30;
         OnInit?.Invoke(this);
-        base.Start();
+        base.Init();
     }
 }

@@ -15,7 +15,7 @@ public class Mouse : Entity
     private bool _stop;
     private Cheese _cheese;
 
-    private void Start()
+    public override void Init()
     {
         _data = GameManager.Instance.Mouses[IsAlbino()];
 
@@ -34,16 +34,14 @@ public class Mouse : Entity
         _currentHealth = 5;
         //_renderer.sprite = _data.Sprite;
         _cheese = GameManager.Instance.Cheese;
-        SetMaxHealth();
-
 
         gameObject.name = _data.Name;
 
         /*_destination = (_checkPoint[_nextPoint] - transform.position);
         _destination.Normalize();
         _rb.velocity = _destination.normalized * _speed;*/
-        _stop = false;/**/
-
+        _stop = false;
+        base.Init();
     }
 
     private int IsAlbino()

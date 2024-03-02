@@ -13,30 +13,35 @@ public class Cat : Entity
 
     private CatSO _data;
 
-    protected override void Start()
+    private void Awake()
     {
-        _speed = 5;
-        Init(_level);
         _isInStorageMode = false;
-        base.Start();
+    }
+
+    public override void Init()
+    {
+        Init(_level);
+        base.Init();
     }
 
     public void Init(int level)
     {
         _level = level;
         _damage = level; // TODO -> change formula
-        _data = GameManager.Instance.Cats[_level - 1];
-        _catColor = ColorPalette.GetColor(_data.Color);
+
         _baseHealth = 50 + (_level * 2) - 2;
         _currentHealth = 0;
+        _speed = 5;
+
+        // Update data with SO
+        _data = GameManager.Instance.Cats[_level - 1];
+
+        // Appearance
+        _catColor = ColorPalette.GetColor(_data.Color);
+        _renderer.sprite = _data.SpriteAbove; // TODO -> check sprite to use
+        if (_data.SpriteAbove == null) _renderer.color = CatColor;
 
         gameObject.name = _data.Name;
-
-        _renderer.sprite = _data.SpriteAbove;
-        // TODO -> check sprite to use
-
-        // Waiting for sprite
-        if (_data.SpriteAbove == null) _renderer.color = CatColor;
     }
 
     public void SetStorageMode(bool mode)

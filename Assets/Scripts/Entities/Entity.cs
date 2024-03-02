@@ -7,6 +7,7 @@ public abstract class Entity : MonoBehaviour
     public static event Action<Entity> OnDeath;
     [SerializeField] protected SpriteRenderer _renderer;
     [SerializeField] protected int _level = 1;
+    [SerializeField] protected Slider _slider;
 
     public float Damage => _damage;
     public float DPS => 3.6f - (_level * 0.1f);
@@ -22,9 +23,12 @@ public abstract class Entity : MonoBehaviour
     protected float _damage;
     protected bool _isAttacked;
 
-    public Slider _slider;
+    private void Start()
+    {
+        Init();
+    }
 
-    protected virtual void Start()
+    public virtual void Init()
     {
         SetMaxHealth();
         SetHealth();

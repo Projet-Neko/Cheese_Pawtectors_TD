@@ -1,4 +1,3 @@
-using PlayFab.EconomyModels;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,10 +35,9 @@ public class M_Economy : MonoBehaviour
         for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
         {
             _amountOfPurchases.Add(1); // TODO -> use database
+
             int n = GameManager.Instance.Cats[i].Level;
-            _catPrices.Add(100 * (int)Mathf.Pow(1.244415f, n - 1));
-      
-            Debug.Log(_catPrices[i]);
+            _catPrices.Add(100 * (n - 1) + (100 * (int)Mathf.Pow(1.244415f, n - 1)));
         }
     }
 

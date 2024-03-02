@@ -33,7 +33,7 @@ public class Brain : MonoBehaviour
         _currentState?.OnExit();
         _currentState = newState;
         _currentState.OnEnter(this);
-        Debug.Log($"New state : {_currentState}.");
+        //Debug.Log($"New state : {_currentState}.");
     }
 
     protected virtual void OnDrawGizmos()

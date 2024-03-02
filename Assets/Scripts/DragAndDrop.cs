@@ -1,28 +1,23 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private GameObject _hud;
-    [SerializeField] private Rigidbody2D _rbCat;
     [SerializeField] private Entity _entity;
 
     [SerializeField] private bool _isBeingDragged = false;
     [SerializeField] private GameObject _target;
-    [SerializeField] private Transform _initialSlot;
+    [SerializeField] private Transform _currentSlot;
 
+    [SerializeField, Layer] private int _catLayer;
+    [SerializeField, Layer] private int _discardLayer;
+    [SerializeField, Layer] private int _slotLayer;
 
     private void Start()
     {
-        _initialSlot = transform.parent;
-    }
-
-    private void OnMouseDown()
-    {
-        Debug.Log("on mouse down");
-        _isBeingDragged = true;
-        _sprite.sortingOrder = 99;
-        _hud.SetActive(false);
+        _currentSlot = transform.parent;
     }
 
     private void OnMouseDrag()
@@ -31,63 +26,81 @@ public class DragAndDrop : MonoBehaviour
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = transform.position.z;
-            transform.position = new Vector3 (mousePosition.x, mousePosition.y, transform.position.z);
+            transform.position = new Vector3(mousePosition.x, mousePosition.y, transform.position.z);
         }
+    }
+
+    private void OnMouseDown()
+    {
+        Grab(true);
     }
 
     private void OnMouseUp()
     {
-        _isBeingDragged = false;
-        _sprite.sortingOrder = 6;
-        _hud.SetActive(true);
+        Grab(false);
 
-        if (_target == null)
+        if (_target == null) BackSlot();
+        else if (_target.layer == _catLayer) Merge();
+        else if (_target.layer == _discardLayer) Destroy(gameObject);
+        else if (_target.layer == _slotLayer) ChangeSlot();
+        else BackSlot();
+    }
+
+    private void Grab(bool isGrabbed)
+    {
+        _isBeingDragged = isGrabbed;
+        _hud.SetActive(!isGrabbed);
+        _sprite.sortingOrder = isGrabbed ? 99 : 6;
+    }
+
+    private void Merge()
+    {
+        Cat target;
+
+        if (_target.layer == _slotLayer)
         {
-            BackSlot();
-            return;
+            target = _target.GetComponentInChildren<Cat>();
         }
+        else target = _target.GetComponentInParent<Cat>();
 
-        switch (_target.layer)
+        if (target.Level == _entity.Level)
         {
-            case 6: // Discard
-                Destroy(gameObject);
-                break;
-            case 7: //merge chat
-                Cat targetCat = _target.GetComponentInParent<Cat>();
-                Debug.Log(targetCat.name);
-
-                if (targetCat.Level == _entity.Level)
-                {
-                    targetCat.LevelUp();
-                    Destroy(gameObject);
-                }
-                break;
-            case 9: //Déplacement des chats dans d'autre slots
-                if (_target.transform.childCount != 0) break;
-
-                _initialSlot = _target.transform;
-                transform.SetParent(_target.transform);
-                transform.position = new Vector3(_target.transform.position.x, _target.transform.position.y, transform.position.z);
-                break;
+            target.LevelUp();
+            Destroy(gameObject);
+            return;
         }
 
         BackSlot();
     }
 
+    private void ChangeSlot()
+    {
+        if (_target.transform.childCount != 0)
+        {
+            Merge();
+            return;
+        }
+
+        _currentSlot = _target.transform;
+        transform.SetParent(_target.transform);
+        transform.position = new Vector3(_target.transform.position.x, _target.transform.position.y, transform.position.z);
+    }
+
     private void BackSlot()
     {
-        transform.SetParent(_initialSlot);
-        transform.position = new Vector3(_initialSlot.transform.position.x, _initialSlot.transform.position.y, transform.position.z);
+        transform.SetParent(_currentSlot);
+        transform.position = new Vector3(_currentSlot.transform.position.x, _currentSlot.transform.position.y, transform.position.z);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         _target = collision.gameObject;
-        //Debug.Log(_target.name);
+        //Debug.Log($"Targeting {_target.name}");
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject == _target) _target = null;
+        //Debug.Log("No target");
     }
 }

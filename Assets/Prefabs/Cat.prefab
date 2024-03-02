@@ -648,11 +648,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 654895726392624424}
   _hud: {fileID: 2299790915040429675}
-  _rbCat: {fileID: 836421918783137823}
   _entity: {fileID: 1033424655005935924}
   _isBeingDragged: 0
   _target: {fileID: 0}
-  _initialSlot: {fileID: 0}
+  _currentSlot: {fileID: 0}
+  _catLayer: 7
+  _discardLayer: 6
+  _slotLayer: 9
 --- !u!114 &8914369612130805977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -748,7 +750,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.6139507, y: -0.08008003}
+  m_Offset: {x: -0.24023724, y: -0.26693344}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -759,7 +761,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 19.868542, y: 19.441448}
+  m_Size: {x: 16.131462, y: 17.893227}
   m_EdgeRadius: 0
 --- !u!1 &8194673931465544253
 GameObject:

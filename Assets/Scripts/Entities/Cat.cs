@@ -3,15 +3,17 @@ using UnityEngine;
 
 public class Cat : Entity
 {
-    [SerializeField] CatBrain _brain;
     [SerializeField] TMP_Text _catLevel;
 
-    public Color CatColor => _catColor;
+    [Header("Debug Only")]
+    [SerializeField] Sprite _sprite;
 
-    private Color _catColor;
-    private bool _isInStorageMode;
+    public Color CatColor => _catColor;
+    public bool IsInStorageMode => _isInStorageMode;
 
     private CatSO _data;
+    private Color _catColor;
+    private bool _isInStorageMode;
 
     private void Awake()
     {
@@ -28,6 +30,7 @@ public class Cat : Entity
     {
         _level = level;
         _damage = level; // TODO -> change formula
+        _catLevel.text = _level.ToString();
 
         _baseHealth = 50 + (_level * 2) - 2;
         _currentHealth = 0;
@@ -48,16 +51,14 @@ public class Cat : Entity
     {
         _isInStorageMode = mode;
         if (!_isInStorageMode) return;
-        _brain.ChangeState(new SStorage());
         _slider.gameObject.SetActive(false);
     }
 
     public void LevelUp()
     {
         _level++;
-        _catLevel.text = _level.ToString();
         Init(_level);
-        Debug.Log($"Level up to lvl {_level}");
+        //Debug.Log($"Level up to lvl {_level}");
     }
 
     public override void TakeDamage(Entity source)
@@ -74,11 +75,8 @@ public class Cat : Entity
 
     private void Sleep()
     {
-        //
+        // TODO -> add animation
     }
 
-    public override bool IsAlive()
-    {
-        return _currentHealth < _baseHealth;
-    }
+    public override bool IsAlive() => _currentHealth < _baseHealth;
 }

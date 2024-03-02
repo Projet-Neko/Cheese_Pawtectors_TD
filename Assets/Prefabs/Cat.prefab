@@ -632,8 +632,9 @@ MonoBehaviour:
   _renderer: {fileID: 654895726392624424}
   _level: 1
   _slider: {fileID: 4350467533428996827}
-  _brain: {fileID: 8914369612130805977}
   _catLevel: {fileID: 1465789133988890057}
+  _brain: {fileID: 8914369612130805977}
+  _sprite: {fileID: 21300000, guid: 7e7dcff4ed855f64a9d79b5fe60d0b75, type: 3}
 --- !u!114 &4401195426459466549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,9 +650,6 @@ MonoBehaviour:
   _sprite: {fileID: 654895726392624424}
   _hud: {fileID: 2299790915040429675}
   _entity: {fileID: 1033424655005935924}
-  _isBeingDragged: 0
-  _target: {fileID: 0}
-  _currentSlot: {fileID: 0}
   _catLayer: 7
   _discardLayer: 6
   _slotLayer: 9

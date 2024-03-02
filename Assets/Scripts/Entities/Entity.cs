@@ -5,8 +5,12 @@ using UnityEngine.UI;
 public abstract class Entity : MonoBehaviour
 {
     public static event Action<Entity> OnDeath;
+
+    [Header("Data")]
     [SerializeField] protected SpriteRenderer _renderer;
     [SerializeField] protected int _level = 1;
+
+    [Header("HUD")]
     [SerializeField] protected Slider _slider;
 
     public float Damage => _damage;
@@ -48,17 +52,11 @@ public abstract class Entity : MonoBehaviour
         if (_currentHealth <= 0) Die(source);
     }
 
+    // Source => entity that killed
     public virtual void Die(Entity source)
     {
-        /* 
-        Handle death logic
-        - source : entity that killed (cat)
-        - this : dying entity (mouse)
-        */
-
         if (source != null) OnDeath?.Invoke(this);
-
-        if (this is not Mouse) return; // Verify if "this" is a mouse
+        if (this is not Mouse) return;
         if (source is Cat) source.TakeDamage(this); // When a mouse die add satiety to cat
         Destroy(gameObject);
     }
@@ -75,9 +73,5 @@ public abstract class Entity : MonoBehaviour
     }
 
     protected virtual void OnDeathEvent(Entity source) => OnDeath?.Invoke(source);
-
-    public virtual bool IsAlive()
-    {
-        return _currentHealth > 0;
-    }
+    public virtual bool IsAlive() => _currentHealth > 0;
 }

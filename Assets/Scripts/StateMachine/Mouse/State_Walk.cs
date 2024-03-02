@@ -1,4 +1,4 @@
-public class SWalk : State
+public class State_Walk : State
 {
     private bool _hasAttacked = false;
 

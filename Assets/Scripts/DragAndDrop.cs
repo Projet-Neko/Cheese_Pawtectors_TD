@@ -1,15 +1,14 @@
 using NaughtyAttributes;
-using System.ComponentModel;
 using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
 {
-    [Category("Dependencies")]
+    [Header("Dependencies")]
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private GameObject _hud;
     [SerializeField] private Entity _entity;
 
-    [Category("Layers")]
+    [Header("Layers")]
     [SerializeField, Layer] private int _catLayer;
     [SerializeField, Layer] private int _discardLayer;
     [SerializeField, Layer] private int _slotLayer;

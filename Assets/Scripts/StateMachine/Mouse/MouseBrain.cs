@@ -26,7 +26,7 @@ public class MouseBrain : Brain
     {
         base.Update();
 
-        if (_currentState is not SSleep && Entity.IsAttacked) ChangeState(Sleep);
+        if (_currentState is not State_Sleep && Entity.IsAttacked) ChangeState(Sleep);
     }
 
     protected override void OnDrawGizmos()

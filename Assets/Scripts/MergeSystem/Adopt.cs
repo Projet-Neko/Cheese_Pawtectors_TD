@@ -4,13 +4,18 @@ using UnityEngine.UI;
 
 public class Adopt : MonoBehaviour
 {
-    [SerializeField] TMP_Text _catPrice;
-    [SerializeField] private GameObject _catPrefab;
+    [Header("Dependencies")]
     [SerializeField] private GridLayoutGroup _slots;
+    [SerializeField] private GameObject _catPrefab;
+
+    [Header("HUD")]
+    [SerializeField] TMP_Text _catPrice;
+
+    private int _cheapestCatIndex;
 
     private void Awake()
     {
-        SetCheapestCatIndex();
+        UpdateCheapestCat();
     }
 
     // Instantiate the cat bought in empty slots when a button "Adopt" is clicked.
@@ -18,7 +23,6 @@ public class Adopt : MonoBehaviour
     {
         Transform freeSlot = null;
 
-        // Parcoure tous les enfants (slots) de l'objet Slots
         foreach (Transform slot in _slots.transform)
         {
             if (slot.childCount == 0)
@@ -29,21 +33,23 @@ public class Adopt : MonoBehaviour
         }
 
         if (freeSlot == null) return;
-        int catIndex = SetCheapestCatIndex();
-        if (GameManager.Instance.CanAdopt(catIndex))
+
+        if (GameManager.Instance.CanAdopt(_cheapestCatIndex))
         {
             GameObject go = Instantiate(_catPrefab, freeSlot);
-            Cat cat = go.GetComponent<Cat>();
-            cat.Init(catIndex + 1);
             go.transform.localScale = new Vector3(10, 10, 10);
-            go.GetComponent<Cat>().SetStorageMode(true); // Permet de cacher le HUD
-            SetCheapestCatIndex();
+
+            Cat cat = go.GetComponent<Cat>();
+            cat.Init(_cheapestCatIndex + 1);
+            cat.SetStorageMode(true); // Permet de cacher le HUD
+
+            UpdateCheapestCat();
         }
     }
-    public int SetCheapestCatIndex()
+
+    private void UpdateCheapestCat()
     {
-        int i = GameManager.Instance.GetCheapestCatIndex();
-        _catPrice.text = GameManager.Instance.CatPrices[i].ToString();
-        return i;
+        _cheapestCatIndex = GameManager.Instance.GetCheapestCatIndex();
+        _catPrice.text = GameManager.Instance.CatPrices[_cheapestCatIndex].ToString();
     }
 }

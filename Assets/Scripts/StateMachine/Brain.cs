@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Brain : MonoBehaviour
 {
+    [Header("Dependencies")]
     [SerializeField] protected SpriteRenderer _renderer;
     [SerializeField] private Entity _entity;
 
@@ -16,12 +17,11 @@ public class Brain : MonoBehaviour
     protected State _currentState;
 
     // All states
-    public State Storage = new SStorage();
-    public State Idle = new SIdle();
-    public State Follow = new SFollow();
-    public State Attack = new SAttack();
-    public State Sleep = new SSleep();
-    public State Walk = new SWalk();
+    public State Idle = new State_Idle();
+    public State Follow = new State_Follow();
+    public State Attack = new State_Attack();
+    public State Sleep = new State_Sleep();
+    public State Walk = new State_Walk();
 
     protected virtual void Update()
     {

@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     public int GetCheapestCatIndex() => _economy.GetCheapestCatIndex();
 
-    public bool CanAdopt(int level) => _economy.CanAdopt(level);
+    public bool CanAdopt(int catLevel) => _economy.CanAdopt(catLevel);
     public void AddMeat(int amount) => _economy.AddMeat(amount);
     public void RemoveMeat(int amount) => _economy.RemoveMeat(amount);
     #endregion

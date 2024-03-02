@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 08_Cocoa
   m_EditorClassIdentifier: 
-  Name: 
   Fur: 0
   Color: 7
+  SpriteAbove: {fileID: 0}
+  SpriteFront: {fileID: 0}
+  Description: 

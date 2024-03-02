@@ -11,28 +11,46 @@ public class M_Economy : MonoBehaviour
     private List<int> _amountOfPurchases; 
     private List<int> _catPrices;
 
+    private void Awake()
+    {
+        Entity.OnDeath += Entity_OnDeath;
+    }
+
+    private void OnDestroy()
+    {
+        Entity.OnDeath -= Entity_OnDeath;
+    }
+
+    private void Entity_OnDeath(Entity obj)
+    {
+        if (obj is Mouse) AddMeat(obj.Level);
+    }
+
     public void Init()
     {
         _meat = 10000; // TODO -> get from database
         _amountOfPurchases = new();
         _catPrices = new();
 
-        for (int i = 0 ; i < GameManager.Instance.Cats.Length; i++)
+        for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
         {
             _amountOfPurchases.Add(1); // TODO -> use database
-            _catPrices.Add(GameManager.Instance.Cats[i].Level * 100); // TODO -> set base price with database
+
+            int n = GameManager.Instance.Cats[i].Level;
+            _catPrices.Add(100 * (n - 1) + (100 * (int)Mathf.Pow(1.244415f, n - 1)));
         }
     }
 
     public bool CanAdopt(int catLevel) 
     {
-        if (_meat < _catPrices[catLevel - 1])
+
+        if (_meat < _catPrices[catLevel])
         {
             Debug.Log($" You can't adopt this cat not enough money!");
             return false;
         }
 
-        RemoveMeat(_catPrices[catLevel - 1]);
+        RemoveMeat(_catPrices[catLevel]);
         IncreasePrice(catLevel);
 
         return true;
@@ -52,9 +70,9 @@ public class M_Economy : MonoBehaviour
 
     private void IncreasePrice(int catLevel) 
     {
-        _amountOfPurchases[catLevel - 1]++;
+        _amountOfPurchases[catLevel]++;
         // Calculation and update of new cat price (5% increase over current price)
-        _catPrices[catLevel - 1] = _catPrices[catLevel - 1] + (_catPrices[catLevel - 1] / 100 * 5);
+        _catPrices[catLevel] = _catPrices[catLevel] + (_catPrices[catLevel] / 100 * 5);
     }
 
     public int GetCheapestCatIndex()

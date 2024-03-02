@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09c374a37627f9e428851ce2f203c3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collider: {fileID: 0}
+  _renderer: {fileID: 4363232312380465801}
   _entity: {fileID: 7288019319597273094}
 --- !u!70 &4609475984340217094
 CapsuleCollider2D:
@@ -513,7 +513,7 @@ GameObject:
   - component: {fileID: 1243990901280299213}
   - component: {fileID: 4220529012633217393}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,19 +1,14 @@
-using System;
-
-public class SAttack : State
+public class State_Attack : State
 {
-    private Timer t;
-    private Mouse m;
+    private Timer _timer;
+    private Mouse _mouse;
 
     public override void OnEnter(Brain brain)
     {
         base.OnEnter(brain);
 
-        // Cat attack cooldown timer
-        t = new(_brain.Entity.DPS);
-
-        // Mouse script from target
-        m = _brain.Target.GetComponentInParent<Mouse>();
+        _timer = new(_brain.Entity.DPS); // Cat attack cooldown timer
+        _mouse = _brain.Target.GetComponentInParent<Mouse>();
         Entity.OnDeath += ResetTarget;
     }
 
@@ -27,10 +22,10 @@ public class SAttack : State
             return;
         }
 
-        if (!t.IsRunning() || t.HasEnded())
+        if (!_timer.IsRunning() || _timer.HasEnded())
         {
             Attack();
-            t.Start();
+            _timer.Start();
             return;
         }
     }
@@ -43,12 +38,12 @@ public class SAttack : State
 
     private void Attack()
     {
-        m.TakeDamage(_brain.Entity);
+        _mouse.TakeDamage(_brain.Entity);
     }
 
     private void ResetTarget(Entity source)
     {
-        if (source == m) _brain.Target = null;
+        if (source == _mouse) _brain.Target = null;
 
         if (!_brain.Entity.IsAlive())
         {

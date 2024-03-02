@@ -9,15 +9,8 @@ public abstract class State
         _brain = brain;
     }
 
-    public virtual void OnUpdate()
-    {
-        //
-    }
-
-    public virtual void OnExit()
-    {
-        //
-    }
+    public virtual void OnUpdate() { }
+    public virtual void OnExit() { }
 
     protected bool IsInFollowRange()
     {

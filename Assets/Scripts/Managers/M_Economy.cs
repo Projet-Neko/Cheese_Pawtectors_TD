@@ -74,8 +74,6 @@ public class M_Economy : MonoBehaviour
                 cheapestPrice = _catPrices[cheapestIndex];
             }
         }
-
         return cheapestIndex;
     }
-
 }

@@ -30,7 +30,7 @@ public class Adopt : MonoBehaviour
 
         if (freeSlot == null) return;
 
-        if (GameManager.Instance.Adopt(1))
+        if (GameManager.Instance.CanAdopt(1))
         {
             GameObject go = Instantiate(_catPrefab, freeSlot);
             go.transform.localScale = new Vector3(10, 10, 10);

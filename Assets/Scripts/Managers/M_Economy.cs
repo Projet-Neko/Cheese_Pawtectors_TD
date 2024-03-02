@@ -7,7 +7,8 @@ public class M_Economy : MonoBehaviour
     public List<int> CatPrices => _catPrices;
 
     private int _meat;
-    private List<int> _amountOfPurchases; // Store the number of purchases for each cat
+    // Store the number of purchases for each cat index: catLevel, value: nbOfPurchasesOfCatsOfThisLevel
+    private List<int> _amountOfPurchases; 
     private List<int> _catPrices;
 
     public void Init()
@@ -23,7 +24,7 @@ public class M_Economy : MonoBehaviour
         }
     }
 
-    public bool Adopt(int level)
+    public bool CanAdopt(int level)
     {
         if (_meat < _catPrices[level - 1])
         {
@@ -51,9 +52,30 @@ public class M_Economy : MonoBehaviour
 
     private void IncreasePrice(int level)
     {
-        // _amountOfPurchases = index:levelduchat value: nbrd'achatduduchatdeceniveau
         _amountOfPurchases[level - 1]++;
         // Calculation and update of new cat price (5% increase over current price)
         _catPrices[level - 1] = _catPrices[level - 1] + (_catPrices[level - 1] / 100 * 5);
     }
+
+    public int GetCheapestCatIndex()
+    {
+        // Temp variable 
+        int cheapestIndex = 0;
+        int cheapestPrice = _catPrices[cheapestIndex];
+
+        // Browse prices for each cat
+        for (int i = 1; i < _catPrices.Count; i++)
+        {
+            // Check whether the current price is lower than the price of the cheapest cat found so far
+            if (_catPrices[i] < cheapestPrice)
+            {
+                // Update the price of the cheapest cat and its index
+                cheapestPrice = _catPrices[i];
+                cheapestIndex = i;
+            }
+        }
+
+        return cheapestIndex;
+    }
+
 }

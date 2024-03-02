@@ -24,16 +24,16 @@ public class M_Economy : MonoBehaviour
         }
     }
 
-    public bool CanAdopt(int level)
+    public bool CanAdopt(int catLevel) 
     {
-        if (_meat < _catPrices[level - 1])
+        if (_meat < _catPrices[catLevel - 1])
         {
             Debug.Log($" You can't adopt this cat not enough money!");
             return false;
         }
 
-        RemoveMeat(_catPrices[level - 1]);
-        IncreasePrice(level);
+        RemoveMeat(_catPrices[catLevel - 1]);
+        IncreasePrice(catLevel);
 
         return true;
     }
@@ -50,11 +50,11 @@ public class M_Economy : MonoBehaviour
         Debug.Log($"Remove {amount} Meat ! Current meat = {_meat}");
     }
 
-    private void IncreasePrice(int level)
+    private void IncreasePrice(int catLevel) 
     {
-        _amountOfPurchases[level - 1]++;
+        _amountOfPurchases[catLevel - 1]++;
         // Calculation and update of new cat price (5% increase over current price)
-        _catPrices[level - 1] = _catPrices[level - 1] + (_catPrices[level - 1] / 100 * 5);
+        _catPrices[catLevel - 1] = _catPrices[catLevel - 1] + (_catPrices[catLevel - 1] / 100 * 5);
     }
 
     public int GetCheapestCatIndex()

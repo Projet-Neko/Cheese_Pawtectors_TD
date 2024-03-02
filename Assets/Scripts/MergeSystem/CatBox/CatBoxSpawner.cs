@@ -1,21 +1,22 @@
 using UnityEngine;
 using System.Collections;
 
-public class RandomCatGenerator : MonoBehaviour
+public class CatBoxSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _catPrefab;
+    [SerializeField] private GameObject _catBoxPrefab;
+    //[SerializeField] private GameObject _catPrefab;
     [SerializeField] private Transform[] _slots;
 
-    private float minSpawnTime = 15f;
-    private float maxSpawnTime = 20f;
+    [SerializeField] private float minSpawnTime = 15f;
+    [SerializeField] private float maxSpawnTime = 20f;
 
     private void Start()
     {
         // Lance la coroutine pour générer les chats à intervalles aléatoires
-        StartCoroutine(SpawnRandomCat());
+        StartCoroutine(Spawn());
     }
 
-    private IEnumerator SpawnRandomCat()
+    private IEnumerator Spawn()
     {
         while (true)
         {
@@ -26,9 +27,9 @@ public class RandomCatGenerator : MonoBehaviour
 
             if (selectedSlot.childCount == 0)
             {
-                GameObject go = Instantiate(_catPrefab, selectedSlot);
-                go.transform.localScale = new Vector3(10, 10, 10);
-                go.GetComponent<Cat>().SetStorageMode(true); // Permet de cacher le HUD
+                GameObject go = Instantiate(_catBoxPrefab, selectedSlot);
+                go.transform.localScale = new Vector3(50, 50, 50);
+                //go.GetComponent<Cat>().SetStorageMode(true); // Permet de cacher le HUD
             }
         }
     }

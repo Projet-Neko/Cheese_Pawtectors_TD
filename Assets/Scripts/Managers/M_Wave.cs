@@ -13,7 +13,7 @@ public class M_Wave : MonoBehaviour
     public int WaveNumber => _waveNumber;
 
     private int _waveNumber;
-    private readonly List<Mouse> _enemies = new();
+    private readonly List<Mouse> _enemies = new(); // List to store spawned enemies
     private Vector3 _SpawnPos;
     private bool _hasCompleteSpawning;
 
@@ -84,9 +84,19 @@ public class M_Wave : MonoBehaviour
     {
         _waveNumber++;
         Debug.Log($"Next wave : {_waveNumber}.");
+        // Check if the wave number is a multiple of 10
+        if (_waveNumber % 10 == 0)
+        {
+            SpawnBossMouse();
+        }
 
         Reload();
         // TODO -> level up mouses in M_Entities
+    }
+
+    private void SpawnBossMouse()
+    {
+        Debug.Log("Spawning boss mouse...");
     }
 
     public void Reload()

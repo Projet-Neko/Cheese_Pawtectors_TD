@@ -8,6 +8,11 @@ public class Adopt : MonoBehaviour
     [SerializeField] private GameObject _catPrefab;
     [SerializeField] private GridLayoutGroup _slots;
 
+    private void Awake()
+    {
+        SetCheapestCatIndex();
+    }
+
     // Instantiate the cat bought in empty slots when a button "Adopt" is clicked.
     public void OnButtonClick()
     {
@@ -24,13 +29,21 @@ public class Adopt : MonoBehaviour
         }
 
         if (freeSlot == null) return;
-
-        if (GameManager.Instance.CanAdopt(1))
+        int catIndex = SetCheapestCatIndex();
+        if (GameManager.Instance.CanAdopt(catIndex))
         {
             GameObject go = Instantiate(_catPrefab, freeSlot);
+            Cat cat = go.GetComponent<Cat>();
+            cat.Init(catIndex);
             go.transform.localScale = new Vector3(10, 10, 10);
             go.GetComponent<Cat>().SetStorageMode(true); // Permet de cacher le HUD
-            _catPrice.text = GameManager.Instance.CatPrices[GameManager.Instance.GetCheapestCatIndex()].ToString();
+            SetCheapestCatIndex();
         }
+    }
+    public int SetCheapestCatIndex()
+    {
+        int i = GameManager.Instance.GetCheapestCatIndex();
+        _catPrice.text = GameManager.Instance.CatPrices[i].ToString();
+        return i;
     }
 }

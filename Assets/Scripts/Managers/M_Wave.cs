@@ -15,24 +15,32 @@ public class M_Wave : MonoBehaviour
     public int WaveNumber => _waveNumber;
 
     private int _waveNumber;
-    private readonly List<Mouse> _enemies = new();
+    private int _enemyNumber;
+    private List<GameObject> _enemyObjects = new();
     private Vector3 _SpawnPos;
     private bool _hasCompleteSpawning;
     private IEnumerator _spawn;
 
     private void Awake()
     {
+        Cheese.OnInit += Cheese_OnInit;
         Entity.OnDeath += Entity_OnDeath;
+    }
+
+    private void Cheese_OnInit(Cheese obj)
+    {
+        StartWaves();
     }
 
     private void OnDestroy()
     {
+        Cheese.OnInit -= Cheese_OnInit;
         Entity.OnDeath -= Entity_OnDeath;
     }
 
     private void Update()
     {
-        if (_hasCompleteSpawning && _enemies.Count == 0) NextWave();
+        if (_hasCompleteSpawning && _enemyNumber == 0) NextWave();
     }
 
     public void Init()
@@ -43,8 +51,9 @@ public class M_Wave : MonoBehaviour
         _hasCompleteSpawning = false;
     }
 
-    public void StartWave()
+    public void StartWaves()
     {
+        _enemyNumber = 0;
         _spawn = SpawnEnemies(false);
         if (_enableWaves) StartCoroutine(_spawn);
     }
@@ -55,12 +64,13 @@ public class M_Wave : MonoBehaviour
 
         if (cooldown) yield return new WaitForSeconds(.5f);
 
-        while (_enemies.Count < 10)
+        while (_enemyNumber < 10)
         {
-            yield return new WaitForSeconds(1);
             Mouse m = Instantiate(_mousePrefab, _SpawnPos, Quaternion.identity).GetComponent<Mouse>();
             m.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-            _enemies.Add(m);
+            _enemyNumber++;
+            _enemyObjects.Add(m.gameObject);
+            yield return new WaitForSeconds(1);
         }
 
         _hasCompleteSpawning = true;
@@ -70,7 +80,7 @@ public class M_Wave : MonoBehaviour
     private void Entity_OnDeath(Entity obj)
     {
         if (obj is Cheese) Reload();
-        else if (obj is Mouse) _enemies.Remove(_enemies.Find(x => obj));
+        else if (obj is Mouse) _enemyNumber--;
     }
 
     public void NextWave()
@@ -87,15 +97,16 @@ public class M_Wave : MonoBehaviour
 
         if (!_hasCompleteSpawning) StopCoroutine(_spawn);
 
-        if (_enemies.Count != 0)
+        if (_enemyNumber != 0)
         {
-            Debug.Log("Destroying remaining enemies...");
+            Debug.Log($"Destroying remaining {_enemyNumber} enemies...");
 
-            foreach (var enemy in _enemies) Destroy(enemy.gameObject);
-            _enemies.Clear();
+            foreach (var enemy in _enemyObjects) if (enemy != null) Destroy(enemy);
+            _enemyObjects.Clear();
         }
 
         OnWaveReload?.Invoke();
+        _enemyNumber = 0;
         _spawn = SpawnEnemies(true);
         StartCoroutine(_spawn);
     }

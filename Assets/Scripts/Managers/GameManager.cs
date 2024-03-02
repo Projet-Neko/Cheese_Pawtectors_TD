@@ -37,8 +37,6 @@ public class GameManager : MonoBehaviour
         _entities.Init();
         _economy.Init();
         _wave.Init();
-
-        _wave.StartWave();
     }
 
     private bool Init()

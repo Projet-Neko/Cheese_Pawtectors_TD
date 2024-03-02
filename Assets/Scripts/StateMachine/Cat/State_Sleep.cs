@@ -14,6 +14,7 @@ public class State_Sleep : State
 
     private void M_Wave_OnWaveReload()
     {
+        (_brain.Entity as Cat).WakeUp();
         _brain.ChangeState(_brain.Idle);
     }
 }

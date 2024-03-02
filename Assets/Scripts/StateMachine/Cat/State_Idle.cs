@@ -4,8 +4,7 @@ public class State_Idle : State
     {
         base.OnUpdate();
 
-        Cat c = _brain.Entity as Cat;
-        if (c.IsInStorageMode) return;
+        if ((_brain.Entity as Cat).IsInStorageMode) return;
 
         // TODO -> Add idle movements
 

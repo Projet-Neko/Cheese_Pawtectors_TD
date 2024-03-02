@@ -4,6 +4,7 @@ public class Brain : MonoBehaviour
 {
     [Header("Dependencies")]
     [SerializeField] protected SpriteRenderer _renderer;
+    [SerializeField] protected Collider2D _collider;
     [SerializeField] private Entity _entity;
 
     public GameObject Target { get; set; }

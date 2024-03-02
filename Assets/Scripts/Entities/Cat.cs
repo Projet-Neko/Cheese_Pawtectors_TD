@@ -78,5 +78,10 @@ public class Cat : Entity
         // TODO -> add animation
     }
 
+    public void WakeUp()
+    {
+        _currentHealth = 0;
+    }
+
     public override bool IsAlive() => _currentHealth < _baseHealth;
 }

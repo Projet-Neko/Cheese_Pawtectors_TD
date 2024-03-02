@@ -20,6 +20,7 @@ public class M_Entities : MonoBehaviour
     private void OnDestroy()
     {
         Cheese.OnInit -= Cheese_OnInit;
+        M_Wave.OnWaveReload -= M_Wave_OnWaveReload;
     }
 
     public void Init()
@@ -31,18 +32,7 @@ public class M_Entities : MonoBehaviour
         _mouses.OrderBy(x => x.name);
 
         Cheese.OnInit += Cheese_OnInit;
-
-        // Testing only
-        //Cat c = Instantiate(_catPrefab).GetComponent<Cat>();
-        //c.Init(1);
-
-        //c = Instantiate(_catPrefab).GetComponent<Cat>();
-        //c.Init(2);
-
-        //for (int i = 0; i < 10; i++)
-        //{
-        //    Instantiate(_mousePrefab);
-        //}
+        M_Wave.OnWaveReload += M_Wave_OnWaveReload;
     }
 
     private void Cheese_OnInit(Cheese cheese)
@@ -51,13 +41,14 @@ public class M_Entities : MonoBehaviour
         _cheese = cheese;
     }
 
+    private void M_Wave_OnWaveReload()
+    {
+        _mouseLevel++;
+        _canSpawnAlbino = true;
+    }
+
     public void AlbinoHasSpawned()
     {
         _canSpawnAlbino = false;
-    }
-
-    public void AlbinoCanSpawn()
-    {
-        _canSpawnAlbino = true;
     }
 }

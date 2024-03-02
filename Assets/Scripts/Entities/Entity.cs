@@ -5,8 +5,13 @@ using UnityEngine.UI;
 public abstract class Entity : MonoBehaviour
 {
     public static event Action<Entity> OnDeath;
+
+    [Header("Data")]
     [SerializeField] protected SpriteRenderer _renderer;
     [SerializeField] protected int _level = 1;
+
+    [Header("HUD")]
+    [SerializeField] protected Slider _slider;
 
     public float Damage => _damage;
     public float DPS => 3.6f - (_level * 0.1f);
@@ -22,12 +27,20 @@ public abstract class Entity : MonoBehaviour
     protected float _damage;
     protected bool _isAttacked;
 
-    public Slider _slider;
+    private void Start()
+    {
+        Init();
+    }
 
-    // TODO -> add ui
+    public virtual void Init()
+    {
+        SetMaxHealth();
+        SetHealth();
+    }
 
     public virtual void TakeDamage(Entity source)
     {
+        if (_currentHealth <= 0) return;
         _isAttacked = true;
         _currentHealth -= source.Damage;
 
@@ -36,27 +49,15 @@ public abstract class Entity : MonoBehaviour
 
         SetHealth();
 
-        if (_currentHealth <= 0) Death(source);
+        if (_currentHealth <= 0) Die(source);
     }
 
-    protected virtual void Death(Entity source)
+    // Source => entity that killed
+    public virtual void Die(Entity source)
     {
-        /* 
-        Handle death logic
-        - source : entity that killed (cat)
-        - this : dying entity (mouse)
-        */
-
-        // Verify if "this" is a mouse
+        if (source != null) OnDeath?.Invoke(this);
         if (this is not Mouse) return;
-        if (source is Cat)
-        {
-            // Call the AddMeat function for the cat
-            GameManager.Instance.AddMeat(1);
-        }
-        // When a mouse die add satiety to cat
-        source.TakeDamage(this);
-        OnDeath?.Invoke(this);
+        if (source is Cat) source.TakeDamage(this); // When a mouse die add satiety to cat
         Destroy(gameObject);
     }
 
@@ -72,10 +73,5 @@ public abstract class Entity : MonoBehaviour
     }
 
     protected virtual void OnDeathEvent(Entity source) => OnDeath?.Invoke(source);
-
-    public virtual bool IsAlive()
-    {
-        return _currentHealth > 0;
-    }
-
+    public virtual bool IsAlive() => _currentHealth > 0;
 }

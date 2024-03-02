@@ -1,19 +1,22 @@
 using NaughtyAttributes;
+using System.ComponentModel;
 using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
 {
+    [Category("Dependencies")]
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private GameObject _hud;
     [SerializeField] private Entity _entity;
 
-    [SerializeField] private bool _isBeingDragged = false;
-    [SerializeField] private GameObject _target;
-    [SerializeField] private Transform _currentSlot;
-
+    [Category("Layers")]
     [SerializeField, Layer] private int _catLayer;
     [SerializeField, Layer] private int _discardLayer;
     [SerializeField, Layer] private int _slotLayer;
+
+    private bool _isBeingDragged = false;
+    private GameObject _target;
+    private Transform _currentSlot;
 
     private void Start()
     {

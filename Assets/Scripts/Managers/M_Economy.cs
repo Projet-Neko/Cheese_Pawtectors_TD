@@ -7,7 +7,8 @@ public class M_Economy : MonoBehaviour
     public List<int> CatPrices => _catPrices;
 
     private int _meat;
-    private List<int> _amountOfPurchases;
+    // Store the number of purchases for each cat index: catLevel, value: nbOfPurchasesOfCatsOfThisLevel
+    private List<int> _amountOfPurchases; 
     private List<int> _catPrices;
 
     public void Init()
@@ -19,20 +20,20 @@ public class M_Economy : MonoBehaviour
         for (int i = 0 ; i < GameManager.Instance.Cats.Length; i++)
         {
             _amountOfPurchases.Add(1); // TODO -> use database
-            _catPrices.Add(GameManager.Instance.Cats[i].BasePrice); // TODO -> set base price with database
+            _catPrices.Add(GameManager.Instance.Cats[i].Level * 100); // TODO -> set base price with database
         }
     }
 
-    public bool Adopt(int level)
+    public bool CanAdopt(int catLevel) 
     {
-        if (_meat < _catPrices[level - 1])
+        if (_meat < _catPrices[catLevel - 1])
         {
             Debug.Log($" You can't adopt this cat not enough money!");
             return false;
         }
 
-        RemoveMeat(_catPrices[level - 1]);
-        IncreasePrice(level);
+        RemoveMeat(_catPrices[catLevel - 1]);
+        IncreasePrice(catLevel);
 
         return true;
     }
@@ -49,9 +50,30 @@ public class M_Economy : MonoBehaviour
         Debug.Log($"Remove {amount} Meat ! Current meat = {_meat}");
     }
 
-    private void IncreasePrice(int level)
+    private void IncreasePrice(int catLevel) 
     {
-        _amountOfPurchases[level - 1]++;
-        _catPrices[level - 1] = _catPrices[level - 1] + (_catPrices[level - 1] / 100 * 5);
+        _amountOfPurchases[catLevel - 1]++;
+        // Calculation and update of new cat price (5% increase over current price)
+        _catPrices[catLevel - 1] = _catPrices[catLevel - 1] + (_catPrices[catLevel - 1] / 100 * 5);
+    }
+
+    public int GetCheapestCatIndex()
+    {
+        // Temp variable 
+        int cheapestIndex = 0;
+        int cheapestPrice = _catPrices[cheapestIndex];
+
+        // Browse prices for each cat
+        for (int i = 1; i < _catPrices.Count; i++)
+        {
+            // Check whether the current price is lower than the price of the cheapest cat found so far
+            if (_catPrices[i] < cheapestPrice)
+            {
+                // Update the price of the cheapest cat and its index
+                cheapestIndex = i;
+                cheapestPrice = _catPrices[cheapestIndex];
+            }
+        }
+        return cheapestIndex;
     }
 }

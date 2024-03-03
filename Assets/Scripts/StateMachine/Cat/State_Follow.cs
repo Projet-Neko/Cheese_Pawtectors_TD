@@ -1,4 +1,4 @@
-public class SFollow : State
+public class State_Follow : State
 {
     public override void OnUpdate()
     {

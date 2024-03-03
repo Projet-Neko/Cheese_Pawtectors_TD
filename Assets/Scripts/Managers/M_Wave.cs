@@ -8,6 +8,8 @@ public class M_Wave : MonoBehaviour
     public static event Action OnWaveReload;
 
     [SerializeField] private GameObject _mousePrefab;
+
+    [Header("Options")]
     [SerializeField] private bool _enableWaves = false;
 
     public int WaveNumber => _waveNumber;
@@ -16,7 +18,6 @@ public class M_Wave : MonoBehaviour
     private readonly List<Mouse> _enemies = new();
     private Vector3 _SpawnPos;
     private bool _hasCompleteSpawning;
-
     private IEnumerator _spawn;
 
     private void Awake()
@@ -68,16 +69,8 @@ public class M_Wave : MonoBehaviour
 
     private void Entity_OnDeath(Entity obj)
     {
-        if (obj is Cheese)
-        {
-            Reload();
-            return;
-        }
-
-        if (obj is Mouse)
-        {
-            // TODO -> remove enemy from list on death
-        }
+        if (obj is Cheese) Reload();
+        else if (obj is Mouse) _enemies.Remove(_enemies.Find(x => obj));
     }
 
     public void NextWave()
@@ -86,7 +79,6 @@ public class M_Wave : MonoBehaviour
         Debug.Log($"Next wave : {_waveNumber}.");
 
         Reload();
-        // TODO -> level up mouses in M_Entities
     }
 
     public void Reload()
@@ -106,11 +98,5 @@ public class M_Wave : MonoBehaviour
         OnWaveReload?.Invoke();
         _spawn = SpawnEnemies(true);
         StartCoroutine(_spawn);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, 1);
     }
 }

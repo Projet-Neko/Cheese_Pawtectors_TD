@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     #region Modules
+    [Header("Modules")]
     [SerializeField] private M_Entities _entities;
     [SerializeField] private M_Economy _economy;
     [SerializeField] private M_Wave _wave;
@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     public List<int> CatPrices => _economy.CatPrices;
 
     public int GetCheapestCatIndex() => _economy.GetCheapestCatIndex();
-
     public bool CanAdopt(int catLevel) => _economy.CanAdopt(catLevel);
     public void AddMeat(int amount) => _economy.AddMeat(amount);
     public void RemoveMeat(int amount) => _economy.RemoveMeat(amount);
@@ -33,20 +32,26 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Destroy(this);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(this);
-        Debug.Log("Game Manager created.");
+        if (!Init()) return;
 
         _entities.Init();
         _economy.Init();
         _wave.Init();
 
         _wave.StartWave();
+    }
+
+    private bool Init()
+    {
+        if (Instance != null)
+        {
+            Destroy(this);
+            return false;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(this);
+        Debug.Log("Game Manager created.");
+        return true;
     }
 }

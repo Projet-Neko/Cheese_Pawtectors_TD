@@ -45,7 +45,7 @@ public abstract class Entity : MonoBehaviour
         _currentHealth -= source.Damage;
 
         Mathf.Clamp(_currentHealth, 0f, _baseHealth);
-        Debug.Log($"Current health after damages : {_currentHealth}");
+        //Debug.Log($"Current health after damages : {_currentHealth}");
 
         SetHealth();
 

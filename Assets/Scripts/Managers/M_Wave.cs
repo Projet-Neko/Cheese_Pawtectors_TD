@@ -60,6 +60,7 @@ public class M_Wave : MonoBehaviour
 
     public IEnumerator SpawnEnemies(bool cooldown)
     {
+        int index = 0;
         _hasCompleteSpawning = false;
 
         if (cooldown) yield return new WaitForSeconds(.5f);
@@ -68,7 +69,9 @@ public class M_Wave : MonoBehaviour
         {
             Mouse m = Instantiate(_mousePrefab, _SpawnPos, Quaternion.identity).GetComponent<Mouse>();
             m.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            m.gameObject.name = $"{m.gameObject.name} #{index}";
             _enemyNumber++;
+            index++;
             _enemyObjects.Add(m.gameObject);
             yield return new WaitForSeconds(1);
         }

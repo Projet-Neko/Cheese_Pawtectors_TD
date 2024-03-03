@@ -7,6 +7,8 @@ public class Mouse : Entity
 
     //[SerializeField] private List<Vector3> _checkPoint;
 
+    public Cat Attacker { get; set; }
+
     private MouseSO _data;
 
     /*private int _nextPoint;
@@ -16,6 +18,7 @@ public class Mouse : Entity
 
     public override void Init()
     {
+        Attacker = null;
         _data = GameManager.Instance.Mouses[IsAlbino()];
 
         // TODO -> is queen if wave % 10
@@ -30,7 +33,7 @@ public class Mouse : Entity
         //_nextPoint = 0;
         //_renderer.sprite = _data.Sprite;
 
-        gameObject.name = _data.Name;
+        //gameObject.name = _data.Name;
 
         /*_destination = (_checkPoint[_nextPoint] - transform.position);
         _destination.Normalize();
@@ -75,4 +78,10 @@ public class Mouse : Entity
             }
         }*/
     }
+
+    //public override void TakeDamage(Entity source)
+    //{
+    //    _targetedBy = source as Cat;
+    //    base.TakeDamage(source);
+    //}
 }

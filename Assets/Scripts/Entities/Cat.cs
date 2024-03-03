@@ -34,7 +34,7 @@ public class Cat : Entity
 
         _baseHealth = 50 + (_level * 2) - 2;
         _currentHealth = 0;
-        _speed = 5;
+        _speed = 2.5f;
 
         // Update data with SO
         _data = GameManager.Instance.Cats[_level - 1];
@@ -81,6 +81,7 @@ public class Cat : Entity
     public void WakeUp()
     {
         _currentHealth = 0;
+        SetHealth();
     }
 
     public override bool IsAlive() => _currentHealth < _baseHealth;

@@ -34,15 +34,13 @@ public class Cat : Entity
 
         _baseHealth = 50 + (_level * 2) - 2;
         _currentHealth = 0;
-        _speed = 5;
+        _speed = 2.5f;
 
         // Update data with SO
         _data = GameManager.Instance.Cats[_level - 1];
 
         // Appearance
-        _catColor = ColorPalette.GetColor(_data.Color);
         _renderer.sprite = _data.SpriteAbove; // TODO -> check sprite to use
-        if (_data.SpriteAbove == null) _renderer.color = CatColor;
 
         gameObject.name = _data.Name;
     }
@@ -76,6 +74,12 @@ public class Cat : Entity
     private void Sleep()
     {
         // TODO -> add animation
+    }
+
+    public void WakeUp()
+    {
+        _currentHealth = 0;
+        SetHealth();
     }
 
     public override bool IsAlive() => _currentHealth < _baseHealth;

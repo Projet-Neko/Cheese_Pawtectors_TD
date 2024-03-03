@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 3_BlackMouse
   m_EditorClassIdentifier: 
   Health: 10
-  Speed: 3
+  Speed: 1
   SatiationRate: 20
   Sprite: {fileID: 0}

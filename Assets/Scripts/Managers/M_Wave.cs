@@ -8,30 +8,39 @@ public class M_Wave : MonoBehaviour
     public static event Action OnWaveReload;
 
     [SerializeField] private GameObject _mousePrefab;
+
+    [Header("Options")]
     [SerializeField] private bool _enableWaves = false;
 
     public int WaveNumber => _waveNumber;
 
     private int _waveNumber;
-    private readonly List<Mouse> _enemies = new();
+    private int _enemyNumber;
+    private List<GameObject> _enemyObjects = new();
     private Vector3 _SpawnPos;
     private bool _hasCompleteSpawning;
-
     private IEnumerator _spawn;
 
     private void Awake()
     {
+        Cheese.OnInit += Cheese_OnInit;
         Entity.OnDeath += Entity_OnDeath;
+    }
+
+    private void Cheese_OnInit(Cheese obj)
+    {
+        StartWaves();
     }
 
     private void OnDestroy()
     {
+        Cheese.OnInit -= Cheese_OnInit;
         Entity.OnDeath -= Entity_OnDeath;
     }
 
     private void Update()
     {
-        if (_hasCompleteSpawning && _enemies.Count == 0) NextWave();
+        if (_hasCompleteSpawning && _enemyNumber == 0) NextWave();
     }
 
     public void Init()
@@ -42,24 +51,29 @@ public class M_Wave : MonoBehaviour
         _hasCompleteSpawning = false;
     }
 
-    public void StartWave()
+    public void StartWaves()
     {
+        _enemyNumber = 0;
         _spawn = SpawnEnemies(false);
         if (_enableWaves) StartCoroutine(_spawn);
     }
 
     public IEnumerator SpawnEnemies(bool cooldown)
     {
+        int index = 0;
         _hasCompleteSpawning = false;
 
         if (cooldown) yield return new WaitForSeconds(.5f);
 
-        while (_enemies.Count < 10)
+        while (_enemyNumber < 10)
         {
-            yield return new WaitForSeconds(1);
             Mouse m = Instantiate(_mousePrefab, _SpawnPos, Quaternion.identity).GetComponent<Mouse>();
             m.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-            _enemies.Add(m);
+            m.gameObject.name = $"{m.gameObject.name} #{index}";
+            _enemyNumber++;
+            index++;
+            _enemyObjects.Add(m.gameObject);
+            yield return new WaitForSeconds(1);
         }
 
         _hasCompleteSpawning = true;
@@ -68,16 +82,8 @@ public class M_Wave : MonoBehaviour
 
     private void Entity_OnDeath(Entity obj)
     {
-        if (obj is Cheese)
-        {
-            Reload();
-            return;
-        }
-
-        if (obj is Mouse)
-        {
-            // TODO -> remove enemy from list on death
-        }
+        if (obj is Cheese) Reload();
+        else if (obj is Mouse) _enemyNumber--;
     }
 
     public void NextWave()
@@ -86,7 +92,6 @@ public class M_Wave : MonoBehaviour
         Debug.Log($"Next wave : {_waveNumber}.");
 
         Reload();
-        // TODO -> level up mouses in M_Entities
     }
 
     public void Reload()
@@ -95,22 +100,17 @@ public class M_Wave : MonoBehaviour
 
         if (!_hasCompleteSpawning) StopCoroutine(_spawn);
 
-        if (_enemies.Count != 0)
+        if (_enemyNumber != 0)
         {
-            Debug.Log("Destroying remaining enemies...");
+            Debug.Log($"Destroying remaining {_enemyNumber} enemies...");
 
-            foreach (var enemy in _enemies) Destroy(enemy.gameObject);
-            _enemies.Clear();
+            foreach (var enemy in _enemyObjects) if (enemy != null) Destroy(enemy);
+            _enemyObjects.Clear();
         }
 
         OnWaveReload?.Invoke();
+        _enemyNumber = 0;
         _spawn = SpawnEnemies(true);
         StartCoroutine(_spawn);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, 1);
     }
 }

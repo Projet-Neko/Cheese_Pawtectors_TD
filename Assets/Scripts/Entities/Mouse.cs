@@ -1,25 +1,30 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class Mouse : Entity
 {
-    //[SerializeField] private List<Vector3> _checkPoint;
+    [Header("Debug")]
     [SerializeField] private bool _forceAlbino = false;
+    //[SerializeField] private bool _forceBoss = false;
+
+    //[SerializeField] private List<Vector3> _checkPoint;
+
+    public Cat Attacker { get; set; }
+    public bool IsBoss => _isBoss;
 
     private MouseSO _data;
+    private bool _isBoss;
 
     /*private int _nextPoint;
     private float _distance;
     private Vector2 _destination;
     private Rigidbody2D _rb;*/
-    private bool _stop;
-    private Cheese _cheese;
 
-    private void Start()
+    public override void Init()
     {
+        Attacker = null;
         _data = GameManager.Instance.Mouses[IsAlbino()];
 
-        // TODO -> is queen if wave % 10
+        // TODO -> _isBoss if wave % 10
 
         _level = GameManager.Instance.MouseLevel;
 
@@ -29,21 +34,14 @@ public class Mouse : Entity
 
         //_rb = GetComponent<Rigidbody2D>();
         //_nextPoint = 0;
-
-        
-        _currentHealth = 5;
         //_renderer.sprite = _data.Sprite;
-        _cheese = GameManager.Instance.Cheese;
-        SetMaxHealth();
 
-
-        gameObject.name = _data.Name;
+        //gameObject.name = _data.Name;
 
         /*_destination = (_checkPoint[_nextPoint] - transform.position);
         _destination.Normalize();
         _rb.velocity = _destination.normalized * _speed;*/
-        _stop = false;/**/
-
+        base.Init();
     }
 
     private int IsAlbino()
@@ -57,21 +55,12 @@ public class Mouse : Entity
         return 0;
     }
 
-    private void FixedUpdate()
-    {
-        if (!_stop) Move();
-       
-    }
-
     private void Move()
     {
         /*_distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
 
         _rb.velocity = _destination * _speed ;
         
-
-
-
         if (_distance < 0.05f)
         {
             _nextPoint++;
@@ -93,13 +82,9 @@ public class Mouse : Entity
         }*/
     }
 
-    public void Stop()
-    {
-        _stop = true;
-    }
-
-    private void Attack()
-    {
-        _cheese?.TakeDamage(this);
-    }
+    //public override void TakeDamage(Entity source)
+    //{
+    //    _targetedBy = source as Cat;
+    //    base.TakeDamage(source);
+    //}
 }

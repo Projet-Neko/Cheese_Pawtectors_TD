@@ -2,7 +2,7 @@ using UnityEngine;
 
 public enum CatFur
 {
-    Solid, Colourpoint, Harlequin, Tabby, Calico, Tortoiseshell
+    Short, Long
 }
 
 [CreateAssetMenu(fileName = "NewCat", menuName = "Projet Neko/Cat")]
@@ -10,10 +10,7 @@ public class CatSO : ScriptableObject
 {
     public string Name => name.Split("_")[1];
     public int Level => int.Parse(name.Split('_')[0]);
-    public int BasePrice;
-    public CatFur Fur;
-    public CatColor Color;
     public Sprite SpriteAbove;
     public Sprite SpriteFront;
-    public string Description;
+    public string Lore;
 }

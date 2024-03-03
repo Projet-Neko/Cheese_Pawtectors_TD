@@ -56,6 +56,7 @@ public abstract class Entity : MonoBehaviour
 
     private void OnMouseOver()
     {
+        if (this is Cat && (this as Cat).IsInStorageMode) return;
         _slider.gameObject.SetActive(true);
     }
 

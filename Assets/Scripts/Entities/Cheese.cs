@@ -11,7 +11,8 @@ public class Cheese : Entity
 
     private void OnWaveReload()
     {
-        _currentHealth = _baseHealth;
+        _currentHealth = 30;
+        base.Init();
     }
 
     public override void Init()

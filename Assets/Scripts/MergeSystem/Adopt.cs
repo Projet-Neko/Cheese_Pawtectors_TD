@@ -10,6 +10,7 @@ public class Adopt : MonoBehaviour
 
     [Header("HUD")]
     [SerializeField] TMP_Text _catPrice;
+    [SerializeField] TMP_Text _catLevel;
 
     private int _cheapestCatIndex;
 

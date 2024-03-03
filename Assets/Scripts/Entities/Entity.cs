@@ -36,20 +36,33 @@ public abstract class Entity : MonoBehaviour
     {
         SetMaxHealth();
         SetHealth();
+        _slider.gameObject.SetActive(false);
     }
 
     public virtual void TakeDamage(Entity source)
     {
         if (_currentHealth <= 0) return;
         _isAttacked = true;
+        _slider.gameObject.SetActive(true);
         _currentHealth -= source.Damage;
 
         Mathf.Clamp(_currentHealth, 0f, _baseHealth);
-        Debug.Log($"Current health after damages : {_currentHealth}");
+        //Debug.Log($"Current health after damages : {_currentHealth}");
 
         SetHealth();
 
         if (_currentHealth <= 0) Die(source);
+    }
+
+    private void OnMouseOver()
+    {
+        _slider.gameObject.SetActive(true);
+    }
+
+    private void OnMouseExit()
+    {
+        if (this is Cat && _currentHealth != 0 || this is not Cat && _currentHealth != _baseHealth) return;
+        _slider.gameObject.SetActive(false);
     }
 
     // Source => entity that killed

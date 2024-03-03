@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
-  m_Name: 10_Fluffy
+  m_Name: 38_Mikan
   m_EditorClassIdentifier: 
-  Name: 
-  Fur: 1
-  Color: 2
+  Fur: 0
+  Color: 0
+  SpriteAbove: {fileID: 0}
+  SpriteFront: {fileID: 0}
+  Description: 

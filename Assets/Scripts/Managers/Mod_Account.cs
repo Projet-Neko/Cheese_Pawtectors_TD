@@ -1,6 +1,5 @@
 using PlayFab;
 using PlayFab.ClientModels;
-using PlayFab.Internal;
 using System.Collections;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -23,7 +22,6 @@ public class Mod_Account : Mod
     // Login
     private bool _isFirstLogin;
     private bool _isLoggedIn = false;
-
     private string _username;
 
     public override void Init(GameManager gm)
@@ -119,21 +117,19 @@ public class Mod_Account : Mod
         _entity = result.EntityToken.Entity;
 
         // --- Check if first login
-        UserAccountInfo info = result.InfoResultPayload.AccountInfo;
         _isFirstLogin = result.LastLoginTime == null;
-
-        //_gm.InvokeOnBigLoadingStart();
 
         //Use this line once to test PlayFab Register & Login
         //yield return RegisterAccount("testing@gmail.com", "testing");
 
-        // --- Create Local Save
-        using (FileStream file = new(_path, FileMode.Create)) _binaryFormatter.Serialize(file, _authData);
+        SetLocalSave();
 
         //if (!_isFirstLogin && !IsAccountReset)
         if (!_isFirstLogin)
         {
             // --- Get Username ---
+            UserAccountInfo info = result.InfoResultPayload.AccountInfo;
+            _username = info.TitleInfo.DisplayName;
 
             // --- Get Account Data
             //GetAccountData();
@@ -146,19 +142,22 @@ public class Mod_Account : Mod
 
         // --- Create Username ---
         _username = "Kitten#";
-        _username += SystemInfo.deviceUniqueIdentifier[..5];
-        Debug.Log($"Creating username {_username}...");
         yield return (UpdateName(_username));
 
         // --- Create Data ---
+        // TODO
 
         CompleteLogin();
         yield return null;
         //yield return UpdateData();
     }
+    private void SetLocalSave()
+    {
+        using (FileStream file = new(_path, FileMode.Create)) _binaryFormatter.Serialize(file, _authData);
+        _authData = new();
+    }
     private void CompleteLogin()
     {
-        _authData = new();
         _isLoggedIn = true;
         Debug.Log("Login complete !");
         _gm.InvokeOnLoginSuccess();
@@ -174,6 +173,46 @@ public class Mod_Account : Mod
         }, res => _gm.EndRequest(), _gm.OnRequestError);
     }
     #endregion
+
+    public IEnumerator RegisterAccount(string email, string password)
+    {
+        yield return _gm.StartAsyncRequest("Registering account...");
+
+        _authData.Email = email;
+        _authData.Password = password;
+
+        PlayFabClientAPI.AddUsernamePassword(new()
+        {
+            Username = _username, //Create unique username with email
+            Email = email,
+            Password = password //Password must be between 6 and 100 characters
+        },
+        res =>
+        {
+            PlayFabClientAPI.UnlinkCustomID(new()
+            {
+                CustomId = SystemInfo.deviceUniqueIdentifier
+            }, res =>
+            {
+                _gm.EndRequest("Account registered !");
+                SetLocalSave();
+            }, _gm.OnRequestError);
+        }, _gm.OnRequestError);
+    }
+
+    //public IEnumerator DeleteAccount()
+    //{
+    //    yield return _gm.StartAsyncRequest("Deleting account...");
+
+    //    PlayFabClientAPI.DeletePlayer(new()
+    //    {
+    //        CustomId = SystemInfo.deviceUniqueIdentifier
+    //    }, res =>
+    //    {
+    //        _gm.EndRequest("Account registered !");
+    //        SetLocalSave();
+    //    }, _gm.OnRequestError);
+    //}
 
     //public IEnumerator UpdateData()
     //{
@@ -201,32 +240,6 @@ public class Mod_Account : Mod
     //            }, _manager.OnRequestError);
     //        }, error => Debug.LogError(error));
     //    }, _gm.OnRequestError);
-    //}
-
-    //public IEnumerator RegisterAccount(string email, string password)
-    //{
-    //    yield return _manager.StartAsyncRequest("Registering account...");
-    //    CreateAccountData(email, password);
-    //    string username = CreateUsername(email);
-
-    //    PlayFabClientAPI.AddUsernamePassword(new()
-    //    {
-    //        Username = username, //Create unique username with email
-    //        Email = email,
-    //        Password = password //Password must be between 6 and 100 characters
-    //    },
-    //    res =>
-    //    {
-    //        PlayFabClientAPI.UnlinkCustomID(new()
-    //        {
-    //            CustomId = SystemInfo.deviceUniqueIdentifier
-    //        }, res =>
-    //        {
-    //            _manager.EndRequest("Account registered !");
-    //            StartCoroutine(UpdateName(username));
-    //            CreateSave();
-    //        }, _manager.OnRequestError);
-    //    }, _manager.OnRequestError);
     //}
 
     //public void ResetAccount(bool admin = false)

@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class Mouse : Entity
 {
-    [Header("Options")]
+    [Header("Debug")]
     [SerializeField] private bool _forceAlbino = false;
+    //[SerializeField] private bool _forceBoss = false;
 
     //[SerializeField] private List<Vector3> _checkPoint;
 
     public Cat Attacker { get; set; }
+    public bool IsBoss => _isBoss;
 
     private MouseSO _data;
+    private bool _isBoss;
 
     /*private int _nextPoint;
     private float _distance;
@@ -21,7 +24,7 @@ public class Mouse : Entity
         Attacker = null;
         _data = GameManager.Instance.Mouses[IsAlbino()];
 
-        // TODO -> is queen if wave % 10
+        // TODO -> _isBoss if wave % 10
 
         _level = GameManager.Instance.MouseLevel;
 

@@ -28,7 +28,7 @@ public abstract class State
             {
                 Mouse m = target.GetComponentInParent<Mouse>();
 
-                if (m.Attacker == null && _brain.Target == null)
+                if ((m.IsBoss || m.Attacker == null) && _brain.Target == null)
                 {
                     m.Attacker = _brain.Entity as Cat;
                     _brain.Target = target.gameObject;

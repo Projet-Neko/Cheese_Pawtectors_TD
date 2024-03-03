@@ -12,6 +12,7 @@ public class MouseBrain : Brain
     {
         base.Update();
 
+        if ((Entity as Mouse).IsBoss) return;
         if (_currentState is not State_Freeze && Entity.IsAttacked) ChangeState(Freeze);
     }
 

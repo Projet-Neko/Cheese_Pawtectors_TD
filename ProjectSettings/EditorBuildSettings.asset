@@ -6,34 +6,34 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_TitleScreen.unity
+    path: Assets/Scenes/BlockOut/BO_TitleScreen.unity
     guid: 518344aa865ee7a4f88b598eb2301364
   - enabled: 1
     path: Assets/Scenes/BlockOut/BlockOut_LoadingPopup.unity
     guid: e80709bd327fd0b4fb618ea59bb043d5
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_LoginPopup.unity
+    path: Assets/Scenes/BlockOut/BO_LoginPopup.unity
     guid: 705bebcd24893cf42a4d4a981ea99315
   - enabled: 1
     path: Assets/Scenes/MainScreen.unity
     guid: a6e91c5e48376f74f866e1f81acfd4ba
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_Profil.unity
+    path: Assets/Scenes/BlockOut/BO_Profile.unity
     guid: bf07bb36ff760f6488cfd4f0ff1cf082
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BO_LeaderBoard.unity
+    path: Assets/Scenes/BlockOut/BO_Leaderboards.unity
     guid: 72eaa0f111d48124599429e4905bda1b
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_Settings.unity
+    path: Assets/Scenes/BlockOut/BO_Settings.unity
     guid: 979153e39fd53e34489c2a65468774e8
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_Build.unity
+    path: Assets/Scenes/BlockOut/BO_BuildMode.unity
     guid: 5f7927bcda7adec4daa218c7070b3052
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_Catalog.unity
+    path: Assets/Scenes/BlockOut/BO_Catalog.unity
     guid: a07c302f78c5ba34b9f6900bd3baca89
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_Shop.unity
+    path: Assets/Scenes/BlockOut/BO_Shop.unity
     guid: a4a8c528f449a4c49a7c22b9e9df6e73
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 3afdfc6cdb377694baa248452ddf0abb, type: 2}

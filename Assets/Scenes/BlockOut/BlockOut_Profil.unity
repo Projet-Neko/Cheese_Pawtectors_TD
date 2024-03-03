@@ -885,8 +885,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 512466465}
-        m_TargetAssemblyTypeName: ScenesLoader, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -946,7 +946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Scene: MainScreen
+  _scene: MainScreen
 --- !u!1 &642536540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1075,7 +1075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Scene: BlockOut_Profil
+  _scene: 
 --- !u!114 &756218756
 MonoBehaviour:
   m_ObjectHideFlags: 0

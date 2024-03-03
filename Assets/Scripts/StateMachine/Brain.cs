@@ -23,6 +23,7 @@ public class Brain : MonoBehaviour
     public State Attack = new State_Attack();
     public State Sleep = new State_Sleep();
     public State Walk = new State_Walk();
+    public State Freeze = new State_Freeze();
 
     protected virtual void Update()
     {

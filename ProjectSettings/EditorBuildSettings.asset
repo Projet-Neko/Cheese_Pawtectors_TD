@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BlockOut/BO_TitleScreen.unity
     guid: 518344aa865ee7a4f88b598eb2301364
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BlockOut/BlockOut_LoadingPopup.unity
     guid: e80709bd327fd0b4fb618ea59bb043d5
   - enabled: 1

@@ -40,9 +40,7 @@ public class Cat : Entity
         _data = GameManager.Instance.Cats[_level - 1];
 
         // Appearance
-        _catColor = ColorPalette.GetColor(_data.Color);
         _renderer.sprite = _data.SpriteAbove; // TODO -> check sprite to use
-        if (_data.SpriteAbove == null) _renderer.color = CatColor;
 
         gameObject.name = _data.Name;
     }

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
-  m_Name: 09_Daisy
+  m_Name: 35_Sushi
   m_EditorClassIdentifier: 
-  Name: 
-  Fur: 1
-  Color: 1
+  SpriteAbove: {fileID: 0}
+  SpriteFront: {fileID: 0}
+  Lore: "Aussi peureux que c\xE2lin."

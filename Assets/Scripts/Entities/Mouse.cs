@@ -55,6 +55,19 @@ public class Mouse : Entity
         return 0;
     }
 
+    private int IsBossMouse()
+    {
+        // Vérifier si le numéro de la vague est un multiple de 10
+        if (GameManager.Instance)
+            //._wave._waveNumber % 10 == 0)
+
+        {
+
+            return 1;
+
+        }
+        return 0;
+
     private void Move()
     {
         /*_distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);

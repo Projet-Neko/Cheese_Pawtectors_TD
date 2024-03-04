@@ -16,6 +16,7 @@ public class Mod_Entities : Mod
     private Cheese _cheese;
     private int _mouseLevel = 1;
     private bool _canSpawnAlbino = true;
+    private bool _canSpawnBoss = true;
 
     private void OnDestroy()
     {

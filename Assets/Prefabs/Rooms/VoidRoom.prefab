@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6618524555710191469}
+  - component: {fileID: 8670251908829595934}
   m_Layer: 0
   m_Name: VoidRoom
   m_TagString: Untagged
@@ -32,6 +33,18 @@ Transform:
   - {fileID: 1809934185958879215}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8670251908829595934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675617977283199060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 532a9f6fc054a9248a87c4335dc0a194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4189960559210027102
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +106,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1b67b56e85753464a860b5398ef0c45b, type: 2}
+  - {fileID: 2100000, guid: aa070530a1e3aa94f9e40b9fa6e3022f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

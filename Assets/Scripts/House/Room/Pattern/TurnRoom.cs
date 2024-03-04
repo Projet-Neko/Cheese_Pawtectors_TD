@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnRoom : MonoBehaviour
+public class TurnRoom : Room
 {
     // Start is called before the first frame update
     void Start()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    private GameObject roomPrefab;
+    [SerializeField] private GameObject roomPrefab;
 
     // Start is called before the first frame update
     void Start()

@@ -2,10 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum RoomType
+{
+    StartRoom,
+    CheeseRoom,
+    Corridor,
+    CrossraodRoom,
+    TurnRoom
+}
+
 public class House : MonoBehaviour
 {
-    private List<Room> roomsAvailable = new List<Room>();
-    private Room[,] rooms = new Room[30,30];
+    [SerializeField] private Dictionary<RoomType, string> _rooms;
+
+    private List<Room> _roomsAvailable = new List<Room>();
+    private Room[,] _roomsGrid = new Room[30,30];
 
 
     // Start is called before the first frame update

@@ -59,14 +59,14 @@ public class Mouse : Entity
     {
         // Vérifier si le numéro de la vague est un multiple de 10
         if (GameManager.Instance)
-            //._wave._waveNumber % 10 == 0)
+        //._wave._waveNumber % 10 == 0)
 
         {
 
-            return 1;
-
+            return 3;
         }
         return 0;
+    }
 
     private void Move()
     {

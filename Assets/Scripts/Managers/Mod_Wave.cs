@@ -87,6 +87,11 @@ public class Mod_Wave : Mod
         else if (obj is Mouse) _enemyNumber--;
     }
 
+    private bool IsBossWave()
+    {
+        return _waveNumber % 10 == 0;
+    }
+
     public void NextWave()
     {
         _waveNumber++;

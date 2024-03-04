@@ -7,16 +7,13 @@ public abstract class State
     public virtual void OnEnter(Brain brain)
     {
         _brain = brain;
+        if (_brain.Entity is Cat) Mod_Wave.OnWaveReload += M_Wave_OnWaveReload;
     }
 
-    public virtual void OnUpdate()
-    {
-        //
-    }
-
+    public virtual void OnUpdate() { }
     public virtual void OnExit()
     {
-        //
+        if (_brain.Entity is Cat) Mod_Wave.OnWaveReload -= M_Wave_OnWaveReload;
     }
 
     protected bool IsInFollowRange()
@@ -29,11 +26,20 @@ public abstract class State
         {
             if (target.gameObject.layer == 8)
             {
-                _brain.Target = target.gameObject;
-                return true;
+                Mouse m = target.GetComponentInParent<Mouse>();
+
+                if ((m.IsBoss || m.Attacker == null) && _brain.Target == null)
+                {
+                    m.Attacker = _brain.Entity as Cat;
+                    _brain.Target = target.gameObject;
+                    //Debug.Log($"{_brain.Entity.name} is targeting {m.name}");
+                    return true;
+                }
+                else if (m.Attacker == _brain.Entity as Cat) return true;
             }
         }
 
+        _brain.Target = null;
         return false;
     }
 
@@ -52,5 +58,12 @@ public abstract class State
     protected void FollowTarget()
     {
         _brain.transform.position = Vector3.MoveTowards(_brain.transform.position, _brain.Target.transform.position, _brain.Entity.Speed * Time.deltaTime);
+    }
+
+    protected void M_Wave_OnWaveReload()
+    {
+        if (_brain.Entity is not Cat) return;
+        (_brain.Entity as Cat).WakeUp();
+        _brain.ChangeState(_brain.Idle);
     }
 }

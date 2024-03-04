@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 2_AlbinoMouse
   m_EditorClassIdentifier: 
   Health: 10
-  Speed: 6
+  Speed: 2
   SatiationRate: 10
   Sprite: {fileID: 0}

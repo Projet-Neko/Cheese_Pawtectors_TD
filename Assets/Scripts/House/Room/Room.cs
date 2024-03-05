@@ -1,19 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum Orientation
-{
-    North,
-    East,
-    South,
-    West
-}
+using UnityEngine.UIElements;
 
 public class Room : MonoBehaviour
 {
     protected bool[] _openings = new bool[4];
-    protected Orientation _orientation = Orientation.North;
 
     // Start is called before the first frame update
     void Start()
@@ -27,16 +19,35 @@ public class Room : MonoBehaviour
         
     }
 
-    protected void ChangeOrientation()
+    protected void RotationClockwise()
     {
-        if (_orientation == Orientation.West)
-            _orientation = Orientation.North;
-        else
-            ++_orientation;
+        Vector3 rotation = transform.eulerAngles;
+        rotation.z -= 90;
+
+        if (rotation.z < 0)
+            rotation.z += 360;
+
+        transform.eulerAngles = rotation;
 
         bool temp = _openings[3];
         for (int i = 3; i > 0; --i)
             _openings[i] = _openings[i - 1];
         _openings[0] = temp;
+    }
+
+    protected void RotationAnticlockwise()
+    {
+        Vector3 rotation = transform.eulerAngles;
+        rotation.z += 90;
+
+        if (rotation.z >= 360)
+            rotation.z -= 360;
+
+        transform.eulerAngles = rotation;
+
+        bool temp = _openings[0];
+        for (int i = 0; i < 3; ++i)
+            _openings[i] = _openings[i + 1];
+        _openings[3] = temp;
     }
 }

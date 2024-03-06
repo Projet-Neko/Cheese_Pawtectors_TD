@@ -3,15 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public enum Currency
-{
-    Meat, Pawsie, Meowstone
-}
-
 [Serializable]
 public class Data
 {
-    public Dictionary<Currency, int> Currencies = new();
+    public List<int> AmountOfPurchases;
 
     public void Init()
     {
@@ -42,9 +37,6 @@ public class Data
 
     public void InitEconomy()
     {
-        foreach (var currency in Enum.GetValues(typeof(Currency)))
-        {
-            Currencies.Add((Currency)currency, 0);
-        }
+        //
     }
 }

@@ -5,21 +5,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Currency
+{
+    Meat, Pawsie, Meowstone
+}
+
 public class Mod_Economy : Mod
 {
-    public readonly Dictionary<Currency, int> Currencies = new(); //Player's currencies
+    public static event Action OnInitComplete;
 
-    public int Meat => _meat;
     public List<int> CatPrices => _catPrices;
 
-    private int _meat;
+    // Local currencies
+    public Dictionary<Currency, int> Currencies => _currencies;
+    private readonly Dictionary<Currency, int> _currencies = new();
+
     // Store the number of purchases for each cat index: catLevel, value: nbOfPurchasesOfCatsOfThisLevel
-    private List<int> _amountOfPurchases; 
+    private List<int> _amountOfPurchases; // TODO -> add to database
     private List<int> _catPrices;
 
     // PlayFab Catalog
     private readonly List<CatalogItem> _catalogItems = new();
-    private readonly Dictionary<string, string> _currencies = new();
+    private readonly Dictionary<string, Currency> _currenciesNameById = new();
+    private readonly Dictionary<Currency, string> _currenciesIdByName = new();
+
+    private bool _isInitComplete = false;
+
+    private Timer _timer = new(60);
 
     private void Awake()
     {
@@ -33,13 +45,12 @@ public class Mod_Economy : Mod
 
     private void Entity_OnDeath(Entity obj)
     {
-        if (obj is Mouse) AddMeat(obj.Level);
+        if (obj is Mouse) AddCurrency(Currency.Meat, obj.Level);
     }
 
     public override void Init(GameManager gm)
     {
         base.Init(gm);
-        _meat = 10000; // TODO -> get from database
         _amountOfPurchases = new();
         _catPrices = new();
 
@@ -49,30 +60,31 @@ public class Mod_Economy : Mod
 
             int n = GameManager.Instance.Cats[i].Level;
             _catPrices.Add(100 * (n - 1) + (100 * (int)Mathf.Pow(1.244415f, n - 1)));
+            // TODO -> init with amount of purchases
         }
+
+        StartCoroutine(EconomyDataRequest());
     }
 
     #region Cat Adoption
     public bool CanAdopt(int catLevel) 
     {
-        if (_meat < _catPrices[catLevel])
+        if (_currencies[Currency.Meat] < _catPrices[catLevel])
         {
             Debug.Log($" You can't adopt this cat not enough money!");
             return false;
         }
 
-        RemoveMeat(_catPrices[catLevel]);
+        RemoveCurrency(Currency.Meat, _catPrices[catLevel]);
         IncreasePrice(catLevel);
 
         return true;
     }
-
     private void IncreasePrice(int catLevel)
     {
         _amountOfPurchases[catLevel]++;
         _catPrices[catLevel] = _catPrices[catLevel] + (_catPrices[catLevel] / 100 * 5);
     }
-
     public int GetCheapestCatIndex()
     {
         int cheapestIndex = 0;
@@ -88,49 +100,33 @@ public class Mod_Economy : Mod
     #endregion
 
     #region Currencies
-    public void AddMeat(int amount)
+    public void AddCurrency(Currency currency, int amount)
     {
-        _meat += amount;
-        Debug.Log($"Added {amount} Meat ! Current meat = {_meat}");
+        _currencies[currency] += amount;
+        Debug.Log($"Added {amount} {currency} ! Current {currency} = {_currencies[currency]}");
     }
-
-    public void RemoveMeat(int amount)
+    public void RemoveCurrency(Currency currency, int amount)
     {
-        _meat -= amount;
-        Debug.Log($"Removed {amount} Meat ! Current meat = {_meat}");
+        _currencies[currency] -= amount;
+        Debug.Log($"Removed {amount} {currency} ! Current {currency} = {_currencies[currency]}");
     }
+    public IEnumerator UpdateCurrency(Currency currency, int amount)
+    {
+        yield return _gm.StartAsyncRequest($"Update {currency}...");
 
-    //public IEnumerator AddCurrency(Currency currency, int amount)
-    //{
-    //    yield return _gm.StartAsyncRequest($"Adding {amount} {currency}...");
-
-    //    PlayFabEconomyAPI.AddInventoryItems(new()
-    //    {
-    //        Entity = new() { Id = _gm.Entity.Id, Type = _gm.Entity.Type },
-    //        Amount = amount,
-    //        Item = new()
-    //        {
-    //            AlternateId = new()
-    //            {
-    //                Type = "FriendlyId",
-    //                Value = currency.ToString()
-    //            }
-    //        }
-    //    }, res =>
-    //    {
-    //        Currencies[currency] += amount;
-    //        //_gm.InvokeOnCurrencyUpdate();
-    //        //_gm.InvokeOnCurrencyGained(currency, amount);
-    //        _gm.EndRequest($"Added {amount} {currency} !");
-    //    }, _gm.OnRequestError);
-    //}
+        PlayFabEconomyAPI.UpdateInventoryItems(new()
+        {
+            Entity = new() { Id = _gm.Entity.Id, Type = _gm.Entity.Type },
+            Item = new()
+            {
+                Amount = amount,
+                Id = _currenciesIdByName[currency]
+            }
+        }, res => _gm.EndRequest($"Updated {currency} !"), _gm.OnRequestError);
+    }
     #endregion
 
-    public void GetEconomyData()
-    {
-        StartCoroutine(EconomyDataRequest());
-    }
-
+    #region Economy Initialization
     public IEnumerator EconomyDataRequest()
     {
         yield return _gm.StartAsyncRequest("Getting game currencies and catalog items...");
@@ -141,7 +137,7 @@ public class Mod_Economy : Mod
             Count = 50
         }, res =>
         {
-            //CatalogItems.AddRange(res.Items);
+            _catalogItems.AddRange(res.Items);
             _gm.EndRequest();
 
             // Relance la requête si tous les items n'ont pas été récupérés
@@ -152,22 +148,18 @@ public class Mod_Economy : Mod
                 return;
             }
 
-            //InitEconomyData();
+            InitEconomyData();
         }, _gm.OnRequestError);
     }
-
     private void InitEconomyData()
     {
         foreach (CatalogItem item in _catalogItems)
         {
-            //TODO -> Get bundle items and shops
-
-            // Initialise la liste des currencies du joueur à 0
             if (item.Type == "currency")
             {
-                _currencies[item.Id] = item.AlternateIds[0].Value;
-                //CurrencyData data = JsonUtility.FromJson<CurrencyData>(item.DisplayProperties.ToString());
-                Currencies[Enum.Parse<Currency>(_currencies[item.Id])] = 0;
+                _currenciesNameById[item.Id] = Enum.Parse<Currency>(item.AlternateIds[0].Value);
+                _currenciesIdByName[_currenciesNameById[item.Id]] = item.Id;
+                _currencies[_currenciesNameById[item.Id]] = 0;
             }
             //else if (item.Type == "catalogItem" || item.Type == "bundle")
             //{
@@ -182,19 +174,8 @@ public class Mod_Economy : Mod
             //}
         }
 
-        //if (_manager.IsFirstLogin)
-        //{
-        //    StartCoroutine(CreateInitialCurrencies());
-        //    return;
-        //}
-
-        PlayFabClientAPI.GetUserInventory(new(), res =>
-        {
-            //Energy = res.VirtualCurrency["EN"];
-            GetPlayerInventory();
-        }, _gm.OnRequestError);
+        PlayFabClientAPI.GetUserInventory(new(), res => GetPlayerInventory(), _gm.OnRequestError);
     }
-
     private void GetPlayerInventory()
     {
         _gm.StartRequest("Getting player's inventory...");
@@ -214,10 +195,7 @@ public class Mod_Economy : Mod
                 //    continue;
                 //}
 
-                if (item.Type == "currency")
-                {
-                    Currencies[Enum.Parse<Currency>(_currencies[item.Id])] = (int)item.Amount;
-                }
+                if (item.Type == "currency") Currencies[_currenciesNameById[item.Id]] = (int)item.Amount;
                 //else if (item.Type == "catalogItem")
                 //{
                 //    Type type = Type.GetType(_itemsById[item.Id]);
@@ -231,8 +209,15 @@ public class Mod_Economy : Mod
             //    return;
             //}
 
-            //_gm.Data.UpdateEquippedGears();
-            //OnInitComplete?.Invoke();
+            OnInitComplete?.Invoke();
+            DebugOnly();
         }, _gm.OnRequestError);
+    }
+    #endregion
+
+    private void DebugOnly()
+    {
+        Debug.Log("--- Economy Debug Function ---");
+        _currencies[Currency.Meat] = 10000;
     }
 }

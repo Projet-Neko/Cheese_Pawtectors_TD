@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     public string Token { get; set; }
     public PlayFab.ClientModels.EntityKey Entity => _account.Entity;
     //public bool AccountChecked { get; set; }
-    //public bool DailiesCheck { get; set; }
     //public bool IsObsolete { get; private set; }
 
     // --- Datas ---
@@ -48,26 +47,43 @@ public class GameManager : MonoBehaviour
     public void AlbinoHasSpawned() => _entities.AlbinoHasSpawned();
 
     // EconomyMod
-    public int Meat => _economy.Meat;
+    public Dictionary<Currency, int> Currencies => _economy.Currencies;
     public List<int> CatPrices => _economy.CatPrices;
 
     public int GetCheapestCatIndex() => _economy.GetCheapestCatIndex();
     public bool CanAdopt(int catLevel) => _economy.CanAdopt(catLevel);
-    public void AddMeat(int amount) => _economy.AddMeat(amount);
-    public void RemoveMeat(int amount) => _economy.RemoveMeat(amount);
+    public void AddCurrency(Currency currency, int amount) => _economy.AddCurrency(currency, amount);
+    public void RemoveCurrency(Currency currency, int amount) => _economy.RemoveCurrency(currency, amount);
 
     // AccountMod
-    public static event Action OnLoginSuccess;
+    //public static event Action OnLoginSuccess;
     #endregion
 
     private void Awake()
     {
         if (!Init()) return;
-
         _entities.Init(this);
-        _economy.Init(this);
         _wave.Init(this);
         _account.Init(this);
+
+        Mod_Account.OnInitComplete += Mod_Account_OnInitComplete;
+        Mod_Economy.OnInitComplete += Mod_Economy_OnInitComplete;
+    }
+
+    private void OnDestroy()
+    {
+        Mod_Account.OnInitComplete -= Mod_Account_OnInitComplete;
+        Mod_Economy.OnInitComplete -= Mod_Economy_OnInitComplete;
+    }
+
+    private void Mod_Account_OnInitComplete()
+    {
+        _economy.Init(this);
+    }
+
+    private void Mod_Economy_OnInitComplete()
+    {
+        StartCoroutine(StartUpdates());
     }
 
     private bool Init()
@@ -84,8 +100,19 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+    private IEnumerator StartUpdates()
+    {
+        Debug.Log("Start game updates...");
+
+        while (true)
+        {
+            yield return new WaitForSeconds(60);
+            foreach (var currency in Currencies) yield return _economy.UpdateCurrency(currency.Key, currency.Value);
+        }
+    }
+
     #region AccountMod
-    public void InvokeOnLoginSuccess() => OnLoginSuccess?.Invoke();
+    //public void InvokeOnLoginSuccess() => OnLoginSuccess?.Invoke();
     #endregion
 
     #region Database Requests
@@ -96,7 +123,6 @@ public class GameManager : MonoBehaviour
         if (_requests > 1) yield return new WaitUntil(() => _requests == request);
         //Debug.Log($"starting async request... - {_requests} requests remaining.");
     }
-
     public int StartRequest(string log = null)
     {
         OnLoadingStart?.Invoke();
@@ -106,7 +132,6 @@ public class GameManager : MonoBehaviour
         if (!string.IsNullOrEmpty(log)) Debug.Log(log);
         return currentRequest;
     }
-
     public void EndRequest(string log = null)
     {
         OnLoadingEnd?.Invoke();
@@ -119,7 +144,6 @@ public class GameManager : MonoBehaviour
             OnSuccessMessage?.Invoke(log);
         }
     }
-
     public void OnRequestError(PlayFabError error)
     {
         Debug.LogError(error.GenerateErrorReport());

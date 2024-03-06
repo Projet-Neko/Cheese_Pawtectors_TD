@@ -38,7 +38,6 @@ public class Mod_Entities : Mod
 
     private void Cheese_OnInit(Cheese cheese)
     {
-        Debug.Log("Cheese found.");
         _cheese = cheese;
     }
 

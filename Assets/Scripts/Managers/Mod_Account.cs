@@ -1,5 +1,6 @@
 using PlayFab;
 using PlayFab.ClientModels;
+using System;
 using System.Collections;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -7,6 +8,8 @@ using UnityEngine;
 
 public class Mod_Account : Mod
 {
+    public static event Action OnInitComplete;
+
     public PlayFab.ClientModels.EntityKey Entity => _entity;
     public string PlayFabId => _playFabId;
 
@@ -160,8 +163,8 @@ public class Mod_Account : Mod
     {
         _isLoggedIn = true;
         Debug.Log("Login complete !");
-        _gm.InvokeOnLoginSuccess();
-        //_gm.Testing();
+        OnInitComplete?.Invoke();
+        //_gm.InvokeOnLoginSuccess();
     }
     public IEnumerator UpdateName(string name)
     {

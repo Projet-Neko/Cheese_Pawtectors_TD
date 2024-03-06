@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CheeseRoom : Room
 {
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        _security = RoomSecurity.Moved;
+
         _openings[0] = false;
         _openings[1] = false;
         _openings[2] = false;

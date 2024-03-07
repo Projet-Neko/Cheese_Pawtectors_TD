@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public enum RoomPattern
 {
     CheeseRoom,
@@ -26,8 +27,15 @@ public enum RoomSecurity
     Overwritten
 }
 
+
 public class Room : MonoBehaviour
 {
+
+    [SerializeField] private GameObject _canva;
+    private bool _canvaEnabled = false;
+    private bool _canMove;
+    private Vector3 _mousePosition;
+
     protected RoomSecurity _security;
     protected bool[] _openings = new bool[4];
 
@@ -36,16 +44,43 @@ public class Room : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _canMove = false;
     }
 
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+
+        if (_canMove)
+        {
+            _mousePosition =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            _mousePosition.z = 0;
+            transform.position = _mousePosition;
+
+
+        }
     }
 
-    protected void RotationClockwise()
+    public void OnMouseDown()
+    {
+        if (_canMove)
+        {
+            _canMove = false;
+        }
+        else
+        {
+
+            _canvaEnabled = !_canvaEnabled;
+            _canva.SetActive(_canvaEnabled);
+        }
+    }
+
+    public void ShowUI()
+    {
+        _canva.SetActive(true);
+    }
+
+    public void RotationClockwise()
     {
         Vector3 rotation = transform.eulerAngles;
         rotation.z -= 90;
@@ -61,7 +96,7 @@ public class Room : MonoBehaviour
         _openings[0] = temp;
     }
 
-    protected void RotationAnticlockwise()
+    public void RotationAnticlockwise()
     {
         Vector3 rotation = transform.eulerAngles;
         rotation.z += 90;
@@ -76,4 +111,18 @@ public class Room : MonoBehaviour
             _openings[i] = _openings[i + 1];
         _openings[3] = temp;
     }
+
+    public void Move()
+    {
+        _canMove = true;
+        _canva.SetActive(false);
+    }
+
+    public void Delete()
+    {
+
+        Destroy(this.transform.parent.gameObject);
+    }
+
+
 }

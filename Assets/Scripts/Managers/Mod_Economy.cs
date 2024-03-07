@@ -110,7 +110,7 @@ public class Mod_Economy : Mod
         _currencies[currency] -= amount;
         Debug.Log($"Removed {amount} {currency} ! Current {currency} = {_currencies[currency]}");
     }
-    public IEnumerator UpdateCurrency(Currency currency, int amount)
+    public IEnumerator UpdateCurrency(Currency currency)
     {
         yield return _gm.StartAsyncRequest($"Update {currency}...");
 
@@ -119,7 +119,7 @@ public class Mod_Economy : Mod
             Entity = new() { Id = _gm.Entity.Id, Type = _gm.Entity.Type },
             Item = new()
             {
-                Amount = amount,
+                Amount = _currencies[currency],
                 Id = _currenciesIdByName[currency]
             }
         }, res => _gm.EndRequest($"Updated {currency} !"), _gm.OnRequestError);
@@ -209,11 +209,51 @@ public class Mod_Economy : Mod
             //    return;
             //}
 
-            OnInitComplete?.Invoke();
-            DebugOnly();
+            StartCoroutine(CheckOfflineCurrency());
         }, _gm.OnRequestError);
     }
+
+    private IEnumerator CheckOfflineCurrency()
+    {
+        if (GameManager.Instance.LastLogin != null)
+        {
+            int meatGained = MeatGainedOffline(GameManager.Instance.LastLogin);
+            Debug.Log($"Gained {meatGained} meat offline !");
+            AddCurrency(Currency.Meat, meatGained);
+            yield return UpdateCurrency(Currency.Meat);
+        }
+        
+        OnInitComplete?.Invoke();
+        DebugOnly();
+    }
     #endregion
+
+    int MeatPerSecond()
+    {
+        int mouseHealth = 4 + GameManager.Instance.MouseLevel;
+
+        // TODO -> update speed variable with levels
+        float catDPS = GameManager.Instance.GetLastUnlockedCatLevel() / 2.5f;
+        float secondsToKill = mouseHealth / catDPS;
+
+        float shootRate = 1 / secondsToKill;
+
+        int meatGained = GameManager.Instance.MouseLevel / GameManager.Instance.SpawnTime;
+
+        return (int)(meatGained / shootRate);
+    }
+
+    int MeatGainedOffline(DateTime? timeOffline)
+    {
+        TimeSpan ts = DateTime.UtcNow.Subtract(timeOffline.Value);
+        int seconds = (int)ts.TotalSeconds;
+        Debug.Log($"{seconds}s since last login.");
+
+        int timeClamped = Mathf.Clamp(seconds, 0, 7200);
+
+        return MeatPerSecond() * timeClamped;
+    }
+
 
     private void DebugOnly()
     {

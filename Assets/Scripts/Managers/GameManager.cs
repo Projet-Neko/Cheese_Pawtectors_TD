@@ -45,6 +45,10 @@ public class GameManager : MonoBehaviour
     public bool CanSpawnAlbino => _entities.CanSpawnAlbino;
 
     public void AlbinoHasSpawned() => _entities.AlbinoHasSpawned();
+    public int GetLastUnlockedCatLevel() => _entities.GetLastUnlockedCatLevel();
+
+    // WaveMod
+    public int SpawnTime => _wave.SpawnTime;
 
     // EconomyMod
     public Dictionary<Currency, int> Currencies => _economy.Currencies;
@@ -57,6 +61,7 @@ public class GameManager : MonoBehaviour
 
     // AccountMod
     //public static event Action OnLoginSuccess;
+    public DateTime? LastLogin => _account.LastLogin;
     #endregion
 
     private void Awake()
@@ -107,7 +112,7 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(60);
-            foreach (var currency in Currencies) yield return _economy.UpdateCurrency(currency.Key, currency.Value);
+            foreach (var currency in Currencies) yield return _economy.UpdateCurrency(currency.Key);
         }
     }
 

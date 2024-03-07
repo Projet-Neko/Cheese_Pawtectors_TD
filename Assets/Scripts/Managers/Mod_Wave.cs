@@ -8,11 +8,13 @@ public class Mod_Wave : Mod
     public static event Action OnWaveReload;
 
     [SerializeField] private GameObject _mousePrefab;
+    [SerializeField] private int _spawnTime = 1;
 
     [Header("Options")]
     [SerializeField] private bool _enableWaves = false;
 
     public int WaveNumber => _waveNumber;
+    public int SpawnTime => _spawnTime;
 
     private int _waveNumber;
     private int _enemyNumber;

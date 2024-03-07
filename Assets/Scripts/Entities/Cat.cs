@@ -15,12 +15,10 @@ public class Cat : Entity
 
     public Color CatColor => _catColor;
     public bool IsInStorageMode => _isInStorageMode;
-    public CatState State => _state;
 
     private CatSO _data;
     private Color _catColor;
     private bool _isInStorageMode;
-    private CatState _state;
 
     private void Awake()
     {
@@ -38,8 +36,6 @@ public class Cat : Entity
         _level = level;
         _damage = level; // TODO -> change formula
         _catLevel.text = _level.ToString();
-
-        _state = level <= 1 ? CatState.Unlock : CatState.Lock;
 
         _baseHealth = 50 + (_level * 2) - 2;
         _currentHealth = 0;

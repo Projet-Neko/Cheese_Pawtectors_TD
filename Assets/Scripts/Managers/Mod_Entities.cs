@@ -17,6 +17,8 @@ public class Mod_Entities : Mod
     private int _mouseLevel = 1;
     private bool _canSpawnAlbino = true;
 
+    // TODO -> check cats unlocked
+
     private void OnDestroy()
     {
         Cheese.OnInit -= Cheese_OnInit;
@@ -50,5 +52,18 @@ public class Mod_Entities : Mod
     public void AlbinoHasSpawned()
     {
         _canSpawnAlbino = false;
+    }
+
+    public int GetLastUnlockedCatLevel()
+    {
+        int level = 1;
+
+        for (int i = 0; i < _cats.Length; i++)
+        {
+            if (_cats[i].State != CatState.Unlock) break;
+            level = _cats[i].Level;
+        }
+
+        return level;
     }
 }

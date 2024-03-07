@@ -12,6 +12,7 @@ public class Mod_Account : Mod
 
     public PlayFab.ClientModels.EntityKey Entity => _entity;
     public string PlayFabId => _playFabId;
+    public DateTime? LastLogin => _lastLogin;
 
     // PlayFab datas
     private PlayFab.ClientModels.EntityKey _entity;
@@ -26,6 +27,8 @@ public class Mod_Account : Mod
     private bool _isFirstLogin;
     private bool _isLoggedIn = false;
     private string _username;
+
+    private DateTime? _lastLogin;
 
     public override void Init(GameManager gm)
     {
@@ -120,7 +123,8 @@ public class Mod_Account : Mod
         _entity = result.EntityToken.Entity;
 
         // --- Check if first login
-        _isFirstLogin = result.LastLoginTime == null;
+        _lastLogin = result.LastLoginTime;
+        _isFirstLogin = _lastLogin == null;
 
         //Use this line once to test PlayFab Register & Login
         //yield return RegisterAccount("testing@gmail.com", "testing");

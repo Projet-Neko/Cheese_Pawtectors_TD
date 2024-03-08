@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static event Action<string> OnSuccessMessage;
 
     // --- Loading events ---
+    public static event Action OnInitComplete;
     public static event Action OnLoadingStart;
     //public static event Action OnBigLoadingStart;
     public static event Action OnLoadingEnd;
@@ -111,6 +112,7 @@ public class GameManager : MonoBehaviour
     {
         if (LastLogin == null) StartCoroutine(_account.UpdateData());
         StartCoroutine(StartUpdates());
+        OnInitComplete?.Invoke();
     }
     #endregion
 

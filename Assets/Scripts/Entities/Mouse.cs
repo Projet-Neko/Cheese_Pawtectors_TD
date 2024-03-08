@@ -22,9 +22,8 @@ public class Mouse : Entity
     public override void Init()
     {
         Attacker = null;
-        _data = GameManager.Instance.Mouses[IsAlbino()];
+        _data = GameManager.Instance.Mouses[MouseType()];
 
-        // TODO -> _isBoss if wave % 10
 
         _level = GameManager.Instance.MouseLevel;
 
@@ -49,23 +48,25 @@ public class Mouse : Entity
         if (_forceAlbino || (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1))
         {
             GameManager.Instance.AlbinoHasSpawned();
+            // 1 = albino mouse
             return 1;
         }
 
         return 0;
     }
 
-    private int IsBossMouse()
+    private int MouseType()
     {
-        // Vérifier si le numéro de la vague est un multiple de 10
-        if (GameManager.Instance)
-        //._wave._waveNumber % 10 == 0)
-
+        if (GameManager.Instance.IsBossWave())
         {
-
+            _isBoss = true;
+            // 3 = boss
             return 3;
         }
-        return 0;
+        else
+        {
+            return IsAlbino();
+        }
     }
 
     private void Move()

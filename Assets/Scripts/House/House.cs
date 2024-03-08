@@ -1,22 +1,119 @@
-using System.Collections;
-using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class House : MonoBehaviour
 {
-    private List<Room> roomsAvailable = new List<Room>();
-    private Room[,] rooms = new Room[30,30];
+    [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
+
+    private const int _maxRooms = 30;
+    private const int _minRooms = 5;
+
+    private int _currentRoomNumber;
+
+    //private List<Room> _roomsAvailable = new List<Room>();
+
+    private GameObject[,] _roomsGrid = new GameObject[_maxRooms,_maxRooms];
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Create the Void Rooms and one Start Room, visible in the beginning
+        _currentRoomNumber = _minRooms;
+        for (int i = 0; i < _currentRoomNumber; i++)
+        {
+            for (int j = 0; j < _currentRoomNumber; j++)
+            {
+                GameObject room;
+                // Place the Start Room
+                if (i == 0 && j == _currentRoomNumber / 2)
+                    room = Instantiate(_rooms[RoomPattern.StartRoom], new Vector3(i, j, 0), Quaternion.identity);
+
+                // Place the Cheese Room
+                else if (i == _currentRoomNumber-1 && j == _currentRoomNumber / 2)
+                    room = Instantiate(_rooms[RoomPattern.CheeseRoom], new Vector3(i, j, 0), Quaternion.identity);
+
+                // Place Void Rooms
+                else
+                    room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(i, j, 0), Quaternion.identity);
+
+                room.transform.parent = transform;
+                _roomsGrid[i, j] = room;
+            }
+        }
+
+        // TO DO : TO REMOVE (is a test)
+        AddRoom(1, 1, RoomPattern.CorridorRoom);
+        AddRoom(2, 1, RoomPattern.CrossraodRoom);
+        RemoveRoom(2, 1);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void AddRoom(int x, int y, RoomPattern pattern)
+    {
+        Room room = _roomsGrid[x, y].GetComponent<Room>();
+        if (!room)
+        {
+            Debug.Log("No room found at position (" + x + ", " + y + ")");
+            return;
+        }
+
+        if (room.Security == RoomSecurity.Overwritten)
+        {
+            // Destroy the old room
+            Destroy(_roomsGrid[x, y]);
+
+            // Create the new room
+            GameObject roomObject = Instantiate(_rooms[pattern], new Vector3(x, y, 0), Quaternion.identity);
+            roomObject.transform.parent = transform;
+            _roomsGrid[x, y] = roomObject;
+        }
+        else
+            Debug.Log("Room not overwritable, security = " + _roomsGrid[x, y].GetComponent<Room>().Security);
+    }
+
+    public void RemoveRoom(int x, int y)
+    {
+        Room room = _roomsGrid[x, y].GetComponent<Room>();
+        if (!room)
+        {
+            Debug.Log("No room found at position (" + x + ", " + y + ")");
+            return;
+        }
+
+        if (room.Security == RoomSecurity.MovedAndRemoved)
+        {
+            // Destroy the old room
+            Destroy(_roomsGrid[x, y]);
+
+            // Create the new room
+            GameObject roomObject = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(x, y, 0), Quaternion.identity);
+            roomObject.transform.parent = transform;
+            _roomsGrid[x, y] = roomObject;
+        }
+    }
+
+    public void MoveRoom(int xStart, int yStart, int xEnd, int yEnd)
+    {
+        Room room = _roomsGrid[xEnd, yEnd].GetComponent<Room>();
+        if (!room)
+        {
+            Debug.Log("No room found at position (" + xEnd + ", " + yEnd + ")");
+            return;
+        }
+
+        RoomSecurity roomSecurityStart = _roomsGrid[xStart, yStart].GetComponent<Room>().Security;
+        if ((roomSecurityStart == RoomSecurity.MovedAndRemoved || roomSecurityStart == RoomSecurity.Moved) && _roomsGrid[xStart, yStart].GetComponent<Room>().Security == RoomSecurity.Overwritten)
+        {
+            GameObject tmpRoom = _roomsGrid[xStart, yStart];
+            _roomsGrid[xStart, yStart] = _roomsGrid[xEnd, yEnd];
+            _roomsGrid[xEnd, yEnd] = tmpRoom;
+        }
     }
 }

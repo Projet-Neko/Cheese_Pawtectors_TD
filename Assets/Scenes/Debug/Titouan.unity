@@ -279,7 +279,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1018826103
@@ -354,6 +354,64 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.12099805, y: -1.0241334, z: -0.050237566}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1195754101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1195754103}
+  - component: {fileID: 1195754102}
+  m_Layer: 0
+  m_Name: House
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1195754102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195754101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098e7a1116a1cf8418edfea0b3bd16c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rooms:
+    _serializedList:
+    - Key: 0
+      Value: {fileID: 7812398506617135315, guid: 04d53dd7769607b469a76644c0f9ac25, type: 3}
+    - Key: 1
+      Value: {fileID: 104032388545238699, guid: d8944dbd0f37f6447926bc4ea325426b, type: 3}
+    - Key: 2
+      Value: {fileID: 4366641987968570484, guid: 13484126a83c4cc4088d338e72f851b3, type: 3}
+    - Key: 3
+      Value: {fileID: 3913000099428562036, guid: 489e24520099990468a4fa812e0e61b4, type: 3}
+    - Key: 4
+      Value: {fileID: 675617977283199060, guid: 31da9b6ca26f9cf4ea088ac4657ef23e, type: 3}
+    - Key: 5
+      Value: {fileID: 675617977283199060, guid: a5b17ab4f887f644ebf6d3e9dc129268, type: 3}
+--- !u!4 &1195754103
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195754101}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -459,3 +517,4 @@ SceneRoots:
   - {fileID: 1152736539}
   - {fileID: 678773359}
   - {fileID: 1018826103}
+  - {fileID: 1195754103}

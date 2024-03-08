@@ -6,7 +6,7 @@ public class Cheese : Entity
 
     private void Awake()
     {
-        M_Wave.OnWaveReload += OnWaveReload;
+        Mod_Wave.OnWaveReload += OnWaveReload;
     }
 
     private void OnWaveReload()

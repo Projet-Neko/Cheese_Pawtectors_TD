@@ -13,4 +13,5 @@ public class CatSO : ScriptableObject
     public Sprite SpriteAbove;
     public Sprite SpriteFront;
     public string Lore;
+    public CatState State;
 }

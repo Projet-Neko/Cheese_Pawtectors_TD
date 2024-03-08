@@ -65,10 +65,13 @@ public class Mod_Waves : Mod
     {
         int index = 0;
         _hasCompleteSpawning = false;
-
+        int enemyToSpawn = 10;
         if (cooldown) yield return new WaitForSeconds(.5f);
-
-        while (_enemyNumber < 10)
+        if (IsBossWave())
+        {
+            enemyToSpawn = 1;
+        }
+        while (_enemyNumber < enemyToSpawn)
         {
             Mouse m = Instantiate(_mousePrefab, _SpawnPos, Quaternion.identity).GetComponent<Mouse>();
             m.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
@@ -87,6 +90,16 @@ public class Mod_Waves : Mod
     {
         if (obj is Cheese) Reload();
         else if (obj is Mouse) _enemyNumber--;
+    }
+
+    public bool IsBossWave()
+    {
+        // Check if the wave number is a multiple of 10
+        if (_waveNumber == 0)
+        { 
+            return false; 
+        }
+        return _waveNumber % 10 == 0;
     }
 
     public void NextWave()

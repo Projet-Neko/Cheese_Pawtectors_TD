@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO -> vérifier si le jeu est à jour
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }

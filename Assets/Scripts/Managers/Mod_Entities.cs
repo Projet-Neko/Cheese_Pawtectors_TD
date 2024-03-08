@@ -22,7 +22,7 @@ public class Mod_Entities : Mod
     private void OnDestroy()
     {
         Cheese.OnInit -= Cheese_OnInit;
-        Mod_Wave.OnWaveReload -= M_Wave_OnWaveReload;
+        Mod_Waves.OnWaveReload -= M_Wave_OnWaveReload;
     }
 
     public override void Init(GameManager gm)
@@ -35,7 +35,7 @@ public class Mod_Entities : Mod
         _mouses.OrderBy(x => x.name);
 
         Cheese.OnInit += Cheese_OnInit;
-        Mod_Wave.OnWaveReload += M_Wave_OnWaveReload;
+        Mod_Waves.OnWaveReload += M_Wave_OnWaveReload;
     }
 
     private void Cheese_OnInit(Cheese cheese)

@@ -398,7 +398,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.2509804, g: 0.2627451, b: 0.34901962, a: 1}
+    m_NormalColor: {r: 1, g: 0.91372555, b: 0.86666673, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2054,6 +2054,7 @@ RectTransform:
   - {fileID: 1690283262}
   - {fileID: 1037152215}
   - {fileID: 2140710582}
+  - {fileID: 271763226}
   - {fileID: 1317773356}
   - {fileID: 1516768882}
   - {fileID: 1308874317}
@@ -2081,7 +2082,6 @@ RectTransform:
   - {fileID: 255633458}
   - {fileID: 2010647230}
   - {fileID: 418023587}
-  - {fileID: 271763226}
   m_Father: {fileID: 1495176541}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2685,7 +2685,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.2509804, g: 0.2627451, b: 0.34901962, a: 1}
+    m_NormalColor: {r: 1, g: 0.91372555, b: 0.86666673, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2770,7 +2770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scene: BlockOut_Shop
+  _scene: BO_TitleScreen
 --- !u!1001 &872775648
 PrefabInstance:
   m_ObjectHideFlags: 0

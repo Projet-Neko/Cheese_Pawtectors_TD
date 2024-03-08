@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CatalogSlot : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private TMP_Text _name;
+    [SerializeField] private TMP_Text _level;
+    [SerializeField] private TMP_Text _price;
+    [SerializeField] private SpriteRenderer _renderer;
 
-    // Update is called once per frame
-    void Update()
+    public void Init(CatSO catSO)
     {
-        
+        _name.text = catSO.Name;
+        _level.text = catSO.Level.ToString();
+        _price.text = GameManager.Instance.CatPrices[catSO.Level - 1].ToString();
+        _renderer.sprite = catSO.SpriteFront;
     }
 }

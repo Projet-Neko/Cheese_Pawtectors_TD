@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
     // AccountMod
     //public static event Action OnLoginSuccess;
     public DateTime? LastLogin => _account.LastLogin;
+    public bool IsLoggedIn => _account.IsLoggedIn;
     #endregion
 
     private void Awake()
@@ -88,6 +89,7 @@ public class GameManager : MonoBehaviour
 
     private void Mod_Economy_OnInitComplete()
     {
+        if (LastLogin == null) StartCoroutine(_account.UpdateData());
         StartCoroutine(StartUpdates());
     }
 
@@ -113,6 +115,7 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(60);
             foreach (var currency in Currencies) yield return _economy.UpdateCurrency(currency.Key);
+            yield return _account.UpdateData();
         }
     }
 

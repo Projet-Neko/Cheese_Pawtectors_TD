@@ -260,9 +260,4 @@ public class Mod_Economy : Mod
         }, res => _gm.EndRequest($"Updated {currency} !"), _gm.OnRequestError);
     }
     #endregion
-
-    private void DebugOnly()
-    {
-        Debug.Log("--- Economy Debug Function ---");
-    }
 }

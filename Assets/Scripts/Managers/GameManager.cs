@@ -34,8 +34,9 @@ public class GameManager : MonoBehaviour
     [Header("Modules")]
     [SerializeField] private Mod_Entities _entities;
     [SerializeField] private Mod_Economy _economy;
-    [SerializeField] private Mod_Wave _wave;
+    [SerializeField] private Mod_Waves _wave;
     [SerializeField] private Mod_Account _account;
+    [SerializeField] private Mod_Clans _clans;
 
     // EntitiesMod
     public CatSO[] Cats => _entities.Cats;
@@ -74,23 +75,13 @@ public class GameManager : MonoBehaviour
 
         Mod_Account.OnInitComplete += Mod_Account_OnInitComplete;
         Mod_Economy.OnInitComplete += Mod_Economy_OnInitComplete;
+        Mod_Clans.OnInitComplete += Mod_Clans_OnInitComplete;
     }
-
     private void OnDestroy()
     {
         Mod_Account.OnInitComplete -= Mod_Account_OnInitComplete;
         Mod_Economy.OnInitComplete -= Mod_Economy_OnInitComplete;
-    }
-
-    private void Mod_Account_OnInitComplete()
-    {
-        _economy.Init(this);
-    }
-
-    private void Mod_Economy_OnInitComplete()
-    {
-        if (LastLogin == null) StartCoroutine(_account.UpdateData());
-        StartCoroutine(StartUpdates());
+        Mod_Clans.OnInitComplete -= Mod_Clans_OnInitComplete;
     }
 
     private bool Init()
@@ -106,6 +97,22 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Manager created.");
         return true;
     }
+
+    #region Gestion des events
+    private void Mod_Account_OnInitComplete()
+    {
+        _economy.Init(this);
+    }
+    private void Mod_Economy_OnInitComplete()
+    {
+        _clans.Init(this);
+    }
+    private void Mod_Clans_OnInitComplete()
+    {
+        if (LastLogin == null) StartCoroutine(_account.UpdateData());
+        StartCoroutine(StartUpdates());
+    }
+    #endregion
 
     private IEnumerator StartUpdates()
     {

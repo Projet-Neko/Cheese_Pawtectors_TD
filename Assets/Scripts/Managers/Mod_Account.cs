@@ -1,14 +1,22 @@
 using PlayFab;
 using PlayFab.ClientModels;
+using PlayFab.DataModels;
+using PlayFab.Internal;
+using System;
 using System.Collections;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using UnityEngine;
 
 public class Mod_Account : Mod
 {
+    public static event Action OnInitComplete;
+
     public PlayFab.ClientModels.EntityKey Entity => _entity;
     public string PlayFabId => _playFabId;
+    public DateTime? LastLogin => _lastLogin;
+    public bool IsLoggedIn => _isLoggedIn;
 
     // PlayFab datas
     private PlayFab.ClientModels.EntityKey _entity;
@@ -23,6 +31,8 @@ public class Mod_Account : Mod
     private bool _isFirstLogin;
     private bool _isLoggedIn = false;
     private string _username;
+
+    private DateTime? _lastLogin;
 
     public override void Init(GameManager gm)
     {
@@ -117,7 +127,8 @@ public class Mod_Account : Mod
         _entity = result.EntityToken.Entity;
 
         // --- Check if first login
-        _isFirstLogin = result.LastLoginTime == null;
+        _lastLogin = result.LastLoginTime;
+        _isFirstLogin = _lastLogin == null;
 
         //Use this line once to test PlayFab Register & Login
         //yield return RegisterAccount("testing@gmail.com", "testing");
@@ -132,9 +143,7 @@ public class Mod_Account : Mod
             _username = info.TitleInfo.DisplayName;
 
             // --- Get Account Data
-            //GetAccountData();
-
-            CompleteLogin();
+            GetUserFiles();
             yield break;
         }
 
@@ -160,8 +169,8 @@ public class Mod_Account : Mod
     {
         _isLoggedIn = true;
         Debug.Log("Login complete !");
-        _gm.InvokeOnLoginSuccess();
-        //_gm.Testing();
+        OnInitComplete?.Invoke();
+        //_gm.InvokeOnLoginSuccess();
     }
     public IEnumerator UpdateName(string name)
     {
@@ -174,6 +183,34 @@ public class Mod_Account : Mod
     }
     #endregion
 
+    #region Etape 3 : Get cloud datas if needed
+    public void GetUserFiles()
+    {
+        _gm.StartRequest("Getting user files...");
+
+        PlayFabDataAPI.GetFiles(new()
+        {
+            Entity = new() { Id = _gm.Entity.Id, Type = _gm.Entity.Type }
+        }, res =>
+        {
+            _gm.EndRequest($"Obtained {res.Metadata.Count} file(s) !");
+            GetFilesDatas(res.Metadata[_gm.Data.GetType().Name]);
+        }, _gm.OnRequestError);
+    }
+    private void GetFilesDatas(GetFileMetadata file)
+    {
+        _gm.StartRequest();
+
+        PlayFabHttp.SimpleGetCall(file.DownloadUrl, res =>
+        {
+            // TODO -> check if local data is newest
+            _gm.Data.UpdateLocalData(Encoding.UTF8.GetString(res));
+            _gm.EndRequest("Local datas updated !");
+            CompleteLogin();
+        }, error => Debug.LogError(error));
+    }
+    #endregion
+
     public IEnumerator RegisterAccount(string email, string password)
     {
         yield return _gm.StartAsyncRequest("Registering account...");
@@ -183,7 +220,7 @@ public class Mod_Account : Mod
 
         PlayFabClientAPI.AddUsernamePassword(new()
         {
-            Username = _username, //Create unique username with email
+            Username = _username,
             Email = email,
             Password = password //Password must be between 6 and 100 characters
         },
@@ -214,33 +251,30 @@ public class Mod_Account : Mod
     //    }, _gm.OnRequestError);
     //}
 
-    //public IEnumerator UpdateData()
-    //{
-    //    yield return _gm.StartAsyncRequest("Initiating data update...");
+    public IEnumerator UpdateData()
+    {
+        yield return _gm.StartAsyncRequest("Initiating data update...");
+        _gm.Data.Update();
 
-    //    PlayFabDataAPI.InitiateFileUploads(new()
-    //    {
-    //        Entity = new() { Id = _manager.Entity.Id, Type = _manager.Entity.Type },
-    //        FileNames = new() { Data.GetType().Name }
-    //    }, res =>
-    //    {
-    //        PlayFabHttp.SimplePutCall(res.UploadDetails[0].UploadUrl, Data.Serialize(), success =>
-    //        {
-    //            PlayFabDataAPI.FinalizeFileUploads(new()
-    //            {
-    //                Entity = new() { Id = _manager.Entity.Id, Type = _manager.Entity.Type },
-    //                FileNames = new() { Data.GetType().Name }
-    //            }, res => {
-    //                _manager.EndRequest("Files uploaded !");
-
-    //                Debug.Log($"init completed : {_isInitCompleted}");
-    //                if (_isInitCompleted) return;
-    //                _isInitCompleted = true;
-    //                OnInitComplete?.Invoke();
-    //            }, _manager.OnRequestError);
-    //        }, error => Debug.LogError(error));
-    //    }, _gm.OnRequestError);
-    //}
+        PlayFabDataAPI.InitiateFileUploads(new()
+        {
+            Entity = new() { Id = _gm.Entity.Id, Type = _gm.Entity.Type },
+            FileNames = new() { _gm.Data.GetType().Name }
+        }, res =>
+        {
+            PlayFabHttp.SimplePutCall(res.UploadDetails[0].UploadUrl, _gm.Data.Serialize(), success =>
+            {
+                PlayFabDataAPI.FinalizeFileUploads(new()
+                {
+                    Entity = new() { Id = _gm.Entity.Id, Type = _gm.Entity.Type },
+                    FileNames = new() { _gm.Data.GetType().Name }
+                }, res =>
+                {
+                    _gm.EndRequest("Files uploaded !");
+                }, _gm.OnRequestError);
+            }, error => Debug.LogError(error));
+        }, _gm.OnRequestError);
+    }
 
     //public void ResetAccount(bool admin = false)
     //{

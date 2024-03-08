@@ -14,6 +14,8 @@ public class Adopt : MonoBehaviour
 
     private int _cheapestCatIndex;
 
+    // TODO -> update Data storage on adoption
+
     private void Awake()
     {
         UpdateCheapestCat();

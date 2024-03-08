@@ -1,11 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+
+public enum RoomPattern
+{
+    CheeseRoom,
+    CorridorRoom,
+    CrossraodRoom,
+    StartRoom,
+    TurnRoom,
+    VoidRoom
+}
+
+/*
+ * CheeseRoom : Moved
+ * CorridorRoom : MovedAndRemoved
+ * CrossraodRoom : MovedAndRemoved
+ * StartRoom : Protected
+ * TurnRoom : MovedAndRemoved
+ * VoidRoom : Overwritten
+ */
+public enum RoomSecurity
+{
+    Protected,
+    Moved,
+    MovedAndRemoved,
+    Overwritten
+}
 
 public class Room : MonoBehaviour
 {
+    protected RoomSecurity _security;
     protected bool[] _openings = new bool[4];
+
+    public RoomSecurity Security { get => _security; }
 
     // Start is called before the first frame update
     void Start()

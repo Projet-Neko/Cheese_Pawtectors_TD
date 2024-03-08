@@ -17,10 +17,12 @@ public class Mod_Entities : Mod
     private int _mouseLevel = 1;
     private bool _canSpawnAlbino = true;
 
+    // TODO -> check cats unlocked
+
     private void OnDestroy()
     {
         Cheese.OnInit -= Cheese_OnInit;
-        Mod_Wave.OnWaveReload -= M_Wave_OnWaveReload;
+        Mod_Waves.OnWaveReload -= M_Wave_OnWaveReload;
     }
 
     public override void Init(GameManager gm)
@@ -33,12 +35,11 @@ public class Mod_Entities : Mod
         _mouses.OrderBy(x => x.name);
 
         Cheese.OnInit += Cheese_OnInit;
-        Mod_Wave.OnWaveReload += M_Wave_OnWaveReload;
+        Mod_Waves.OnWaveReload += M_Wave_OnWaveReload;
     }
 
     private void Cheese_OnInit(Cheese cheese)
     {
-        Debug.Log("Cheese found.");
         _cheese = cheese;
     }
 
@@ -51,5 +52,18 @@ public class Mod_Entities : Mod
     public void AlbinoHasSpawned()
     {
         _canSpawnAlbino = false;
+    }
+
+    public int GetLastUnlockedCatLevel()
+    {
+        int level = 1;
+
+        for (int i = 0; i < _cats.Length; i++)
+        {
+            if (_cats[i].State != CatState.Unlock) break;
+            level = _cats[i].Level;
+        }
+
+        return level;
     }
 }

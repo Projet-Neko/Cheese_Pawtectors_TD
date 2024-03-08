@@ -17,6 +17,8 @@ public class DragAndDrop : MonoBehaviour
     private GameObject _target;
     private Transform _currentSlot;
 
+    // TODO -> update Data storage on cat move
+
     private void Start()
     {
         _currentSlot = transform.parent;

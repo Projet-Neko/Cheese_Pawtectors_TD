@@ -7,13 +7,13 @@ public abstract class State
     public virtual void OnEnter(Brain brain)
     {
         _brain = brain;
-        if (_brain.Entity is Cat) Mod_Wave.OnWaveReload += M_Wave_OnWaveReload;
+        if (_brain.Entity is Cat) Mod_Waves.OnWaveReload += M_Wave_OnWaveReload;
     }
 
     public virtual void OnUpdate() { }
     public virtual void OnExit()
     {
-        if (_brain.Entity is Cat) Mod_Wave.OnWaveReload -= M_Wave_OnWaveReload;
+        if (_brain.Entity is Cat) Mod_Waves.OnWaveReload -= M_Wave_OnWaveReload;
     }
 
     protected bool IsInFollowRange()

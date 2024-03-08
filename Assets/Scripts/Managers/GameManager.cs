@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static event Action<string> OnSuccessMessage;
 
     // --- Loading events ---
+    public static event Action OnInitComplete;
     public static event Action OnLoadingStart;
     //public static event Action OnBigLoadingStart;
     public static event Action OnLoadingEnd;
@@ -24,7 +25,6 @@ public class GameManager : MonoBehaviour
     public string Token { get; set; }
     public PlayFab.ClientModels.EntityKey Entity => _account.Entity;
     //public bool AccountChecked { get; set; }
-    //public bool DailiesCheck { get; set; }
     //public bool IsObsolete { get; private set; }
 
     // --- Datas ---
@@ -35,8 +35,9 @@ public class GameManager : MonoBehaviour
     [Header("Modules")]
     [SerializeField] private Mod_Entities _entities;
     [SerializeField] private Mod_Economy _economy;
-    [SerializeField] private Mod_Wave _wave;
+    [SerializeField] private Mod_Waves _wave;
     [SerializeField] private Mod_Account _account;
+    [SerializeField] private Mod_Clans _clans;
 
     // EntitiesMod
     public CatSO[] Cats => _entities.Cats;
@@ -46,28 +47,42 @@ public class GameManager : MonoBehaviour
     public bool CanSpawnAlbino => _entities.CanSpawnAlbino;
 
     public void AlbinoHasSpawned() => _entities.AlbinoHasSpawned();
+    public int GetLastUnlockedCatLevel() => _entities.GetLastUnlockedCatLevel();
+
+    // WaveMod
+    public int SpawnTime => _wave.SpawnTime;
 
     // EconomyMod
-    public int Meat => _economy.Meat;
+    public Dictionary<Currency, int> Currencies => _economy.Currencies;
     public List<int> CatPrices => _economy.CatPrices;
 
     public int GetCheapestCatIndex() => _economy.GetCheapestCatIndex();
     public bool CanAdopt(int catLevel) => _economy.CanAdopt(catLevel);
-    public void AddMeat(int amount) => _economy.AddMeat(amount);
-    public void RemoveMeat(int amount) => _economy.RemoveMeat(amount);
+    public void AddCurrency(Currency currency, int amount) => _economy.AddCurrency(currency, amount);
+    public void RemoveCurrency(Currency currency, int amount) => _economy.RemoveCurrency(currency, amount);
 
     // AccountMod
-    public static event Action OnLoginSuccess;
+    //public static event Action OnLoginSuccess;
+    public DateTime? LastLogin => _account.LastLogin;
+    public bool IsLoggedIn => _account.IsLoggedIn;
     #endregion
 
     private void Awake()
     {
         if (!Init()) return;
-
         _entities.Init(this);
-        _economy.Init(this);
         _wave.Init(this);
         _account.Init(this);
+
+        Mod_Account.OnInitComplete += Mod_Account_OnInitComplete;
+        Mod_Economy.OnInitComplete += Mod_Economy_OnInitComplete;
+        Mod_Clans.OnInitComplete += Mod_Clans_OnInitComplete;
+    }
+    private void OnDestroy()
+    {
+        Mod_Account.OnInitComplete -= Mod_Account_OnInitComplete;
+        Mod_Economy.OnInitComplete -= Mod_Economy_OnInitComplete;
+        Mod_Clans.OnInitComplete -= Mod_Clans_OnInitComplete;
     }
 
     private bool Init()
@@ -84,8 +99,37 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+    #region Gestion des events
+    private void Mod_Account_OnInitComplete()
+    {
+        _economy.Init(this);
+    }
+    private void Mod_Economy_OnInitComplete()
+    {
+        _clans.Init(this);
+    }
+    private void Mod_Clans_OnInitComplete()
+    {
+        if (LastLogin == null) StartCoroutine(_account.UpdateData());
+        StartCoroutine(StartUpdates());
+        OnInitComplete?.Invoke();
+    }
+    #endregion
+
+    private IEnumerator StartUpdates()
+    {
+        Debug.Log("Start game updates...");
+
+        while (true)
+        {
+            yield return new WaitForSeconds(60);
+            foreach (var currency in Currencies) yield return _economy.UpdateCurrency(currency.Key);
+            yield return _account.UpdateData();
+        }
+    }
+
     #region AccountMod
-    public void InvokeOnLoginSuccess() => OnLoginSuccess?.Invoke();
+    //public void InvokeOnLoginSuccess() => OnLoginSuccess?.Invoke();
     #endregion
 
     #region Database Requests
@@ -96,7 +140,6 @@ public class GameManager : MonoBehaviour
         if (_requests > 1) yield return new WaitUntil(() => _requests == request);
         //Debug.Log($"starting async request... - {_requests} requests remaining.");
     }
-
     public int StartRequest(string log = null)
     {
         OnLoadingStart?.Invoke();
@@ -106,7 +149,6 @@ public class GameManager : MonoBehaviour
         if (!string.IsNullOrEmpty(log)) Debug.Log(log);
         return currentRequest;
     }
-
     public void EndRequest(string log = null)
     {
         OnLoadingEnd?.Invoke();
@@ -119,7 +161,6 @@ public class GameManager : MonoBehaviour
             OnSuccessMessage?.Invoke(log);
         }
     }
-
     public void OnRequestError(PlayFabError error)
     {
         Debug.LogError(error.GenerateErrorReport());

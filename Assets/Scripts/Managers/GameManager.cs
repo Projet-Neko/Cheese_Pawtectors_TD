@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static event Action<string> OnSuccessMessage;
 
     // --- Loading events ---
+    public static event Action OnInitComplete;
     public static event Action OnLoadingStart;
     //public static event Action OnBigLoadingStart;
     public static event Action OnLoadingEnd;
@@ -34,8 +35,9 @@ public class GameManager : MonoBehaviour
     [Header("Modules")]
     [SerializeField] private Mod_Entities _entities;
     [SerializeField] private Mod_Economy _economy;
-    [SerializeField] private Mod_Wave _wave;
+    [SerializeField] private Mod_Waves _wave;
     [SerializeField] private Mod_Account _account;
+    [SerializeField] private Mod_Clans _clans;
 
     // EntitiesMod
     public CatSO[] Cats => _entities.Cats;
@@ -45,6 +47,11 @@ public class GameManager : MonoBehaviour
     public bool CanSpawnAlbino => _entities.CanSpawnAlbino;
 
     public void AlbinoHasSpawned() => _entities.AlbinoHasSpawned();
+    public int GetLastUnlockedCatLevel() => _entities.GetLastUnlockedCatLevel();
+    public bool IsBossWave() => _wave.IsBossWave();
+
+    // WaveMod
+    public int SpawnTime => _wave.SpawnTime;
 
     // EconomyMod
     public Dictionary<Currency, int> Currencies => _economy.Currencies;
@@ -57,6 +64,8 @@ public class GameManager : MonoBehaviour
 
     // AccountMod
     //public static event Action OnLoginSuccess;
+    public DateTime? LastLogin => _account.LastLogin;
+    public bool IsLoggedIn => _account.IsLoggedIn;
     #endregion
 
     private void Awake()
@@ -68,22 +77,13 @@ public class GameManager : MonoBehaviour
 
         Mod_Account.OnInitComplete += Mod_Account_OnInitComplete;
         Mod_Economy.OnInitComplete += Mod_Economy_OnInitComplete;
+        Mod_Clans.OnInitComplete += Mod_Clans_OnInitComplete;
     }
-
     private void OnDestroy()
     {
         Mod_Account.OnInitComplete -= Mod_Account_OnInitComplete;
         Mod_Economy.OnInitComplete -= Mod_Economy_OnInitComplete;
-    }
-
-    private void Mod_Account_OnInitComplete()
-    {
-        _economy.Init(this);
-    }
-
-    private void Mod_Economy_OnInitComplete()
-    {
-        StartCoroutine(StartUpdates());
+        Mod_Clans.OnInitComplete -= Mod_Clans_OnInitComplete;
     }
 
     private bool Init()
@@ -100,6 +100,23 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+    #region Gestion des events
+    private void Mod_Account_OnInitComplete()
+    {
+        _economy.Init(this);
+    }
+    private void Mod_Economy_OnInitComplete()
+    {
+        _clans.Init(this);
+    }
+    private void Mod_Clans_OnInitComplete()
+    {
+        if (LastLogin == null) StartCoroutine(_account.UpdateData());
+        StartCoroutine(StartUpdates());
+        OnInitComplete?.Invoke();
+    }
+    #endregion
+
     private IEnumerator StartUpdates()
     {
         Debug.Log("Start game updates...");
@@ -107,7 +124,8 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(60);
-            foreach (var currency in Currencies) yield return _economy.UpdateCurrency(currency.Key, currency.Value);
+            foreach (var currency in Currencies) yield return _economy.UpdateCurrency(currency.Key);
+            yield return _account.UpdateData();
         }
     }
 

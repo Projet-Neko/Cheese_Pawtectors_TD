@@ -3,16 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mod_Wave : Mod
+public class Mod_Waves : Mod
 {
     public static event Action OnWaveReload;
 
     [SerializeField] private GameObject _mousePrefab;
+    [SerializeField] private int _spawnTime = 1;
 
     [Header("Options")]
     [SerializeField] private bool _enableWaves = false;
 
     public int WaveNumber => _waveNumber;
+    public int SpawnTime => _spawnTime;
 
     private int _waveNumber;
     private int _enemyNumber;
@@ -63,10 +65,13 @@ public class Mod_Wave : Mod
     {
         int index = 0;
         _hasCompleteSpawning = false;
-
+        int enemyToSpawn = 10;
         if (cooldown) yield return new WaitForSeconds(.5f);
-
-        while (_enemyNumber < 10)
+        if (IsBossWave())
+        {
+            enemyToSpawn = 1;
+        }
+        while (_enemyNumber < enemyToSpawn)
         {
             Mouse m = Instantiate(_mousePrefab, _SpawnPos, Quaternion.identity).GetComponent<Mouse>();
             m.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
@@ -85,6 +90,16 @@ public class Mod_Wave : Mod
     {
         if (obj is Cheese) Reload();
         else if (obj is Mouse) _enemyNumber--;
+    }
+
+    public bool IsBossWave()
+    {
+        // Check if the wave number is a multiple of 10
+        if (_waveNumber == 0)
+        { 
+            return false; 
+        }
+        return _waveNumber % 10 == 0;
     }
 
     public void NextWave()

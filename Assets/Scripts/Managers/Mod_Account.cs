@@ -5,7 +5,7 @@ using PlayFab.Internal;
 using System;
 using System.Collections;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
@@ -24,8 +24,9 @@ public class Mod_Account : Mod
 
     // Local save
     private AuthData _authData = new();
-    private readonly BinaryFormatter _binaryFormatter = new();
     private string _path;
+    private byte[] _savedKey;
+    private FileStream _dataStream;
 
     // Login
     private bool _isFirstLogin;
@@ -49,7 +50,7 @@ public class Mod_Account : Mod
         Debug.Log($"Your save path is : {_path}");
 
         //Check if binary file with user datas exists
-        if (!File.Exists(_path))
+        if (!File.Exists(_path) || !PlayerPrefs.HasKey("key"))
         {
             Debug.Log("No local datas found.");
             return;
@@ -59,10 +60,21 @@ public class Mod_Account : Mod
 
         try
         {
-            using (FileStream file = new(_path, FileMode.Open))
-                _authData = (AuthData)_binaryFormatter.Deserialize(file);
+            // Get encrypt keys
+            _savedKey = Convert.FromBase64String(PlayerPrefs.GetString("key"));
+            _dataStream = new FileStream(_path, FileMode.Open);
+            Aes aes = Aes.Create();
+            byte[] outputIV = new byte[aes.IV.Length];
+            _dataStream.Read(outputIV, 0, outputIV.Length);
 
-            if (_authData.Email == null) Debug.LogWarning("No registered account found.");
+            // Get encrypted datas
+            CryptoStream oStream = new(_dataStream, aes.CreateDecryptor(_savedKey, outputIV), CryptoStreamMode.Read);
+            StreamReader reader = new(oStream);
+            string text = reader.ReadToEnd();
+            reader.Close();
+
+            _authData = JsonUtility.FromJson<AuthData>(text);
+            if (string.IsNullOrEmpty(_authData.Email)) Debug.LogWarning("No registered account found.");
         }
         catch
         {
@@ -73,8 +85,9 @@ public class Mod_Account : Mod
     public void Login()
     {
         CheckLocalSave();
+        Debug.Log(_authData.Email);
 
-        if (_authData.Email == null)
+        if (string.IsNullOrEmpty(_authData.Email))
         {
             _gm.StartRequest("Starting anonymous login...");
 
@@ -133,7 +146,7 @@ public class Mod_Account : Mod
         //Use this line once to test PlayFab Register & Login
         //yield return RegisterAccount("testing@gmail.com", "testing");
 
-        SetLocalSave();
+        UpdateLocalSave();
 
         //if (!_isFirstLogin && !IsAccountReset)
         if (!_isFirstLogin)
@@ -160,9 +173,26 @@ public class Mod_Account : Mod
         yield return null;
         //yield return UpdateData();
     }
-    private void SetLocalSave()
+    private void UpdateLocalSave()
     {
-        using (FileStream file = new(_path, FileMode.Create)) _binaryFormatter.Serialize(file, _authData);
+        _dataStream = new FileStream(_path, FileMode.Create);
+
+        // Create encrypt keys
+        Aes aes = Aes.Create();
+        _savedKey = aes.Key;
+        PlayerPrefs.SetString("key", Convert.ToBase64String(_savedKey));
+        byte[] inputIV = aes.IV;
+        _dataStream.Write(inputIV, 0, inputIV.Length);
+
+        // Write encrypted datas
+        CryptoStream iStream = new(_dataStream, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write);
+        StreamWriter sWriter = new(new CryptoStream(_dataStream, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write));
+        sWriter.Write(JsonUtility.ToJson(_authData));
+
+        sWriter.Close();
+        //iStream.Close();
+        _dataStream.Close();
+
         _authData = new();
     }
     private void CompleteLogin()
@@ -215,9 +245,6 @@ public class Mod_Account : Mod
     {
         yield return _gm.StartAsyncRequest("Registering account...");
 
-        _authData.Email = email;
-        _authData.Password = password;
-
         PlayFabClientAPI.AddUsernamePassword(new()
         {
             Username = _username,
@@ -232,7 +259,7 @@ public class Mod_Account : Mod
             }, res =>
             {
                 _gm.EndRequest("Account registered !");
-                SetLocalSave();
+                UpdateLocalSave();
             }, _gm.OnRequestError);
         }, _gm.OnRequestError);
     }

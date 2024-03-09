@@ -32,7 +32,6 @@ public class Room : MonoBehaviour
 {
 
     [SerializeField] private GameObject _canva;
-    private bool _canvaEnabled = false;
     private bool _canMove;
     private Vector3 _mousePosition;
 
@@ -58,6 +57,7 @@ public class Room : MonoBehaviour
             transform.position = _mousePosition;
 
 
+
         }
     }
 
@@ -66,13 +66,10 @@ public class Room : MonoBehaviour
         if (_canMove)
         {
             _canMove = false;
-        }
-        else
-        {
+            _canva.transform.position = _mousePosition;
 
-            _canvaEnabled = !_canvaEnabled;
-            _canva.SetActive(_canvaEnabled);
         }
+            _canva.SetActive(!_canva.activeSelf);
     }
 
     public void ShowUI()

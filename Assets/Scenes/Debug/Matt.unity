@@ -622,6 +622,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: TurnRoom
       objectReference: {fileID: 0}
+    - target: {fileID: 1199088791158708106, guid: 31da9b6ca26f9cf4ea088ac4657ef23e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199088791158708106, guid: 31da9b6ca26f9cf4ea088ac4657ef23e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 8.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 3209592863311046083, guid: 31da9b6ca26f9cf4ea088ac4657ef23e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 8.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 3209592863311046083, guid: 31da9b6ca26f9cf4ea088ac4657ef23e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 3985870091958739319, guid: 31da9b6ca26f9cf4ea088ac4657ef23e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -8.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 3985870091958739319, guid: 31da9b6ca26f9cf4ea088ac4657ef23e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.52
+      objectReference: {fileID: 0}
     - target: {fileID: 6618524555710191469, guid: 31da9b6ca26f9cf4ea088ac4657ef23e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.968

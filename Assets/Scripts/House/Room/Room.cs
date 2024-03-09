@@ -31,7 +31,9 @@ public enum RoomSecurity
 public class Room : MonoBehaviour
 {
 
-    [SerializeField] private GameObject _canva;
+    [SerializeField] private GameObject _HUDCanva;
+    [SerializeField] private GameObject _moveModCanva;
+    private bool _moveModBool;
     private bool _canMove;
     private Vector3 _mousePosition;
 
@@ -44,18 +46,19 @@ public class Room : MonoBehaviour
     void Start()
     {
         _canMove = false;
+        _moveModBool = false;
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
 
-        if (_canMove)
+        if (_moveModBool && _canMove)
         {
             _mousePosition =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
             _mousePosition.z = 0;
             transform.position = _mousePosition;
-
+            _moveModCanva.transform.position = _mousePosition;
 
 
         }
@@ -63,18 +66,24 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (_canMove)
+        
+        
+        if (!_moveModBool)
         {
-            _canMove = false;
-            _canva.transform.position = _mousePosition;
+            _HUDCanva.SetActive(!_HUDCanva.activeSelf);
 
         }
-            _canva.SetActive(!_canva.activeSelf);
+        _canMove = true;
+    }
+
+    public void OnMouseUp()
+    {
+        _canMove = false;
     }
 
     public void ShowUI()
     {
-        _canva.SetActive(true);
+        _HUDCanva.SetActive(true);
     }
 
     public void RotationClockwise()
@@ -111,8 +120,15 @@ public class Room : MonoBehaviour
 
     public void Move()
     {
-        _canMove = true;
-        _canva.SetActive(false);
+        _moveModBool= true;
+        _HUDCanva.SetActive(false);
+        _moveModCanva.SetActive(true);
+    }
+    public void StopMove()
+    {
+        _moveModBool = false;
+        _moveModCanva.SetActive(false);
+        _HUDCanva.transform.position = this.transform.position;
     }
 
     public void Delete()

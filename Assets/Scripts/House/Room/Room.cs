@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public enum RoomPattern
 {
     CheeseRoom,
@@ -26,8 +27,16 @@ public enum RoomSecurity
     Overwritten
 }
 
+
 public class Room : MonoBehaviour
 {
+
+    [SerializeField] private GameObject _HUDCanva;
+    [SerializeField] private GameObject _moveModCanva;
+    private bool _moveModBool;
+    private bool _canMove;
+    private Vector3 _mousePosition;
+
     protected RoomSecurity _security;
     protected bool[] _openings = new bool[4];
 
@@ -36,16 +45,46 @@ public class Room : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _canMove = false;
+        _moveModBool = false;
     }
 
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+
+        if (_moveModBool && _canMove)
+        {
+            _mousePosition =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            _mousePosition.z = -1;
+            transform.position = _mousePosition;
+            _moveModCanva.transform.position = _mousePosition;
+
+
+        }
     }
 
-    protected void RotationClockwise()
+    public void OnMouseDown()
+    {
+         if (!_moveModBool)
+        {
+            _HUDCanva.SetActive(!_HUDCanva.activeSelf);
+
+        }
+        _canMove = true;
+    }
+
+    public void OnMouseUp()
+    {
+        _canMove = false;
+    }
+
+    public void ShowUI()
+    {
+        _HUDCanva.SetActive(true);
+    }
+
+    public void RotationClockwise()
     {
         Vector3 rotation = transform.eulerAngles;
         rotation.z -= 90;
@@ -61,7 +100,7 @@ public class Room : MonoBehaviour
         _openings[0] = temp;
     }
 
-    protected void RotationAnticlockwise()
+    public void RotationAnticlockwise()
     {
         Vector3 rotation = transform.eulerAngles;
         rotation.z += 90;
@@ -76,4 +115,25 @@ public class Room : MonoBehaviour
             _openings[i] = _openings[i + 1];
         _openings[3] = temp;
     }
+
+    public void Move()
+    {
+        _moveModBool= true;
+        _HUDCanva.SetActive(false);
+        _moveModCanva.SetActive(true);
+    }
+    public void StopMove()
+    {
+        _moveModBool = false;
+        _moveModCanva.SetActive(false);
+        _HUDCanva.transform.position = this.transform.position;
+    }
+
+    public void Delete()
+    {
+
+        Destroy(this.transform.parent.gameObject);
+    }
+
+
 }

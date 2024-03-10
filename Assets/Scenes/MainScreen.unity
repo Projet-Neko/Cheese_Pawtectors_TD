@@ -3660,6 +3660,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4247897409131689313, guid: 5ee8bb75298a94c4c8bed05c76a44b7b, type: 3}
+      propertyPath: _scene
+      value: BO_TitleScreen
+      objectReference: {fileID: 0}
     - target: {fileID: 5384443636072995547, guid: 5ee8bb75298a94c4c8bed05c76a44b7b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4892,7 +4896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.63529414, g: 0.098039225, b: 0.10588236, a: 1}
+  m_Color: {r: 0.8705883, g: 0.36078432, b: 0.27450982, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -36,7 +36,7 @@ public class House : MonoBehaviour
 
                 // Place Void Rooms
                 else
-                    room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(i, j, 0), Quaternion.identity);
+                    room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(i, j, 1), Quaternion.identity);
 
                 room.transform.parent = transform;
                 _roomsGrid[i, j] = room;

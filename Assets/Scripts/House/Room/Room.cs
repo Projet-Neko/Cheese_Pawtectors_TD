@@ -56,7 +56,7 @@ public class Room : MonoBehaviour
         if (_moveModBool && _canMove)
         {
             _mousePosition =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _mousePosition.z = 0;
+            _mousePosition.z = -1;
             transform.position = _mousePosition;
             _moveModCanva.transform.position = _mousePosition;
 
@@ -66,9 +66,7 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-        
-        
-        if (!_moveModBool)
+         if (!_moveModBool)
         {
             _HUDCanva.SetActive(!_HUDCanva.activeSelf);
 

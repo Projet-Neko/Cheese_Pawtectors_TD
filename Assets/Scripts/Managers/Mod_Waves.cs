@@ -102,6 +102,15 @@ public class Mod_Waves : Mod
         return _waveNumber % 10 == 0;
     }
 
+    public bool CanSpawnBlackMouse()
+    {
+        if (_waveNumber >= 20)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void NextWave()
     {
         _waveNumber++;

@@ -45,13 +45,12 @@ public class Mouse : Entity
 
     private int IsAlbino()
     {
-        if (_forceAlbino || (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1))
+        if (_forceAlbino || (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) == 1))
         {
             GameManager.Instance.AlbinoHasSpawned();
             // 1 = albino mouse
             return 1;
         }
-
         return 0;
     }
 
@@ -62,6 +61,12 @@ public class Mouse : Entity
             _isBoss = true;
             // 3 = boss
             return 3;
+        }
+        if (GameManager.Instance.CanSpawnBlackMouse())
+        {
+            int blackMouseIndex = UnityEngine.Random.Range(0, 10);
+
+            return 2;
         }
         else
         {

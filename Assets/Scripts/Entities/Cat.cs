@@ -34,12 +34,13 @@ public class Cat : Entity
     public void Init(int level)
     {
         _level = level;
-        _damage = level; // TODO -> change formula
+        _damage = _data.Damage();
+        _dps = _data.DPS();
         _catLevel.text = _level.ToString();
 
-        _baseHealth = 50 + (_level * 2) - 2;
+        _baseHealth = _data.Satiety();
         _currentHealth = 0;
-        _speed = 2.5f;
+        _speed = _data.Speed();
 
         // Update data with SO
         _data = GameManager.Instance.Cats[_level - 1];

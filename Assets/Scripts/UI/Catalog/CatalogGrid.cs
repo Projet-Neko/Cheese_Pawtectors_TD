@@ -40,7 +40,7 @@ public class CatalogGrid : MonoBehaviour
         _level.text = cat.Level.ToString();
         _lore.text = cat.Lore.ToString();
         _damage.text = cat.Damage().ToString();
-        _dps.text = "";
+        _dps.text = cat.DPS().ToString();
         _speed.text = cat.Speed().ToString();
         _satiety.text = cat.Satiety().ToString();
         _price.text = GameManager.Instance.CatPrices[cat.Level - 1].ToString();

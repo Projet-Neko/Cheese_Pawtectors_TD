@@ -104,7 +104,11 @@ public class Mod_Waves : Mod
 
     public bool CanSpawnBlackMouse()
     {
-        if (_waveNumber >= 20)
+        if (GameManager.Instance.BlackMouseHasSpawned)
+        {
+            return false;
+        }
+        if (_waveNumber > 20)
         {
             return true;
         }

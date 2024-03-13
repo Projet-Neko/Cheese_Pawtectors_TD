@@ -10,12 +10,14 @@ public class Mod_Entities : Mod
     public Cheese Cheese => _cheese;
     public int MouseLevel => _mouseLevel;
     public bool CanSpawnAlbino => _canSpawnAlbino;
+    public bool BlackMouseHasSpawned => _blackMouseHasSpawned;
 
     private CatSO[] _cats;
     private MouseSO[] _mouses;
     private Cheese _cheese;
     private int _mouseLevel = 1;
     private bool _canSpawnAlbino = true;
+    private bool _blackMouseHasSpawned = false;
 
     // TODO -> check cats unlocked
 
@@ -52,6 +54,11 @@ public class Mod_Entities : Mod
     public void AlbinoHasSpawned()
     {
         _canSpawnAlbino = false;
+    }
+
+    public void SpawnBlackMouse()
+    {
+        _blackMouseHasSpawned = true;
     }
 
     public int GetLastUnlockedCatLevel()

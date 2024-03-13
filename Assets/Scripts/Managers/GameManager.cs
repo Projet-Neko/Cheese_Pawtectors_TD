@@ -47,8 +47,10 @@ public class GameManager : MonoBehaviour
     public Cheese Cheese => _entities.Cheese;
     public int MouseLevel => _entities.MouseLevel;
     public bool CanSpawnAlbino => _entities.CanSpawnAlbino;
+    public bool BlackMouseHasSpawned => _entities.BlackMouseHasSpawned;
 
     public void AlbinoHasSpawned() => _entities.AlbinoHasSpawned();
+    public void SpawnBlackMouse() => _entities.SpawnBlackMouse();
     public int GetLastUnlockedCatLevel() => _entities.GetLastUnlockedCatLevel();
     public bool IsBossWave() => _wave.IsBossWave();
     public bool CanSpawnBlackMouse() => _wave.CanSpawnBlackMouse();

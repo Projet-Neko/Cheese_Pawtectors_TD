@@ -64,8 +64,7 @@ public class Mouse : Entity
         }
         if (GameManager.Instance.CanSpawnBlackMouse())
         {
-            int blackMouseIndex = UnityEngine.Random.Range(0, 10);
-
+            GameManager.Instance.SpawnBlackMouse();
             return 2;
         }
         else

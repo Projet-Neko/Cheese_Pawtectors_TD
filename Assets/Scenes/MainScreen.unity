@@ -1872,7 +1872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scene: BlockOut_Build
+  _scene: BO_TitleScreen
 --- !u!1 &520177992
 GameObject:
   m_ObjectHideFlags: 0
@@ -2085,7 +2085,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 536513970}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2743,7 +2743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &839973076
 Grid:
   m_ObjectHideFlags: 0
@@ -3548,7 +3548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 626d3fe5f83d79f4d84f07293318ab84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _catBoxPrefab: {fileID: 0}
+  _catBoxPrefab: {fileID: 7208088740895612853, guid: 0e69ad1657a964b4796701a38d0cf400, type: 3}
   _slots:
   - {fileID: 522736763}
   - {fileID: 620406385}
@@ -4798,7 +4798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scene: BO_Catalog
+  _scene: Catalog
 --- !u!1 &1485826812
 GameObject:
   m_ObjectHideFlags: 0
@@ -5679,7 +5679,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1670994541
 Transform:
   m_ObjectHideFlags: 0

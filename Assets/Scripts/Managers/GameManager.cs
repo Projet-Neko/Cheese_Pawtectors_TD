@@ -33,6 +33,10 @@ public class GameManager : MonoBehaviour
     public Data Data => _data;
     private readonly Data _data = new();
 
+    // --- Scenes ---
+    public bool IsPopupSceneLoaded => _isPopupSceneLoaded;
+    private bool _isPopupSceneLoaded;
+
     #region Modules
     [Header("Modules")]
     [SerializeField] private Mod_Entities _entities;
@@ -80,12 +84,22 @@ public class GameManager : MonoBehaviour
         Mod_Account.OnInitComplete += Mod_Account_OnInitComplete;
         Mod_Economy.OnInitComplete += Mod_Economy_OnInitComplete;
         Mod_Clans.OnInitComplete += Mod_Clans_OnInitComplete;
+
+        SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
     }
+
+    private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded)
+    {
+        _isPopupSceneLoaded = isPopupSceneLoaded;
+    }
+
     private void OnDestroy()
     {
         Mod_Account.OnInitComplete -= Mod_Account_OnInitComplete;
         Mod_Economy.OnInitComplete -= Mod_Economy_OnInitComplete;
         Mod_Clans.OnInitComplete -= Mod_Clans_OnInitComplete;
+
+        SceneLoader.OnPopupSceneToogle -= SceneLoader_OnPopupSceneToogle;
     }
 
     private bool Init()

@@ -40,8 +40,14 @@ AudioMixerController:
     - 2e187a73b37babf4e9108b695eca651e
     - 501f7f0f4b6931e4f9ebb8828329aba2
     - d1a233da271641f4a9855f2887eb2012
-    name: View
-  m_CurrentViewIndex: 0
+    name: Everything
+  - guids:
+    - 501f7f0f4b6931e4f9ebb8828329aba2
+    name: Music
+  - guids:
+    - d1a233da271641f4a9855f2887eb2012
+    name: SoundEffect
+  m_CurrentViewIndex: 2
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:

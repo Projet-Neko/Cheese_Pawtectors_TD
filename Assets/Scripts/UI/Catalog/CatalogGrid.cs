@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -35,7 +34,6 @@ public class CatalogGrid : MonoBehaviour
 
     private void InitCatalogSlot_OnClick(CatSO cat)
     {
-        Debug.Log("init catalog slot");
         _slotPopup.SetActive(true);
         //_renderer.sprite = cat.SpriteFront;
         _name.text = cat.Name;

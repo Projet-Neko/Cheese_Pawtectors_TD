@@ -40,9 +40,7 @@ public class CatalogSlot : MonoBehaviour
 
     private void OnMouseUp()
     {
-        Debug.Log("on mouse up");
         if (_isPopupOpened) return;
-        Debug.Log("popup is not opened");
         OnClick?.Invoke(_data);
     }
 }

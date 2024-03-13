@@ -7,14 +7,22 @@ public class CatalogPopup : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("enable");
         OnToggle?.Invoke(true);
+    }
+
+    private void OnDisable()
+    {
+        OnToggle?.Invoke(false);
+    }
+
+    public void Buy()
+    {
+        Close();
     }
 
     public void Close()
     {
-        Debug.Log("close");
-        OnToggle?.Invoke(false);
+        //OnToggle?.Invoke(false);
         gameObject.SetActive(false);
     }
 }

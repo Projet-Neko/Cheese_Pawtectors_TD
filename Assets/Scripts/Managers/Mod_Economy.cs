@@ -183,8 +183,6 @@ public class Mod_Economy : Mod
     {
         _catPrices = new();
 
-        Debug.Log($"Setting cat prices... {GameManager.Instance.Cats.Length} cats found.");
-
         for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
         {
             int n = GameManager.Instance.Cats[i].Level;
@@ -205,7 +203,7 @@ public class Mod_Economy : Mod
     }
 
     #region Gestion de l'adoption
-    public bool CanAdopt(int catLevel)
+    public bool CanAdopt(int catLevel, int slotindex)
     {
         if (_currencies[Currency.Meat] < _catPrices[catLevel])
         {
@@ -214,13 +212,13 @@ public class Mod_Economy : Mod
         }
 
         RemoveCurrency(Currency.Meat, _catPrices[catLevel]);
-        IncreasePrice(catLevel);
+        IncreasePrice(catLevel, slotindex);
 
         return true;
     }
-    private void IncreasePrice(int catLevel)
+    private void IncreasePrice(int catLevel, int slotindex)
     {
-        _gm.Data.UpdateCatAmount(catLevel);
+        _gm.Data.AdoptCat(catLevel, slotindex);
         _catPrices[catLevel] = _catPrices[catLevel] + (_catPrices[catLevel] / 100 * 5);
     }
     public int GetCheapestCatIndex()

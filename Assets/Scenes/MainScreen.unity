@@ -1919,7 +1919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scene: BO_TitleScreen
+  _scene: BO_BuildMode
 --- !u!1 &520177992
 GameObject:
   m_ObjectHideFlags: 0
@@ -3627,6 +3627,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2080860737867708360, guid: 5ee8bb75298a94c4c8bed05c76a44b7b, type: 3}
+      propertyPath: _scene
+      value: BO_Shop
+      objectReference: {fileID: 0}
     - target: {fileID: 2135593207111807996, guid: 5ee8bb75298a94c4c8bed05c76a44b7b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3689,7 +3693,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4247897409131689313, guid: 5ee8bb75298a94c4c8bed05c76a44b7b, type: 3}
       propertyPath: _scene
-      value: BO_TitleScreen
+      value: BO_Leaderboards
       objectReference: {fileID: 0}
     - target: {fileID: 5384443636072995547, guid: 5ee8bb75298a94c4c8bed05c76a44b7b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3814,6 +3818,14 @@ PrefabInstance:
     - target: {fileID: 8152379401327891283, guid: 5ee8bb75298a94c4c8bed05c76a44b7b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482367898023497369, guid: 5ee8bb75298a94c4c8bed05c76a44b7b, type: 3}
+      propertyPath: _scene
+      value: BO_Settings
+      objectReference: {fileID: 0}
+    - target: {fileID: 8923516924503076202, guid: 5ee8bb75298a94c4c8bed05c76a44b7b, type: 3}
+      propertyPath: _scene
+      value: BO_Profile
       objectReference: {fileID: 0}
     - target: {fileID: 9107689506333040684, guid: 5ee8bb75298a94c4c8bed05c76a44b7b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5355,7 +5367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scene: BlockOut_Shop
+  _scene: BO_Shop
 --- !u!114 &1594703521
 MonoBehaviour:
   m_ObjectHideFlags: 0

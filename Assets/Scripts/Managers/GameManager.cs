@@ -93,9 +93,10 @@ public class GameManager : MonoBehaviour
         SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
     }
 
-    private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded)
+    private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded, string popupName)
     {
         _isPopupSceneLoaded = isPopupSceneLoaded;
+        _popupSceneName = popupName;
     }
 
     private void OnDestroy()
@@ -138,6 +139,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator CompleteInit()
     {
+        Debug.Log("complete init");
         if (LastLogin == null) yield return _account.UpdateData();
         Debug.Log("<color=yellow>----- GAME MANAGER INIT COMPLETED ! -----</color>");
         OnInitComplete?.Invoke();

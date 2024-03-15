@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    public static event Action<bool> OnPopupSceneToogle;
+    public static event Action<bool, string> OnPopupSceneToogle;
 
     [SerializeField, Scene] private string _scene;
 
@@ -31,12 +31,14 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadSceneAdditive()
     {
-        OnPopupSceneToogle?.Invoke(true);
+        if (GameManager.Instance.IsPopupSceneLoaded) UnloadSceneAdditive();
         SceneManager.LoadScene(_scene, LoadSceneMode.Additive);
+        OnPopupSceneToogle?.Invoke(true, _scene);
     }
 
     public void UnloadSceneAdditive()
     {
-        OnPopupSceneToogle?.Invoke(false);
+        SceneManager.UnloadSceneAsync(GameManager.Instance.PopupSceneName);
+        OnPopupSceneToogle?.Invoke(false, null);
     }
 }

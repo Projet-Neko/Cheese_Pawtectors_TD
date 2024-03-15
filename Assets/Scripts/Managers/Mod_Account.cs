@@ -311,6 +311,7 @@ public class Mod_Account : Mod
 
     private IEnumerator UpdateCloudData()
     {
+        Debug.Log("Update cloud data...");
         yield return UpdateData();
         CompleteLogin();
     }

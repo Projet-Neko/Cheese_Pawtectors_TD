@@ -66,7 +66,6 @@ public class GameManager : MonoBehaviour
     public List<int> CatPrices => _economy.CatPrices;
 
     public int GetCheapestCatIndex() => _economy.GetCheapestCatIndex();
-    public bool CanAdopt(int catLevel, int slotIndex) => _economy.CanAdopt(catLevel, slotIndex);
     public void AddCurrency(Currency currency, int amount) => _economy.AddCurrency(currency, amount);
     public void RemoveCurrency(Currency currency, int amount) => _economy.RemoveCurrency(currency, amount);
 

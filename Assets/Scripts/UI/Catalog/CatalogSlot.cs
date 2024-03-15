@@ -17,11 +17,13 @@ public class CatalogSlot : MonoBehaviour
     private void Awake()
     {
         CatalogPopup.OnToggle += InitCatalog_OnToggle;
+        Mod_Economy.OnAdoptCheck += Mod_Economy_OnAdoptCheck;
     }
 
     private void OnDestroy()
     {
         CatalogPopup.OnToggle -= InitCatalog_OnToggle;
+        Mod_Economy.OnAdoptCheck -= Mod_Economy_OnAdoptCheck;
     }
 
     private void InitCatalog_OnToggle(bool isOpened)
@@ -36,11 +38,19 @@ public class CatalogSlot : MonoBehaviour
         _level.text = catSO.Level.ToString();
         _price.text = GameManager.Instance.CatPrices[catSO.Level - 1].ToString();
         _renderer.sprite = catSO.SpriteFront;
+
+        GetComponentInChildren<AdoptButton>().Init(catSO);
     }
 
     private void OnMouseUp()
     {
         if (_isPopupOpened) return;
         OnClick?.Invoke(_data);
+    }
+
+    private void Mod_Economy_OnAdoptCheck(bool canAdopt, int catLevel)
+    {
+        if (!canAdopt | catLevel != _data.Level) return;
+        _price.text = GameManager.Instance.CatPrices[_data.Level - 1].ToString();
     }
 }

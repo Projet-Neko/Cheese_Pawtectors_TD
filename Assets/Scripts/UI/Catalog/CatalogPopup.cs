@@ -19,6 +19,7 @@ public class CatalogPopup : MonoBehaviour
 
     private void AdoptButton_OnAdoptButtonClick(int obj)
     {
+        Debug.Log("on adopt button click");
         gameObject.SetActive(false);
     }
 }

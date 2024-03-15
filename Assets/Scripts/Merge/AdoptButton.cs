@@ -19,7 +19,7 @@ public class AdoptButton : MonoBehaviour
     {
         Mod_Economy.OnAdoptCheck += Mod_Economy_OnAdoptCheck;
 
-        if (_renderer == null | _catLevel == null) UpdateCheapestCat();
+        if (_catLevel != null) UpdateCheapestCat();
     }
 
     private void OnDestroy()
@@ -56,6 +56,6 @@ public class AdoptButton : MonoBehaviour
         _cheapestCatIndex = GameManager.Instance.GetCheapestCatIndex();
         _catPrice.text = GameManager.Instance.CatPrices[_cheapestCatIndex].ToString();
         _catLevel.text = (_cheapestCatIndex + 1).ToString();
-        _renderer.sprite = GameManager.Instance.Cats[_cheapestCatIndex].SpriteFront;
+        //_renderer.sprite = GameManager.Instance.Cats[_cheapestCatIndex].SpriteFront;
     }
 }

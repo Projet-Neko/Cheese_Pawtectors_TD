@@ -1413,6 +1413,7 @@ GameObject:
   - component: {fileID: 2061223582232085239}
   - component: {fileID: 7976873150502381826}
   - component: {fileID: 489433449410967707}
+  - component: {fileID: 7776144384912659472}
   m_Layer: 5
   m_Name: Buy Button
   m_TagString: Untagged
@@ -1522,8 +1523,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 20387060643645383}
-        m_TargetAssemblyTypeName: CatalogPopup, Assembly-CSharp
+      - m_Target: {fileID: 7776144384912659472}
+        m_TargetAssemblyTypeName: AdoptButton, Assembly-CSharp
         m_MethodName: Buy
         m_Mode: 1
         m_Arguments:
@@ -1534,6 +1535,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7776144384912659472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4854064724219433039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c882b7e712965148af9cf8d04f952be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cat: {fileID: 0}
+  _renderer: {fileID: 0}
+  _catPrice: {fileID: 5524334045311985215}
+  _catLevel: {fileID: 0}
 --- !u!1 &5198616902038888214
 GameObject:
   m_ObjectHideFlags: 0

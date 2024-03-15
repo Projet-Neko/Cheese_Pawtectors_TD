@@ -398,6 +398,7 @@ GameObject:
   - component: {fileID: 3869330049591335059}
   - component: {fileID: 2605652203238773829}
   - component: {fileID: 4551023038621829729}
+  - component: {fileID: 8455187194438303240}
   m_Layer: 5
   m_Name: Buy Button
   m_TagString: Untagged
@@ -506,7 +507,35 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2605652203238773829}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8455187194438303240}
+        m_TargetAssemblyTypeName: AdoptButton, Assembly-CSharp
+        m_MethodName: Buy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8455187194438303240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282761264513761288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c882b7e712965148af9cf8d04f952be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cat: {fileID: 0}
+  _renderer: {fileID: 0}
+  _catPrice: {fileID: 3743190004381973216}
+  _catLevel: {fileID: 0}
 --- !u!1 &7917052969352484160
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,6 +1030,7 @@ MonoBehaviour:
   _level: {fileID: 7412448331028615344}
   _price: {fileID: 3743190004381973216}
   _renderer: {fileID: 427530992514206391}
+  _adoptButton: {fileID: 8455187194438303240}
 --- !u!61 &1358689934885169222
 BoxCollider2D:
   m_ObjectHideFlags: 0

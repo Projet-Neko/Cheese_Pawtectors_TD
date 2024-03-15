@@ -10,6 +10,7 @@ public class CatalogSlot : MonoBehaviour
     [SerializeField] private TMP_Text _level;
     [SerializeField] private TMP_Text _price;
     [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private AdoptButton _adoptButton;
 
     private CatSO _data;
     private bool _isPopupOpened = false;
@@ -39,7 +40,7 @@ public class CatalogSlot : MonoBehaviour
         _price.text = GameManager.Instance.CatPrices[catSO.Level - 1].ToString();
         _renderer.sprite = catSO.SpriteFront;
 
-        GetComponentInChildren<AdoptButton>().Init(catSO);
+        _adoptButton.Init(catSO);
     }
 
     private void OnMouseUp()

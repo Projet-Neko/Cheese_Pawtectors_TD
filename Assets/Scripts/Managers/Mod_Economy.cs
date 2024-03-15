@@ -81,9 +81,11 @@ public class Mod_Economy : Mod
         {
             if (item.Type == "currency")
             {
+                Debug.Log($"Found currency {item.AlternateIds[0].Value} !");
                 _currenciesNameById[item.Id] = Enum.Parse<Currency>(item.AlternateIds[0].Value);
                 _currenciesIdByName[_currenciesNameById[item.Id]] = item.Id;
                 _currencies[_currenciesNameById[item.Id]] = 0;
+                Debug.Log(_currencies.Count);
             }
             //else if (item.Type == "catalogItem" || item.Type == "bundle")
             //{
@@ -212,6 +214,8 @@ public class Mod_Economy : Mod
         if (slotIndex == -1) return;
         bool canAdopt;
 
+        Debug.Log(_currencies.Count);
+
         if (_currencies[Currency.Meat] < _catPrices[catLevel - 1])
         {
             Debug.Log(" You can't adopt this cat : not enough money!");
@@ -255,6 +259,7 @@ public class Mod_Economy : Mod
     {
         _currencies[currency] -= amount;
         Debug.Log($"Removed {amount} {currency} ! Current {currency} = {_currencies[currency]}");
+        Debug.Log(_currencies.Count);
     }
     public IEnumerator UpdateCurrency(Currency currency)
     {

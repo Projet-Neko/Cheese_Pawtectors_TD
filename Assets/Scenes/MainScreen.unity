@@ -1103,7 +1103,7 @@ GameObject:
   - component: {fileID: 373288357}
   - component: {fileID: 373288360}
   m_Layer: 0
-  m_Name: Home
+  m_Name: AdoptButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1176,8 +1176,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 373288360}
-        m_TargetAssemblyTypeName: Adopt, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_TargetAssemblyTypeName: AdoptButton, Assembly-CSharp
+        m_MethodName: Buy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1234,13 +1234,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 373288354}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ff38e98150c1594d8186ce33243013f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c882b7e712965148af9cf8d04f952be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slots: {fileID: 473152869}
-  _catPrefab: {fileID: 6983453442427492931, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
+  _cat: {fileID: 0}
+  _renderer: {fileID: 0}
   _catPrice: {fileID: 679597389}
-  _catLevel: {fileID: 0}
+  _catLevel: {fileID: 1369882805}
 --- !u!1 &399515609
 GameObject:
   m_ObjectHideFlags: 0
@@ -3470,6 +3470,7 @@ GameObject:
   - component: {fileID: 1150333480}
   - component: {fileID: 1150333479}
   - component: {fileID: 1150333481}
+  - component: {fileID: 1150333482}
   m_Layer: 5
   m_Name: Storage
   m_TagString: Untagged
@@ -3560,6 +3561,20 @@ MonoBehaviour:
   - {fileID: 619567391}
   minSpawnTime: 15
   maxSpawnTime: 20
+--- !u!114 &1150333482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150333477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4336e57233db0341b14e474c0f5ec9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slots: {fileID: 473152869}
+  _catPrefab: {fileID: 6983453442427492931, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
 --- !u!1001 &1163319372
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -33,6 +33,9 @@ public class Cat : Entity
 
     public void Init(int level)
     {
+        // Update data with SO
+        _data = GameManager.Instance.Cats[level - 1];
+
         _level = level;
         _damage = _data.Damage();
         _dps = _data.DPS();
@@ -41,9 +44,6 @@ public class Cat : Entity
         _baseHealth = _data.Satiety();
         _currentHealth = 0;
         _speed = _data.Speed();
-
-        // Update data with SO
-        _data = GameManager.Instance.Cats[_level - 1];
 
         // Appearance
         _renderer.sprite = _data.SpriteAbove; // TODO -> check sprite to use

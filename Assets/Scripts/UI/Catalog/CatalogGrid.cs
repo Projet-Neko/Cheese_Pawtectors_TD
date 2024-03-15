@@ -16,6 +16,7 @@ public class CatalogGrid : MonoBehaviour
     [SerializeField] private TMP_Text _speed;
     [SerializeField] private TMP_Text _satiety;
     [SerializeField] private TMP_Text _price;
+    [SerializeField] private AdoptButton _adoptButton;
 
     private void Awake()
     {
@@ -44,5 +45,7 @@ public class CatalogGrid : MonoBehaviour
         _speed.text = cat.Speed().ToString();
         _satiety.text = cat.Satiety().ToString();
         _price.text = GameManager.Instance.CatPrices[cat.Level - 1].ToString();
+
+        _adoptButton.Init(cat);
     }
 }

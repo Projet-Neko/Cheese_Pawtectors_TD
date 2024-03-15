@@ -13,6 +13,7 @@ public enum Currency
 public class Mod_Economy : Mod
 {
     public static event Action OnInitComplete;
+    public static event Action<bool, int> OnAdoptCheck;
 
     public List<int> CatPrices => _catPrices;
     public Dictionary<Currency, int> Currencies => _currencies; // Local currencies
@@ -29,10 +30,13 @@ public class Mod_Economy : Mod
     private void Awake()
     {
         Entity.OnDeath += Entity_OnDeath;
+        CheckStorage.OnStorageCheck += CheckStorage_OnStorageCheck;
     }
+
     private void OnDestroy()
     {
         Entity.OnDeath -= Entity_OnDeath;
+        CheckStorage.OnStorageCheck -= CheckStorage_OnStorageCheck;
     }
     private void Entity_OnDeath(Entity obj)
     {
@@ -77,9 +81,11 @@ public class Mod_Economy : Mod
         {
             if (item.Type == "currency")
             {
+                Debug.Log($"Found currency {item.AlternateIds[0].Value} !");
                 _currenciesNameById[item.Id] = Enum.Parse<Currency>(item.AlternateIds[0].Value);
                 _currenciesIdByName[_currenciesNameById[item.Id]] = item.Id;
                 _currencies[_currenciesNameById[item.Id]] = 0;
+                Debug.Log(_currencies.Count);
             }
             //else if (item.Type == "catalogItem" || item.Type == "bundle")
             //{
@@ -203,23 +209,31 @@ public class Mod_Economy : Mod
     }
 
     #region Gestion de l'adoption
-    public bool CanAdopt(int catLevel, int slotindex)
+    private void CheckStorage_OnStorageCheck(int slotIndex, int catLevel)
     {
-        if (_currencies[Currency.Meat] < _catPrices[catLevel])
+        if (slotIndex == -1) return;
+        bool canAdopt;
+
+        Debug.Log(_currencies.Count);
+
+        if (_currencies[Currency.Meat] < _catPrices[catLevel - 1])
         {
-            Debug.Log($" You can't adopt this cat not enough money!");
-            return false;
+            Debug.Log(" You can't adopt this cat : not enough money!");
+            canAdopt = false;
+        }
+        else
+        {
+            canAdopt = true;
+            RemoveCurrency(Currency.Meat, _catPrices[catLevel - 1]);
+            IncreasePrice(catLevel - 1);
+            _gm.Data.AdoptCat(catLevel - 1, slotIndex);
         }
 
-        RemoveCurrency(Currency.Meat, _catPrices[catLevel]);
-        IncreasePrice(catLevel, slotindex);
-
-        return true;
+        OnAdoptCheck?.Invoke(canAdopt, catLevel);
     }
-    private void IncreasePrice(int catLevel, int slotindex)
+    private void IncreasePrice(int catIndex)
     {
-        _gm.Data.AdoptCat(catLevel, slotindex);
-        _catPrices[catLevel] = _catPrices[catLevel] + (_catPrices[catLevel] / 100 * 5);
+        _catPrices[catIndex] = _catPrices[catIndex] + (_catPrices[catIndex] / 100 * 5);
     }
     public int GetCheapestCatIndex()
     {
@@ -245,6 +259,7 @@ public class Mod_Economy : Mod
     {
         _currencies[currency] -= amount;
         Debug.Log($"Removed {amount} {currency} ! Current {currency} = {_currencies[currency]}");
+        Debug.Log(_currencies.Count);
     }
     public IEnumerator UpdateCurrency(Currency currency)
     {

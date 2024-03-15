@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     public bool IsPopupSceneLoaded => _isPopupSceneLoaded;
     private bool _isPopupSceneLoaded;
 
+    private bool _isInitCompleted = false;
+
     #region Modules
     [Header("Modules")]
     [SerializeField] private Mod_Entities _entities;
@@ -137,6 +139,7 @@ public class GameManager : MonoBehaviour
         if (LastLogin == null) yield return _account.UpdateData();
         Debug.Log("<color=yellow>----- GAME MANAGER INIT COMPLETED ! -----</color>");
         OnInitComplete?.Invoke();
+        _isInitCompleted = true;
         yield return StartUpdates();
     }
 
@@ -155,6 +158,7 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationPause(bool pause)
     {
+        if (!_isInitCompleted) return;
         Debug.Log("Updating local data on application pause...");
         Data.Update();
     }

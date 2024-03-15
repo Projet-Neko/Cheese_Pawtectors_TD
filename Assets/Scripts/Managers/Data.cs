@@ -24,7 +24,7 @@ public class Data
 
     public Data()
     {
-        for (int i = 0; i < GameManager.Instance.Cats.Length; i++) AmountOfPurchases.Add(1);
+        for (int i = 0; i < GameManager.Instance.Cats.Length; i++) AmountOfPurchases.Add(0);
         for (int i = 0; i < 8; i++) Storage.Add(new(i)); // Init empty storage
     }
 
@@ -60,6 +60,8 @@ public class Data
         // Write encrypted datas
         CryptoStream iStream = new(_dataStream, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write);
         StreamWriter sWriter = new(new CryptoStream(_dataStream, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write));
+        //sWriter.Write(Serialize());
+        Debug.Log(JsonUtility.ToJson(this));
         sWriter.Write(JsonUtility.ToJson(this));
 
         sWriter.Close();

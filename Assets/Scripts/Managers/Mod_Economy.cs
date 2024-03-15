@@ -197,7 +197,7 @@ public class Mod_Economy : Mod
 
             _catPrices.Add(catPrice);
 
-            Debug.Log($"{GameManager.Instance.Cats[i].Name} price is {catPrice}.");
+            Debug.Log($"{GameManager.Instance.Cats[i].Name} price is {catPrice}. (bought {_gm.Data.AmountOfPurchases[i]} time)");
         }
 
         OnInitComplete?.Invoke();

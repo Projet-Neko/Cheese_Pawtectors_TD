@@ -140,6 +140,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("<color=yellow>----- GAME MANAGER INIT COMPLETED ! -----</color>");
         OnInitComplete?.Invoke();
         _isInitCompleted = true;
+        DebugOnly();
         yield return StartUpdates();
     }
 
@@ -154,6 +155,11 @@ public class GameManager : MonoBehaviour
             foreach (var currency in Currencies) yield return _economy.UpdateCurrency(currency.Key);
             yield return _account.UpdateData();
         }
+    }
+
+    private void DebugOnly()
+    {
+        //DeleteLocalDatas(); // Reset local datas
     }
 
     private void OnApplicationPause(bool pause)
@@ -203,4 +209,10 @@ public class GameManager : MonoBehaviour
         OnLoadingEnd?.Invoke();
     }
     #endregion
+
+    public void DeleteLocalDatas()
+    {
+        _data = new();
+        _data.Update();
+    }
 }

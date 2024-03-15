@@ -203,23 +203,23 @@ public class Mod_Economy : Mod
     }
 
     #region Gestion de l'adoption
-    public bool CanAdopt(int catLevel, int slotindex)
+    public bool CanAdopt(int catIndex, int slotIndex)
     {
-        if (_currencies[Currency.Meat] < _catPrices[catLevel])
+        if (_currencies[Currency.Meat] < _catPrices[catIndex])
         {
             Debug.Log($" You can't adopt this cat not enough money!");
             return false;
         }
 
-        RemoveCurrency(Currency.Meat, _catPrices[catLevel]);
-        IncreasePrice(catLevel, slotindex);
+        RemoveCurrency(Currency.Meat, _catPrices[catIndex]);
+        IncreasePrice(catIndex);
+        _gm.Data.AdoptCat(catIndex, slotIndex);
 
         return true;
     }
-    private void IncreasePrice(int catLevel, int slotindex)
+    private void IncreasePrice(int catIndex)
     {
-        _gm.Data.AdoptCat(catLevel, slotindex);
-        _catPrices[catLevel] = _catPrices[catLevel] + (_catPrices[catLevel] / 100 * 5);
+        _catPrices[catIndex] = _catPrices[catIndex] + (_catPrices[catIndex] / 100 * 5);
     }
     public int GetCheapestCatIndex()
     {

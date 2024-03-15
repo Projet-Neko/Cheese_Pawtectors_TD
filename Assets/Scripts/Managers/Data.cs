@@ -69,10 +69,10 @@ public class Data
         _dataStream.Close();
     }
 
-    public void AdoptCat(int level, int slotIndex)
+    public void AdoptCat(int catIndex, int slotIndex)
     {
-        // TODO - update storage slot
-        AmountOfPurchases[level]++;
+        Storage[slotIndex].CatIndex = catIndex;
+        AmountOfPurchases[catIndex]++;
         Update();
     }
 

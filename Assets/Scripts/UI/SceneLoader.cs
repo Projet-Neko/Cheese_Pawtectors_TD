@@ -9,6 +9,21 @@ public class SceneLoader : MonoBehaviour
 
     [SerializeField, Scene] private string _scene;
 
+    private void Awake()
+    {
+        GameManager.OnInitComplete += GameManager_OnInitComplete;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnInitComplete -= GameManager_OnInitComplete;
+    }
+
+    private void GameManager_OnInitComplete()
+    {
+        LoadScene();
+    }
+
     public void LoadScene()
     {
         SceneManager.LoadScene(_scene);

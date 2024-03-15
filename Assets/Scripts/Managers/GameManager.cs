@@ -35,7 +35,10 @@ public class GameManager : MonoBehaviour
 
     // --- Scenes ---
     public bool IsPopupSceneLoaded => _isPopupSceneLoaded;
+    public string PopupSceneName => _popupSceneName;
+
     private bool _isPopupSceneLoaded;
+    private string _popupSceneName;
 
     private bool _isInitCompleted = false;
 

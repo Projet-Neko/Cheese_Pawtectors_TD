@@ -96,7 +96,6 @@ public class Mod_Economy : Mod
 
         if (_gm.LastLogin == null) // First time player
         {
-            _gm.Data.InitEconomy();
             CompleteEconomyInit();
             return;
         }
@@ -148,7 +147,7 @@ public class Mod_Economy : Mod
     private IEnumerator CheckOfflineCurrency()
     {
         int meatGained = MeatGainedOffline(GameManager.Instance.LastLogin);
-        Debug.Log($"Gained {meatGained} meat offline !");
+        Debug.Log($"<color=lime>Gained {meatGained} meat offline !</color>");
         AddCurrency(Currency.Meat, meatGained);
         yield return UpdateCurrency(Currency.Meat);
 
@@ -184,17 +183,21 @@ public class Mod_Economy : Mod
     {
         _catPrices = new();
 
+        Debug.Log($"Setting cat prices... {GameManager.Instance.Cats.Length} cats found.");
+
         for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
         {
             int n = GameManager.Instance.Cats[i].Level;
             int catPrice = 100 * (n - 1) + (100 * (int)Mathf.Pow(1.244415f, n - 1));
 
-            if (_gm.Data.AmountOfPurchases[i] - 1 != 0)
+            if (_gm.Data.AmountOfPurchases[i] != 0)
             {
                 catPrice = (catPrice / 100 * 5) * _gm.Data.AmountOfPurchases[i] - 1;
             }
 
             _catPrices.Add(catPrice);
+
+            Debug.Log($"{GameManager.Instance.Cats[i].Name} price is {catPrice}.");
         }
 
         OnInitComplete?.Invoke();
@@ -238,7 +241,7 @@ public class Mod_Economy : Mod
     public void AddCurrency(Currency currency, int amount)
     {
         _currencies[currency] += amount;
-        Debug.Log($"Added {amount} {currency} ! Current {currency} = {_currencies[currency]}");
+        Debug.Log($"<color=lime>Added {amount} {currency} ! Current {currency} = {_currencies[currency]}</color>");
     }
     public void RemoveCurrency(Currency currency, int amount)
     {

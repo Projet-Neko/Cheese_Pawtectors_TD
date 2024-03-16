@@ -47,7 +47,7 @@ AudioMixerController:
   - guids:
     - d1a233da271641f4a9855f2887eb2012
     name: SoundEffect
-  m_CurrentViewIndex: 2
+  m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
@@ -93,7 +93,8 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 21dd7f28bc7dd5e4b8243c46ff0307ba
-  m_FloatValues: {}
+  m_FloatValues:
+    6b76ee9a496e3b74fb3da74c52881cc4: -24.752398
   m_TransitionOverrides: {}
 --- !u!244 &1000026713934105461
 AudioMixerEffectController:

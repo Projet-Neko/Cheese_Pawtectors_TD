@@ -8,6 +8,6 @@ public class Mod : MonoBehaviour
 
     protected virtual void DebugOnly()
     {
-        Debug.Log($"--- {GetType().Name} Debug Function ---");
+        Debug.Log($"<color=cyan>--- {GetType().Name} Debug Function ---</color>");
     }
 }

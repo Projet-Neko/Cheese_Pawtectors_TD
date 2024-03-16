@@ -5,7 +5,7 @@ using PlayFab.Internal;
 using System;
 using System.Collections;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
@@ -24,8 +24,10 @@ public class Mod_Account : Mod
 
     // Local save
     private AuthData _authData = new();
-    private readonly BinaryFormatter _binaryFormatter = new();
     private string _path;
+    private byte[] _savedKey;
+    private FileStream _dataStream;
+    private readonly string _localAuthDataKey = "LocalAuthDataKey";
 
     // Login
     private bool _isFirstLogin;
@@ -43,30 +45,41 @@ public class Mod_Account : Mod
     #region Etape 1 : Check local save and login
     public void CheckLocalSave()
     {
-        Debug.Log("Checking local datas...");
+        Debug.Log("<color=orange>Checking auth local datas...</color>");
 
-        _path = Application.persistentDataPath + "/CheesePawtectorsTD.save"; //Local save path
+        _path = Application.persistentDataPath + "/CheesePawtectorsTD_LocalAuthData.save"; //Local save path
         Debug.Log($"Your save path is : {_path}");
 
         //Check if binary file with user datas exists
-        if (!File.Exists(_path))
+        if (!File.Exists(_path) || !PlayerPrefs.HasKey(_localAuthDataKey))
         {
-            Debug.Log("No local datas found.");
+            Debug.Log("No auth local datas found.");
             return;
         }
 
-        Debug.Log("Local datas found !");
+        Debug.Log("<color=lime>Auth local datas found !</color>");
 
         try
         {
-            using (FileStream file = new(_path, FileMode.Open))
-                _authData = (AuthData)_binaryFormatter.Deserialize(file);
+            // Get encrypt keys
+            _savedKey = Convert.FromBase64String(PlayerPrefs.GetString(_localAuthDataKey));
+            _dataStream = new FileStream(_path, FileMode.Open);
+            Aes aes = Aes.Create();
+            byte[] outputIV = new byte[aes.IV.Length];
+            _dataStream.Read(outputIV, 0, outputIV.Length);
 
-            if (_authData.Email == null) Debug.LogWarning("No registered account found.");
+            // Get encrypted datas
+            CryptoStream oStream = new(_dataStream, aes.CreateDecryptor(_savedKey, outputIV), CryptoStreamMode.Read);
+            StreamReader reader = new(oStream);
+            string text = reader.ReadToEnd();
+            reader.Close();
+
+            _authData = JsonUtility.FromJson<AuthData>(text);
+            if (string.IsNullOrEmpty(_authData.Email)) Debug.LogWarning("No registered account found.");
         }
         catch
         {
-            Debug.LogError("Error with local datas.");
+            Debug.LogError("Error with auth local datas.");
             File.Delete(_path);
         }
     }
@@ -74,7 +87,7 @@ public class Mod_Account : Mod
     {
         CheckLocalSave();
 
-        if (_authData.Email == null)
+        if (string.IsNullOrEmpty(_authData.Email))
         {
             _gm.StartRequest("Starting anonymous login...");
 
@@ -133,7 +146,7 @@ public class Mod_Account : Mod
         //Use this line once to test PlayFab Register & Login
         //yield return RegisterAccount("testing@gmail.com", "testing");
 
-        SetLocalSave();
+        UpdateLocalSave();
 
         //if (!_isFirstLogin && !IsAccountReset)
         if (!_isFirstLogin)
@@ -160,15 +173,32 @@ public class Mod_Account : Mod
         yield return null;
         //yield return UpdateData();
     }
-    private void SetLocalSave()
+    private void UpdateLocalSave()
     {
-        using (FileStream file = new(_path, FileMode.Create)) _binaryFormatter.Serialize(file, _authData);
+        _dataStream = new FileStream(_path, FileMode.Create);
+
+        // Create encrypt keys
+        Aes aes = Aes.Create();
+        _savedKey = aes.Key;
+        PlayerPrefs.SetString(_localAuthDataKey, Convert.ToBase64String(_savedKey));
+        byte[] inputIV = aes.IV;
+        _dataStream.Write(inputIV, 0, inputIV.Length);
+
+        // Write encrypted datas
+        CryptoStream iStream = new(_dataStream, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write);
+        StreamWriter sWriter = new(new CryptoStream(_dataStream, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write));
+        sWriter.Write(JsonUtility.ToJson(_authData));
+
+        sWriter.Close();
+        //iStream.Close();
+        _dataStream.Close();
+
         _authData = new();
     }
     private void CompleteLogin()
     {
         _isLoggedIn = true;
-        Debug.Log("Login complete !");
+        Debug.Log("<color=lime>Login complete !</color>");
         OnInitComplete?.Invoke();
         //_gm.InvokeOnLoginSuccess();
     }
@@ -203,9 +233,15 @@ public class Mod_Account : Mod
 
         PlayFabHttp.SimpleGetCall(file.DownloadUrl, res =>
         {
-            // TODO -> check if local data is newest
+            _gm.EndRequest();
+
+            if (_gm.Data.IsLocalDataMoreRecent(Encoding.UTF8.GetString(res)))
+            {
+                StartCoroutine(UpdateCloudData());
+                return;
+            }
+
             _gm.Data.UpdateLocalData(Encoding.UTF8.GetString(res));
-            _gm.EndRequest("Local datas updated !");
             CompleteLogin();
         }, error => Debug.LogError(error));
     }
@@ -214,9 +250,6 @@ public class Mod_Account : Mod
     public IEnumerator RegisterAccount(string email, string password)
     {
         yield return _gm.StartAsyncRequest("Registering account...");
-
-        _authData.Email = email;
-        _authData.Password = password;
 
         PlayFabClientAPI.AddUsernamePassword(new()
         {
@@ -232,7 +265,7 @@ public class Mod_Account : Mod
             }, res =>
             {
                 _gm.EndRequest("Account registered !");
-                SetLocalSave();
+                UpdateLocalSave();
             }, _gm.OnRequestError);
         }, _gm.OnRequestError);
     }
@@ -274,6 +307,13 @@ public class Mod_Account : Mod
                 }, _gm.OnRequestError);
             }, error => Debug.LogError(error));
         }, _gm.OnRequestError);
+    }
+
+    private IEnumerator UpdateCloudData()
+    {
+        Debug.Log("Update cloud data...");
+        yield return UpdateData();
+        CompleteLogin();
     }
 
     //public void ResetAccount(bool admin = false)

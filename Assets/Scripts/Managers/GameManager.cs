@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO -> vérifier si le jeu est à jour
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -29,7 +31,16 @@ public class GameManager : MonoBehaviour
 
     // --- Datas ---
     public Data Data => _data;
-    private readonly Data _data = new();
+    private Data _data;
+
+    // --- Scenes ---
+    public bool IsPopupSceneLoaded => _isPopupSceneLoaded;
+    public string PopupSceneName => _popupSceneName;
+
+    private bool _isPopupSceneLoaded;
+    private string _popupSceneName;
+
+    private bool _isInitCompleted = false;
 
     #region Modules
     [Header("Modules")]
@@ -58,7 +69,6 @@ public class GameManager : MonoBehaviour
     public List<int> CatPrices => _economy.CatPrices;
 
     public int GetCheapestCatIndex() => _economy.GetCheapestCatIndex();
-    public bool CanAdopt(int catLevel) => _economy.CanAdopt(catLevel);
     public void AddCurrency(Currency currency, int amount) => _economy.AddCurrency(currency, amount);
     public void RemoveCurrency(Currency currency, int amount) => _economy.RemoveCurrency(currency, amount);
 
@@ -73,30 +83,42 @@ public class GameManager : MonoBehaviour
         if (!Init()) return;
         _entities.Init(this);
         _wave.Init(this);
+        _data = new();
         _account.Init(this);
 
         Mod_Account.OnInitComplete += Mod_Account_OnInitComplete;
         Mod_Economy.OnInitComplete += Mod_Economy_OnInitComplete;
         Mod_Clans.OnInitComplete += Mod_Clans_OnInitComplete;
+
+        SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
     }
+
+    private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded, string popupName)
+    {
+        _isPopupSceneLoaded = isPopupSceneLoaded;
+        _popupSceneName = popupName;
+    }
+
     private void OnDestroy()
     {
         Mod_Account.OnInitComplete -= Mod_Account_OnInitComplete;
         Mod_Economy.OnInitComplete -= Mod_Economy_OnInitComplete;
         Mod_Clans.OnInitComplete -= Mod_Clans_OnInitComplete;
+
+        SceneLoader.OnPopupSceneToogle -= SceneLoader_OnPopupSceneToogle;
     }
 
     private bool Init()
     {
         if (Instance != null)
         {
-            Destroy(this);
+            Destroy(gameObject);
             return false;
         }
 
         Instance = this;
         DontDestroyOnLoad(this);
-        Debug.Log("Game Manager created.");
+        Debug.Log("<color=yellow>Game Manager created.</color>");
         return true;
     }
 
@@ -111,22 +133,44 @@ public class GameManager : MonoBehaviour
     }
     private void Mod_Clans_OnInitComplete()
     {
-        if (LastLogin == null) StartCoroutine(_account.UpdateData());
-        StartCoroutine(StartUpdates());
-        OnInitComplete?.Invoke();
+        StartCoroutine(CompleteInit());
     }
     #endregion
 
+    private IEnumerator CompleteInit()
+    {
+        Debug.Log("complete init");
+        if (LastLogin == null) yield return _account.UpdateData();
+        Debug.Log("<color=yellow>----- GAME MANAGER INIT COMPLETED ! -----</color>");
+        OnInitComplete?.Invoke();
+        _isInitCompleted = true;
+        DebugOnly();
+        yield return StartUpdates();
+    }
+
     private IEnumerator StartUpdates()
     {
-        Debug.Log("Start game updates...");
+        Debug.Log("<color=orange>Start game updates...</color>");
 
         while (true)
         {
             yield return new WaitForSeconds(60);
+            Debug.Log("Starting auto save...");
             foreach (var currency in Currencies) yield return _economy.UpdateCurrency(currency.Key);
             yield return _account.UpdateData();
         }
+    }
+
+    private void DebugOnly()
+    {
+        //DeleteLocalDatas(); // Reset local datas
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (!_isInitCompleted) return;
+        Debug.Log("Updating local data on application pause...");
+        Data.Update();
     }
 
     #region AccountMod
@@ -147,7 +191,7 @@ public class GameManager : MonoBehaviour
         OnRequest?.Invoke();
         int currentRequest = _requests;
         _requests++;
-        if (!string.IsNullOrEmpty(log)) Debug.Log(log);
+        if (!string.IsNullOrEmpty(log)) Debug.Log($"<color=orange>{log}</color>");
         return currentRequest;
     }
     public void EndRequest(string log = null)
@@ -158,7 +202,7 @@ public class GameManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(log))
         {
-            Debug.Log(log);
+            Debug.Log($"<color=lime>{log}</color>");
             OnSuccessMessage?.Invoke(log);
         }
     }
@@ -169,4 +213,10 @@ public class GameManager : MonoBehaviour
         OnLoadingEnd?.Invoke();
     }
     #endregion
+
+    public void DeleteLocalDatas()
+    {
+        _data = new();
+        _data.Update();
+    }
 }

@@ -1,5 +1,4 @@
 using AYellowpaper.SerializedCollections;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class House : MonoBehaviour
@@ -15,12 +14,11 @@ public class House : MonoBehaviour
 
     private GameObject[,] _roomsGrid = new GameObject[_maxRooms,_maxRooms];
 
-
-    // Start is called before the first frame update
     void Start()
     {
         // Create the Void Rooms and one Start Room, visible in the beginning
         _currentRoomNumber = _minRooms;
+
         for (int i = 0; i < _currentRoomNumber; i++)
         {
             for (int j = 0; j < _currentRoomNumber; j++)
@@ -49,12 +47,6 @@ public class House : MonoBehaviour
         RemoveRoom(2, 1);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void AddRoom(int x, int y, RoomPattern pattern)
     {
         Room room = _roomsGrid[x, y].GetComponent<Room>();
@@ -74,8 +66,7 @@ public class House : MonoBehaviour
             roomObject.transform.parent = transform;
             _roomsGrid[x, y] = roomObject;
         }
-        else
-            Debug.Log("Room not overwritable, security = " + _roomsGrid[x, y].GetComponent<Room>().Security);
+        else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, y].GetComponent<Room>().Security);
     }
 
     public void RemoveRoom(int x, int y)

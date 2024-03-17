@@ -24,6 +24,7 @@ public class Data
 
     public Data()
     {
+        if (GameManager.Instance == null) return;
         for (int i = 0; i < GameManager.Instance.Cats.Length; i++) AmountOfPurchases.Add(0);
         for (int i = 0; i < 8; i++) Storage.Add(new(i)); // Init empty storage
     }

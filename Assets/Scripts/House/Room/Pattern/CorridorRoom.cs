@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class CorridorRoom : Room
 {
     void Awake()
@@ -12,11 +8,5 @@ public class CorridorRoom : Room
         _openings[1] = true;
         _openings[2] = false;
         _openings[3] = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class CrossraodRoom : Room
+public class CrossroadRoom : Room
 {
     void Awake()
     {
@@ -12,11 +8,5 @@ public class CrossraodRoom : Room
         _openings[1] = true;
         _openings[2] = true;
         _openings[3] = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

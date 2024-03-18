@@ -91,30 +91,15 @@ public class GameManager : MonoBehaviour
         Mod_Clans.OnInitComplete += Mod_Clans_OnInitComplete;
 
         SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
-        DragAndDrop.OnSlotChanged += DragAndDrop_OnSlotChanged;
+
+        // Merge & Move events
+        StorageSlot.OnSlotChanged += HandleMergeAndMove;
+        Merge.OnCatMerge += HandleMergeAndMove;
+        Discard.OnCatDiscard += HandleMergeAndMove;
+
+        // Adoption events
         CatBoxSpawner.OnBoxSpawn += CatBoxSpawner_OnBoxSpawn;
         Storage.OnCatSpawn += Storage_OnCatSpawn;
-    }
-
-    private void Storage_OnCatSpawn(int catLevel, int slotIndex)
-    {
-        _data.AdoptCat(catLevel - 1, slotIndex);
-    }
-
-    private void CatBoxSpawner_OnBoxSpawn(int slotIndex)
-    {
-        _data.UpdateStorage(slotIndex, -2);
-    }
-
-    private void DragAndDrop_OnSlotChanged(int slotIndex, int catIndex)
-    {
-        _data.UpdateStorage(slotIndex, catIndex);
-    }
-
-    private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded, string popupName)
-    {
-        _isPopupSceneLoaded = isPopupSceneLoaded;
-        _popupSceneName = popupName;
     }
 
     private void OnDestroy()
@@ -124,7 +109,13 @@ public class GameManager : MonoBehaviour
         Mod_Clans.OnInitComplete -= Mod_Clans_OnInitComplete;
 
         SceneLoader.OnPopupSceneToogle -= SceneLoader_OnPopupSceneToogle;
-        DragAndDrop.OnSlotChanged -= DragAndDrop_OnSlotChanged;
+
+        // Merge & Move events
+        StorageSlot.OnSlotChanged -= HandleMergeAndMove;
+        Merge.OnCatMerge -= HandleMergeAndMove;
+        Discard.OnCatDiscard -= HandleMergeAndMove;
+
+        // Adoption events
         CatBoxSpawner.OnBoxSpawn -= CatBoxSpawner_OnBoxSpawn;
         Storage.OnCatSpawn -= Storage_OnCatSpawn;
     }
@@ -155,6 +146,23 @@ public class GameManager : MonoBehaviour
     private void Mod_Clans_OnInitComplete()
     {
         StartCoroutine(CompleteInit());
+    }
+    private void HandleMergeAndMove(int slotIndex, int catindex)
+    {
+        _data.UpdateStorage(slotIndex, catindex);
+    }
+    private void Storage_OnCatSpawn(int catLevel, int slotIndex)
+    {
+        _data.AdoptCat(catLevel - 1, slotIndex);
+    }
+    private void CatBoxSpawner_OnBoxSpawn(int slotIndex)
+    {
+        _data.UpdateStorage(slotIndex, -2);
+    }
+    private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded, string popupName)
+    {
+        _isPopupSceneLoaded = isPopupSceneLoaded;
+        _popupSceneName = popupName;
     }
     #endregion
 

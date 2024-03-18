@@ -192,14 +192,9 @@ public class Mod_Economy : Mod
         {
             int n = GameManager.Instance.Cats[i].Level;
             int catPrice = 100 * (n - 1) + (100 * (int)Mathf.Pow(1.244415f, n - 1));
-
-            if (_gm.Data.AmountOfPurchases[i] != 0)
-            {
-                catPrice = (catPrice / 100 * 5) * _gm.Data.AmountOfPurchases[i] - 1;
-            }
-
             _catPrices.Add(catPrice);
 
+            for (int j = 0; j < _gm.Data.AmountOfPurchases[i]; j++) IncreasePrice(i);
             Debug.Log($"{GameManager.Instance.Cats[i].Name} price is {catPrice}. (bought {_gm.Data.AmountOfPurchases[i]} time)");
         }
 
@@ -272,4 +267,10 @@ public class Mod_Economy : Mod
         }, res => _gm.EndRequest($"Updated {currency} !"), _gm.OnRequestError);
     }
     #endregion
+
+    protected override void DebugOnly()
+    {
+        base.DebugOnly();
+        AddCurrency(Currency.Meat, 1000);
+    }
 }

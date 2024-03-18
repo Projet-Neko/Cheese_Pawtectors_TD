@@ -15,6 +15,15 @@ public class CheckStorage : MonoBehaviour
     {
         AdoptButton.OnAdoptButtonClick += AdoptButton_OnAdoptButtonClick;
         Mod_Economy.OnAdoptCheck += Mod_Economy_OnAdoptCheck;
+
+        int index = 0;
+
+        foreach (Transform slot in _slots.transform)
+        {
+            Data_Storage ds = GameManager.Instance.Data.Storage[index];
+            if (ds.CatIndex != -1) SpawnCat(ds.CatIndex + 1, slot);
+            index++;
+        }
     }
 
     private void OnDestroy()
@@ -44,9 +53,12 @@ public class CheckStorage : MonoBehaviour
     private void Mod_Economy_OnAdoptCheck(bool canAdopt, int catLevel)
     {
         if (!canAdopt) return;
+        SpawnCat(catLevel, _freeSlot); // Spawn cat in storage
+    }
 
-        // Spawn cat in storage
-        GameObject go = Instantiate(_catPrefab, _freeSlot);
+    private void SpawnCat(int catLevel, Transform slot)
+    {
+        GameObject go = Instantiate(_catPrefab, slot);
         go.transform.localScale = new Vector3(10, 10, 10);
 
         Cat cat = go.GetComponent<Cat>();

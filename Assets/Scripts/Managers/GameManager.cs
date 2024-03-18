@@ -92,6 +92,18 @@ public class GameManager : MonoBehaviour
 
         SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
         DragAndDrop.OnSlotChanged += DragAndDrop_OnSlotChanged;
+        CatBoxSpawner.OnBoxSpawn += CatBoxSpawner_OnBoxSpawn;
+        Storage.OnCatSpawn += Storage_OnCatSpawn;
+    }
+
+    private void Storage_OnCatSpawn(int catLevel, int slotIndex)
+    {
+        _data.AdoptCat(catLevel - 1, slotIndex);
+    }
+
+    private void CatBoxSpawner_OnBoxSpawn(int slotIndex)
+    {
+        _data.UpdateStorage(slotIndex, -2);
     }
 
     private void DragAndDrop_OnSlotChanged(int slotIndex, int catIndex)
@@ -113,6 +125,8 @@ public class GameManager : MonoBehaviour
 
         SceneLoader.OnPopupSceneToogle -= SceneLoader_OnPopupSceneToogle;
         DragAndDrop.OnSlotChanged -= DragAndDrop_OnSlotChanged;
+        CatBoxSpawner.OnBoxSpawn -= CatBoxSpawner_OnBoxSpawn;
+        Storage.OnCatSpawn -= Storage_OnCatSpawn;
     }
 
     private bool Init()

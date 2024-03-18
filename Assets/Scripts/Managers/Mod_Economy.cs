@@ -30,13 +30,13 @@ public class Mod_Economy : Mod
     private void Awake()
     {
         Entity.OnDeath += Entity_OnDeath;
-        CheckStorage.OnStorageCheck += CheckStorage_OnStorageCheck;
+        Storage.OnStorageCheck += CheckStorage_OnStorageCheck;
     }
 
     private void OnDestroy()
     {
         Entity.OnDeath -= Entity_OnDeath;
-        CheckStorage.OnStorageCheck -= CheckStorage_OnStorageCheck;
+        Storage.OnStorageCheck -= CheckStorage_OnStorageCheck;
     }
     private void Entity_OnDeath(Entity obj)
     {
@@ -218,7 +218,6 @@ public class Mod_Economy : Mod
             canAdopt = true;
             RemoveCurrency(Currency.Meat, _catPrices[catLevel - 1]);
             IncreasePrice(catLevel - 1);
-            _gm.Data.AdoptCat(catLevel - 1, slotIndex);
         }
 
         OnAdoptCheck?.Invoke(canAdopt, catLevel);

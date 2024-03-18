@@ -2,9 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CheckStorage : MonoBehaviour
+public class Storage : MonoBehaviour
 {
     public static event Action<int, int> OnStorageCheck;
+    public static event Action<int, int> OnCatSpawn;
+    public static event Action<Transform> OnBoxInit;
 
     [SerializeField] private GridLayoutGroup _slots;
     [SerializeField] private GameObject _catPrefab;
@@ -15,12 +17,24 @@ public class CheckStorage : MonoBehaviour
     {
         AdoptButton.OnAdoptButtonClick += AdoptButton_OnAdoptButtonClick;
         Mod_Economy.OnAdoptCheck += Mod_Economy_OnAdoptCheck;
+        CatBoxOpening.OnBoxOpen += CatBoxOpening_OnBoxOpen;
+
+        int index = 0;
+
+        foreach (Transform slot in _slots.transform)
+        {
+            Data_Storage ds = GameManager.Instance.Data.Storage[index];
+            if (ds.CatIndex == -2) OnBoxInit?.Invoke(slot);
+            else if (ds.CatIndex != -1) slot.GetComponent<StorageSlot>().InitSlot(SpawnCat(ds.CatIndex + 1, slot));
+            index++;
+        }
     }
 
     private void OnDestroy()
     {
         AdoptButton.OnAdoptButtonClick -= AdoptButton_OnAdoptButtonClick;
         Mod_Economy.OnAdoptCheck -= Mod_Economy_OnAdoptCheck;
+        CatBoxOpening.OnBoxOpen -= CatBoxOpening_OnBoxOpen;
     }
 
     private void AdoptButton_OnAdoptButtonClick(int catLevel)
@@ -44,13 +58,23 @@ public class CheckStorage : MonoBehaviour
     private void Mod_Economy_OnAdoptCheck(bool canAdopt, int catLevel)
     {
         if (!canAdopt) return;
+        SpawnCat(catLevel, _freeSlot); // Spawn cat in storage
+    }
 
-        // Spawn cat in storage
-        GameObject go = Instantiate(_catPrefab, _freeSlot);
+    private Cat SpawnCat(int catLevel, Transform slot)
+    {
+        GameObject go = Instantiate(_catPrefab, slot);
         go.transform.localScale = new Vector3(10, 10, 10);
 
         Cat cat = go.GetComponent<Cat>();
         cat.Init(catLevel);
         cat.SetStorageMode(true); // Permet de cacher le HUD
+        OnCatSpawn?.Invoke(catLevel, int.Parse(slot.name.Split('_')[1]));
+        return cat;
+    }
+
+    private void CatBoxOpening_OnBoxOpen(Transform slot)
+    {
+        SpawnCat(1, slot); // TODO -> spawn random cat level
     }
 }

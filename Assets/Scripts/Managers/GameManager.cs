@@ -91,12 +91,15 @@ public class GameManager : MonoBehaviour
         Mod_Clans.OnInitComplete += Mod_Clans_OnInitComplete;
 
         SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
-    }
 
-    private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded, string popupName)
-    {
-        _isPopupSceneLoaded = isPopupSceneLoaded;
-        _popupSceneName = popupName;
+        // Merge & Move events
+        StorageSlot.OnSlotChanged += HandleMergeAndMove;
+        Merge.OnCatMerge += HandleMergeAndMove;
+        Discard.OnCatDiscard += HandleMergeAndMove;
+
+        // Adoption events
+        CatBoxSpawner.OnBoxSpawn += CatBoxSpawner_OnBoxSpawn;
+        Storage.OnCatSpawn += Storage_OnCatSpawn;
     }
 
     private void OnDestroy()
@@ -106,6 +109,15 @@ public class GameManager : MonoBehaviour
         Mod_Clans.OnInitComplete -= Mod_Clans_OnInitComplete;
 
         SceneLoader.OnPopupSceneToogle -= SceneLoader_OnPopupSceneToogle;
+
+        // Merge & Move events
+        StorageSlot.OnSlotChanged -= HandleMergeAndMove;
+        Merge.OnCatMerge -= HandleMergeAndMove;
+        Discard.OnCatDiscard -= HandleMergeAndMove;
+
+        // Adoption events
+        CatBoxSpawner.OnBoxSpawn -= CatBoxSpawner_OnBoxSpawn;
+        Storage.OnCatSpawn -= Storage_OnCatSpawn;
     }
 
     private bool Init()
@@ -135,11 +147,27 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(CompleteInit());
     }
+    private void HandleMergeAndMove(int slotIndex, int catindex)
+    {
+        _data.UpdateStorage(slotIndex, catindex);
+    }
+    private void Storage_OnCatSpawn(int catLevel, int slotIndex)
+    {
+        _data.AdoptCat(catLevel - 1, slotIndex);
+    }
+    private void CatBoxSpawner_OnBoxSpawn(int slotIndex)
+    {
+        _data.UpdateStorage(slotIndex, -2);
+    }
+    private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded, string popupName)
+    {
+        _isPopupSceneLoaded = isPopupSceneLoaded;
+        _popupSceneName = popupName;
+    }
     #endregion
 
     private IEnumerator CompleteInit()
     {
-        Debug.Log("complete init");
         if (LastLogin == null) yield return _account.UpdateData();
         Debug.Log("<color=yellow>----- GAME MANAGER INIT COMPLETED ! -----</color>");
         OnInitComplete?.Invoke();

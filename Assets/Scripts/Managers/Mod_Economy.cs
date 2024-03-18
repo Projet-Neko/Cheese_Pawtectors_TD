@@ -30,13 +30,13 @@ public class Mod_Economy : Mod
     private void Awake()
     {
         Entity.OnDeath += Entity_OnDeath;
-        CheckStorage.OnStorageCheck += CheckStorage_OnStorageCheck;
+        Storage.OnStorageCheck += CheckStorage_OnStorageCheck;
     }
 
     private void OnDestroy()
     {
         Entity.OnDeath -= Entity_OnDeath;
-        CheckStorage.OnStorageCheck -= CheckStorage_OnStorageCheck;
+        Storage.OnStorageCheck -= CheckStorage_OnStorageCheck;
     }
     private void Entity_OnDeath(Entity obj)
     {
@@ -192,14 +192,9 @@ public class Mod_Economy : Mod
         {
             int n = GameManager.Instance.Cats[i].Level;
             int catPrice = 100 * (n - 1) + (100 * (int)Mathf.Pow(1.244415f, n - 1));
-
-            if (_gm.Data.AmountOfPurchases[i] != 0)
-            {
-                catPrice = (catPrice / 100 * 5) * _gm.Data.AmountOfPurchases[i] - 1;
-            }
-
             _catPrices.Add(catPrice);
 
+            for (int j = 0; j < _gm.Data.AmountOfPurchases[i]; j++) IncreasePrice(i);
             Debug.Log($"{GameManager.Instance.Cats[i].Name} price is {catPrice}. (bought {_gm.Data.AmountOfPurchases[i]} time)");
         }
 
@@ -223,7 +218,6 @@ public class Mod_Economy : Mod
             canAdopt = true;
             RemoveCurrency(Currency.Meat, _catPrices[catLevel - 1]);
             IncreasePrice(catLevel - 1);
-            _gm.Data.AdoptCat(catLevel - 1, slotIndex);
         }
 
         OnAdoptCheck?.Invoke(canAdopt, catLevel);
@@ -272,4 +266,10 @@ public class Mod_Economy : Mod
         }, res => _gm.EndRequest($"Updated {currency} !"), _gm.OnRequestError);
     }
     #endregion
+
+    protected override void DebugOnly()
+    {
+        base.DebugOnly();
+        AddCurrency(Currency.Meat, 1000);
+    }
 }

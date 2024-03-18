@@ -91,6 +91,12 @@ public class GameManager : MonoBehaviour
         Mod_Clans.OnInitComplete += Mod_Clans_OnInitComplete;
 
         SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
+        DragAndDrop.OnSlotChanged += DragAndDrop_OnSlotChanged;
+    }
+
+    private void DragAndDrop_OnSlotChanged(int slotIndex, int catIndex)
+    {
+        _data.UpdateStorage(slotIndex, catIndex);
     }
 
     private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded, string popupName)
@@ -106,6 +112,7 @@ public class GameManager : MonoBehaviour
         Mod_Clans.OnInitComplete -= Mod_Clans_OnInitComplete;
 
         SceneLoader.OnPopupSceneToogle -= SceneLoader_OnPopupSceneToogle;
+        DragAndDrop.OnSlotChanged -= DragAndDrop_OnSlotChanged;
     }
 
     private bool Init()

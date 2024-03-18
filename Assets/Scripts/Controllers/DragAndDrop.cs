@@ -16,6 +16,8 @@ public class DragAndDrop : MonoBehaviour
     [SerializeField, Layer] private int _discardLayer;
     [SerializeField, Layer] private int _slotLayer;
 
+    public int CurrentSlotIndex => _currentSlotIndex;
+
     private bool _isBeingDragged = false;
     private GameObject _target;
     private Transform _currentSlot;
@@ -26,6 +28,7 @@ public class DragAndDrop : MonoBehaviour
     private void Start()
     {
         _currentSlot = transform.parent;
+        _currentSlotIndex = int.Parse(_currentSlot.name.Split('_')[1]);
     }
 
     private void OnMouseDrag()
@@ -73,7 +76,8 @@ public class DragAndDrop : MonoBehaviour
 
         if (target.Level == _entity.Level)
         {
-            OnSlotChanged?.Invoke(_currentSlotIndex, _entity.Level);
+            OnSlotChanged?.Invoke(_currentSlotIndex, -1);
+            OnSlotChanged?.Invoke(target.GetComponentInParent<DragAndDrop>().CurrentSlotIndex, _entity.Level);
             target.LevelUp();
             Destroy(gameObject);
             return;

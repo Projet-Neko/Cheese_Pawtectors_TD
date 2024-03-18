@@ -1,8 +1,11 @@
 using NaughtyAttributes;
+using System;
 using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
 {
+    public static event Action<int, int> OnSlotChanged;
+
     [Header("Dependencies")]
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private GameObject _hud;
@@ -16,6 +19,7 @@ public class DragAndDrop : MonoBehaviour
     private bool _isBeingDragged = false;
     private GameObject _target;
     private Transform _currentSlot;
+    private int _currentSlotIndex;
 
     // TODO -> update Data storage on cat move
 
@@ -69,6 +73,7 @@ public class DragAndDrop : MonoBehaviour
 
         if (target.Level == _entity.Level)
         {
+            OnSlotChanged?.Invoke(_currentSlotIndex, _entity.Level);
             target.LevelUp();
             Destroy(gameObject);
             return;
@@ -86,8 +91,10 @@ public class DragAndDrop : MonoBehaviour
         }
 
         _currentSlot = _target.transform;
+        _currentSlotIndex = int.Parse(_currentSlot.name.Split('_')[1]);
         transform.SetParent(_target.transform);
         transform.position = new Vector3(_target.transform.position.x, _target.transform.position.y, transform.position.z);
+        OnSlotChanged?.Invoke(_currentSlotIndex, _entity.Level - 1);
     }
 
     private void BackSlot()

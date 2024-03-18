@@ -9,7 +9,8 @@ public class DragAndDrop : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private GameObject _hud;
-    [SerializeField] private Entity _entity;
+    [SerializeField] private Cat _cat;
+    [SerializeField] private Room _room;
 
     [Header("Layers")]
     [SerializeField, Layer] private int _catLayer;
@@ -22,13 +23,14 @@ public class DragAndDrop : MonoBehaviour
     private GameObject _target;
     private Transform _currentSlot;
     private int _currentSlotIndex;
+    private Vector3 _initialPosition;
 
     // TODO -> update Data storage on cat move
 
     private void Start()
     {
-        _currentSlot = transform.parent;
-        _currentSlotIndex = int.Parse(_currentSlot.name.Split('_')[1]);
+        //_currentSlot = transform.parent;
+        //_currentSlotIndex = int.Parse(_currentSlot.name.Split('_')[1]);
     }
 
     private void OnMouseDrag()
@@ -50,11 +52,18 @@ public class DragAndDrop : MonoBehaviour
     {
         Grab(false);
 
-        if (_target == null) BackSlot();
-        else if (_target.layer == _catLayer) Merge();
-        else if (_target.layer == _discardLayer) Destroy(gameObject);
-        else if (_target.layer == _slotLayer) ChangeSlot();
-        else BackSlot();
+        if (_target == null) transform.position = _initialPosition;
+        else if (_target.TryGetComponent(out DragAndDropHandler component))
+        {
+            if (_cat != null) component.HandleDragAndDrop(_cat, _initialPosition);
+            else if (_room != null) component.HandleDragAndDrop(_room, _initialPosition);
+        }
+        else transform.position = _initialPosition;
+
+        //else if (_target.layer == _catLayer) Merge();
+        //else if (_target.layer == _discardLayer) Destroy(gameObject);
+        //else if (_target.layer == _slotLayer) ChangeSlot();
+        //else BackSlot();
     }
 
     private void Grab(bool isGrabbed)
@@ -62,50 +71,51 @@ public class DragAndDrop : MonoBehaviour
         _isBeingDragged = isGrabbed;
         _hud.SetActive(!isGrabbed);
         _sprite.sortingOrder = isGrabbed ? 99 : 6;
+        _initialPosition = transform.position;
     }
 
-    private void Merge()
-    {
-        Cat target;
+    //private void Merge()
+    //{
+    //    Cat target;
 
-        if (_target.layer == _slotLayer)
-        {
-            target = _target.GetComponentInChildren<Cat>();
-        }
-        else target = _target.GetComponentInParent<Cat>();
+    //    if (_target.layer == _slotLayer)
+    //    {
+    //        target = _target.GetComponentInChildren<Cat>();
+    //    }
+    //    else target = _target.GetComponentInParent<Cat>();
 
-        if (target.Level == _entity.Level)
-        {
-            OnSlotChanged?.Invoke(_currentSlotIndex, -1);
-            OnSlotChanged?.Invoke(target.GetComponentInParent<DragAndDrop>().CurrentSlotIndex, _entity.Level);
-            target.LevelUp();
-            Destroy(gameObject);
-            return;
-        }
+    //    if (target.Level == _room.Level)
+    //    {
+    //        OnSlotChanged?.Invoke(_currentSlotIndex, -1);
+    //        OnSlotChanged?.Invoke(target.GetComponentInParent<DragAndDrop>().CurrentSlotIndex, _room.Level);
+    //        target.LevelUp();
+    //        Destroy(gameObject);
+    //        return;
+    //    }
 
-        BackSlot();
-    }
+    //    BackSlot();
+    //}
 
-    private void ChangeSlot()
-    {
-        if (_target.transform.childCount != 0)
-        {
-            Merge();
-            return;
-        }
+    //private void ChangeSlot()
+    //{
+    //    if (_target.transform.childCount != 0)
+    //    {
+    //        Merge();
+    //        return;
+    //    }
 
-        _currentSlot = _target.transform;
-        _currentSlotIndex = int.Parse(_currentSlot.name.Split('_')[1]);
-        transform.SetParent(_target.transform);
-        transform.position = new Vector3(_target.transform.position.x, _target.transform.position.y, transform.position.z);
-        OnSlotChanged?.Invoke(_currentSlotIndex, _entity.Level - 1);
-    }
+    //    _currentSlot = _target.transform;
+    //    _currentSlotIndex = int.Parse(_currentSlot.name.Split('_')[1]);
+    //    transform.SetParent(_target.transform);
+    //    transform.position = new Vector3(_target.transform.position.x, _target.transform.position.y, transform.position.z);
+    //    OnSlotChanged?.Invoke(_currentSlotIndex, _room.Level - 1);
+    //}
 
-    private void BackSlot()
-    {
-        transform.SetParent(_currentSlot);
-        transform.position = new Vector3(_currentSlot.transform.position.x, _currentSlot.transform.position.y, transform.position.z);
-    }
+    //private void BackSlot()
+    //{
+    //    transform.SetParent(_currentSlot);
+    //    transform.position = new Vector3(_currentSlot.transform.position.x, _currentSlot.transform.position.y, transform.position.z);
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

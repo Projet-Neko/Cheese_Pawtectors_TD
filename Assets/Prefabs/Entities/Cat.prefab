@@ -647,7 +647,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 654895726392624424}
   _hud: {fileID: 2299790915040429675}
-  _entity: {fileID: 1033424655005935924}
+  _cat: {fileID: 1033424655005935924}
+  _room: {fileID: 0}
   _catLayer: 7
   _discardLayer: 6
   _slotLayer: 9

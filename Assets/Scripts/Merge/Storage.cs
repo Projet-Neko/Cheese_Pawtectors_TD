@@ -25,7 +25,7 @@ public class Storage : MonoBehaviour
         {
             Data_Storage ds = GameManager.Instance.Data.Storage[index];
             if (ds.CatIndex == -2) OnBoxInit?.Invoke(slot);
-            else if (ds.CatIndex != -1) SpawnCat(ds.CatIndex + 1, slot);
+            else if (ds.CatIndex != -1) slot.GetComponent<StorageSlot>().InitSlot(SpawnCat(ds.CatIndex + 1, slot));
             index++;
         }
     }
@@ -61,7 +61,7 @@ public class Storage : MonoBehaviour
         SpawnCat(catLevel, _freeSlot); // Spawn cat in storage
     }
 
-    private void SpawnCat(int catLevel, Transform slot)
+    private Cat SpawnCat(int catLevel, Transform slot)
     {
         GameObject go = Instantiate(_catPrefab, slot);
         go.transform.localScale = new Vector3(10, 10, 10);
@@ -70,6 +70,7 @@ public class Storage : MonoBehaviour
         cat.Init(catLevel);
         cat.SetStorageMode(true); // Permet de cacher le HUD
         OnCatSpawn?.Invoke(catLevel, int.Parse(slot.name.Split('_')[1]));
+        return cat;
     }
 
     private void CatBoxOpening_OnBoxOpen(Transform slot)

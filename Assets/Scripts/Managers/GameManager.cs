@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
         Mod_Clans.OnInitComplete += Mod_Clans_OnInitComplete;
 
         SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
-        DragAndDrop.OnSlotChanged += DragAndDrop_OnSlotChanged;
+        StorageSlot.OnSlotChanged += StorageSlot_OnSlotChanged;
         CatBoxSpawner.OnBoxSpawn += CatBoxSpawner_OnBoxSpawn;
         Storage.OnCatSpawn += Storage_OnCatSpawn;
     }
@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
         _data.UpdateStorage(slotIndex, -2);
     }
 
-    private void DragAndDrop_OnSlotChanged(int slotIndex, int catIndex)
+    private void StorageSlot_OnSlotChanged(int slotIndex, int catIndex)
     {
         _data.UpdateStorage(slotIndex, catIndex);
     }
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
         Mod_Clans.OnInitComplete -= Mod_Clans_OnInitComplete;
 
         SceneLoader.OnPopupSceneToogle -= SceneLoader_OnPopupSceneToogle;
-        DragAndDrop.OnSlotChanged -= DragAndDrop_OnSlotChanged;
+        StorageSlot.OnSlotChanged -= StorageSlot_OnSlotChanged;
         CatBoxSpawner.OnBoxSpawn -= CatBoxSpawner_OnBoxSpawn;
         Storage.OnCatSpawn -= Storage_OnCatSpawn;
     }

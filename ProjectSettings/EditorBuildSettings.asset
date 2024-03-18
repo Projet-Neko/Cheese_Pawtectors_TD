@@ -30,7 +30,7 @@ EditorBuildSettings:
     path: Assets/Scenes/BlockOut/BO_BuildMode.unity
     guid: 5f7927bcda7adec4daa218c7070b3052
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BO_Catalog.unity
+    path: Assets/Scenes/Catalog.unity
     guid: a07c302f78c5ba34b9f6900bd3baca89
   - enabled: 1
     path: Assets/Scenes/BlockOut/BO_Shop.unity

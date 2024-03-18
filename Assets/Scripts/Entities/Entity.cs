@@ -14,7 +14,7 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected Slider _slider;
 
     public float Damage => _damage;
-    public float DPS => 3.6f - (_level * 0.1f);
+    public float DPS => _dps;
     public float BaseHealth => _baseHealth;
     public float CurrentHealth => _currentHealth;
     public int Level => _level;
@@ -25,6 +25,7 @@ public abstract class Entity : MonoBehaviour
     protected float _baseHealth;
     protected float _currentHealth;
     protected float _damage;
+    protected float _dps;
     protected bool _isAttacked;
 
     private void Start()

@@ -13,6 +13,7 @@ public enum Currency
 public class Mod_Economy : Mod
 {
     public static event Action OnInitComplete;
+    public static event Action<bool, int> OnAdoptCheck;
 
     public List<int> CatPrices => _catPrices;
     public Dictionary<Currency, int> Currencies => _currencies; // Local currencies
@@ -29,10 +30,13 @@ public class Mod_Economy : Mod
     private void Awake()
     {
         Entity.OnDeath += Entity_OnDeath;
+        CheckStorage.OnStorageCheck += CheckStorage_OnStorageCheck;
     }
+
     private void OnDestroy()
     {
         Entity.OnDeath -= Entity_OnDeath;
+        CheckStorage.OnStorageCheck -= CheckStorage_OnStorageCheck;
     }
     private void Entity_OnDeath(Entity obj)
     {
@@ -77,6 +81,7 @@ public class Mod_Economy : Mod
         {
             if (item.Type == "currency")
             {
+                Debug.Log($"Found currency {item.AlternateIds[0].Value} !");
                 _currenciesNameById[item.Id] = Enum.Parse<Currency>(item.AlternateIds[0].Value);
                 _currenciesIdByName[_currenciesNameById[item.Id]] = item.Id;
                 _currencies[_currenciesNameById[item.Id]] = 0;
@@ -96,7 +101,6 @@ public class Mod_Economy : Mod
 
         if (_gm.LastLogin == null) // First time player
         {
-            _gm.Data.InitEconomy();
             CompleteEconomyInit();
             return;
         }
@@ -148,7 +152,7 @@ public class Mod_Economy : Mod
     private IEnumerator CheckOfflineCurrency()
     {
         int meatGained = MeatGainedOffline(GameManager.Instance.LastLogin);
-        Debug.Log($"Gained {meatGained} meat offline !");
+        Debug.Log($"<color=lime>Gained {meatGained} meat offline !</color>");
         AddCurrency(Currency.Meat, meatGained);
         yield return UpdateCurrency(Currency.Meat);
 
@@ -188,13 +192,10 @@ public class Mod_Economy : Mod
         {
             int n = GameManager.Instance.Cats[i].Level;
             int catPrice = 100 * (n - 1) + (100 * (int)Mathf.Pow(1.244415f, n - 1));
-
-            if (_gm.Data.AmountOfPurchases[i] - 1 != 0)
-            {
-                catPrice = (catPrice / 100 * 5) * _gm.Data.AmountOfPurchases[i] - 1;
-            }
-
             _catPrices.Add(catPrice);
+
+            for (int j = 0; j < _gm.Data.AmountOfPurchases[i]; j++) IncreasePrice(i);
+            Debug.Log($"{GameManager.Instance.Cats[i].Name} price is {catPrice}. (bought {_gm.Data.AmountOfPurchases[i]} time)");
         }
 
         OnInitComplete?.Invoke();
@@ -202,23 +203,29 @@ public class Mod_Economy : Mod
     }
 
     #region Gestion de l'adoption
-    public bool CanAdopt(int catLevel)
+    private void CheckStorage_OnStorageCheck(int slotIndex, int catLevel)
     {
-        if (_currencies[Currency.Meat] < _catPrices[catLevel])
+        if (slotIndex == -1) return;
+        bool canAdopt;
+
+        if (_currencies[Currency.Meat] < _catPrices[catLevel - 1])
         {
-            Debug.Log($" You can't adopt this cat not enough money!");
-            return false;
+            Debug.Log(" You can't adopt this cat : not enough money!");
+            canAdopt = false;
+        }
+        else
+        {
+            canAdopt = true;
+            RemoveCurrency(Currency.Meat, _catPrices[catLevel - 1]);
+            IncreasePrice(catLevel - 1);
+            _gm.Data.AdoptCat(catLevel - 1, slotIndex);
         }
 
-        RemoveCurrency(Currency.Meat, _catPrices[catLevel]);
-        IncreasePrice(catLevel);
-
-        return true;
+        OnAdoptCheck?.Invoke(canAdopt, catLevel);
     }
-    private void IncreasePrice(int catLevel)
+    private void IncreasePrice(int catIndex)
     {
-        _gm.Data.UpdateCatAmount(catLevel);
-        _catPrices[catLevel] = _catPrices[catLevel] + (_catPrices[catLevel] / 100 * 5);
+        _catPrices[catIndex] = _catPrices[catIndex] + (_catPrices[catIndex] / 100 * 5);
     }
     public int GetCheapestCatIndex()
     {
@@ -238,7 +245,7 @@ public class Mod_Economy : Mod
     public void AddCurrency(Currency currency, int amount)
     {
         _currencies[currency] += amount;
-        Debug.Log($"Added {amount} {currency} ! Current {currency} = {_currencies[currency]}");
+        Debug.Log($"<color=lime>Added {amount} {currency} ! Current {currency} = {_currencies[currency]}</color>");
     }
     public void RemoveCurrency(Currency currency, int amount)
     {
@@ -260,4 +267,10 @@ public class Mod_Economy : Mod
         }, res => _gm.EndRequest($"Updated {currency} !"), _gm.OnRequestError);
     }
     #endregion
+
+    protected override void DebugOnly()
+    {
+        base.DebugOnly();
+        AddCurrency(Currency.Meat, 1000);
+    }
 }

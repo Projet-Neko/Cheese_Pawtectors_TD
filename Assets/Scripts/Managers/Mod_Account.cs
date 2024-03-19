@@ -12,6 +12,7 @@ using UnityEngine;
 public class Mod_Account : Mod
 {
     public static event Action OnInitComplete;
+    public static event Action OnCloudUpdate;
 
     public PlayFab.ClientModels.EntityKey Entity => _entity;
     public string PlayFabId => _playFabId;
@@ -304,6 +305,7 @@ public class Mod_Account : Mod
                 }, res =>
                 {
                     _gm.EndRequest("Files uploaded !");
+                    OnCloudUpdate?.Invoke();
                 }, _gm.OnRequestError);
             }, error => Debug.LogError(error));
         }, _gm.OnRequestError);

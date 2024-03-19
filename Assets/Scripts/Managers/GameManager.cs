@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Mod_Waves _wave;
     [SerializeField] private Mod_Account _account;
     [SerializeField] private Mod_Clans _clans;
+    [SerializeField] private Mod_Leaderboards _leaderboards;
 
     // EntitiesMod
     public CatSO[] Cats => _entities.Cats;

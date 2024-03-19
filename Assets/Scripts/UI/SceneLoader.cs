@@ -8,10 +8,13 @@ public class SceneLoader : MonoBehaviour
     public static event Action<bool, string> OnPopupSceneToogle;
 
     [SerializeField, Scene] private string _scene;
+    [SerializeField] private bool _isPermanent;
 
     private void Awake()
     {
-        GameManager.OnInitComplete += GameManager_OnInitComplete;
+        GameManager.OnInitComplete += GameManager_OnInitComplete; // TODO -> Replace with title screen button event
+
+        if (_isPermanent) SceneManager.LoadScene(_scene, LoadSceneMode.Additive);
     }
 
     private void OnDestroy()

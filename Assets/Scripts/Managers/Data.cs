@@ -5,6 +5,8 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
+// TODO -> save clan as local data
+
 [Serializable]
 public class Data
 {
@@ -13,7 +15,9 @@ public class Data
     public List<int> AmountOfPurchases = new();
     public List<Data_Storage> Storage = new();
     public List<Data_Rooms> Rooms = new();
+    public List<Data_Leaderboards> Leaderboards = new();
     public string LastUpdateString; // Needed for serialization
+    public bool CloudNeedsUpdate;
 
     private DateTime _lastUpdate;
 
@@ -27,6 +31,16 @@ public class Data
         if (GameManager.Instance == null) return;
         for (int i = 0; i < GameManager.Instance.Cats.Length; i++) AmountOfPurchases.Add(0);
         for (int i = 0; i < 8; i++) Storage.Add(new(i)); // Init empty storage
+
+        // Init empty leaderboards
+        foreach (var leaderboard in Enum.GetNames(typeof(Leaderboards)))
+        {
+            Leaderboards.Add(new()
+            {
+                Name = leaderboard,
+                Value = 0
+            });
+        }
     }
 
     public byte[] Serialize() => Encoding.UTF8.GetBytes(JsonUtility.ToJson(this));
@@ -37,6 +51,7 @@ public class Data
         AmountOfPurchases = data.AmountOfPurchases;
         Storage = data.Storage;
         Rooms = data.Rooms;
+        Leaderboards = data.Leaderboards;
         _lastUpdate = DateTime.Parse(data.LastUpdateString);
 
         Debug.Log(json);
@@ -98,6 +113,7 @@ public class Data
         string log = isLocalDataMoreRecent ? "Local data is more recent." : "Cloud data is more recent.";
         Debug.Log(log);
 
+        CloudNeedsUpdate = isLocalDataMoreRecent;
         return isLocalDataMoreRecent;
     }
 

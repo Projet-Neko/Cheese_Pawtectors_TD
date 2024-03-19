@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     private bool _isPopupSceneLoaded;
     private string _popupSceneName;
+    private bool _hasLoginPopupLoad;
 
     private bool _isInitCompleted = false;
 
@@ -166,6 +167,13 @@ public class GameManager : MonoBehaviour
         _popupSceneName = popupName;
     }
     #endregion
+
+    public bool HasLoginPopupLoad()
+    {
+        if (_hasLoginPopupLoad) return true;
+        _hasLoginPopupLoad = true;
+        return false;
+    }
 
     private IEnumerator CompleteInit()
     {

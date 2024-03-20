@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
 
         // Adoption events
         CatBoxSpawner.OnBoxSpawn += (slotIndex) => _data.UpdateStorage(slotIndex, -2);
-        Storage.OnCatSpawn += (slotIndex, catIndex) => _data.AdoptCat(catIndex - 1, slotIndex);
+        Storage.OnCatSpawn += (slotIndex, catIndex, free) => _data.AdoptCat(catIndex - 1, slotIndex, free);
         Cat.OnUnlock += _data.UnlockCat;
     }
 
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
 
         // Adoption events
         CatBoxSpawner.OnBoxSpawn -= (slotIndex) => _data.UpdateStorage(slotIndex, -2);
-        Storage.OnCatSpawn -= (slotIndex, catIndex) => _data.AdoptCat(catIndex - 1, slotIndex);
+        Storage.OnCatSpawn -= (slotIndex, catIndex, free) => _data.AdoptCat(catIndex - 1, slotIndex, free);
     }
 
     private bool Init()

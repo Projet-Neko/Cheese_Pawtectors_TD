@@ -102,10 +102,10 @@ public class Data
         _dataStream.Close();
     }
 
-    public void AdoptCat(int catIndex, int slotIndex)
+    public void AdoptCat(int catIndex, int slotIndex, bool free)
     {
         Storage[slotIndex].CatIndex = catIndex;
-        AmountOfPurchases[catIndex]++;
+        if (!free) AmountOfPurchases[catIndex]++;
 
         Update();
     }

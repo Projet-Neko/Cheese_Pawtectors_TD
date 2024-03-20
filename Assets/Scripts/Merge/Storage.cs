@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Storage : MonoBehaviour
 {
     public static event Action<int, int> OnStorageCheck;
-    public static event Action<int, int> OnCatSpawn;
+    public static event Action<int, int, bool> OnCatSpawn;
     public static event Action<Transform> OnBoxInit;
 
     [SerializeField] private GridLayoutGroup _slots;
@@ -25,7 +25,7 @@ public class Storage : MonoBehaviour
         {
             Data_Storage ds = GameManager.Instance.Data.Storage[index];
             if (ds.CatIndex == -2) OnBoxInit?.Invoke(slot);
-            else if (ds.CatIndex != -1) slot.GetComponent<StorageSlot>().InitSlot(SpawnCat(ds.CatIndex + 1, slot));
+            else if (ds.CatIndex != -1) slot.GetComponent<StorageSlot>().InitSlot(SpawnCat(ds.CatIndex + 1, slot, true));
             index++;
         }
     }
@@ -61,7 +61,7 @@ public class Storage : MonoBehaviour
         SpawnCat(catLevel, _freeSlot); // Spawn cat in storage
     }
 
-    private Cat SpawnCat(int catLevel, Transform slot)
+    private Cat SpawnCat(int catLevel, Transform slot, bool free = false)
     {
         GameObject go = Instantiate(_catPrefab, slot);
         go.transform.localScale = new Vector3(10, 10, 10);
@@ -69,13 +69,13 @@ public class Storage : MonoBehaviour
         Cat cat = go.GetComponent<Cat>();
         cat.Init(catLevel);
         cat.SetStorageMode(true); // Permet de cacher le HUD
-        OnCatSpawn?.Invoke(int.Parse(slot.name.Split('_')[1]), catLevel);
+        OnCatSpawn?.Invoke(int.Parse(slot.name.Split('_')[1]), catLevel, free);
         return cat;
     }
 
     private void CatBoxOpening_OnBoxOpen(Transform slot)
     {
         int level = UnityEngine.Random.Range(1, GameManager.Instance.Data.LastCatUnlockedIndex + 2);
-        SpawnCat(level, slot);
+        SpawnCat(level, slot, true);
     }
 }

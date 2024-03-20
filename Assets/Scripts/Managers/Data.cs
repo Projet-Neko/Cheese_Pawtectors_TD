@@ -12,21 +12,30 @@ public class Data
 {
     public DateTime LastUpdate => _lastUpdate;
 
-    public List<int> AmountOfPurchases = new();
+    // Entities
     public List<bool> CatsUnlocked = new();
     public List<Data_Storage> Storage = new();
-    public List<Data_Rooms> Rooms = new();
-    public List<Data_Leaderboards> Leaderboards = new();
-    public string LastUpdateString; // Needed for serialization
-    public bool CloudNeedsUpdate;
     public int LastCatUnlockedIndex;
 
-    private DateTime _lastUpdate;
+    // Economy
+    public List<int> AmountOfPurchases = new();
+
+    // Rooms
+    public List<Data_Rooms> Rooms = new();
+
+    // Social
+    public List<Data_Leaderboards> Leaderboards = new();
 
     // Local save
     private byte[] _savedKey;
     private FileStream _dataStream;
     private readonly string _localDataKey = "LocalDataKey";
+
+    // Update check
+    public string LastUpdateString; // Needed for serialization
+    public bool CloudNeedsUpdate;
+
+    private DateTime _lastUpdate;
 
     public Data()
     {

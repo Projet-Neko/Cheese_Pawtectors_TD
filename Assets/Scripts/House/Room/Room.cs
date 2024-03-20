@@ -91,27 +91,24 @@ public class Room : MonoBehaviour
 
     public void RotationRoom(bool clockwise)
     {
-        UnityEngine.Quaternion rotation = transform.rotation;
-        float zAxis = rotation.z;
-        Debug.Log(zAxis + "begin");
+
+        Vector3 rotation = transform.eulerAngles;
 
         if (clockwise)
         {
-            zAxis = zAxis - 90;
-            if (zAxis < 0) rotation.z += 360;
+            rotation.z -= 90;
+
+            if (rotation.z >= 360) rotation.z -= 360;
 
         }
         else
         {
-            zAxis = zAxis + 90;
+            rotation.z += 90;
 
-            if (rotation.z >= 360) rotation.z -= 360;
+            if (rotation.z < 0) rotation.z += 360;
         }
-        Debug.Log(zAxis);
 
-        //transform.eulerAngles = rotation;
-        transform.Rotate(rotation.x, rotation.y, zAxis, Space.World);
-
+        transform.eulerAngles = rotation;
     }
 
 }

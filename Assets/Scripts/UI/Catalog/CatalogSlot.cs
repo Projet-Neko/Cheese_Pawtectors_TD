@@ -38,7 +38,7 @@ public class CatalogSlot : MonoBehaviour
         _name.text = catSO.Name;
         _level.text = catSO.Level.ToString();
         _price.text = GameManager.Instance.CatPrices[catSO.Level - 1].ToString();
-        _renderer.sprite = catSO.SpriteFront;
+        //_renderer.sprite = catSO.SpriteFront;
 
         _adoptButton.Init(catSO);
     }

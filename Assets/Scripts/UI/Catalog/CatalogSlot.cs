@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CatalogSlot : MonoBehaviour
 {
-    public static event Action<CatSO> OnClick;
+    public static event Action<CatSO> OnCatalogSlotClick;
 
     [SerializeField] private TMP_Text _name;
     [SerializeField] private TMP_Text _level;
@@ -43,10 +43,10 @@ public class CatalogSlot : MonoBehaviour
         _adoptButton.Init(catSO);
     }
 
-    private void OnMouseUp()
+    public void OnClick()
     {
         if (_isPopupOpened) return;
-        OnClick?.Invoke(_data);
+        OnCatalogSlotClick?.Invoke(_data);
     }
 
     private void Mod_Economy_OnAdoptCheck(bool canAdopt, int catLevel)

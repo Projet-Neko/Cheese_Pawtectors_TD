@@ -22,8 +22,6 @@ public class StorageSlot : DragAndDropHandler
 
     public override void HandleDragAndDrop(Cat cat, Vector3 initialPosition)
     {
-        Debug.Log(_currentCat.Level);
-        Debug.Log(cat.Level);
         _previousSlotIndex = int.Parse(cat.transform.parent.name.Split('_')[1]);
 
         if (_currentCat == null) MoveCat(cat);

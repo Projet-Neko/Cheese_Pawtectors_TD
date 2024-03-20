@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ public enum CatState
 
 public class Cat : Entity
 {
+    public static event Action<int> OnUnlock;
+
     [SerializeField] TMP_Text _catLevel;
 
     [Header("Debug Only")]
@@ -61,6 +64,14 @@ public class Cat : Entity
     public void LevelUp()
     {
         _level++;
+
+        if (_data.State == CatState.Lock)
+        {
+            Debug.Log($"{_data.Name} is unlocked !");
+            _data.State = CatState.Unlock;
+            OnUnlock?.Invoke(_level - 1);
+        }
+
         Init(_level);
         //Debug.Log($"Level up to lvl {_level}");
     }

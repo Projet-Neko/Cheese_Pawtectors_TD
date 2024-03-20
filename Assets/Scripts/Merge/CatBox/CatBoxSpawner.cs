@@ -16,20 +16,14 @@ public class CatBoxSpawner : MonoBehaviour
 
     private void Awake()
     {
-        Storage.OnBoxInit += Storage_OnBoxInit;
+        Storage.OnBoxInit += SpawnBox;
 
         StartCoroutine(Spawn()); // Lance la coroutine pour générer les chats à intervalles aléatoires
     }
 
     private void OnDestroy()
     {
-        Storage.OnBoxInit -= Storage_OnBoxInit;
-    }
-
-    private void Storage_OnBoxInit(Transform slot)
-    {
-        GameObject go = Instantiate(_catBoxPrefab, slot);
-        go.transform.localScale = new Vector3(50, 50, 50);
+        Storage.OnBoxInit -= SpawnBox;
     }
 
     private IEnumerator Spawn()

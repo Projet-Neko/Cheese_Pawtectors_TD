@@ -31,12 +31,14 @@ public class Mod_Economy : Mod
     {
         Entity.OnDeath += Entity_OnDeath;
         Storage.OnStorageCheck += CheckStorage_OnStorageCheck;
+        CollectOfflineCurrency.OnCollect += CheckOfflineCurrency;
     }
 
     private void OnDestroy()
     {
         Entity.OnDeath -= Entity_OnDeath;
         Storage.OnStorageCheck -= CheckStorage_OnStorageCheck;
+        CollectOfflineCurrency.OnCollect -= CheckOfflineCurrency;
     }
     private void Entity_OnDeath(Entity obj)
     {
@@ -145,18 +147,17 @@ public class Mod_Economy : Mod
                 //    return;
                 //}
 
-                StartCoroutine(CheckOfflineCurrency());
+                CompleteEconomyInit();
+                //StartCoroutine(CheckOfflineCurrency());
             }, _gm.OnRequestError);
         }, _gm.OnRequestError);
     }
-    private IEnumerator CheckOfflineCurrency()
+    private void CheckOfflineCurrency()
     {
         int meatGained = MeatGainedOffline(GameManager.Instance.LastLogin);
         Debug.Log($"<color=lime>Gained {meatGained} meat offline !</color>");
         AddCurrency(Currency.Meat, meatGained);
-        yield return UpdateCurrency(Currency.Meat);
-
-        CompleteEconomyInit();
+        //yield return UpdateCurrency(Currency.Meat);
     }
     private int MeatPerSecond()
     {

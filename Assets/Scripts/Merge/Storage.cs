@@ -69,7 +69,7 @@ public class Storage : MonoBehaviour
         Cat cat = go.GetComponent<Cat>();
         cat.Init(catLevel);
         cat.SetStorageMode(true); // Permet de cacher le HUD
-        OnCatSpawn?.Invoke(catLevel, int.Parse(slot.name.Split('_')[1]));
+        OnCatSpawn?.Invoke(int.Parse(slot.name.Split('_')[1]), catLevel);
         return cat;
     }
 

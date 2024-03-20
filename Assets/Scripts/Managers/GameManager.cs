@@ -88,38 +88,39 @@ public class GameManager : MonoBehaviour
         _data = new();
         _account.Init(this);
 
-        Mod_Account.OnInitComplete += Mod_Account_OnInitComplete;
-        Mod_Economy.OnInitComplete += Mod_Economy_OnInitComplete;
-        Mod_Clans.OnInitComplete += Mod_Clans_OnInitComplete;
+        Mod_Account.OnInitComplete += () => _economy.Init(this);
+        Mod_Economy.OnInitComplete += () => _clans.Init(this);
+        Mod_Clans.OnInitComplete += () => StartCoroutine(CompleteInit());
 
         SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
 
         // Merge & Move events
-        StorageSlot.OnSlotChanged += HandleMergeAndMove;
-        Merge.OnCatMerge += HandleMergeAndMove;
-        Discard.OnCatDiscard += HandleMergeAndMove;
+        StorageSlot.OnSlotChanged += (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
+        Merge.OnCatMerge += (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
+        Discard.OnCatDiscard += (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
 
         // Adoption events
-        CatBoxSpawner.OnBoxSpawn += CatBoxSpawner_OnBoxSpawn;
-        Storage.OnCatSpawn += Storage_OnCatSpawn;
+        CatBoxSpawner.OnBoxSpawn += (slotIndex) => _data.UpdateStorage(slotIndex, -2);
+        Storage.OnCatSpawn += (slotIndex, catIndex) => _data.AdoptCat(catIndex - 1, slotIndex);
+        Cat.OnUnlock += _data.UnlockCat;
     }
 
     private void OnDestroy()
     {
-        Mod_Account.OnInitComplete -= Mod_Account_OnInitComplete;
-        Mod_Economy.OnInitComplete -= Mod_Economy_OnInitComplete;
-        Mod_Clans.OnInitComplete -= Mod_Clans_OnInitComplete;
+        Mod_Account.OnInitComplete -= () => _economy.Init(this);
+        Mod_Economy.OnInitComplete -= () => _clans.Init(this);
+        Mod_Clans.OnInitComplete -= () => StartCoroutine(CompleteInit());
 
         SceneLoader.OnPopupSceneToogle -= SceneLoader_OnPopupSceneToogle;
 
         // Merge & Move events
-        StorageSlot.OnSlotChanged -= HandleMergeAndMove;
-        Merge.OnCatMerge -= HandleMergeAndMove;
-        Discard.OnCatDiscard -= HandleMergeAndMove;
+        StorageSlot.OnSlotChanged -= (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
+        Merge.OnCatMerge -= (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
+        Discard.OnCatDiscard -= (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
 
         // Adoption events
-        CatBoxSpawner.OnBoxSpawn -= CatBoxSpawner_OnBoxSpawn;
-        Storage.OnCatSpawn -= Storage_OnCatSpawn;
+        CatBoxSpawner.OnBoxSpawn -= (slotIndex) => _data.UpdateStorage(slotIndex, -2);
+        Storage.OnCatSpawn -= (slotIndex, catIndex) => _data.AdoptCat(catIndex - 1, slotIndex);
     }
 
     private bool Init()
@@ -137,30 +138,6 @@ public class GameManager : MonoBehaviour
     }
 
     #region Gestion des events
-    private void Mod_Account_OnInitComplete()
-    {
-        _economy.Init(this);
-    }
-    private void Mod_Economy_OnInitComplete()
-    {
-        _clans.Init(this);
-    }
-    private void Mod_Clans_OnInitComplete()
-    {
-        StartCoroutine(CompleteInit());
-    }
-    private void HandleMergeAndMove(int slotIndex, int catindex)
-    {
-        _data.UpdateStorage(slotIndex, catindex);
-    }
-    private void Storage_OnCatSpawn(int catLevel, int slotIndex)
-    {
-        _data.AdoptCat(catLevel - 1, slotIndex);
-    }
-    private void CatBoxSpawner_OnBoxSpawn(int slotIndex)
-    {
-        _data.UpdateStorage(slotIndex, -2);
-    }
     private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded, string popupName)
     {
         _isPopupSceneLoaded = isPopupSceneLoaded;

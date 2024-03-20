@@ -28,7 +28,8 @@ public class CatBoxSpawner : MonoBehaviour
 
     private void Storage_OnBoxInit(Transform slot)
     {
-        SpawnBox(slot);
+        GameObject go = Instantiate(_catBoxPrefab, slot);
+        go.transform.localScale = new Vector3(50, 50, 50);
     }
 
     private IEnumerator Spawn()

@@ -13,6 +13,7 @@ public class Data
     public DateTime LastUpdate => _lastUpdate;
 
     public List<int> AmountOfPurchases = new();
+    public List<bool> CatsUnlocked = new();
     public List<Data_Storage> Storage = new();
     public List<Data_Rooms> Rooms = new();
     public List<Data_Leaderboards> Leaderboards = new();
@@ -29,7 +30,14 @@ public class Data
     public Data()
     {
         if (GameManager.Instance == null) return;
-        for (int i = 0; i < GameManager.Instance.Cats.Length; i++) AmountOfPurchases.Add(0);
+
+        // Init default amount of purchases and cats unlocked
+        for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
+        {
+            AmountOfPurchases.Add(0);
+            CatsUnlocked.Add(GameManager.Instance.Cats[i].State == CatState.Unlock);
+        }
+
         for (int i = 0; i < 8; i++) Storage.Add(new(i)); // Init empty storage
 
         // Init empty leaderboards
@@ -49,10 +57,16 @@ public class Data
     {
         Data data = JsonUtility.FromJson<Data>(json);
         AmountOfPurchases = data.AmountOfPurchases;
+        CatsUnlocked = data.CatsUnlocked;
         Storage = data.Storage;
         Rooms = data.Rooms;
         Leaderboards = data.Leaderboards;
         _lastUpdate = DateTime.Parse(data.LastUpdateString);
+
+        for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
+        {
+            GameManager.Instance.Cats[i].State = CatsUnlocked[i] ? CatState.Unlock : CatState.Lock;
+        }
 
         Debug.Log(json);
     }
@@ -77,7 +91,7 @@ public class Data
         CryptoStream iStream = new(_dataStream, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write);
         StreamWriter sWriter = new(new CryptoStream(_dataStream, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write));
         //sWriter.Write(Serialize());
-        Debug.Log(JsonUtility.ToJson(this));
+        Debug.Log($"<color=cyan>Local data update : {JsonUtility.ToJson(this)}</color>");
         sWriter.Write(JsonUtility.ToJson(this));
 
         sWriter.Close();
@@ -89,7 +103,13 @@ public class Data
     {
         Storage[slotIndex].CatIndex = catIndex;
         AmountOfPurchases[catIndex]++;
+
         Update();
+    }
+
+    public void UnlockCat(int catIndex)
+    {
+        CatsUnlocked[catIndex] = true;
     }
 
     public void UpdateStorage(int slotIndex, int catIndex)

@@ -302,6 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: BO_TitleScreen
+  _isPermanent: 0
 --- !u!1 &537995804
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,7 +452,7 @@ Canvas:
   m_GameObject: {fileID: 628388435}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1445,6 +1446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: BO_TitleScreen
+  _isPermanent: 0
 --- !u!1 &871233367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,6 +1594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: BO_Shop
+  _isPermanent: 0
 --- !u!1 &1242945834
 GameObject:
   m_ObjectHideFlags: 0

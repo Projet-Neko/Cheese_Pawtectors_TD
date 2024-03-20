@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+//using System.Numerics;
 using UnityEngine;
 
 public enum RoomPattern
@@ -21,7 +22,7 @@ public enum RoomSecurity
 
 public class Room : MonoBehaviour
 {
-    [Header ("Room Canva")]
+    [Header("Room Canva")]
     [SerializeField] private GameObject _HUDCanva;
     [SerializeField] private GameObject _moveModCanva;
 
@@ -46,7 +47,7 @@ public class Room : MonoBehaviour
     {
         if (_moveModBool && _canMove)
         {
-            _mousePosition =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             _mousePosition.z = -1;
             transform.position = _mousePosition;
             _moveModCanva.transform.position = _mousePosition;
@@ -55,7 +56,7 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-         if (!_moveModBool) _HUDCanva.SetActive(!_HUDCanva.activeSelf);
+        if (!_moveModBool) _HUDCanva.SetActive(!_HUDCanva.activeSelf);
         _canMove = true;
     }
 
@@ -71,7 +72,7 @@ public class Room : MonoBehaviour
 
     public void Move()
     {
-        _moveModBool= true;
+        _moveModBool = true;
         _HUDCanva.SetActive(false);
         _moveModCanva.SetActive(true);
     }
@@ -90,24 +91,27 @@ public class Room : MonoBehaviour
 
     public void RotationRoom(bool clockwise)
     {
-        Vector3 rotation = transform.eulerAngles;
+        UnityEngine.Quaternion rotation = transform.rotation;
+        float zAxis = rotation.z;
+        Debug.Log(zAxis + "begin");
 
         if (clockwise)
         {
-            rotation.z -= 90;
+            zAxis = zAxis - 90;
+            if (zAxis < 0) rotation.z += 360;
 
-            if (rotation.z < 0)
-                rotation.z += 360;
         }
         else
         {
-            rotation.z += 90;
+            zAxis = zAxis + 90;
 
-            if (rotation.z >= 360)
-                rotation.z -= 360;
+            if (rotation.z >= 360) rotation.z -= 360;
         }
+        Debug.Log(zAxis);
 
-        transform.eulerAngles = rotation;
+        //transform.eulerAngles = rotation;
+        transform.Rotate(rotation.x, rotation.y, zAxis, Space.World);
+
     }
 
 }

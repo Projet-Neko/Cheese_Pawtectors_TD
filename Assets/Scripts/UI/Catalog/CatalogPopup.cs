@@ -22,4 +22,9 @@ public class CatalogPopup : MonoBehaviour
         Debug.Log("on adopt button click");
         gameObject.SetActive(false);
     }
+
+    public void ClosePopup()
+    {
+        gameObject.SetActive(false);
+    }
 }

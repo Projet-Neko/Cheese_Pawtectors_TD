@@ -139,7 +139,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 1.0
+  bundleVersion: 0.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -162,6 +162,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.NekoTeam.CheesePawtectorsTD
+    Standalone: com.Neko-Team.Cheese-Pawtectors-TD
   buildNumber:
     Standalone: 0
     VisionOS: 0

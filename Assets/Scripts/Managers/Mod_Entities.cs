@@ -53,17 +53,4 @@ public class Mod_Entities : Mod
     {
         _canSpawnAlbino = false;
     }
-
-    public int GetLastUnlockedCatLevel()
-    {
-        int level = 1;
-
-        for (int i = 0; i < _cats.Length; i++)
-        {
-            if (_cats[i].State != CatState.Unlock) break;
-            level = _cats[i].Level;
-        }
-
-        return level;
-    }
 }

@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     private bool _isPopupSceneLoaded;
     private string _popupSceneName;
+    private bool _hasLoginPopupLoad;
 
     private bool _isInitCompleted = false;
 
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Mod_Waves _wave;
     [SerializeField] private Mod_Account _account;
     [SerializeField] private Mod_Clans _clans;
+    [SerializeField] private Mod_Leaderboards _leaderboards;
 
     // EntitiesMod
     public CatSO[] Cats => _entities.Cats;
@@ -58,7 +60,6 @@ public class GameManager : MonoBehaviour
     public bool CanSpawnAlbino => _entities.CanSpawnAlbino;
 
     public void AlbinoHasSpawned() => _entities.AlbinoHasSpawned();
-    public int GetLastUnlockedCatLevel() => _entities.GetLastUnlockedCatLevel();
     public bool IsBossWave() => _wave.IsBossWave();
 
     // WaveMod
@@ -86,26 +87,39 @@ public class GameManager : MonoBehaviour
         _data = new();
         _account.Init(this);
 
-        Mod_Account.OnInitComplete += Mod_Account_OnInitComplete;
-        Mod_Economy.OnInitComplete += Mod_Economy_OnInitComplete;
-        Mod_Clans.OnInitComplete += Mod_Clans_OnInitComplete;
+        Mod_Account.OnInitComplete += () => _economy.Init(this);
+        Mod_Economy.OnInitComplete += () => _clans.Init(this);
+        Mod_Clans.OnInitComplete += () => StartCoroutine(CompleteInit());
 
         SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
-    }
 
-    private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded, string popupName)
-    {
-        _isPopupSceneLoaded = isPopupSceneLoaded;
-        _popupSceneName = popupName;
+        // Merge & Move events
+        StorageSlot.OnSlotChanged += (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
+        Merge.OnCatMerge += (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
+        Discard.OnCatDiscard += (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
+
+        // Adoption events
+        CatBoxSpawner.OnBoxSpawn += (slotIndex) => _data.UpdateStorage(slotIndex, -2);
+        Storage.OnCatSpawn += (slotIndex, catIndex, free) => _data.AdoptCat(catIndex - 1, slotIndex, free);
+        Cat.OnUnlock += _data.UnlockCat;
     }
 
     private void OnDestroy()
     {
-        Mod_Account.OnInitComplete -= Mod_Account_OnInitComplete;
-        Mod_Economy.OnInitComplete -= Mod_Economy_OnInitComplete;
-        Mod_Clans.OnInitComplete -= Mod_Clans_OnInitComplete;
+        Mod_Account.OnInitComplete -= () => _economy.Init(this);
+        Mod_Economy.OnInitComplete -= () => _clans.Init(this);
+        Mod_Clans.OnInitComplete -= () => StartCoroutine(CompleteInit());
 
         SceneLoader.OnPopupSceneToogle -= SceneLoader_OnPopupSceneToogle;
+
+        // Merge & Move events
+        StorageSlot.OnSlotChanged -= (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
+        Merge.OnCatMerge -= (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
+        Discard.OnCatDiscard -= (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
+
+        // Adoption events
+        CatBoxSpawner.OnBoxSpawn -= (slotIndex) => _data.UpdateStorage(slotIndex, -2);
+        Storage.OnCatSpawn -= (slotIndex, catIndex, free) => _data.AdoptCat(catIndex - 1, slotIndex, free);
     }
 
     private bool Init()
@@ -123,23 +137,22 @@ public class GameManager : MonoBehaviour
     }
 
     #region Gestion des events
-    private void Mod_Account_OnInitComplete()
+    private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded, string popupName)
     {
-        _economy.Init(this);
-    }
-    private void Mod_Economy_OnInitComplete()
-    {
-        _clans.Init(this);
-    }
-    private void Mod_Clans_OnInitComplete()
-    {
-        StartCoroutine(CompleteInit());
+        _isPopupSceneLoaded = isPopupSceneLoaded;
+        _popupSceneName = popupName;
     }
     #endregion
 
+    public bool HasLoginPopupLoad()
+    {
+        if (_hasLoginPopupLoad) return true;
+        _hasLoginPopupLoad = true;
+        return false;
+    }
+
     private IEnumerator CompleteInit()
     {
-        Debug.Log("complete init");
         if (LastLogin == null) yield return _account.UpdateData();
         Debug.Log("<color=yellow>----- GAME MANAGER INIT COMPLETED ! -----</color>");
         OnInitComplete?.Invoke();

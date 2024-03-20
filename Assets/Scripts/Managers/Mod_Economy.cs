@@ -111,7 +111,7 @@ public class Mod_Economy : Mod
     }
     #endregion
 
-    #region Etape 2 : On récupère l'inventaire et la currency offline du joueur
+    #region Etape 2 : On récupère l'inventaire
     private void GetPlayerInventory()
     {
         _gm.StartRequest("Getting player's inventory...");
@@ -152,24 +152,25 @@ public class Mod_Economy : Mod
             }, _gm.OnRequestError);
         }, _gm.OnRequestError);
     }
+    #endregion
+
+    #region Currency Offline
     private void CheckOfflineCurrency()
     {
-        int meatGained = MeatGainedOffline(GameManager.Instance.LastLogin);
+        int meatGained = MeatGainedOffline(_gm.LastLogin);
         Debug.Log($"<color=lime>Gained {meatGained} meat offline !</color>");
         AddCurrency(Currency.Meat, meatGained);
-        //yield return UpdateCurrency(Currency.Meat);
     }
     private int MeatPerSecond()
     {
-        int mouseHealth = 4 + GameManager.Instance.MouseLevel;
+        int mouseHealth = 4 + _gm.MouseLevel;
 
-        // TODO -> update speed variable with levels
-        float catDPS = GameManager.Instance.GetLastUnlockedCatLevel() / 2.5f;
+        float catDPS = _gm.Cats[_gm.Data.LastCatUnlockedIndex].DPS();
         float secondsToKill = mouseHealth / catDPS;
 
         float shootRate = 1 / secondsToKill;
 
-        int meatGained = GameManager.Instance.MouseLevel / GameManager.Instance.SpawnTime;
+        int meatGained = _gm.MouseLevel / _gm.SpawnTime;
 
         return (int)(meatGained / shootRate);
     }
@@ -189,14 +190,14 @@ public class Mod_Economy : Mod
     {
         _catPrices = new();
 
-        for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
+        for (int i = 0; i < _gm.Cats.Length; i++)
         {
-            int n = GameManager.Instance.Cats[i].Level;
+            int n = _gm.Cats[i].Level;
             int catPrice = 100 * (n - 1) + (100 * (int)Mathf.Pow(1.244415f, n - 1));
             _catPrices.Add(catPrice);
 
             for (int j = 0; j < _gm.Data.AmountOfPurchases[i]; j++) IncreasePrice(i);
-            Debug.Log($"{GameManager.Instance.Cats[i].Name} price is {catPrice}. (bought {_gm.Data.AmountOfPurchases[i]} time)");
+            Debug.Log($"{_gm.Cats[i].Name} price is {catPrice}. (bought {_gm.Data.AmountOfPurchases[i]} time)");
         }
 
         OnInitComplete?.Invoke();

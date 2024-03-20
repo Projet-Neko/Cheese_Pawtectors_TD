@@ -19,6 +19,7 @@ public class Data
     public List<Data_Leaderboards> Leaderboards = new();
     public string LastUpdateString; // Needed for serialization
     public bool CloudNeedsUpdate;
+    public int LastCatUnlockedIndex;
 
     private DateTime _lastUpdate;
 
@@ -36,6 +37,7 @@ public class Data
         {
             AmountOfPurchases.Add(0);
             CatsUnlocked.Add(GameManager.Instance.Cats[i].State == CatState.Unlock);
+            LastCatUnlockedIndex = 0;
         }
 
         for (int i = 0; i < 8; i++) Storage.Add(new(i)); // Init empty storage
@@ -66,6 +68,7 @@ public class Data
         for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
         {
             GameManager.Instance.Cats[i].State = CatsUnlocked[i] ? CatState.Unlock : CatState.Lock;
+            if (CatsUnlocked[i]) LastCatUnlockedIndex = i;
         }
 
         Debug.Log(json);

@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
     public bool CanSpawnAlbino => _entities.CanSpawnAlbino;
 
     public void AlbinoHasSpawned() => _entities.AlbinoHasSpawned();
-    public int GetLastUnlockedCatLevel() => _entities.GetLastUnlockedCatLevel();
     public bool IsBossWave() => _wave.IsBossWave();
 
     // WaveMod

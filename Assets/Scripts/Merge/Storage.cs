@@ -75,6 +75,7 @@ public class Storage : MonoBehaviour
 
     private void CatBoxOpening_OnBoxOpen(Transform slot)
     {
-        SpawnCat(1, slot); // TODO -> spawn random cat level
+        int level = UnityEngine.Random.Range(1, GameManager.Instance.Data.LastCatUnlockedIndex + 2);
+        SpawnCat(level, slot);
     }
 }

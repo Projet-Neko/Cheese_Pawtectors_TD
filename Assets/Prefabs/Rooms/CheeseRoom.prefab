@@ -120,7 +120,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5943416543860980565}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Room, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 1
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5943416543860980565}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Room, Assembly-CSharp
         m_MethodName: RotationClockwise
         m_Mode: 1
@@ -591,7 +591,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5943416543860980565}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Room, Assembly-CSharp
         m_MethodName: RotationAnticlockwise
         m_Mode: 1
@@ -890,6 +890,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _HUDCanva: {fileID: 4210603833533310875}
   _moveModCanva: {fileID: 4329369356319404547}
+  _opening:
+  - {fileID: 1649868698177858624}
 --- !u!61 &7990989672398056520
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1316,7 +1318,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5943416543860980565}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Room, Assembly-CSharp
         m_MethodName: Delete
         m_Mode: 1
@@ -1414,7 +1416,6 @@ GameObject:
   - component: {fileID: 74695606420661759}
   - component: {fileID: 5094276725403167039}
   - component: {fileID: 5210593161646384874}
-  - component: {fileID: 5943416543860980565}
   - component: {fileID: 8914029093394076258}
   m_Layer: 0
   m_Name: CheeseRoom
@@ -1507,20 +1508,6 @@ MonoBehaviour:
   _renderer: {fileID: 0}
   _level: 1
   _slider: {fileID: 0}
---- !u!114 &5943416543860980565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7812398506617135315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e18cd5ff57bdca4a91348c13f11bac3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _HUDCanva: {fileID: 4210603833533310875}
-  _moveModCanva: {fileID: 4329369356319404547}
 --- !u!61 &8914029093394076258
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1655,6 +1642,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+--- !u!114 &1649868698177858624 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2974692567794657501, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+  m_PrefabInstance: {fileID: 4588528069283169437}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f02b80e65a2ba4699355321bcdda91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3856781537144265079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 732876900431338986, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 585808103112085876}
   - component: {fileID: 747074594211423549}
   - component: {fileID: 2430439305045054425}
+  - component: {fileID: 4602865559846345499}
   m_Layer: 0
   m_Name: Room
   m_TagString: Untagged
@@ -85,6 +86,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4602865559846345499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2243982071437726720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f85e357775254184fbf50814ced46667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _HUDCanva: {fileID: 0}
+  _moveModCanva: {fileID: 0}
+  _opening:
+  - {fileID: 4279068225855028531}
 --- !u!1 &2329519105138117924
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +194,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5031148661404859147}
-  - component: {fileID: 3061559834780975968}
   m_Layer: 0
   m_Name: StartRoom
   m_TagString: Untagged
@@ -201,20 +217,6 @@ Transform:
   - {fileID: 585808103112085876}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3061559834780975968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3913000099428562036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f85e357775254184fbf50814ced46667, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _HUDCanva: {fileID: 0}
-  _moveModCanva: {fileID: 0}
 --- !u!1 &4205731639313252831
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,3 +343,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 732876900431338986, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
   m_PrefabInstance: {fileID: 1308989210737956334}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4279068225855028531 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2974692567794657501, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+  m_PrefabInstance: {fileID: 1308989210737956334}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f02b80e65a2ba4699355321bcdda91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

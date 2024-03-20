@@ -588,6 +588,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _HUDCanva: {fileID: 6285127139490752415}
   _moveModCanva: {fileID: 8002742664615557043}
+  _opening:
+  - {fileID: 4632531544083108643}
+  - {fileID: 7476222492324461218}
 --- !u!61 &3733080520650093311
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1398,6 +1401,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 732876900431338986, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
   m_PrefabInstance: {fileID: 5659014411087368831}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7476222492324461218 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2974692567794657501, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+  m_PrefabInstance: {fileID: 5659014411087368831}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f02b80e65a2ba4699355321bcdda91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7566669440347585534
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1455,6 +1469,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+--- !u!114 &4632531544083108643 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2974692567794657501, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+  m_PrefabInstance: {fileID: 7566669440347585534}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f02b80e65a2ba4699355321bcdda91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7145390084076086804 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 732876900431338986, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}

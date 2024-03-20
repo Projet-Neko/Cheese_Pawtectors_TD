@@ -20,7 +20,7 @@ public class CatalogGrid : MonoBehaviour
 
     private void Awake()
     {
-        CatalogSlot.OnClick += InitCatalogSlot_OnClick;
+        CatalogSlot.OnCatalogSlotClick += InitCatalogSlot_OnClick;
 
         foreach (var cat in GameManager.Instance.Cats)
         {
@@ -30,7 +30,7 @@ public class CatalogGrid : MonoBehaviour
 
     private void OnDestroy()
     {
-        CatalogSlot.OnClick -= InitCatalogSlot_OnClick;
+        CatalogSlot.OnCatalogSlotClick -= InitCatalogSlot_OnClick;
     }
 
     private void InitCatalogSlot_OnClick(CatSO cat)

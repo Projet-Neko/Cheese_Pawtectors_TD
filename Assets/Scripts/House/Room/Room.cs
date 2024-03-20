@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum RoomPattern
@@ -20,8 +21,12 @@ public enum RoomSecurity
 
 public class Room : MonoBehaviour
 {
+    [Header ("Room Canva")]
     [SerializeField] private GameObject _HUDCanva;
     [SerializeField] private GameObject _moveModCanva;
+
+    [Header("Junction")]
+    [SerializeField] private List<Junction> _opening;
 
     public RoomSecurity Security => _security;
 
@@ -30,7 +35,6 @@ public class Room : MonoBehaviour
     private Vector3 _mousePosition;
 
     protected RoomSecurity _security;
-    protected bool[] _openings = new bool[4];
 
     void Start()
     {
@@ -65,34 +69,6 @@ public class Room : MonoBehaviour
         _HUDCanva.SetActive(true);
     }
 
-    public void RotationClockwise()
-    {
-        Vector3 rotation = transform.eulerAngles;
-        rotation.z -= 90;
-
-        if (rotation.z < 0) rotation.z += 360;
-
-        transform.eulerAngles = rotation;
-
-        bool temp = _openings[3];
-        for (int i = 3; i > 0; --i) _openings[i] = _openings[i - 1];
-        _openings[0] = temp;
-    }
-
-    public void RotationAnticlockwise()
-    {
-        Vector3 rotation = transform.eulerAngles;
-        rotation.z += 90;
-
-        if (rotation.z >= 360) rotation.z -= 360;
-
-        transform.eulerAngles = rotation;
-
-        bool temp = _openings[0];
-        for (int i = 0; i < 3; ++i) _openings[i] = _openings[i + 1];
-        _openings[3] = temp;
-    }
-
     public void Move()
     {
         _moveModBool= true;
@@ -111,4 +87,27 @@ public class Room : MonoBehaviour
     {
         Destroy(transform.parent.gameObject);
     }
+
+    public void RotationRoom(bool clockwise)
+    {
+        Vector3 rotation = transform.eulerAngles;
+
+        if (clockwise)
+        {
+            rotation.z -= 90;
+
+            if (rotation.z < 0)
+                rotation.z += 360;
+        }
+        else
+        {
+            rotation.z += 90;
+
+            if (rotation.z >= 360)
+                rotation.z -= 360;
+        }
+
+        transform.eulerAngles = rotation;
+    }
+
 }

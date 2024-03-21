@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class Storage : MonoBehaviour
 {
-    public static event Action<int, int> OnStorageCheck;
-    public static event Action<int, int, bool> OnCatSpawn;
-    public static event Action<Transform> OnBoxInit;
+    public static event Action<int, int> OnStorageCheck; // slot index, cat level
+    public static event Action<int, int, bool> OnCatSpawn; // slot index, cat level, is free
+    public static event Action<Transform> OnBoxInit; // slot transform
 
     [SerializeField] private GridLayoutGroup _slots;
     [SerializeField] private GameObject _catPrefab;

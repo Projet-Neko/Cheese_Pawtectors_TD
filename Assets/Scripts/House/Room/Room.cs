@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 //using System.Numerics;
 using UnityEngine;
@@ -37,6 +38,17 @@ public class Room : MonoBehaviour
 
     protected RoomSecurity _security;
 
+    public static event Action TileSelected;
+    private bool _isSelected;
+
+
+    private void Awake()
+    {
+       TileSelected += DeselectTile;
+    }
+
+    
+
     void Start()
     {
         _canMove = false;
@@ -56,6 +68,7 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
+        Selected();
         if (!_moveModBool) _HUDCanva.SetActive(!_HUDCanva.activeSelf);
         _canMove = true;
     }
@@ -111,4 +124,24 @@ public class Room : MonoBehaviour
         transform.eulerAngles = rotation;
     }
 
+    private void Selected()
+    {
+        _isSelected = true;
+        TileSelected?.Invoke(); // On invoque l'évent
+    }
+
+    private void DeselectTile()
+    {
+        if (!_isSelected)
+        {
+            _HUDCanva.SetActive(false);
+        }
+        _isSelected = false;
+
+    }
+
+    private void OnDestroy()
+    {
+        TileSelected -= DeselectTile;
+    }
 }

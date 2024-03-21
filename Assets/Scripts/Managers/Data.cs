@@ -17,6 +17,10 @@ public class Data
     public List<Data_Storage> Storage = new();
     public int LastCatUnlockedIndex;
 
+    // Waves
+    public int WaveNumber = 1;
+    public int MouseLevel = 1;
+
     // Economy
     public List<int> AmountOfPurchases = new();
 
@@ -67,6 +71,8 @@ public class Data
     public void UpdateLocalData(string json)
     {
         Data data = JsonUtility.FromJson<Data>(json);
+        MouseLevel = data.MouseLevel;
+        WaveNumber = data.WaveNumber;
         AmountOfPurchases = data.AmountOfPurchases;
         CatsUnlocked = data.CatsUnlocked;
         Storage = data.Storage;
@@ -115,13 +121,20 @@ public class Data
     {
         Storage[slotIndex].CatIndex = catIndex;
         if (!free) AmountOfPurchases[catIndex]++;
-
         Update();
     }
 
     public void UnlockCat(int catIndex)
     {
         CatsUnlocked[catIndex] = true;
+        Update();
+    }
+
+    public void UpdateWaves()
+    {
+        MouseLevel++;
+        WaveNumber++;
+        Update();
     }
 
     public void UpdateStorage(int slotIndex, int catIndex)

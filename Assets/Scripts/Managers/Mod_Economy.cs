@@ -163,14 +163,14 @@ public class Mod_Economy : Mod
     }
     private int MeatPerSecond()
     {
-        int mouseHealth = 4 + _gm.MouseLevel;
+        int mouseHealth = 4 + _gm.Data.MouseLevel;
 
         float catDPS = _gm.Cats[_gm.Data.LastCatUnlockedIndex].DPS();
         float secondsToKill = mouseHealth / catDPS;
 
         float shootRate = 1 / secondsToKill;
 
-        int meatGained = _gm.MouseLevel / _gm.SpawnTime;
+        int meatGained = _gm.Data.MouseLevel / _gm.SpawnTime;
 
         return (int)(meatGained / shootRate);
     }

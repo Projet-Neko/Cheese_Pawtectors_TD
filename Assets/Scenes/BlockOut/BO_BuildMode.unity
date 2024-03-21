@@ -2314,7 +2314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scene: MainScreen
+  _scene: QuitBuildScene
+  _isPermanent: 0
 --- !u!114 &2049919022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2361,7 +2362,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2049919021}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: LoadSceneAdditive
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

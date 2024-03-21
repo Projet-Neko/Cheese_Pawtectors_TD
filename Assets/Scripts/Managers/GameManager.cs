@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
     public CatSO[] Cats => _entities.Cats;
     public MouseSO[] Mouses => _entities.Mouses;
     public Cheese Cheese => _entities.Cheese;
-    public int MouseLevel => _entities.MouseLevel;
     public bool CanSpawnAlbino => _entities.CanSpawnAlbino;
 
     public void AlbinoHasSpawned() => _entities.AlbinoHasSpawned();

@@ -25,7 +25,7 @@ public class Mouse : Entity
         _data = GameManager.Instance.Mouses[MouseType()];
 
 
-        _level = GameManager.Instance.MouseLevel;
+        _level = GameManager.Instance.Data.MouseLevel;
 
         _baseHealth = _currentHealth = _data.Health + (_level * 1) - 1;
         _damage = _data.SatiationRate;

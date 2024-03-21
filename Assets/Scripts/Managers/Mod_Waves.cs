@@ -13,10 +13,8 @@ public class Mod_Waves : Mod
     [Header("Options")]
     [SerializeField] private bool _enableWaves = false;
 
-    public int WaveNumber => _waveNumber;
     public int SpawnTime => _spawnTime;
 
-    private int _waveNumber;
     private int _enemyNumber;
     private List<GameObject> _enemyObjects = new();
     private Vector3 _SpawnPos;
@@ -48,7 +46,6 @@ public class Mod_Waves : Mod
     public override void Init(GameManager gm)
     {
         base.Init(gm);
-        _waveNumber = 0; // TODO -> get from database
         _SpawnPos = transform.position;
         _SpawnPos.z = -4;
         _hasCompleteSpawning = false;
@@ -95,17 +92,13 @@ public class Mod_Waves : Mod
     public bool IsBossWave()
     {
         // Check if the wave number is a multiple of 10
-        if (_waveNumber == 0)
-        { 
-            return false; 
-        }
-        return _waveNumber % 10 == 0;
+        return _gm.Data.WaveNumber % 10 == 0;
     }
 
     public void NextWave()
     {
-        _waveNumber++;
-        Debug.Log($"Next wave : {_waveNumber}.");
+        _gm.Data.UpdateWaves();
+        Debug.Log($"Next wave : {_gm.Data.WaveNumber}.");
 
         Reload();
     }

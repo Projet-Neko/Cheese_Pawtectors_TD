@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Merge : DragAndDropHandler
 {
-    public static event Action<int, int> OnCatMerge;
+    public static event Action<int, int> OnCatMerge; // slot index, cat index
 
     [SerializeField] private Cat _cat;
 

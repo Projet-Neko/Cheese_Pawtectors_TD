@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     // --- Requests events ---
-    public static event Action<PlayFabError> OnError;
+    public static event Action<string> OnError;
     public static event Action<string> OnSuccessMessage;
 
     // --- Loading events ---
@@ -81,9 +81,16 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         if (!Init()) return;
+
+        // Init all entities SO
         _entities.Init(this);
-        _wave.Init(this);
+
+        // Init local data file - entities init required first
         _data = new();
+
+        _wave.Init(this);
+
+        // Check if player has local data
         _account.Init(this);
 
         Mod_Account.OnInitComplete += () => _economy.Init(this);
@@ -185,10 +192,6 @@ public class GameManager : MonoBehaviour
         Data.Update();
     }
 
-    #region AccountMod
-    //public void InvokeOnLoginSuccess() => OnLoginSuccess?.Invoke();
-    #endregion
-
     #region Database Requests
     public IEnumerator StartAsyncRequest(string log = null)
     {
@@ -218,11 +221,17 @@ public class GameManager : MonoBehaviour
             OnSuccessMessage?.Invoke(log);
         }
     }
+    public void OnRequestError(string error)
+    {
+        Debug.LogError(error);
+        OnError?.Invoke(error);
+        EndRequest();
+    }
     public void OnRequestError(PlayFabError error)
     {
         Debug.LogError(error.GenerateErrorReport());
-        OnError?.Invoke(error);
-        OnLoadingEnd?.Invoke();
+        OnError?.Invoke(error.GenerateErrorReport());
+        EndRequest();
     }
     #endregion
 

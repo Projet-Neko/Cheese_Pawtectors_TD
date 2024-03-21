@@ -11,6 +11,7 @@ using UnityEngine;
 
 public class Mod_Account : Mod
 {
+    public static event Action<bool> OnLocalDataCheck;
     public static event Action OnInitComplete;
     public static event Action OnCloudUpdate;
 
@@ -40,13 +41,13 @@ public class Mod_Account : Mod
     public override void Init(GameManager gm)
     {
         base.Init(gm);
-        Login();
+        CheckLocalSave();
     }
 
     #region Etape 1 : Check local save and login
     public void CheckLocalSave()
     {
-        Debug.Log("<color=orange>Checking auth local datas...</color>");
+        _gm.StartRequest("Checking auth local datas...");
 
         _path = Application.persistentDataPath + "/CheesePawtectorsTD_LocalAuthData.save"; //Local save path
         Debug.Log($"Your save path is : {_path}");
@@ -54,7 +55,8 @@ public class Mod_Account : Mod
         //Check if binary file with user datas exists
         if (!File.Exists(_path) || !PlayerPrefs.HasKey(_localAuthDataKey))
         {
-            Debug.Log("No auth local datas found.");
+            _gm.EndRequest("No auth local datas found.");
+            OnLocalDataCheck?.Invoke(false);
             return;
         }
 
@@ -80,14 +82,18 @@ public class Mod_Account : Mod
         }
         catch
         {
-            Debug.LogError("Error with auth local datas.");
+            _gm.OnRequestError("Error with auth local datas.");
             File.Delete(_path);
+            OnLocalDataCheck?.Invoke(false);
+            return;
         }
+
+        _gm.EndRequest();
+        OnLocalDataCheck?.Invoke(true);
+        Login();
     }
     public void Login()
     {
-        CheckLocalSave();
-
         if (string.IsNullOrEmpty(_authData.Email))
         {
             _gm.StartRequest("Starting anonymous login...");

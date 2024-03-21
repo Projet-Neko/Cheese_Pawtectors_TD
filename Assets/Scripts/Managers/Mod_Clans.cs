@@ -9,10 +9,8 @@ public enum Clan
     Meowquest, Furrocious, Purrtopia, Whiskerhood
 }
 
-public class Mod_Clans : Mod
+public class Mod_Clans : Module
 {
-    public static event Action OnInitComplete;
-
     private readonly Dictionary<Clan, PlayFab.GroupsModels.EntityKey> _clans = new();
 
     private readonly List<string> _clansId = new()
@@ -37,7 +35,7 @@ public class Mod_Clans : Mod
 
         yield return new WaitUntil(() => _clans.Count == 4);
         _gm.EndRequest();
-        OnInitComplete?.Invoke();
+        InitComplete();
     }
 
     private void GetClan(int index)

@@ -12,12 +12,9 @@ public enum Leaderboards
 // TODO -> subscribe UpdateLocalLeaderboards to all actions giving score
 // TODO -> get more leaderboard entries on scroll
 
-public class Mod_Leaderboards : Mod
+public class Mod_Leaderboards : Module
 {
     public static event Action<List<PlayerLeaderboardEntry>> OnGetLeaderboard;
-    //public static event Action OnInitComplete;
-
-    //private bool _isInitialized = false;
 
     private void Awake()
     {
@@ -32,14 +29,7 @@ public class Mod_Leaderboards : Mod
     public override void Init(GameManager gm)
     {
         base.Init(gm);
-
-        if (_gm.Data.CloudNeedsUpdate)
-        {
-            UpdateCloudLeaderboards();
-            return;
-        }
-
-        //CompleteInit();
+        InitComplete();
     }
 
     private void UpdateLocalLeaderboards(int value)

@@ -2,6 +2,7 @@ using PlayFab;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // TODO -> vérifier si le jeu est à jour
@@ -25,7 +26,7 @@ public class GameManager : MonoBehaviour
     // --- Requests ---
     private int _requests;
     public string Token { get; set; }
-    public PlayFab.ClientModels.EntityKey Entity => _account.Entity;
+    public PlayFab.ClientModels.EntityKey Entity => Mod<Mod_Account>().Entity;
     //public bool AccountChecked { get; set; }
     //public bool IsObsolete { get; private set; }
 
@@ -44,86 +45,78 @@ public class GameManager : MonoBehaviour
     private bool _isInitCompleted = false;
 
     #region Modules
-    [Header("Modules")]
-    [SerializeField] private Mod_Entities _entities;
-    [SerializeField] private Mod_Economy _economy;
-    [SerializeField] private Mod_Waves _wave;
-    [SerializeField] private Mod_Account _account;
-    [SerializeField] private Mod_Clans _clans;
-    [SerializeField] private Mod_Leaderboards _leaderboards;
+    [SerializeField] private List<Module> _modules;
 
     // EntitiesMod
-    public CatSO[] Cats => _entities.Cats;
-    public MouseSO[] Mouses => _entities.Mouses;
-    public Cheese Cheese => _entities.Cheese;
-    public bool CanSpawnAlbino => _entities.CanSpawnAlbino;
+    public CatSO[] Cats => Mod<Mod_Entities>().Cats;
+    public MouseSO[] Mouses => Mod<Mod_Entities>().Mouses;
+    public Cheese Cheese => Mod<Mod_Entities>().Cheese;
+    public bool CanSpawnAlbino => Mod<Mod_Entities>().CanSpawnAlbino;
 
-    public void AlbinoHasSpawned() => _entities.AlbinoHasSpawned();
-    public bool IsBossWave() => _wave.IsBossWave();
+    public void AlbinoHasSpawned() => Mod<Mod_Entities>().AlbinoHasSpawned();
 
     // WaveMod
-    public int SpawnTime => _wave.SpawnTime;
+    public int SpawnTime => Mod<Mod_Waves>().SpawnTime;
+
+    public bool IsBossWave() => Mod<Mod_Waves>().IsBossWave();
 
     // EconomyMod
-    public Dictionary<Currency, int> Currencies => _economy.Currencies;
-    public List<int> CatPrices => _economy.CatPrices;
+    public Dictionary<Currency, int> Currencies => Mod<Mod_Economy>().Currencies;
+    public List<int> CatPrices => Mod<Mod_Economy>().CatPrices;
 
-    public int GetCheapestCatIndex() => _economy.GetCheapestCatIndex();
-    public void AddCurrency(Currency currency, int amount) => _economy.AddCurrency(currency, amount);
-    public void RemoveCurrency(Currency currency, int amount) => _economy.RemoveCurrency(currency, amount);
+    public int GetCheapestCatIndex() => Mod<Mod_Economy>().GetCheapestCatIndex();
+    public void AddCurrency(Currency currency, int amount) => Mod<Mod_Economy>().AddCurrency(currency, amount);
+    public void RemoveCurrency(Currency currency, int amount) => Mod<Mod_Economy>().RemoveCurrency(currency, amount);
 
     // AccountMod
-    //public static event Action OnLoginSuccess;
-    public DateTime? LastLogin => _account.LastLogin;
-    public bool IsLoggedIn => _account.IsLoggedIn;
+    public DateTime? LastLogin => Mod<Mod_Account>().LastLogin;
+    public bool IsLoggedIn => Mod<Mod_Account>().IsLoggedIn;
     #endregion
+
+    private T Mod<T>() where T : Module => _modules.OfType<T>().First();
 
     private void Awake()
     {
         if (!Init()) return;
 
+        Module.OnInitComplete += Module_OnInitComplete;
+        SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
+
         // Init all entities SO
-        _entities.Init(this);
+        Mod<Mod_Entities>().Init(this);
 
         // Init local data file - entities init required first
         _data = new();
 
-        _wave.Init(this);
-
-        // Check if player has local data
-        _account.Init(this);
-
-        Mod_Account.OnInitComplete += () => _economy.Init(this);
-        Mod_Economy.OnInitComplete += () => _clans.Init(this);
-        Mod_Clans.OnInitComplete += () => StartCoroutine(CompleteInit());
-
-        SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
-
-        // Merge & Move events
+        // Data events
         StorageSlot.OnSlotChanged += (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
         Merge.OnCatMerge += (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
         Discard.OnCatDiscard += (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
-
-        // Adoption events
         CatBoxSpawner.OnBoxSpawn += (slotIndex) => _data.UpdateStorage(slotIndex, -2);
         Storage.OnCatSpawn += (slotIndex, catIndex, free) => _data.AdoptCat(catIndex - 1, slotIndex, free);
         Cat.OnUnlock += _data.UnlockCat;
+
+        Mod<Mod_Waves>().Init(this);
+        Mod<Mod_Leaderboards>().Init(this);
+        Mod<Mod_Account>().Init(this);
+    }
+
+    private void Module_OnInitComplete(Type mod)
+    {
+        if (mod == typeof(Mod_Account)) Mod<Mod_Economy>().Init(this);
+        else if (mod == typeof(Mod_Economy)) Mod<Mod_Clans>().Init(this);
+        else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
     }
 
     private void OnDestroy()
     {
-        Mod_Account.OnInitComplete -= () => _economy.Init(this);
-        Mod_Economy.OnInitComplete -= () => _clans.Init(this);
-        Mod_Clans.OnInitComplete -= () => StartCoroutine(CompleteInit());
-
+        Module.OnInitComplete -= Module_OnInitComplete;
         SceneLoader.OnPopupSceneToogle -= SceneLoader_OnPopupSceneToogle;
 
-        // Merge & Move events
+        // Data events
         StorageSlot.OnSlotChanged -= (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
         Merge.OnCatMerge -= (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
         Discard.OnCatDiscard -= (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
-
-        // Adoption events
         CatBoxSpawner.OnBoxSpawn -= (slotIndex) => _data.UpdateStorage(slotIndex, -2);
         Storage.OnCatSpawn -= (slotIndex, catIndex, free) => _data.AdoptCat(catIndex - 1, slotIndex, free);
     }
@@ -159,7 +152,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator CompleteInit()
     {
-        if (LastLogin == null) yield return _account.UpdateData();
+        if (LastLogin == null) yield return Mod<Mod_Account>().UpdateData();
         Debug.Log("<color=yellow>----- GAME MANAGER INIT COMPLETED ! -----</color>");
         OnInitComplete?.Invoke();
         _isInitCompleted = true;
@@ -175,8 +168,8 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(60);
             Debug.Log("Starting auto save...");
-            foreach (var currency in Currencies) yield return _economy.UpdateCurrency(currency.Key);
-            yield return _account.UpdateData();
+            foreach (var currency in Currencies) yield return Mod<Mod_Economy>().UpdateCurrency(currency.Key);
+            yield return Mod<Mod_Account>().UpdateData();
         }
     }
 

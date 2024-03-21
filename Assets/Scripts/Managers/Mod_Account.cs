@@ -9,10 +9,9 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
-public class Mod_Account : Mod
+public class Mod_Account : Module
 {
     public static event Action<bool> OnLocalDataCheck;
-    public static event Action OnInitComplete;
     public static event Action OnCloudUpdate;
 
     public PlayFab.ClientModels.EntityKey Entity => _entity;
@@ -206,7 +205,7 @@ public class Mod_Account : Mod
     {
         _isLoggedIn = true;
         Debug.Log("<color=lime>Login complete !</color>");
-        OnInitComplete?.Invoke();
+        InitComplete();
         //_gm.InvokeOnLoginSuccess();
     }
     public IEnumerator UpdateName(string name)

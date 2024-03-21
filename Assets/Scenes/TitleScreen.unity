@@ -1095,6 +1095,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7026789102367359029, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+      propertyPath: _loadingSlider
+      value: 
+      objectReference: {fileID: 1346184816}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1436,17 +1440,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418085829}
   m_CullTransparentMesh: 1
---- !u!114 &1592935485 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4534125006970263443, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-  m_PrefabInstance: {fileID: 1318986572}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5500f57838385eb449a511213d06d38f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1762167955
 GameObject:
   m_ObjectHideFlags: 0

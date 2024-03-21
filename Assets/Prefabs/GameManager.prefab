@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4534125006970263443}
   - component: {fileID: 4659310966647496093}
   - component: {fileID: 7030047405026936483}
+  - component: {fileID: 2843526968020932932}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -49,11 +50,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8132ba88d426bb41a173dd723ea18b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _modules:
+  - {fileID: 8386388096323966852}
+  - {fileID: 2732286174534552492}
+  - {fileID: 4534125006970263443}
+  - {fileID: 4659310966647496093}
+  - {fileID: 7030047405026936483}
+  - {fileID: 2843526968020932932}
   _entities: {fileID: 8386388096323966852}
   _economy: {fileID: 2732286174534552492}
   _wave: {fileID: 7030047405026936483}
   _account: {fileID: 4534125006970263443}
   _clans: {fileID: 4659310966647496093}
+  _leaderboards: {fileID: 2843526968020932932}
 --- !u!114 &8386388096323966852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,3 +128,15 @@ MonoBehaviour:
   _mousePrefab: {fileID: 0}
   _spawnTime: 1
   _enableWaves: 0
+--- !u!114 &2843526968020932932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4136298536209485269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 067a2cf6ed3ca0d47b4f0aeb2dd89003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

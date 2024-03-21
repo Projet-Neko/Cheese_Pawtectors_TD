@@ -4,12 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 // TODO -> vérifier si le jeu est à jour
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
+    [SerializeField] private Slider _loadingSlider;
 
     // --- Requests events ---
     public static event Action<string> OnError;

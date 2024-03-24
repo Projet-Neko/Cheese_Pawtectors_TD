@@ -42,14 +42,15 @@ public class House : MonoBehaviour
         }
 
         // TO DO : TO REMOVE (is a test)
-        AddRoom(1, 1, RoomPattern.CorridorRoom);
-        AddRoom(2, 1, RoomPattern.CrossraodRoom);
-        RemoveRoom(2, 1);
+        AddRoom(1, 2, RoomPattern.CorridorRoom);
+        AddRoom(2, 2, RoomPattern.CrossraodRoom);
+        AddRoom(3, 2, RoomPattern.CorridorRoom);
+        //RemoveRoom(2, 1);
     }
 
     public void AddRoom(int x, int y, RoomPattern pattern)
     {
-        Room room = _roomsGrid[x, y].GetComponent<Room>();
+        Room room = _roomsGrid[x, y].GetComponentInChildren<Room>();
         if (!room)
         {
             Debug.Log("No room found at position (" + x + ", " + y + ")");

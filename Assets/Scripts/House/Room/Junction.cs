@@ -1,27 +1,27 @@
+using System;
 using UnityEngine;
 
 public class Junction : MonoBehaviour
 {
-    private bool _connected = false;    // True if the Junction is connected to another Junction
-    private bool _valided = false;      // True if the Junction is belong to the valided path
+    private Junction _junctionConnected = null;  // The Junction that this Junction is connected to
 
-    public bool Connected { get => _connected; }
-    public bool Valided { get => _valided; }
+    public event Func<Junction, bool> OnCheckPath;
 
     private void OnCollisionEnter(Collision collision)
     {
-        _connected = true;
-
-        Junction junction = collision.gameObject.GetComponent<Junction>();
-        if (junction && junction.Valided)
-        {
-            _valided = true;
-            // Notify room that the path is valided
-        }
+        Debug.Log("Junction Collision: " + collision.gameObject);
+        _junctionConnected = collision.gameObject.GetComponent<Junction>();
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        _connected = false;
+        _junctionConnected = null;
+    }
+
+    // Check if the junction is connected to another junction and if the next room is in a valid path
+    public bool Validation()
+    {
+        Debug.Log("Junction: " + _junctionConnected);
+        return _junctionConnected && _junctionConnected.OnCheckPath.Invoke(_junctionConnected);
     }
 }

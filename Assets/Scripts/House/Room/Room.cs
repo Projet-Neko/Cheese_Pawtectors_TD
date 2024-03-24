@@ -27,7 +27,7 @@ public class Room : MonoBehaviour
     [SerializeField] private GameObject _moveModCanva;
 
     [Header("Junction")]
-    [SerializeField] private List<Junction> _opening;
+    [SerializeField] protected List<Junction> _opening;
 
     public RoomSecurity Security => _security;
 
@@ -35,7 +35,21 @@ public class Room : MonoBehaviour
     private bool _canMove;
     private Vector3 _mousePosition;
 
+    protected bool _correctPath = false;      // True if the room is in a correct path
+
     protected RoomSecurity _security;
+
+    private void Awake()
+    {
+        foreach (Junction junction in _opening)
+            junction.OnCheckPath += CheckPath;
+    }
+
+    private void OnDestroy()
+    {
+        foreach (Junction junction in _opening)
+            junction.OnCheckPath -= CheckPath;
+    }
 
     void Start()
     {
@@ -52,6 +66,24 @@ public class Room : MonoBehaviour
             transform.position = _mousePosition;
             _moveModCanva.transform.position = _mousePosition;
         }
+    }
+
+    protected virtual bool CheckPath(Junction startJunction)
+    {
+        // If the room is already in a correct path, return true
+        if (_correctPath)
+            return true;
+
+        foreach (Junction junction in _opening)                         // Check all the junctions of the room...
+        {
+            if (junction != startJunction)                              // ... except the one that called the function
+            {
+                _correctPath = _correctPath || junction.Validation();   // Update of the variable correctPath : if ONE junction is coorect, the room is in a correct path
+            }
+        }
+
+        Debug.Log("Room: " + _correctPath);
+        return _correctPath;
     }
 
     public void OnMouseDown()

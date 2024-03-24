@@ -5,9 +5,8 @@ public class CheeseRoom : Room
         _security = RoomSecurity.Moved;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override bool CheckPath(Junction junction)
     {
-        
+        return true;
     }
 }

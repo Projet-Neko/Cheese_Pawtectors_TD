@@ -167,9 +167,4 @@ public class Room : MonoBehaviour
         _isSelected = false;
 
     }
-
-    private void OnDestroy()
-    {
-        TileSelected -= DeselectTile;
-    }
 }

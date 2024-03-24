@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 //using System.Numerics;
 using UnityEngine;
@@ -37,19 +38,26 @@ public class Room : MonoBehaviour
 
     protected bool _correctPath = false;      // True if the room is in a correct path
 
+    public static event Action TileSelected;
+    private bool _isSelected;
+
     protected RoomSecurity _security;
 
     private void Awake()
     {
+        TileSelected += DeselectTile;
+
         foreach (Junction junction in _opening)
             junction.OnCheckPath += CheckPath;
     }
 
     private void OnDestroy()
     {
+        TileSelected -= DeselectTile;
+
         foreach (Junction junction in _opening)
             junction.OnCheckPath -= CheckPath;
-    }
+    }    
 
     void Start()
     {
@@ -88,6 +96,7 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
+        Selected();
         if (!_moveModBool) _HUDCanva.SetActive(!_HUDCanva.activeSelf);
         _canMove = true;
     }
@@ -143,4 +152,24 @@ public class Room : MonoBehaviour
         transform.eulerAngles = rotation;
     }
 
+    private void Selected()
+    {
+        _isSelected = true;
+        TileSelected?.Invoke(); // On invoque l'�vent
+    }
+
+    private void DeselectTile()
+    {
+        if (!_isSelected)
+        {
+            _HUDCanva.SetActive(false);
+        }
+        _isSelected = false;
+
+    }
+
+    private void OnDestroy()
+    {
+        TileSelected -= DeselectTile;
+    }
 }

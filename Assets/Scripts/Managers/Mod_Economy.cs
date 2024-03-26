@@ -10,9 +10,8 @@ public enum Currency
     Meat, Pawsie, Meowstone
 }
 
-public class Mod_Economy : Mod
+public class Mod_Economy : Module
 {
-    public static event Action OnInitComplete;
     public static event Action<bool, int> OnAdoptCheck;
 
     public List<int> CatPrices => _catPrices;
@@ -200,7 +199,7 @@ public class Mod_Economy : Mod
             Debug.Log($"{_gm.Cats[i].Name} price is {catPrice}. (bought {_gm.Data.AmountOfPurchases[i]} time)");
         }
 
-        OnInitComplete?.Invoke();
+        InitComplete();
         DebugOnly();
     }
 

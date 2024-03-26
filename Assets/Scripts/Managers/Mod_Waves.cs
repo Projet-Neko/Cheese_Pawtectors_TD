@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mod_Waves : Mod
+public class Mod_Waves : Module
 {
     public static event Action OnWaveReload;
 

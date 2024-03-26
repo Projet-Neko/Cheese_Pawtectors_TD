@@ -35,6 +35,8 @@ public class Room : MonoBehaviour
     private bool _moveModBool;
     private bool _canMove;
     private Vector3 _mousePosition;
+    public Vector3 _oldPosition;
+    public Vector3 _newPosition;
 
     protected bool _correctPath = false;      // True if the room is in a correct path
 
@@ -43,7 +45,7 @@ public class Room : MonoBehaviour
 
     protected RoomSecurity _security;
 
-    private void Awake()
+    public void SetupRoom()
     {
         TileSelected += DeselectTile;
 
@@ -63,6 +65,8 @@ public class Room : MonoBehaviour
     {
         _canMove = false;
         _moveModBool = false;
+
+       
     }
 
     private void FixedUpdate()
@@ -74,6 +78,14 @@ public class Room : MonoBehaviour
             transform.position = _mousePosition;
             _moveModCanva.transform.position = _mousePosition;
         }
+    }
+
+    private void RoomPosition()
+    {
+        Vector3 position = transform.position;
+        position.x = Mathf.Round(position.x);
+        position.y = Mathf.Round(position.y);
+        _newPosition = position;
     }
 
     protected virtual bool CheckPath(Junction startJunction)
@@ -104,6 +116,7 @@ public class Room : MonoBehaviour
     public void OnMouseUp()
     {
         _canMove = false;
+        RoomPosition();
     }
 
     public void ShowUI()
@@ -116,6 +129,7 @@ public class Room : MonoBehaviour
         _moveModBool = true;
         _HUDCanva.SetActive(false);
         _moveModCanva.SetActive(true);
+        _oldPosition = transform.position;
     }
 
     public void StopMove()
@@ -162,7 +176,7 @@ public class Room : MonoBehaviour
     {
         if (!_isSelected)
         {
-            _HUDCanva.SetActive(false);
+            if(_HUDCanva != null) _HUDCanva.SetActive(false);
         }
         _isSelected = false;
 

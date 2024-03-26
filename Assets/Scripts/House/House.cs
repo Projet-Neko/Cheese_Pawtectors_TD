@@ -12,7 +12,7 @@ public class House : MonoBehaviour
 
     //private List<Room> _roomsAvailable = new List<Room>();
 
-    private GameObject[,] _roomsGrid = new GameObject[_maxRooms,_maxRooms];
+    private GameObject[,] _roomsGrid = new GameObject[_maxRooms, _maxRooms];
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class House : MonoBehaviour
                     room = Instantiate(_rooms[RoomPattern.StartRoom], new Vector3(i, j, 0), Quaternion.identity);
 
                 // Place the Cheese Room
-                else if (i == _currentRoomNumber-1 && j == _currentRoomNumber / 2)
+                else if (i == _currentRoomNumber - 1 && j == _currentRoomNumber / 2)
                     room = Instantiate(_rooms[RoomPattern.CheeseRoom], new Vector3(i, j, 0), Quaternion.identity);
 
                 // Place Void Rooms
@@ -68,6 +68,7 @@ public class House : MonoBehaviour
             _roomsGrid[x, y] = roomObject;
         }
         else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, y].GetComponent<Room>().Security);
+        room.SetupRoom();
     }
 
     public void RemoveRoom(int x, int y)

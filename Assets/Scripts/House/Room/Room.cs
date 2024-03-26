@@ -45,10 +45,12 @@ public class Room : MonoBehaviour
 
     protected RoomSecurity _security;
 
+    //Get room pattern to test for the deselectTile function
+    //limit the deplacement to the grid
+    //link the room to the change position of the house
+
     public void SetupRoom()
     {
-        
-
         foreach (Junction junction in _opening)
             junction.OnCheckPath += CheckPath;
     }
@@ -88,6 +90,14 @@ public class Room : MonoBehaviour
         position.y = Mathf.Round(position.y);
         _newPosition = position;
         return position;
+    }
+    private void TestPosition()
+    {
+        if (_newPosition != _oldPosition)
+        {
+            Debug.Log("Position changed");
+            // TO DO : Check if the new position is valid
+        }
     }
 
     protected virtual bool CheckPath(Junction startJunction)
@@ -175,10 +185,11 @@ public class Room : MonoBehaviour
 
     private void DeselectTile()
     {
+        
         if (!_isSelected)
         {
             if(_HUDCanva != null) _HUDCanva.SetActive(false);
-               StopMove();
+            if (_moveModCanva != null) StopMove();
         }
         _isSelected = false;
 

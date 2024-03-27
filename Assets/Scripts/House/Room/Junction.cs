@@ -22,6 +22,7 @@ public class Junction : MonoBehaviour
     public bool Validation()
     {
         Debug.Log("Junction: " + _junctionConnected);
-        return _junctionConnected && _junctionConnected.OnCheckPath.Invoke(_junctionConnected);
+        Debug.Log("Junction2: " + _junctionConnected.OnCheckPath);
+        return _junctionConnected != null && _junctionConnected.OnCheckPath.Invoke(_junctionConnected);
     }
 }

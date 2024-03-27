@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class StartRoom : Room
@@ -9,7 +10,14 @@ public class StartRoom : Room
 
     void Start()
     {
+        StartCoroutine(Coroutine());
+    }
+
+    private IEnumerator Coroutine()
+    {
+        yield return new WaitForSeconds(2);
         CheckPath();
+        yield return null;
     }
 
     public bool CheckPath()

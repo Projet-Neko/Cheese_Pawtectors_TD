@@ -20,10 +20,6 @@ public class Junction : MonoBehaviour
     // Check if the junction is connected to another junction and if the next room is in a valid path
     public bool Validation()
     {
-        if (_junctionConnected == null)
-            Debug.LogError("No junction connected to " + gameObject.transform.parent.parent.parent.name);
-
-
         return _junctionConnected && _junctionConnected.OnCheckPath != null && _junctionConnected.OnCheckPath.Invoke(_junctionConnected);
     }
 }

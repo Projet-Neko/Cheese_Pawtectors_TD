@@ -10,7 +10,6 @@ public class CheeseRoom : Room
 
     protected override bool CheckPath(Junction junction)
     {
-        Debug.Log("CheckPath Cheese Room");
         return true;
     }
 }

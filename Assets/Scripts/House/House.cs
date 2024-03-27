@@ -1,4 +1,5 @@
 using AYellowpaper.SerializedCollections;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class House : MonoBehaviour
@@ -10,9 +11,8 @@ public class House : MonoBehaviour
 
     private int _currentRoomNumber;
 
-    //private List<Room> _roomsAvailable = new List<Room>();
-
     private GameObject[,] _roomsGrid = new GameObject[_maxRooms, _maxRooms];
+    private StartRoom _startRoom;
 
     void Start()
     {
@@ -29,6 +29,7 @@ public class House : MonoBehaviour
                 {
                     room = Instantiate(_rooms[RoomPattern.StartRoom], new Vector3(i, j, 0), Quaternion.identity);
                     room.GetComponentInChildren<Room>().SetupRoom();
+                    _startRoom = room.GetComponentInChildren<StartRoom>();
                 }
                     
 
@@ -82,7 +83,7 @@ public class House : MonoBehaviour
 
     public void RemoveRoom(int x, int y)
     {
-        Room room = _roomsGrid[x, y].GetComponent<Room>();
+        Room room = _roomsGrid[x, y].GetComponentInChildren<Room>();
         if (!room)
         {
             Debug.Log("No room found at position (" + x + ", " + y + ")");
@@ -117,5 +118,23 @@ public class House : MonoBehaviour
             _roomsGrid[xStart, yStart] = _roomsGrid[xEnd, yEnd];
             _roomsGrid[xEnd, yEnd] = tmpRoom;
         }
+    }
+
+    public void DestroyInvalidRoom()
+    {
+        if (_startRoom.CheckPath())
+        {
+            for (int i = 0; i < _currentRoomNumber; i++)
+            {
+                for (int j = 0; j < _currentRoomNumber; j++)
+                {
+                    Room room = _roomsGrid[i, j].GetComponentInChildren<Room>();
+                    if (!room.CorrectPath)
+                        RemoveRoom(i, j);
+                }
+            }
+        }
+        else
+            Debug.Log("The path is not valid");
     }
 }

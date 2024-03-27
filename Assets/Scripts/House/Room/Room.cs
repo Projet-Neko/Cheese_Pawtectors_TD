@@ -45,6 +45,8 @@ public class Room : MonoBehaviour
 
     protected RoomSecurity _security;
 
+    public bool CorrectPath { get => _correctPath; }
+
     //Get room pattern to test for the deselectTile function
     //limit the deplacement to the grid
     //link the room to the change position of the house
@@ -114,8 +116,6 @@ public class Room : MonoBehaviour
                 _correctPath = _correctPath || aux;                     // Update of the variable correctPath : if ONE junction is coorect, the room is in a correct path
             }
         }
-
-        Debug.Log("Room : " + gameObject.transform.parent.name + " = " + _correctPath);
 
         return _correctPath;
     }

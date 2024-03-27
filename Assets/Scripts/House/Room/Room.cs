@@ -148,6 +148,7 @@ public class Room : MonoBehaviour
         _moveModBool = false;
         _moveModCanva.SetActive(false);
         _HUDCanva.transform.position = transform.position;
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
     }
 
     public void Delete()

@@ -110,11 +110,13 @@ public class Room : MonoBehaviour
         {
             if (junction != startJunction)                              // ... except the one that called the function
             {
-                _correctPath = _correctPath || junction.Validation();   // Update of the variable correctPath : if ONE junction is coorect, the room is in a correct path
+                bool aux = junction.Validation();                       // Check if the room is in a correct path. We use a variable aux to avoid not getting into the job because of the OR operator
+                _correctPath = _correctPath || aux;                     // Update of the variable correctPath : if ONE junction is coorect, the room is in a correct path
             }
         }
 
-        Debug.Log("Room: " + _correctPath);
+        Debug.Log("Room : " + gameObject.transform.parent.name + " = " + _correctPath);
+
         return _correctPath;
     }
 

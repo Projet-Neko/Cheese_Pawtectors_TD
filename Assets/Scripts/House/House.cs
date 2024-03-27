@@ -26,11 +26,18 @@ public class House : MonoBehaviour
                 GameObject room;
                 // Place the Start Room
                 if (i == 0 && j == _currentRoomNumber / 2)
+                {
                     room = Instantiate(_rooms[RoomPattern.StartRoom], new Vector3(i, j, 0), Quaternion.identity);
+                    room.GetComponentInChildren<Room>().SetupRoom();
+                }
+                    
 
                 // Place the Cheese Room
                 else if (i == _currentRoomNumber - 1 && j == _currentRoomNumber / 2)
+                {
                     room = Instantiate(_rooms[RoomPattern.CheeseRoom], new Vector3(i, j, 0), Quaternion.identity);
+                    room.GetComponentInChildren<Room>().SetupRoom();
+                }
 
                 // Place Void Rooms
                 else
@@ -44,6 +51,7 @@ public class House : MonoBehaviour
         // TO DO : TO REMOVE (is a test)
         AddRoom(1, 2, RoomPattern.CorridorRoom);
         AddRoom(2, 2, RoomPattern.CrossraodRoom);
+        AddRoom(2, 3, RoomPattern.CrossraodRoom);
         AddRoom(3, 2, RoomPattern.CorridorRoom);
         //RemoveRoom(2, 1);
     }

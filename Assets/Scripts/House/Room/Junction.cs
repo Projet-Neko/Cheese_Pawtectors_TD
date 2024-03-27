@@ -9,7 +9,6 @@ public class Junction : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Junction Collision: " + collision.gameObject);
         _junctionConnected = collision.gameObject.GetComponent<Junction>();
     }
 
@@ -21,8 +20,10 @@ public class Junction : MonoBehaviour
     // Check if the junction is connected to another junction and if the next room is in a valid path
     public bool Validation()
     {
-        //Debug.Log("Junction: " + _junctionConnected);
-        //Debug.Log("Junction2: " + _junctionConnected.OnCheckPath);
+        if (_junctionConnected == null)
+            Debug.LogError("No junction connected to " + gameObject.transform.parent.parent.parent.name);
+
+
         return _junctionConnected && _junctionConnected.OnCheckPath != null && _junctionConnected.OnCheckPath.Invoke(_junctionConnected);
     }
 }

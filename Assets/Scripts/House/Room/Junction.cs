@@ -21,8 +21,8 @@ public class Junction : MonoBehaviour
     // Check if the junction is connected to another junction and if the next room is in a valid path
     public bool Validation()
     {
-        Debug.Log("Junction: " + _junctionConnected);
-        Debug.Log("Junction2: " + _junctionConnected.OnCheckPath);
-        return _junctionConnected != null && _junctionConnected.OnCheckPath.Invoke(_junctionConnected);
+        //Debug.Log("Junction: " + _junctionConnected);
+        //Debug.Log("Junction2: " + _junctionConnected.OnCheckPath);
+        return _junctionConnected && _junctionConnected.OnCheckPath != null && _junctionConnected.OnCheckPath.Invoke(_junctionConnected);
     }
 }

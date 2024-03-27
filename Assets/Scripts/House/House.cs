@@ -68,7 +68,8 @@ public class House : MonoBehaviour
             _roomsGrid[x, y] = roomObject;
         }
         else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, y].GetComponent<Room>().Security);
-        room.SetupRoom();
+
+        _roomsGrid[x, y].GetComponentInChildren<Room>().SetupRoom();
     }
 
     public void RemoveRoom(int x, int y)

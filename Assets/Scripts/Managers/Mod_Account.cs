@@ -14,12 +14,10 @@ public class Mod_Account : Module
     public static event Action<bool> OnLocalDataCheck;
     public static event Action OnCloudUpdate;
 
+    // PlayFab datas
     public PlayFab.ClientModels.EntityKey Entity => _entity;
     public string PlayFabId => _playFabId;
-    public DateTime? LastLogin => _lastLogin;
-    public bool IsLoggedIn => _isLoggedIn;
 
-    // PlayFab datas
     private PlayFab.ClientModels.EntityKey _entity;
     private string _playFabId;
 
@@ -31,11 +29,19 @@ public class Mod_Account : Module
     private readonly string _localAuthDataKey = "LocalAuthDataKey";
 
     // Login
+    public DateTime? LastLogin => _lastLogin;
+    public bool IsLoggedIn => _isLoggedIn;
+
     private bool _isFirstLogin;
     private bool _isLoggedIn = false;
-    private string _username;
-
     private DateTime? _lastLogin;
+
+    // Username
+    public string Username => _username.Split("#")[0];
+    public bool HasChangedUsername => !_username.StartsWith(_defaultUsername);
+
+    private string _username;
+    private readonly string _defaultUsername = "Kitten#";
 
     public override void Init(GameManager gm)
     {
@@ -169,8 +175,7 @@ public class Mod_Account : Module
         Debug.LogWarning("First login !");
 
         // --- Create Username ---
-        _username = "Kitten#";
-        yield return (UpdateName(_username));
+        yield return (UpdateUsername(_defaultUsername));
 
         // --- Create Data ---
         // TODO
@@ -208,13 +213,14 @@ public class Mod_Account : Module
         InitComplete();
         //_gm.InvokeOnLoginSuccess();
     }
-    public IEnumerator UpdateName(string name)
+    public IEnumerator UpdateUsername(string username)
     {
         yield return _gm.StartAsyncRequest("Updating username...");
+        _username = username;
 
         PlayFabClientAPI.UpdateUserTitleDisplayName(new()
         {
-            DisplayName = name
+            DisplayName = username
         }, res => _gm.EndRequest(), _gm.OnRequestError);
     }
     #endregion

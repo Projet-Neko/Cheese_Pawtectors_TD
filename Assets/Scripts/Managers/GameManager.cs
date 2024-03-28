@@ -74,8 +74,12 @@ public class GameManager : MonoBehaviour
     public void RemoveCurrency(Currency currency, int amount) => Mod<Mod_Economy>().RemoveCurrency(currency, amount);
 
     // AccountMod
-    public DateTime? LastLogin => Mod<Mod_Account>().LastLogin;
     public bool IsLoggedIn => Mod<Mod_Account>().IsLoggedIn;
+    public DateTime? LastLogin => Mod<Mod_Account>().LastLogin;
+    public string Username => Mod<Mod_Account>().Username;
+    public bool HasChangedUsername => Mod<Mod_Account>().HasChangedUsername;
+
+    public void UpdateUsername(string username) => StartCoroutine(Mod<Mod_Account>().UpdateUsername(username));
     #endregion
 
     private T Mod<T>() where T : Module => _modules.OfType<T>().First();

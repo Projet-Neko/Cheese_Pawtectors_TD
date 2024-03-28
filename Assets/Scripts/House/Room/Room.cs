@@ -30,6 +30,10 @@ public class Room : MonoBehaviour
     [Header("Junction")]
     [SerializeField] protected List<Junction> _opening;
 
+    private const int _maxLevel = 3;
+
+    private int _currentLevel = 1;
+
     public RoomSecurity Security => _security;
 
     private bool _moveModBool;
@@ -196,5 +200,11 @@ public class Room : MonoBehaviour
         }
         _isSelected = false;
 
+    }
+
+    private void LevelUp()
+    {
+        if (_currentLevel < _maxLevel)
+            ++_currentLevel;
     }
 }

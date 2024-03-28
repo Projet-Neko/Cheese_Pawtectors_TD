@@ -2,10 +2,13 @@ using AYellowpaper.SerializedCollections;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using static UnityEditor.Recorder.OutputPath;
+using System;
 
 public class House : MonoBehaviour
 {
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
+
+    public static event Action<bool> ValidatePositionChange;
 
     private const int _maxRooms = 30;
     private const int _minRooms = 5;
@@ -29,16 +32,14 @@ public class House : MonoBehaviour
                 if (i == 0 && j == _currentRoomNumber / 2)
                 {
                     room = Instantiate(_rooms[RoomPattern.StartRoom], new Vector3(i, j, 0), Quaternion.identity);
-                    room.GetComponentInChildren<Room>().SetupRoom();
                     _startRoom = room.GetComponentInChildren<StartRoom>();
                 }
-                    
+
 
                 // Place the Cheese Room
                 else if (i == _currentRoomNumber - 1 && j == _currentRoomNumber / 2)
                 {
                     room = Instantiate(_rooms[RoomPattern.CheeseRoom], new Vector3(i, j, 0), Quaternion.identity);
-                    room.GetComponentInChildren<Room>().SetupRoom();
                 }
 
                 // Place Void Rooms
@@ -73,13 +74,13 @@ public class House : MonoBehaviour
 
         for (int i = 0; i < _currentRoomNumber; i++)
         {
-            GameObject room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(i, _currentRoomNumber-1, 1), Quaternion.identity);
+            GameObject room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(i, _currentRoomNumber - 1, 1), Quaternion.identity);
 
             room.transform.parent = transform;
             _roomsGrid[i, _currentRoomNumber - 1] = room;
         }
 
-        for (int i = 0; i < _currentRoomNumber-1; i++)
+        for (int i = 0; i < _currentRoomNumber - 1; i++)
         {
             GameObject room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(_currentRoomNumber - 1, i, 1), Quaternion.identity);
 
@@ -108,8 +109,6 @@ public class House : MonoBehaviour
             _roomsGrid[x, y] = roomObject;
         }
         else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, y].GetComponent<Room>().Security);
-
-        _roomsGrid[x, y].GetComponentInChildren<Room>().SetupRoom();
     }
 
     public void RemoveRoom(int x, int y)
@@ -135,20 +134,19 @@ public class House : MonoBehaviour
 
     public void MoveRoom(int xStart, int yStart, int xEnd, int yEnd)
     {
-        Room room = _roomsGrid[xEnd, yEnd].GetComponent<Room>();
+        Room room = _roomsGrid[xEnd, yEnd].GetComponentInChildren<Room>();
         if (!room)
         {
             Debug.Log("No room found at position (" + xEnd + ", " + yEnd + ")");
             return;
         }
 
-        RoomSecurity roomSecurityStart = _roomsGrid[xStart, yStart].GetComponent<Room>().Security;
-        if ((roomSecurityStart == RoomSecurity.MovedAndRemoved || roomSecurityStart == RoomSecurity.Moved) && _roomsGrid[xStart, yStart].GetComponent<Room>().Security == RoomSecurity.Overwritten)
-        {
-            GameObject tmpRoom = _roomsGrid[xStart, yStart];
-            _roomsGrid[xStart, yStart] = _roomsGrid[xEnd, yEnd];
-            _roomsGrid[xEnd, yEnd] = tmpRoom;
-        }
+        if (_roomsGrid[xEnd, yEnd].GetComponentInChildren<Room>().Security == RoomSecurity.Protected) return; // Ajouter une popup "You can't move this room" ?
+
+        GameObject tmpRoom = _roomsGrid[xStart, yStart];
+        _roomsGrid[xStart, yStart] = _roomsGrid[xEnd, yEnd];
+        _roomsGrid[xEnd, yEnd] = tmpRoom;
+
     }
 
     public void DestroyInvalidRoom()
@@ -169,19 +167,31 @@ public class House : MonoBehaviour
             Debug.Log("The path is not valid");
     }
 
-    private void ExchangeRoom()
+    private void CheckRoomPosition(Vector3 oldPosition, Vector3 newPosition, bool validate)
     {
-
-    }
-
-    private void CheckRoomPosition(Vector3 oldPosition, Vector3 newPosition)
-    {
-        int xStart = (int)oldPosition.x;
-        int yStart = (int)oldPosition.y;
         int xEnd = (int)newPosition.x;
         int yEnd = (int)newPosition.y;
 
-        MoveRoom(xStart, yStart, xEnd, yEnd);
+        if (xEnd < 0 || xEnd >= _currentRoomNumber || yEnd < 0 || yEnd >= _currentRoomNumber)
+        {
+            ValidatePositionChange?.Invoke(false);
+            return;
+        }
+
+        int xStart = (int)oldPosition.x;
+        int yStart = (int)oldPosition.y;
+
+        if (_roomsGrid[xEnd, yEnd].GetComponentInChildren<Room>().Security == RoomSecurity.Protected)
+        {
+            ValidatePositionChange?.Invoke(false);
+            return;
+        }
+
+
+        ValidatePositionChange?.Invoke(true);
+
+        if (validate) MoveRoom(xStart, yStart, xEnd, yEnd);
+
     }
 
     private void OnDestroy()

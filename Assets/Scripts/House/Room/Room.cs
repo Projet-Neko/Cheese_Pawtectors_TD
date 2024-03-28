@@ -30,7 +30,7 @@ public class Room : MonoBehaviour
     [Header("Junction")]
     [SerializeField] protected List<Junction> _opening;
 
-    public static event Action<Vector3,Vector3> ChangeTilePosition;
+    public static event Action<Vector3, Vector3, bool> ChangeTilePosition; // Old position, new position, Still in motion or not (false if the room is still moving)
     public static event Action TileSelected;
     public bool CorrectPath { get => _correctPath; }
     public RoomSecurity Security => _security;
@@ -47,19 +47,13 @@ public class Room : MonoBehaviour
     private bool _isSelected;
     private bool _moveModBool;
     private int _currentLevel = 1;
+    private bool _WaitForValidation = false;
     private const int _maxLevel = 3;
 
-    //Get room pattern to test for the deselectTile function
+
+
     //limit the deplacement to the grid
     //link the room to the change position of the house
-
-
-    //Remplacer le OnMouseDown par un bouton invisible pour éviter les problèmes de clics
-    public void SetupRoom()
-    {
-        foreach (Junction junction in _opening)
-            junction.OnCheckPath += CheckPath;
-    }
 
     private void OnDestroy()
     {
@@ -67,7 +61,7 @@ public class Room : MonoBehaviour
 
         foreach (Junction junction in _opening)
             junction.OnCheckPath -= CheckPath;
-    }    
+    }
 
     void Start()
     {
@@ -75,6 +69,10 @@ public class Room : MonoBehaviour
         _moveModBool = false;
 
         TileSelected += DeselectTile;
+        House.ValidatePositionChange += ChangePosition;
+
+        foreach (Junction junction in _opening)
+            junction.OnCheckPath += CheckPath;
     }
 
     private void FixedUpdate()
@@ -86,6 +84,10 @@ public class Room : MonoBehaviour
             transform.position = _mousePosition;
             transform.position = RoundPosition(transform.position);
             _moveModCanva.transform.position = RoundPosition(_mousePosition);
+
+            if (transform.position != _oldPosition)
+                ChangeTilePosition?.Invoke(_oldPosition, _newPosition, false); //false because the room is still moving
+
         }
     }
 
@@ -96,14 +98,6 @@ public class Room : MonoBehaviour
         position.y = Mathf.Round(position.y);
         _newPosition = position;
         return position;
-    }
-    private void TestPosition()
-    {
-        if (_newPosition != _oldPosition)
-        {
-            Debug.Log("Position changed");
-            // TO DO : Check if the new position is valid
-        }
     }
 
     protected virtual bool CheckPath(Junction startJunction)
@@ -153,9 +147,10 @@ public class Room : MonoBehaviour
     {
         _moveModBool = false;
         _moveModCanva.SetActive(false);
-        _HUDCanva.transform.position = new Vector3 (transform.position.x, transform.position.y, -5 );
+        _HUDCanva.transform.position = new Vector3(transform.position.x, transform.position.y, -5);
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-        ChangeTilePosition?.Invoke(_oldPosition, _newPosition);
+        ChangeTilePosition?.Invoke(_oldPosition, _newPosition, true); //true because the room ask for position validation
+        _WaitForValidation = true;
     }
 
     public void Delete()
@@ -193,16 +188,39 @@ public class Room : MonoBehaviour
 
     private void DeselectTile()
     {
-        
+
         if (!_isSelected)
         {
-            if(_HUDCanva != null) _HUDCanva.SetActive(false);
+            if (_HUDCanva != null) _HUDCanva.SetActive(false);
             if (_moveModCanva != null) StopMove();
         }
         _isSelected = false;
 
     }
 
+    private void ChangePosition(bool validate)
+    {
+
+        if (_moveModBool)
+        {
+            if (validate)
+            {
+                //change Material to green
+            }
+            else
+            {
+                //change Material to red
+            }
+        }
+        if (_WaitForValidation)
+        {
+            transform.position = new Vector3(0, 0, 0);
+            //change Material to normal           
+            _WaitForValidation = false;
+        }
+    }
+
+    //
     private void LevelUp()
     {
         if (_currentLevel < _maxLevel)

@@ -30,26 +30,24 @@ public class Room : MonoBehaviour
     [Header("Junction")]
     [SerializeField] protected List<Junction> _opening;
 
-    private const int _maxLevel = 3;
-
-    private int _currentLevel = 1;
-
-    public RoomSecurity Security => _security;
-
-    private bool _moveModBool;
-    private bool _canMove;
-    private Vector3 _mousePosition;
-    public Vector3 _oldPosition;
-    public Vector3 _newPosition;
-
-    protected bool _correctPath = false;      // True if the room is in a correct path
-
+    public static event Action<Vector3,Vector3> ChangeTilePosition;
     public static event Action TileSelected;
-    private bool _isSelected;
+    public bool CorrectPath { get => _correctPath; }
+    public RoomSecurity Security => _security;
+    public Vector3 _newPosition;
+    public Vector3 _oldPosition;
+
 
     protected RoomSecurity _security;
+    protected bool _correctPath = false;      // True if the room is in a correct path
 
-    public bool CorrectPath { get => _correctPath; }
+
+    private bool _canMove;
+    private Vector3 _mousePosition;
+    private bool _isSelected;
+    private bool _moveModBool;
+    private int _currentLevel = 1;
+    private const int _maxLevel = 3;
 
     //Get room pattern to test for the deselectTile function
     //limit the deplacement to the grid
@@ -155,6 +153,7 @@ public class Room : MonoBehaviour
         _moveModCanva.SetActive(false);
         _HUDCanva.transform.position = transform.position;
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+        ChangeTilePosition?.Invoke(_oldPosition, _newPosition);
     }
 
     public void Delete()

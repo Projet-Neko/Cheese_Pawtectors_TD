@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour
     public void AlbinoHasSpawned() => Mod<Mod_Entities>().AlbinoHasSpawned();
 
     // WaveMod
+    public int EnemyNumber => Mod<Mod_Waves>().EnemyNumber;
+    public int MaxEnemyNumber => Mod<Mod_Waves>().MaxEnemyNumber;
     public int SpawnTime => Mod<Mod_Waves>().SpawnTime;
 
     public bool IsBossWave() => Mod<Mod_Waves>().IsBossWave();
@@ -69,6 +71,7 @@ public class GameManager : MonoBehaviour
     public Dictionary<Currency, int> Currencies => Mod<Mod_Economy>().Currencies;
     public List<int> CatPrices => Mod<Mod_Economy>().CatPrices;
 
+    public int MeatPerSecond() => Mod<Mod_Economy>().MeatPerSecond();
     public int GetCheapestCatIndex() => Mod<Mod_Economy>().GetCheapestCatIndex();
     public void AddCurrency(Currency currency, int amount) => Mod<Mod_Economy>().AddCurrency(currency, amount);
     public void RemoveCurrency(Currency currency, int amount) => Mod<Mod_Economy>().RemoveCurrency(currency, amount);

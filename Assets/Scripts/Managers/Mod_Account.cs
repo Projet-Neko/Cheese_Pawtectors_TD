@@ -37,7 +37,7 @@ public class Mod_Account : Module
     private DateTime? _lastLogin;
 
     // Username
-    public string Username => _username.Split("#")[0];
+    public string Username => HasChangedUsername ? _username.Split("#")[0] : _username;
     public bool HasChangedUsername => !_username.StartsWith(_defaultUsername);
 
     private string _username;

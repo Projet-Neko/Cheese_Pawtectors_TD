@@ -29,6 +29,7 @@ public class Data
 
     // Social
     public List<Data_Leaderboards> Leaderboards = new();
+    public int Score => Leaderboards[0].Value;
 
     // Local save
     private byte[] _savedKey;

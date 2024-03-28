@@ -50,6 +50,8 @@ public class House : MonoBehaviour
             }
         }
 
+        Room.ChangeTilePosition += CheckRoomPosition;
+
         // TO DO : TO REMOVE (is a test)
         AddRoom(1, 2, RoomPattern.CorridorRoom);
         AddRoom(2, 2, RoomPattern.CrossraodRoom);
@@ -166,4 +168,25 @@ public class House : MonoBehaviour
         else
             Debug.Log("The path is not valid");
     }
+
+    private void ExchangeRoom()
+    {
+
+    }
+
+    private void CheckRoomPosition(Vector3 oldPosition, Vector3 newPosition)
+    {
+        int xStart = (int)oldPosition.x;
+        int yStart = (int)oldPosition.y;
+        int xEnd = (int)newPosition.x;
+        int yEnd = (int)newPosition.y;
+
+        MoveRoom(xStart, yStart, xEnd, yEnd);
+    }
+
+    private void OnDestroy()
+    {
+        Room.ChangeTilePosition -= CheckRoomPosition;
+    }
+
 }

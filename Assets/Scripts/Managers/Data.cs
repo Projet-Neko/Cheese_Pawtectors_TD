@@ -29,6 +29,7 @@ public class Data
 
     // Social
     public List<Data_Leaderboards> Leaderboards = new();
+    public int Score => Leaderboards[0].Value;
 
     // Local save
     private byte[] _savedKey;
@@ -109,7 +110,7 @@ public class Data
         CryptoStream iStream = new(_dataStream, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write);
         StreamWriter sWriter = new(new CryptoStream(_dataStream, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write));
         //sWriter.Write(Serialize());
-        Debug.Log($"<color=cyan>Local data update : {JsonUtility.ToJson(this)}</color>");
+        //Debug.Log($"<color=cyan>Local data update : {JsonUtility.ToJson(this)}</color>");
         sWriter.Write(JsonUtility.ToJson(this));
 
         sWriter.Close();

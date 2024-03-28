@@ -1,21 +1,21 @@
 using UnityEngine;
 
-public class TitleScreenUI : MonoBehaviour
+public class SceneUI_TitleScreen : MonoBehaviour
 {
     [SerializeField] private GameObject[] _titleScreenButtons;
     [SerializeField] private GameObject _checkingText;
 
     private void Awake()
     {
-        Mod_Account.OnLocalDataCheck += Mod_Account_OnLocalDataNotFound;
+        Mod_Account.OnLocalDataCheck += Mod_Account_OnLocalDataCheck;
     }
 
     private void OnDestroy()
     {
-        Mod_Account.OnLocalDataCheck -= Mod_Account_OnLocalDataNotFound;
+        Mod_Account.OnLocalDataCheck -= Mod_Account_OnLocalDataCheck;
     }
 
-    private void Mod_Account_OnLocalDataNotFound(bool hasLocalData)
+    private void Mod_Account_OnLocalDataCheck(bool hasLocalData)
     {
         _checkingText.SetActive(false);
         if (hasLocalData) return;

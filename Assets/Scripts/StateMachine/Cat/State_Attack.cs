@@ -41,7 +41,7 @@ public class State_Attack : State
         _mouse.TakeDamage(_brain.Entity);
     }
 
-    private void ResetTarget(Entity source)
+    private void ResetTarget(Entity source, bool hasBeenKilledByPlayer)
     {
         if (source == _mouse) _brain.Target = null;
 

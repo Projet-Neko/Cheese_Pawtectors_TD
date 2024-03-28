@@ -55,6 +55,9 @@ public class House : MonoBehaviour
         AddRoom(2, 2, RoomPattern.CrossraodRoom);
         AddRoom(2, 3, RoomPattern.CrossraodRoom);
         AddRoom(3, 2, RoomPattern.CorridorRoom);
+        AddRoom(1, 0, RoomPattern.TurnRoom);
+        AddRoom(3, 0, RoomPattern.TurnRoom);
+        AddRoom(4, 0, RoomPattern.TurnRoom);
         //RemoveRoom(2, 1);
     }
 

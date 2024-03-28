@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TitleScreenUI : MonoBehaviour
+public class SceneUI_TitleScreen : MonoBehaviour
 {
     [SerializeField] private GameObject[] _titleScreenButtons;
     [SerializeField] private GameObject _checkingText;

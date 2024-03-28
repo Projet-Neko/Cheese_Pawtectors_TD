@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HeadBandUI : MonoBehaviour
+public class SceneUI_HeadBand : MonoBehaviour
 {
     [SerializeField] private TMP_Text _username;
     [SerializeField] private TMP_Text _waveNumber;

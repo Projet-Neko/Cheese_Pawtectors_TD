@@ -1,7 +1,5 @@
 using AYellowpaper.SerializedCollections;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
-using static UnityEditor.Recorder.OutputPath;
 
 public class House : MonoBehaviour
 {
@@ -60,6 +58,8 @@ public class House : MonoBehaviour
         AddRoom(1, 0, RoomPattern.TurnRoom);
         AddRoom(3, 0, RoomPattern.TurnRoom);
         AddRoom(4, 0, RoomPattern.TurnRoom);
+        AddRoom(2, 0, RoomPattern.CrossraodRoom);
+        AddRoom(0, 0, RoomPattern.CrossraodRoom);
         //RemoveRoom(2, 1);
     }
 

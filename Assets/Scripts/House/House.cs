@@ -1,6 +1,7 @@
 using AYellowpaper.SerializedCollections;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
+using static UnityEditor.Recorder.OutputPath;
 
 public class House : MonoBehaviour
 {
@@ -55,6 +56,27 @@ public class House : MonoBehaviour
         AddRoom(2, 3, RoomPattern.CrossraodRoom);
         AddRoom(3, 2, RoomPattern.CorridorRoom);
         //RemoveRoom(2, 1);
+    }
+
+    public void ExtendHouse()
+    {
+        ++_currentRoomNumber;
+
+        for (int i = 0; i < _currentRoomNumber; i++)
+        {
+            GameObject room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(i, _currentRoomNumber-1, 1), Quaternion.identity);
+
+            room.transform.parent = transform;
+            _roomsGrid[i, _currentRoomNumber - 1] = room;
+        }
+
+        for (int i = 0; i < _currentRoomNumber-1; i++)
+        {
+            GameObject room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(_currentRoomNumber - 1, i, 1), Quaternion.identity);
+
+            room.transform.parent = transform;
+            _roomsGrid[_currentRoomNumber - 1, i] = room;
+        }
     }
 
     public void AddRoom(int x, int y, RoomPattern pattern)

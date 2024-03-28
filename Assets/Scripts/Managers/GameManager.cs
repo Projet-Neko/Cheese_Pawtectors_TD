@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         if (!Init()) return;
+        _loadingSlider.value = 0;
 
         Module.OnInitComplete += Module_OnInitComplete;
         SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
@@ -106,6 +107,7 @@ public class GameManager : MonoBehaviour
 
     private void Module_OnInitComplete(Type mod)
     {
+        _loadingSlider.value += Mathf.Ceil(100.0f / _modules.Count);
         if (mod == typeof(Mod_Account)) Mod<Mod_Economy>().Init(this);
         else if (mod == typeof(Mod_Economy)) Mod<Mod_Clans>().Init(this);
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());

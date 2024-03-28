@@ -49,6 +49,7 @@ public class Mod_Waves : Module
         _SpawnPos = transform.position;
         _SpawnPos.z = -4;
         _hasCompleteSpawning = false;
+        InitComplete();
     }
 
     public void StartWaves()

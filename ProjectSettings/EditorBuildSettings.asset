@@ -5,12 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/BlockOut/BO_TitleScreen.unity
-    guid: 518344aa865ee7a4f88b598eb2301364
-  - enabled: 0
-    path: Assets/Scenes/BlockOut/BlockOut_LoadingPopup.unity
-    guid: e80709bd327fd0b4fb618ea59bb043d5
   - enabled: 1
     path: Assets/Scenes/PopUp/LoginPopup.unity
     guid: 705bebcd24893cf42a4d4a981ea99315
@@ -35,5 +29,23 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Shop.unity
     guid: a4a8c528f449a4c49a7c22b9e9df6e73
+  - enabled: 1
+    path: Assets/Scenes/HeadBand.unity
+    guid: 976db888d08beee4eb09c0e9566d8ae0
+  - enabled: 1
+    path: Assets/Scenes/PopUp/QuitBuildScene.unity
+    guid: 7074bb17f6d341f42b64da4384848618
+  - enabled: 1
+    path: Assets/Scenes/PopUp/NewRoom.unity
+    guid: 600e7265840aae54996a3f7458639843
+  - enabled: 1
+    path: Assets/Scenes/PopUp/NewCat.unity
+    guid: 7e22026dfcb970147ac142ee33e4430c
+  - enabled: 1
+    path: Assets/Scenes/PopUp/NameAlreadyUsed.unity
+    guid: b7591d52da78e7e42bfa5e0089f3c36b
+  - enabled: 1
+    path: Assets/Scenes/PopUp/LoadingPopup.unity
+    guid: 3219a4dc5a4f98e4093348043aca6b81
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 3afdfc6cdb377694baa248452ddf0abb, type: 2}

@@ -10,9 +10,8 @@ public enum Currency
     Meat, Pawsie, Meowstone
 }
 
-public class Mod_Economy : Mod
+public class Mod_Economy : Module
 {
-    public static event Action OnInitComplete;
     public static event Action<bool, int> OnAdoptCheck;
 
     public List<int> CatPrices => _catPrices;
@@ -31,12 +30,14 @@ public class Mod_Economy : Mod
     {
         Entity.OnDeath += Entity_OnDeath;
         Storage.OnStorageCheck += CheckStorage_OnStorageCheck;
+        CollectOfflineCurrency.OnCollect += CheckOfflineCurrency;
     }
 
     private void OnDestroy()
     {
         Entity.OnDeath -= Entity_OnDeath;
         Storage.OnStorageCheck -= CheckStorage_OnStorageCheck;
+        CollectOfflineCurrency.OnCollect -= CheckOfflineCurrency;
     }
     private void Entity_OnDeath(Entity obj)
     {
@@ -109,7 +110,7 @@ public class Mod_Economy : Mod
     }
     #endregion
 
-    #region Etape 2 : On récupère l'inventaire et la currency offline du joueur
+    #region Etape 2 : On récupère l'inventaire
     private void GetPlayerInventory()
     {
         _gm.StartRequest("Getting player's inventory...");
@@ -145,30 +146,30 @@ public class Mod_Economy : Mod
                 //    return;
                 //}
 
-                StartCoroutine(CheckOfflineCurrency());
+                CompleteEconomyInit();
+                //StartCoroutine(CheckOfflineCurrency());
             }, _gm.OnRequestError);
         }, _gm.OnRequestError);
     }
-    private IEnumerator CheckOfflineCurrency()
+    #endregion
+
+    #region Currency Offline
+    private void CheckOfflineCurrency()
     {
-        int meatGained = MeatGainedOffline(GameManager.Instance.LastLogin);
+        int meatGained = MeatGainedOffline(_gm.LastLogin);
         Debug.Log($"<color=lime>Gained {meatGained} meat offline !</color>");
         AddCurrency(Currency.Meat, meatGained);
-        yield return UpdateCurrency(Currency.Meat);
-
-        CompleteEconomyInit();
     }
     private int MeatPerSecond()
     {
-        int mouseHealth = 4 + GameManager.Instance.MouseLevel;
+        int mouseHealth = 4 + _gm.Data.MouseLevel;
 
-        // TODO -> update speed variable with levels
-        float catDPS = GameManager.Instance.GetLastUnlockedCatLevel() / 2.5f;
+        float catDPS = _gm.Cats[_gm.Data.LastCatUnlockedIndex].DPS();
         float secondsToKill = mouseHealth / catDPS;
 
         float shootRate = 1 / secondsToKill;
 
-        int meatGained = GameManager.Instance.MouseLevel / GameManager.Instance.SpawnTime;
+        int meatGained = _gm.Data.MouseLevel / _gm.SpawnTime;
 
         return (int)(meatGained / shootRate);
     }
@@ -188,17 +189,17 @@ public class Mod_Economy : Mod
     {
         _catPrices = new();
 
-        for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
+        for (int i = 0; i < _gm.Cats.Length; i++)
         {
-            int n = GameManager.Instance.Cats[i].Level;
+            int n = _gm.Cats[i].Level;
             int catPrice = 100 * (n - 1) + (100 * (int)Mathf.Pow(1.244415f, n - 1));
             _catPrices.Add(catPrice);
 
             for (int j = 0; j < _gm.Data.AmountOfPurchases[i]; j++) IncreasePrice(i);
-            Debug.Log($"{GameManager.Instance.Cats[i].Name} price is {catPrice}. (bought {_gm.Data.AmountOfPurchases[i]} time)");
+            Debug.Log($"{_gm.Cats[i].Name} price is {catPrice}. (bought {_gm.Data.AmountOfPurchases[i]} time)");
         }
 
-        OnInitComplete?.Invoke();
+        InitComplete();
         DebugOnly();
     }
 

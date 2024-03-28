@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Discard : DragAndDropHandler
 {
-    public static event Action<int, int> OnCatDiscard;
+    public static event Action<int, int> OnCatDiscard; // slot index, empty index for cat
 
     public override void HandleDragAndDrop(Cat cat, Vector3 initialPosition)
     {

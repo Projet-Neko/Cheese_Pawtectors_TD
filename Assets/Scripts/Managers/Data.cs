@@ -12,24 +12,47 @@ public class Data
 {
     public DateTime LastUpdate => _lastUpdate;
 
-    public List<int> AmountOfPurchases = new();
+    // Entities
+    public List<bool> CatsUnlocked = new();
     public List<Data_Storage> Storage = new();
-    public List<Data_Rooms> Rooms = new();
-    public List<Data_Leaderboards> Leaderboards = new();
-    public string LastUpdateString; // Needed for serialization
-    public bool CloudNeedsUpdate;
+    public int LastCatUnlockedIndex;
 
-    private DateTime _lastUpdate;
+    // Waves
+    public int WaveNumber = 1;
+    public int MouseLevel = 1;
+
+    // Economy
+    public List<int> AmountOfPurchases = new();
+
+    // Rooms
+    public List<Data_Rooms> Rooms = new();
+
+    // Social
+    public List<Data_Leaderboards> Leaderboards = new();
 
     // Local save
     private byte[] _savedKey;
     private FileStream _dataStream;
     private readonly string _localDataKey = "LocalDataKey";
 
+    // Update check
+    public string LastUpdateString; // Needed for serialization
+    public bool CloudNeedsUpdate;
+
+    private DateTime _lastUpdate;
+
     public Data()
     {
         if (GameManager.Instance == null) return;
-        for (int i = 0; i < GameManager.Instance.Cats.Length; i++) AmountOfPurchases.Add(0);
+
+        // Init default amount of purchases and cats unlocked
+        for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
+        {
+            AmountOfPurchases.Add(0);
+            CatsUnlocked.Add(GameManager.Instance.Cats[i].State == CatState.Unlock);
+            LastCatUnlockedIndex = 0;
+        }
+
         for (int i = 0; i < 8; i++) Storage.Add(new(i)); // Init empty storage
 
         // Init empty leaderboards
@@ -48,11 +71,20 @@ public class Data
     public void UpdateLocalData(string json)
     {
         Data data = JsonUtility.FromJson<Data>(json);
+        MouseLevel = data.MouseLevel;
+        WaveNumber = data.WaveNumber;
         AmountOfPurchases = data.AmountOfPurchases;
+        CatsUnlocked = data.CatsUnlocked;
         Storage = data.Storage;
         Rooms = data.Rooms;
         Leaderboards = data.Leaderboards;
         _lastUpdate = DateTime.Parse(data.LastUpdateString);
+
+        for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
+        {
+            GameManager.Instance.Cats[i].State = CatsUnlocked[i] ? CatState.Unlock : CatState.Lock;
+            if (CatsUnlocked[i]) LastCatUnlockedIndex = i;
+        }
 
         Debug.Log(json);
     }
@@ -77,7 +109,7 @@ public class Data
         CryptoStream iStream = new(_dataStream, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write);
         StreamWriter sWriter = new(new CryptoStream(_dataStream, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write));
         //sWriter.Write(Serialize());
-        Debug.Log(JsonUtility.ToJson(this));
+        Debug.Log($"<color=cyan>Local data update : {JsonUtility.ToJson(this)}</color>");
         sWriter.Write(JsonUtility.ToJson(this));
 
         sWriter.Close();
@@ -85,10 +117,23 @@ public class Data
         _dataStream.Close();
     }
 
-    public void AdoptCat(int catIndex, int slotIndex)
+    public void AdoptCat(int catIndex, int slotIndex, bool free)
     {
         Storage[slotIndex].CatIndex = catIndex;
-        AmountOfPurchases[catIndex]++;
+        if (!free) AmountOfPurchases[catIndex]++;
+        Update();
+    }
+
+    public void UnlockCat(int catIndex)
+    {
+        CatsUnlocked[catIndex] = true;
+        Update();
+    }
+
+    public void UpdateWaves()
+    {
+        MouseLevel++;
+        WaveNumber++;
         Update();
     }
 

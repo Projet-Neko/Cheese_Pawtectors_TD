@@ -15,8 +15,6 @@ public class Mod_Entities : Module
     private Cheese _cheese;
     private bool _canSpawnAlbino = true;
 
-    // TODO -> check cats unlocked
-
     private void OnDestroy()
     {
         Cheese.OnInit -= Cheese_OnInit;

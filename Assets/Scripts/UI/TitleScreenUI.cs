@@ -7,15 +7,15 @@ public class TitleScreenUI : MonoBehaviour
 
     private void Awake()
     {
-        Mod_Account.OnLocalDataCheck += Mod_Account_OnLocalDataNotFound;
+        Mod_Account.OnLocalDataCheck += Mod_Account_OnLocalDataCheck;
     }
 
     private void OnDestroy()
     {
-        Mod_Account.OnLocalDataCheck -= Mod_Account_OnLocalDataNotFound;
+        Mod_Account.OnLocalDataCheck -= Mod_Account_OnLocalDataCheck;
     }
 
-    private void Mod_Account_OnLocalDataNotFound(bool hasLocalData)
+    private void Mod_Account_OnLocalDataCheck(bool hasLocalData)
     {
         _checkingText.SetActive(false);
         if (hasLocalData) return;

@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: HeadBand
+  _headBand: 
   _isPermanent: 1
 --- !u!114 &32646881
 MonoBehaviour:
@@ -183,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: LoginPopup
+  _headBand: 
   _isPermanent: 0
 --- !u!1 &64492013
 GameObject:
@@ -1936,6 +1938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: BO_BuildMode
+  _headBand: 
   _isPermanent: 0
 --- !u!1 &520177992
 GameObject:
@@ -4590,6 +4593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: Catalog
+  _headBand: 
   _isPermanent: 0
 --- !u!1 &1485826812
 GameObject:
@@ -5133,6 +5137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: Shop
+  _headBand: HeadBand
   _isPermanent: 0
 --- !u!114 &1594703521
 MonoBehaviour:
@@ -5178,6 +5183,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1594703520}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: UnloadHeadBand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1594703520}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadSceneAdditive

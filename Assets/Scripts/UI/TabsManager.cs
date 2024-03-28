@@ -28,4 +28,3 @@ public class TabsManager : MonoBehaviour
 
     }
 }
-

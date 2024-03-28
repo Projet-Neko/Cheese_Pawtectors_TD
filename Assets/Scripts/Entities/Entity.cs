@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public abstract class Entity : MonoBehaviour
 {
-    public static event Action<Entity> OnDeath;
+    public static event Action<Entity, bool> OnDeath;
 
     [Header("Data")]
     [SerializeField] protected SpriteRenderer _renderer;
@@ -70,7 +70,7 @@ public abstract class Entity : MonoBehaviour
     // Source => entity that killed
     public virtual void Die(Entity source)
     {
-        if (source != null) OnDeath?.Invoke(this);
+        OnDeath?.Invoke(this, source != null);
         if (this is not Mouse) return;
         if (source is Cat) source.TakeDamage(this); // When a mouse die add satiety to cat
         Destroy(gameObject);
@@ -87,6 +87,5 @@ public abstract class Entity : MonoBehaviour
         _slider.value = _currentHealth;
     }
 
-    protected virtual void OnDeathEvent(Entity source) => OnDeath?.Invoke(source);
     public virtual bool IsAlive() => _currentHealth > 0;
 }

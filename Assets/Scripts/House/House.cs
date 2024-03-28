@@ -60,6 +60,10 @@ public class House : MonoBehaviour
 
     public void ExtendHouse()
     {
+        // Security on the max index possible
+        if (_currentRoomNumber == _maxRooms)
+            return;
+
         ++_currentRoomNumber;
 
         for (int i = 0; i < _currentRoomNumber; i++)

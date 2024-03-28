@@ -53,6 +53,8 @@ public class Room : MonoBehaviour
     //limit the deplacement to the grid
     //link the room to the change position of the house
 
+
+    //Remplacer le OnMouseDown par un bouton invisible pour éviter les problèmes de clics
     public void SetupRoom()
     {
         foreach (Junction junction in _opening)
@@ -151,7 +153,7 @@ public class Room : MonoBehaviour
     {
         _moveModBool = false;
         _moveModCanva.SetActive(false);
-        _HUDCanva.transform.position = transform.position;
+        _HUDCanva.transform.position = new Vector3 (transform.position.x, transform.position.y, -5 );
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         ChangeTilePosition?.Invoke(_oldPosition, _newPosition);
     }

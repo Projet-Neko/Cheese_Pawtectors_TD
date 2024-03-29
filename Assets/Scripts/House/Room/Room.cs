@@ -53,6 +53,7 @@ public class Room : MonoBehaviour
 
 
     //change OnMouseDown to Button to avoid click error
+    //Link delete button to delete function of house
 
     private void OnDestroy()
     {

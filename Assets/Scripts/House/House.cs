@@ -8,7 +8,7 @@ public class House : MonoBehaviour
 {
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
 
-    public static event Action<bool> ValidatePositionChange;
+    public static event Action<bool> ValidatePositionChange; // bool == position validé ?
 
     private const int _maxRooms = 30;
     private const int _minRooms = 5;
@@ -141,12 +141,15 @@ public class House : MonoBehaviour
             return;
         }
 
-        if (_roomsGrid[xEnd, yEnd].GetComponentInChildren<Room>().Security == RoomSecurity.Protected) return; // Ajouter une popup "You can't move this room" ?
+        Room endRoom = _roomsGrid[xEnd, yEnd].GetComponentInChildren<Room>();
+        if (endRoom.Security == RoomSecurity.Protected) return; // Ajouter une popup "You can't move this room" ?
 
-        GameObject tmpRoom = _roomsGrid[xStart, yStart];
+        GameObject startRoom = _roomsGrid[xStart, yStart];
         _roomsGrid[xStart, yStart] = _roomsGrid[xEnd, yEnd];
-        _roomsGrid[xEnd, yEnd] = tmpRoom;
-
+        _roomsGrid[xEnd, yEnd] = startRoom;
+        startRoom.transform.position = new Vector3(xEnd, yEnd, 0);
+        endRoom.transform.position = new Vector3(xStart, yStart, 0);
+        endRoom.UpdateCanvaPosition();
     }
 
     public void DestroyInvalidRoom()

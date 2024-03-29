@@ -120,7 +120,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6138648243483348578}
         m_TargetAssemblyTypeName: Room, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 1
@@ -892,6 +892,8 @@ MonoBehaviour:
   _moveModCanva: {fileID: 4329369356319404547}
   _opening:
   - {fileID: 1649868698177858624}
+  _newPosition: {x: 0, y: 0, z: 0}
+  _oldPosition: {x: 0, y: 0, z: 0}
 --- !u!61 &7990989672398056520
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -73,6 +73,7 @@ public class Room : MonoBehaviour
 
         foreach (Junction junction in _opening)
             junction.OnCheckPath += CheckPath;
+
     }
 
     private void FixedUpdate()
@@ -83,11 +84,10 @@ public class Room : MonoBehaviour
             _mousePosition.z = -1;
             transform.position = _mousePosition;
             transform.position = RoundPosition(transform.position);
-            _moveModCanva.transform.position = RoundPosition(_mousePosition);
 
-            if (transform.position != _oldPosition)
-                ChangeTilePosition?.Invoke(_oldPosition, _newPosition, false); //false because the room is still moving
+            if (transform.position != _oldPosition) ChangeTilePosition?.Invoke(_oldPosition, _newPosition, false); //false because the room is still moving
 
+            UpdateCanvaPosition();
         }
     }
 
@@ -96,8 +96,9 @@ public class Room : MonoBehaviour
         Vector3 position = startPosition;
         position.x = Mathf.Round(position.x);
         position.y = Mathf.Round(position.y);
-        _newPosition = position;
-        return position;
+        position.z = -5;
+        return _newPosition = position;
+
     }
 
     protected virtual bool CheckPath(Junction startJunction)
@@ -121,7 +122,8 @@ public class Room : MonoBehaviour
     public void OnMouseDown()
     {
         Selected();
-        if (!_moveModBool) _HUDCanva.SetActive(!_HUDCanva.activeSelf);
+        if (!_moveModBool) 
+            _HUDCanva.SetActive(!_HUDCanva.activeSelf);
         _canMove = true;
     }
 
@@ -147,10 +149,10 @@ public class Room : MonoBehaviour
     {
         _moveModBool = false;
         _moveModCanva.SetActive(false);
-        _HUDCanva.transform.position = new Vector3(transform.position.x, transform.position.y, -5);
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-        ChangeTilePosition?.Invoke(_oldPosition, _newPosition, true); //true because the room ask for position validation
+        //transform.position = RoundPosition(transform.position);
         _WaitForValidation = true;
+        ChangeTilePosition?.Invoke(_oldPosition, _newPosition, true); //true because the room ask for position validation
+        _HUDCanva.transform.position = RoundPosition(_HUDCanva.transform.position);
     }
 
     public void Delete()
@@ -192,7 +194,12 @@ public class Room : MonoBehaviour
         if (!_isSelected)
         {
             if (_HUDCanva != null) _HUDCanva.SetActive(false);
-            if (_moveModCanva != null) StopMove();
+            if (_moveModBool == true)
+            {
+                _moveModBool = false;
+                _moveModCanva.SetActive(false);
+                UpdateCanvaPosition();
+            }
         }
         _isSelected = false;
 
@@ -212,18 +219,24 @@ public class Room : MonoBehaviour
                 //change Material to red
             }
         }
+
         if (_WaitForValidation)
         {
-            transform.position = new Vector3(0, 0, 0);
+            transform.position = _oldPosition;
             //change Material to normal           
             _WaitForValidation = false;
+            UpdateCanvaPosition();
         }
     }
-
-    //
     private void LevelUp()
     {
         if (_currentLevel < _maxLevel)
             ++_currentLevel;
+    }
+
+    public void UpdateCanvaPosition()
+    {
+        _HUDCanva.transform.position = new Vector3(transform.position.x, transform.position.y, -5);
+        _moveModCanva.transform.position = new Vector3(transform.position.x, transform.position.y, -5);
     }
 }

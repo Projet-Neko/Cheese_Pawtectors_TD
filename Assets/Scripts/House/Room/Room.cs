@@ -52,8 +52,7 @@ public class Room : MonoBehaviour
 
 
 
-    //limit the deplacement to the grid
-    //link the room to the change position of the house
+    //change OnMouseDown to Button to avoid click error
 
     private void OnDestroy()
     {
@@ -198,6 +197,7 @@ public class Room : MonoBehaviour
             {
                 _moveModBool = false;
                 _moveModCanva.SetActive(false);
+                transform.position = _oldPosition;
                 UpdateCanvaPosition();
             }
         }

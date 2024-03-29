@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [SerializeField] private List<Module> _modules;
+
+    [Header("Loading Bar")]
     [SerializeField] private Slider _loadingSlider;
+    [SerializeField] private TMP_Text _loadingText;
 
     // --- Requests events ---
     public static event Action<string> OnError;
@@ -21,7 +26,6 @@ public class GameManager : MonoBehaviour
     // --- Loading events ---
     public static event Action OnInitComplete;
     public static event Action OnLoadingStart;
-    //public static event Action OnBigLoadingStart;
     public static event Action OnLoadingEnd;
     public static event Action OnRequest;
     public static event Action OnEndRequest;
@@ -48,8 +52,6 @@ public class GameManager : MonoBehaviour
     private bool _isInitCompleted = false;
 
     #region Modules
-    [SerializeField] private List<Module> _modules;
-
     // EntitiesMod
     public CatSO[] Cats => Mod<Mod_Entities>().Cats;
     public MouseSO[] Mouses => Mod<Mod_Entities>().Mouses;
@@ -59,6 +61,8 @@ public class GameManager : MonoBehaviour
     public void AlbinoHasSpawned() => Mod<Mod_Entities>().AlbinoHasSpawned();
 
     // WaveMod
+    public int EnemyNumber => Mod<Mod_Waves>().EnemyNumber;
+    public int MaxEnemyNumber => Mod<Mod_Waves>().MaxEnemyNumber;
     public int SpawnTime => Mod<Mod_Waves>().SpawnTime;
 
     public bool IsBossWave() => Mod<Mod_Waves>().IsBossWave();
@@ -67,20 +71,26 @@ public class GameManager : MonoBehaviour
     public Dictionary<Currency, int> Currencies => Mod<Mod_Economy>().Currencies;
     public List<int> CatPrices => Mod<Mod_Economy>().CatPrices;
 
+    public int MeatPerSecond() => Mod<Mod_Economy>().MeatPerSecond();
     public int GetCheapestCatIndex() => Mod<Mod_Economy>().GetCheapestCatIndex();
     public void AddCurrency(Currency currency, int amount) => Mod<Mod_Economy>().AddCurrency(currency, amount);
     public void RemoveCurrency(Currency currency, int amount) => Mod<Mod_Economy>().RemoveCurrency(currency, amount);
 
     // AccountMod
-    public DateTime? LastLogin => Mod<Mod_Account>().LastLogin;
     public bool IsLoggedIn => Mod<Mod_Account>().IsLoggedIn;
+    public DateTime? LastLogin => Mod<Mod_Account>().LastLogin;
+    public string Username => Mod<Mod_Account>().Username;
+    public bool HasChangedUsername => Mod<Mod_Account>().HasChangedUsername;
+
+    public void UpdateUsername(string username) => StartCoroutine(Mod<Mod_Account>().UpdateUsername(username));
     #endregion
 
     private T Mod<T>() where T : Module => _modules.OfType<T>().First();
 
-    private void Awake()
+    private void Start()
     {
         if (!Init()) return;
+        _loadingSlider.value = 0;
 
         Module.OnInitComplete += Module_OnInitComplete;
         SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
@@ -106,6 +116,8 @@ public class GameManager : MonoBehaviour
 
     private void Module_OnInitComplete(Type mod)
     {
+        _loadingSlider.value += Mathf.Ceil(100.0f / _modules.Count);
+        _loadingText.text = _loadingSlider.value.ToString() + "%";
         if (mod == typeof(Mod_Account)) Mod<Mod_Economy>().Init(this);
         else if (mod == typeof(Mod_Economy)) Mod<Mod_Clans>().Init(this);
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());

@@ -30,36 +30,30 @@ public class Room : MonoBehaviour
     [Header("Junction")]
     [SerializeField] protected List<Junction> _opening;
 
-    private const int _maxLevel = 3;
-
-    private int _currentLevel = 1;
-
-    public RoomSecurity Security => _security;
-
-    private bool _moveModBool;
-    private bool _canMove;
-    private Vector3 _mousePosition;
-    public Vector3 _oldPosition;
-    public Vector3 _newPosition;
-
-    protected bool _correctPath = false;      // True if the room is in a correct path
-
+    public static event Action<Vector3, Vector3, bool> ChangeTilePosition; // Old position, new position, Still in motion or not (false if the room is still moving)
     public static event Action TileSelected;
-    private bool _isSelected;
+    public bool CorrectPath { get => _correctPath; }
+    public RoomSecurity Security => _security;
+    public Vector3 _newPosition;
+    public Vector3 _oldPosition;
+
 
     protected RoomSecurity _security;
+    protected bool _correctPath = false;      // True if the room is in a correct path
 
-    public bool CorrectPath { get => _correctPath; }
 
-    //Get room pattern to test for the deselectTile function
-    //limit the deplacement to the grid
-    //link the room to the change position of the house
+    private bool _canMove;
+    private Vector3 _mousePosition;
+    private bool _isSelected;
+    private bool _moveModBool;
+    private int _currentLevel = 1;
+    private bool _WaitForValidation = false;
+    private const int _maxLevel = 3;
 
-    public void SetupRoom()
-    {
-        foreach (Junction junction in _opening)
-            junction.OnCheckPath += CheckPath;
-    }
+
+
+    //change OnMouseDown to Button to avoid click error
+    //Link delete button to delete function of house
 
     private void OnDestroy()
     {
@@ -67,7 +61,7 @@ public class Room : MonoBehaviour
 
         foreach (Junction junction in _opening)
             junction.OnCheckPath -= CheckPath;
-    }    
+    }
 
     void Start()
     {
@@ -75,6 +69,11 @@ public class Room : MonoBehaviour
         _moveModBool = false;
 
         TileSelected += DeselectTile;
+        House.ValidatePositionChange += ChangePosition;
+
+        foreach (Junction junction in _opening)
+            junction.OnCheckPath += CheckPath;
+
     }
 
     private void FixedUpdate()
@@ -85,7 +84,10 @@ public class Room : MonoBehaviour
             _mousePosition.z = -1;
             transform.position = _mousePosition;
             transform.position = RoundPosition(transform.position);
-            _moveModCanva.transform.position = RoundPosition(_mousePosition);
+            UpdateCanvaPosition();
+
+            if (transform.position != _oldPosition) ChangeTilePosition?.Invoke(_oldPosition, _newPosition, false); //false because the room is still moving
+
         }
     }
 
@@ -94,16 +96,9 @@ public class Room : MonoBehaviour
         Vector3 position = startPosition;
         position.x = Mathf.Round(position.x);
         position.y = Mathf.Round(position.y);
-        _newPosition = position;
-        return position;
-    }
-    private void TestPosition()
-    {
-        if (_newPosition != _oldPosition)
-        {
-            Debug.Log("Position changed");
-            // TO DO : Check if the new position is valid
-        }
+        position.z = -5;
+        return _newPosition = position;
+
     }
 
     protected virtual bool CheckPath(Junction startJunction)
@@ -127,7 +122,8 @@ public class Room : MonoBehaviour
     public void OnMouseDown()
     {
         Selected();
-        if (!_moveModBool) _HUDCanva.SetActive(!_HUDCanva.activeSelf);
+        if (!_moveModBool) 
+            _HUDCanva.SetActive(!_HUDCanva.activeSelf);
         _canMove = true;
     }
 
@@ -153,8 +149,10 @@ public class Room : MonoBehaviour
     {
         _moveModBool = false;
         _moveModCanva.SetActive(false);
-        _HUDCanva.transform.position = transform.position;
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+        //transform.position = RoundPosition(transform.position);
+        _WaitForValidation = true;
+        ChangeTilePosition?.Invoke(_oldPosition, _newPosition, true); //true because the room ask for position validation
+        _HUDCanva.transform.position = RoundPosition(_HUDCanva.transform.position);
     }
 
     public void Delete()
@@ -192,19 +190,54 @@ public class Room : MonoBehaviour
 
     private void DeselectTile()
     {
-        
+
         if (!_isSelected)
         {
-            if(_HUDCanva != null) _HUDCanva.SetActive(false);
-            if (_moveModCanva != null) StopMove();
+            if (_HUDCanva != null) _HUDCanva.SetActive(false);
+            if (_moveModBool == true)
+            {
+                _moveModBool = false;
+                _moveModCanva.SetActive(false);
+                transform.position = _oldPosition;
+                UpdateCanvaPosition();
+            }
         }
         _isSelected = false;
 
     }
 
+    private void ChangePosition(bool validate)
+    {
+
+        if (_moveModBool)
+        {
+            if (validate)
+            {
+                //change Material to green
+            }
+            else
+            {
+                //change Material to red
+            }
+        }
+
+        if (_WaitForValidation)
+        {
+            transform.position = _oldPosition;
+            //change Material to normal           
+            _WaitForValidation = false;
+            UpdateCanvaPosition();
+        }
+    }
     private void LevelUp()
     {
         if (_currentLevel < _maxLevel)
             ++_currentLevel;
+    }
+
+    public void UpdateCanvaPosition()
+    {
+        _HUDCanva.transform.position = new Vector3(transform.position.x, transform.position.y, -5);
+        _moveModCanva.transform.position = new Vector3(transform.position.x, transform.position.y, -5);
     }
 }

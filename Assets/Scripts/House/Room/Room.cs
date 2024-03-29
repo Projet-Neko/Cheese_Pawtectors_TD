@@ -83,10 +83,10 @@ public class Room : MonoBehaviour
             _mousePosition.z = -1;
             transform.position = _mousePosition;
             transform.position = RoundPosition(transform.position);
+            UpdateCanvaPosition();
 
             if (transform.position != _oldPosition) ChangeTilePosition?.Invoke(_oldPosition, _newPosition, false); //false because the room is still moving
 
-            UpdateCanvaPosition();
         }
     }
 

@@ -1,5 +1,4 @@
 using AYellowpaper.SerializedCollections;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using static UnityEditor.Recorder.OutputPath;
 using System;
@@ -8,7 +7,7 @@ public class House : MonoBehaviour
 {
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
 
-    public static event Action<bool> ValidatePositionChange; // bool == position validé ?
+    public static event Action<bool> ValidatePositionChange; // bool == position validï¿½ ?
 
     private const int _maxRooms = 30;
     private const int _minRooms = 5;
@@ -61,6 +60,8 @@ public class House : MonoBehaviour
         AddRoom(1, 0, RoomPattern.TurnRoom);
         AddRoom(3, 0, RoomPattern.TurnRoom);
         AddRoom(4, 0, RoomPattern.TurnRoom);
+        AddRoom(2, 0, RoomPattern.CrossraodRoom);
+        AddRoom(0, 0, RoomPattern.CrossraodRoom);
         //RemoveRoom(2, 1);
     }
 

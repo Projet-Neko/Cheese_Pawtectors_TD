@@ -888,12 +888,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e18cd5ff57bdca4a91348c13f11bac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _room: {fileID: 7812398506617135315}
   _HUDCanva: {fileID: 4210603833533310875}
   _moveModCanva: {fileID: 4329369356319404547}
   _opening:
   - {fileID: 1649868698177858624}
-  _newPosition: {x: 0, y: 0, z: 0}
-  _oldPosition: {x: 0, y: 0, z: 0}
 --- !u!61 &7990989672398056520
 BoxCollider2D:
   m_ObjectHideFlags: 0

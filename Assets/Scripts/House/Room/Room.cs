@@ -1,28 +1,30 @@
 using System;
 using System.Collections.Generic;
-//using System.Numerics;
 using UnityEngine;
 
 public enum RoomPattern
 {
-    CheeseRoom, // Moved
-    CorridorRoom, // MovedAndRemoved
-    CrossraodRoom, // MovedAndRemoved
-    StartRoom, // Protected
-    TurnRoom, // MovedAndRemoved
-    VoidRoom // Overwritten
+    CheeseRoom,     // Moved
+    CorridorRoom,   // MovedAndRemoved
+    CrossraodRoom,  // MovedAndRemoved
+    StartRoom,      // Protected
+    TurnRoom,       // MovedAndRemoved
+    VoidRoom        // Overwritten
 }
 
 public enum RoomSecurity
 {
-    Protected,
-    Moved,
-    MovedAndRemoved,
-    Overwritten
+    Protected,          // The room can't be moved or removed
+    Moved,              // The room can be moved
+    MovedAndRemoved,    // The room can be moved and removed
+    Overwritten         // A room can be placed over this one
 }
 
 public class Room : MonoBehaviour
 {
+    [Header("Room")]
+    [SerializeField] private GameObject _room;
+
     [Header("Room Canva")]
     [SerializeField] private GameObject _HUDCanva;
     [SerializeField] private GameObject _moveModCanva;
@@ -30,26 +32,26 @@ public class Room : MonoBehaviour
     [Header("Junction")]
     [SerializeField] protected List<Junction> _opening;
 
+    // Events
     public static event Action<Vector3, Vector3, bool> ChangeTilePosition; // Old position, new position, Still in motion or not (false if the room is still moving)
     public static event Action TileSelected;
-    public bool CorrectPath { get => _correctPath; }
-    public RoomSecurity Security => _security;
-    public Vector3 _newPosition;
-    public Vector3 _oldPosition;
 
+    // Getters
+    public bool CorrectPath => _correctPath;
+    public RoomSecurity Security => _security;
 
     protected RoomSecurity _security;
     protected bool _correctPath = false;      // True if the room is in a correct path
 
-
+    private Vector3 _oldPosition;
     private bool _canMove;
-    private Vector3 _mousePosition;
-    private bool _isSelected;
     private bool _moveModBool;
-    private int _currentLevel = 1;
     private bool _WaitForValidation = false;
-    private const int _maxLevel = 3;
+    private bool _isSelected;
+    private int _currentLevel = 1;
 
+    // Constants
+    private const int _maxLevel = 3;
 
 
     //change OnMouseDown to Button to avoid click error
@@ -57,6 +59,7 @@ public class Room : MonoBehaviour
 
     private void OnDestroy()
     {
+        // Unsubscribe from events
         TileSelected -= DeselectTile;
 
         foreach (Junction junction in _opening)
@@ -65,29 +68,24 @@ public class Room : MonoBehaviour
 
     void Start()
     {
-        _canMove = false;
-        _moveModBool = false;
-
+        // Subscribe to events
         TileSelected += DeselectTile;
         House.ValidatePositionChange += ChangePosition;
 
         foreach (Junction junction in _opening)
             junction.OnCheckPath += CheckPath;
 
+
+        _canMove = false;
+        _moveModBool = false;
     }
 
     private void FixedUpdate()
     {
         if (_moveModBool && _canMove)
         {
-            _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _mousePosition.z = -1;
-            transform.position = _mousePosition;
-            transform.position = RoundPosition(transform.position);
-            UpdateCanvaPosition();
-
-            if (transform.position != _oldPosition) ChangeTilePosition?.Invoke(_oldPosition, _newPosition, false); //false because the room is still moving
-
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            _room.transform.position = RoundPosition(mousePosition);
         }
     }
 
@@ -96,9 +94,9 @@ public class Room : MonoBehaviour
         Vector3 position = startPosition;
         position.x = Mathf.Round(position.x);
         position.y = Mathf.Round(position.y);
-        position.z = -5;
-        return _newPosition = position;
+        position.z = 0;
 
+        return position;
     }
 
     protected virtual bool CheckPath(Junction startJunction)
@@ -121,10 +119,11 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
+        _canMove = true;
         Selected();
+
         if (!_moveModBool) 
             _HUDCanva.SetActive(!_HUDCanva.activeSelf);
-        _canMove = true;
     }
 
     public void OnMouseUp()
@@ -137,27 +136,28 @@ public class Room : MonoBehaviour
         _HUDCanva.SetActive(true);
     }
 
+    // When user click on Canvas/HUD/Move button
     public void Move()
     {
         _moveModBool = true;
-        _HUDCanva.SetActive(false);
-        _moveModCanva.SetActive(true);
-        _oldPosition = transform.position;
+        _HUDCanva.SetActive(false);                 // Hide the HUD
+        _moveModCanva.SetActive(true);              // Show the Move Canvas
+        _oldPosition = _room.transform.position;    // Save the currently position
     }
 
+    // When user click on Canvas/Move Arrow/Done button
     public void StopMove()
     {
         _moveModBool = false;
-        _moveModCanva.SetActive(false);
-        //transform.position = RoundPosition(transform.position);
         _WaitForValidation = true;
-        ChangeTilePosition?.Invoke(_oldPosition, _newPosition, true); //true because the room ask for position validation
-        _HUDCanva.transform.position = RoundPosition(_HUDCanva.transform.position);
+
+        _moveModCanva.SetActive(false);                                                 // Hide the Move Canvas
+        ChangeTilePosition?.Invoke(_oldPosition, _room.transform.position, true);       //true because the room ask for position validation
     }
 
     public void Delete()
     {
-        Destroy(transform.parent.gameObject);
+        Destroy(_room);
     }
 
     public void RotationRoom(bool clockwise)
@@ -190,16 +190,16 @@ public class Room : MonoBehaviour
 
     private void DeselectTile()
     {
-
         if (!_isSelected)
         {
-            if (_HUDCanva != null) _HUDCanva.SetActive(false);
+            if (_HUDCanva != null)
+                _HUDCanva.SetActive(false);
+
             if (_moveModBool == true)
             {
                 _moveModBool = false;
                 _moveModCanva.SetActive(false);
-                transform.position = _oldPosition;
-                UpdateCanvaPosition();
+                MoveRoomOldPosition();
             }
         }
         _isSelected = false;
@@ -223,21 +223,25 @@ public class Room : MonoBehaviour
 
         if (_WaitForValidation)
         {
-            transform.position = _oldPosition;
+            MoveRoomOldPosition();
             //change Material to normal           
             _WaitForValidation = false;
-            UpdateCanvaPosition();
         }
     }
+
+    public void MoveRoom(int x, int y)
+    {
+        _room.transform.position = new Vector3(x, y, 0);
+    }
+
+    public void MoveRoomOldPosition()
+    {
+        _room.transform.position = _oldPosition;
+    }
+
     private void LevelUp()
     {
         if (_currentLevel < _maxLevel)
             ++_currentLevel;
-    }
-
-    public void UpdateCanvaPosition()
-    {
-        _HUDCanva.transform.position = new Vector3(transform.position.x, transform.position.y, -5);
-        _moveModCanva.transform.position = new Vector3(transform.position.x, transform.position.y, -5);
     }
 }

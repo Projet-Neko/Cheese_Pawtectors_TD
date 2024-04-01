@@ -1,12 +1,9 @@
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
-using System;
 
 public class House : MonoBehaviour
 {
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
-
-    public static event Action<bool> ValidatePositionChange; // bool == position valid� ?
 
     private const int _maxRooms = 30;
     private const int _minRooms = 5;
@@ -16,6 +13,9 @@ public class House : MonoBehaviour
     private Room[,] _roomsGrid = new Room[_maxRooms, _maxRooms];
     private StartRoom _startRoom;
 
+    /* * * * * * * * * * * * * * * * * * * *
+     *          BASIC FUNCTIONS
+     * * * * * * * * * * * * * * * * * * * */
     void Start()
     {
         // Create the Void Rooms and one Start Room, visible in the beginning
@@ -25,31 +25,26 @@ public class House : MonoBehaviour
         {
             for (int j = 0; j < _currentRoomNumber; j++)
             {
-                GameObject room;
                 // Place the Start Room
                 if (i == 0 && j == _currentRoomNumber / 2)
                 {
-                    room = Instantiate(_rooms[RoomPattern.StartRoom], new Vector3(i, j, 0), Quaternion.identity);
-                    _startRoom = room.GetComponentInChildren<StartRoom>();
+                    CreateRoom(i, j, RoomPattern.StartRoom);
+                    _startRoom = (StartRoom)_roomsGrid[i, j];
                 }
-
 
                 // Place the Cheese Room
                 else if (i == _currentRoomNumber - 1 && j == _currentRoomNumber / 2)
-                {
-                    room = Instantiate(_rooms[RoomPattern.CheeseRoom], new Vector3(i, j, 0), Quaternion.identity);
-                }
+                    CreateRoom(i, j, RoomPattern.CheeseRoom);
 
                 // Place Void Rooms
                 else
-                    room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(i, j, 1), Quaternion.identity);
-
-                room.transform.parent = transform;
-                _roomsGrid[i, j] = room.GetComponentInChildren<Room>();
+                    CreateRoom(i, j, RoomPattern.VoidRoom);
             }
         }
 
+        // Subscribe to events
         Room.ChangeTilePosition += CheckRoomPosition;
+        Room.TileDestroyed += CreateRoom;
 
         // TO DO : TO REMOVE (is a test)
         AddRoom(1, 2, RoomPattern.CorridorRoom);
@@ -64,84 +59,58 @@ public class House : MonoBehaviour
         //RemoveRoom(2, 1);
     }
 
-    public void ExtendHouse()
+    private void OnDestroy()
     {
-        // Security on the max index possible
-        if (_currentRoomNumber == _maxRooms)
-            return;
-
-        ++_currentRoomNumber;
-
-        for (int i = 0; i < _currentRoomNumber; i++)
-        {
-            GameObject room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(i, _currentRoomNumber - 1, 1), Quaternion.identity);
-
-            room.transform.parent = transform;
-            _roomsGrid[i, _currentRoomNumber - 1] = room.GetComponentInChildren<Room>();
-        }
-
-        for (int i = 0; i < _currentRoomNumber - 1; i++)
-        {
-            GameObject room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(_currentRoomNumber - 1, i, 1), Quaternion.identity);
-
-            room.transform.parent = transform;
-            _roomsGrid[_currentRoomNumber - 1, i] = room.GetComponentInChildren<Room>();
-        }
+        // Unsubscribe to events
+        Room.ChangeTilePosition -= CheckRoomPosition;
+        Room.TileDestroyed -= CreateRoom;
     }
 
-    public void AddRoom(int x, int y, RoomPattern pattern)
+
+    /* * * * * * * * * * * * * * * * * * * *
+     *          CREATE ROOM
+     * * * * * * * * * * * * * * * * * * * */
+
+    private void CreateRoom(int x, int y, RoomPattern roomPattern)
     {
-        Room room = _roomsGrid[x, y];
-        if (!room)
-        {
-            Debug.Log("No room found at position (" + x + ", " + y + ")");
-            return;
-        }
-
-        if (room.Security == RoomSecurity.Overwritten)
-        {
-            // Destroy the old room
-            _roomsGrid[x, y].Delete();
-
-            // Create the new room
-            GameObject roomObject = Instantiate(_rooms[pattern], new Vector3(x, y, 0), Quaternion.identity);
-            roomObject.transform.parent = transform;
-            _roomsGrid[x, y] = roomObject.GetComponentInChildren<Room>();
-        }
-        else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, y].Security);
+        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(x, y, 0), Quaternion.identity);
+        roomObject.transform.parent = transform;
+        _roomsGrid[x, y] = roomObject.GetComponentInChildren<Room>();
     }
 
-    public void RemoveRoom(int x, int y)
+
+    /* * * * * * * * * * * * * * * * * * * *
+     *          HUD INTERACTIONS
+     * * * * * * * * * * * * * * * * * * * */
+
+    private bool IsInGrid(int x, int y)
     {
-        Room room = _roomsGrid[x, y];
-        if (!room)
+        return x >= 0 && x < _currentRoomNumber && y >= 0 && y < _currentRoomNumber;
+    }
+
+    private void CheckRoomPosition(Vector3 oldPosition, Vector3 newPosition, bool validate)
+    {
+        int xStart = (int)oldPosition.x;
+        int yStart = (int)oldPosition.y;
+        int xEnd = (int)newPosition.x;
+        int yEnd = (int)newPosition.y;
+
+        // Check if the new position is in the grid and if the room is movable
+        if (!IsInGrid(xEnd, yEnd) || _roomsGrid[xEnd, yEnd].Security == RoomSecurity.Protected)
         {
-            Debug.Log("No room found at position (" + x + ", " + y + ")");
+            _roomsGrid[xStart, yStart].MoveRoomOldPosition();
             return;
         }
 
-        if (room.Security == RoomSecurity.MovedAndRemoved)
-        {
-            // Destroy the old room
-            _roomsGrid[x, y].Delete();
-
-            // Create the new room
-            GameObject roomObject = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(x, y, 0), Quaternion.identity);
-            roomObject.transform.parent = transform;
-            _roomsGrid[x, y] = roomObject.GetComponentInChildren<Room>();
-        }
+        if (validate)
+            MoveRoom(xStart, yStart, xEnd, yEnd);
     }
 
-    public void MoveRoom(int xStart, int yStart, int xEnd, int yEnd)
+    private void MoveRoom(int xStart, int yStart, int xEnd, int yEnd)
     {
         Room startRoom = _roomsGrid[xStart, yStart];
         Room endRoom = _roomsGrid[xEnd, yEnd];
 
-        if (!endRoom)
-        {
-            Debug.Log("No room found at position (" + xEnd + ", " + yEnd + ")");
-            return;
-        }
         if (endRoom.Security == RoomSecurity.Protected) return; // Ajouter une popup "You can't move this room" ?
 
         // Swap the rooms in the scene
@@ -153,6 +122,56 @@ public class House : MonoBehaviour
         _roomsGrid[xEnd, yEnd] = startRoom;
     }
 
+    /* * * * * * * * * * * * * * * * * * * *
+     *              NEW ROOM
+     * * * * * * * * * * * * * * * * * * * */
+
+    private void AddRoom(int x, int y, RoomPattern pattern)
+    {
+        if (_roomsGrid[x, y].Security == RoomSecurity.Overwritten)
+        {
+            // Destroy the old room
+            _roomsGrid[x, y].Delete();
+
+            // Create the new room
+            CreateRoom(x, y, pattern);
+        }
+        else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, y].Security);
+    }
+
+    public void ExtendHouse()
+    {
+        // Security on the max index possible
+        if (_currentRoomNumber == _maxRooms) return;
+
+        ++_currentRoomNumber;
+
+        // Create the new rooms on the top
+        for (int i = 0; i < _currentRoomNumber; i++)
+            CreateRoom(i, _currentRoomNumber - 1, RoomPattern.VoidRoom);
+
+        // Create the new rooms on the right
+        for (int i = 0; i < _currentRoomNumber - 1; i++)
+            CreateRoom(_currentRoomNumber - 1, i, RoomPattern.VoidRoom);
+    }
+
+    /* * * * * * * * * * * * * * * * * * * *
+    *        VALIDATION OF THE PATH
+    * * * * * * * * * * * * * * * * * * * */
+
+    private void RemoveRoom(int x, int y)
+    {
+        if (_roomsGrid[x, y].Security == RoomSecurity.MovedAndRemoved)
+        {
+            // Destroy the old room
+            _roomsGrid[x, y].Delete();
+
+            // Create the new room
+            CreateRoom(x, y, RoomPattern.VoidRoom);
+        }
+        else Debug.Log("Room not MovedAndRemoved, security = " + _roomsGrid[x, y].Security);
+    }
+
     public void DestroyInvalidRoom()
     {
         if (_startRoom.CheckPath())
@@ -161,8 +180,7 @@ public class House : MonoBehaviour
             {
                 for (int j = 0; j < _currentRoomNumber; j++)
                 {
-                    Room room = _roomsGrid[i, j];
-                    if (!room.CorrectPath)
+                    if (!_roomsGrid[i, j].CorrectPath)
                         RemoveRoom(i, j);
                 }
             }
@@ -170,33 +188,4 @@ public class House : MonoBehaviour
         else
             Debug.Log("The path is not valid");
     }
-
-    private void CheckRoomPosition(Vector3 oldPosition, Vector3 newPosition, bool validate)
-    {
-        int xStart = (int)oldPosition.x;
-        int yStart = (int)oldPosition.y;
-        int xEnd = (int)newPosition.x;
-        int yEnd = (int)newPosition.y;
-
-        if (xEnd < 0 || xEnd >= _currentRoomNumber || yEnd < 0 || yEnd >= _currentRoomNumber)
-        {
-            _roomsGrid[xStart, yStart].MoveRoomOldPosition();
-            return;
-        }
-
-        if (_roomsGrid[xEnd, yEnd].Security == RoomSecurity.Protected)
-        {
-            _roomsGrid[xStart, yStart].MoveRoomOldPosition();
-            return;
-        }
-
-        if (validate)
-            MoveRoom(xStart, yStart, xEnd, yEnd);
-    }
-
-    private void OnDestroy()
-    {
-        Room.ChangeTilePosition -= CheckRoomPosition;
-    }
-
 }

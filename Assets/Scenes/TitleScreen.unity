@@ -3047,7 +3047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _titleScreen: {fileID: 2088933802}
-  _mainScreen: {fileID: 0}
+  _mainScreen: {fileID: 1986814221}
 --- !u!4 &1434561069
 Transform:
   m_ObjectHideFlags: 0

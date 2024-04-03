@@ -7,7 +7,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _mainScreen;
     private bool _titleIsPlaying = false;
     private bool _mainIsPlaying = false;
-
     public void StartTitleMusic()
     {
         if (!_titleIsPlaying)

@@ -15,7 +15,11 @@ public class Mod_Entities : Module
     private Cheese _cheese;
     private bool _canSpawnAlbino = true;
 
-    // TODO -> check cats unlocked
+    private void Awake()
+    {
+        Cheese.OnInit += Cheese_OnInit;
+        Mod_Waves.OnWaveReload += M_Wave_OnWaveReload;
+    }
 
     private void OnDestroy()
     {
@@ -32,8 +36,7 @@ public class Mod_Entities : Module
         _cats.OrderBy(x => x.name);
         _mouses.OrderBy(x => x.name);
 
-        Cheese.OnInit += Cheese_OnInit;
-        Mod_Waves.OnWaveReload += M_Wave_OnWaveReload;
+        InitComplete();
     }
 
     private void Cheese_OnInit(Cheese cheese)

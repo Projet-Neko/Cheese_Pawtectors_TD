@@ -8,7 +8,9 @@ public class SceneLoader : MonoBehaviour
     public static event Action<bool, string> OnPopupSceneToogle;
 
     [SerializeField, Scene] private string _scene;
+    [SerializeField, Scene] private string _headBand;
     [SerializeField] private bool _isPermanent;
+
 
     private void Awake()
     {
@@ -43,5 +45,10 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.UnloadSceneAsync(GameManager.Instance.PopupSceneName);
         OnPopupSceneToogle?.Invoke(false, null);
+    }
+
+    public void UnloadHeadBand()
+    {
+        SceneManager.UnloadSceneAsync(_headBand);
     }
 }

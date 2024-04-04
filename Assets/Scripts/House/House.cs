@@ -199,6 +199,9 @@ public class House : MonoBehaviour
         {
             for (int j = 0; j < _currentRoomNumber; j++)
             {
+                //Ajouter les rooms a une liste ? 
+                // Rajouter toutes les rooms de la liste à l'inventaire ?
+                //ou juste les ajouter une par une
                 RemoveRoom(i, j);
             }
         }

@@ -44,7 +44,7 @@ public class Room : MonoBehaviour
     protected bool _correctPath = false;        // True if the room is in a correct path
 
     // Events
-    private static event Action TileSelected;   // Deselect the other rooms when a room is selected
+    private static event Action<bool> TileSelected;   // Deselect the other rooms when a room is selected
 
     private Vector3 _oldPosition;
     private bool _canMove;
@@ -139,10 +139,10 @@ public class Room : MonoBehaviour
     {
         _isSelected = !_isSelected;
         _HUDCanva.SetActive(_isSelected);
-        TileSelected?.Invoke(); // Invoke the event to deselect the other rooms
+        TileSelected?.Invoke(_isSelected); // Invoke the event to deselect the other rooms
     }
 
-    private void DeselectTile()
+    private void DeselectTile(bool deselect)
     {
         if (!_isSelected)
         {
@@ -151,13 +151,13 @@ public class Room : MonoBehaviour
                 _HUDCanva.SetActive(false);
 
             // If the room is not selected, hide the Move Arrow gameobject
-            if (_moveModBool == true)
+            if (_moveModBool)
             {
                 _moveModBool = false;
                 _moveModCanva.SetActive(false);
                 MoveRoomOldPosition();
             }
-            _anotherTileSelected = !_anotherTileSelected;
+            _anotherTileSelected = deselect;
         }
         //_isSelected = false;
     }
@@ -189,7 +189,7 @@ public class Room : MonoBehaviour
 
         _moveModCanva.SetActive(false);                                                 // Hide the Move Canvas
         ChangeTilePosition?.Invoke(_oldPosition, _room.transform.position, true);       //true because the room ask for position validation
-        TileSelected?.Invoke(); // Invoke the event to deselect the other rooms
+        TileSelected?.Invoke(false); // Invoke the event to deselect the other rooms
         _isSelected = false;
 
     }
@@ -257,7 +257,7 @@ public class Room : MonoBehaviour
     public void Remove()
     {
         TileDestroyed?.Invoke((int)transform.position.x, (int)transform.position.y, RoomPattern.VoidRoom); // Notify the house that a room will be destroyed and that it must be replaced by a void room
-        TileSelected?.Invoke();
+        TileSelected?.Invoke(false);
         Delete();
     }
 

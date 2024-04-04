@@ -1,4 +1,7 @@
 using AYellowpaper.SerializedCollections;
+using System;
+using Unity.Mathematics;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class House : MonoBehaviour
@@ -78,6 +81,32 @@ public class House : MonoBehaviour
         _roomsGrid[x, y] = roomObject.GetComponentInChildren<Room>();
     }
 
+    /*private void CreateRandomRoom()
+    {
+        int random = UnityEngine.Random.Range(0, 2);
+        RoomPattern roomPattern;
+        switch (random)
+        {
+            case 0:
+                roomPattern = RoomPattern.CorridorRoom;
+                break;
+                
+            case 1:
+                roomPattern = RoomPattern.TurnRoom;
+                break;
+
+            case 2:
+                roomPattern= RoomPattern.CrossraodRoom;
+                break;
+
+            default:
+                roomPattern = RoomPattern.CorridorRoom;
+                break;
+        }
+        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity);
+        roomObject.transform.parent = transform;
+        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();
+    }*/
 
     /* * * * * * * * * * * * * * * * * * * *
      *          HUD INTERACTIONS
@@ -130,11 +159,18 @@ public class House : MonoBehaviour
     {
         if (_roomsGrid[x, y].Security == RoomSecurity.Overwritten)
         {
-            // Destroy the old room
+            // Destroy the old room (void)
             _roomsGrid[x, y].Delete();
 
             // Create the new room
             CreateRoom(x, y, pattern);
+        }
+        else if (_roomsGrid[x, y].Security == RoomSecurity.MovedAndRemoved)
+        {
+            //Ajout de la vieille piece dans l'inventaire
+
+            CreateRoom(x, y, pattern);
+
         }
         else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, y].Security);
     }
@@ -231,14 +267,14 @@ public class House : MonoBehaviour
     public void BuildPath()
     {
         InitBuildPath();                                                                                                    // Define the ID of each room in its junctions
-        
+
         IdRoom idRoomNext = _roomsGrid[_idStartRoom.x, _idStartRoom.y].Opening[0].GetIdRoomConnected();                     // Get the ID of the room connected to the junction of the start room
 
         if (idRoomNext.IsNull())                                                                                            // If the start room is not connected to another room
         {
             Debug.Log("Start room not connected");
             return;
-        }    
+        }
 
         if (BuildPath(idRoomNext, _idStartRoom))                                                                            // Build the path from the next room and check if it is valid
             DestroyInvalidRoom();
@@ -252,6 +288,8 @@ public class House : MonoBehaviour
         {
             // Destroy the old room
             _roomsGrid[x, y].Delete();
+
+            //Ajout dans l'inventaire
 
             // Create the new room
             CreateRoom(x, y, RoomPattern.VoidRoom);
@@ -279,7 +317,7 @@ public class House : MonoBehaviour
 
     public void DestroyAllRoom()
     {
-        for (int i = 0; i< _currentRoomNumber; i++)
+        for (int i = 0; i < _currentRoomNumber; i++)
         {
             for (int j = 0; j < _currentRoomNumber; j++)
             {

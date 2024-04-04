@@ -32,26 +32,21 @@ public struct IdRoom
         y = yRoom;
     }
 
-    public void SetNull()
-    {
-        x = -1;
-        y = -1;
-    }
-
     public bool IsNull()
     {
-        return x == -1 || y == -1;
+        return x < 0 || y < 0;
     }
 
-    public static bool operator ==(IdRoom id1, IdRoom id2)
+    public override bool Equals(object obj)
     {
-        return id1.x == id2.x && id1.y == id2.y;
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        IdRoom id = (IdRoom)obj;
+        return x == id.x && y == id.y;
     }
 
-    public static bool operator !=(IdRoom id1, IdRoom id2)
-    {
-        return id1.x != id2.x || id1.y != id2.y;
-    }
+    public override int GetHashCode() { return HashCode.Combine(x, y); }
 }
 
 public class Room : MonoBehaviour
@@ -108,19 +103,12 @@ public class Room : MonoBehaviour
     {
         // Unsubscribe from events
         TileSelected -= DeselectTile;
-
-        foreach (Junction junction in _opening)
-            junction.OnCheckPath -= CheckPath;
     }
 
     void Start()
     {
         // Subscribe to events
         TileSelected += DeselectTile;
-
-        foreach (Junction junction in _opening)
-            junction.OnCheckPath += CheckPath;
-
 
         _canMove = false;
         _moveModBool = false;
@@ -297,28 +285,20 @@ public class Room : MonoBehaviour
     *        VALIDATION OF THE PATH
     * * * * * * * * * * * * * * * * * * * */
 
+    public void ResetPath()
+    {
+        _correctPath = false;
+    }
+
+    public void ValidatePath()
+    {
+        _correctPath = true;
+    }
+
     public void DefineIdRoom(int x, int y)
     {
         foreach (Junction junction in _opening)
             junction.SetIdRoom(x, y);
-    }
-
-    protected virtual bool CheckPath(Junction startJunction)
-    {
-        // If the room is already in a correct path, return true
-        if (_correctPath)
-            return true;
-
-        foreach (Junction junction in _opening)                         // Check all the junctions of the room...
-        {
-            if (junction != startJunction)                              // ... except the one that called the function
-            {
-                bool aux = junction.Validation();                       // Check if the room is in a correct path. We use a variable aux to avoid not getting into the job because of the OR operator
-                _correctPath = _correctPath || aux;                     // Update of the variable correctPath : if ONE junction is coorect, the room is in a correct path
-            }
-        }
-
-        return _correctPath;
     }
 
 

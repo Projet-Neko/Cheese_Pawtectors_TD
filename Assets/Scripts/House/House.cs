@@ -159,12 +159,15 @@ public class House : MonoBehaviour
     *        VALIDATION OF THE PATH
     * * * * * * * * * * * * * * * * * * * */
 
-    private void DefineIdRoom()
+    private void InitBuildPath()
     {
         for (int x = 0; x < _currentRoomNumber; x++)
         {
             for (int y = 0; y < _currentRoomNumber; y++)
+            {
                 _roomsGrid[x, y].DefineIdRoom(x, y);
+                _roomsGrid[x, y].ResetPath();
+            }
         }
     }
 
@@ -172,7 +175,7 @@ public class House : MonoBehaviour
     {
         foreach (IdRoom idRoomPrevious in _roomsGrid[idRoom.x, idRoom.y].PreviousRooms)
         {
-            if (idRoomPrevious == idRoomSearch)
+            if (idRoomPrevious.Equals(idRoomSearch))
                 return true;
 
             if (IsPreviousRoom(idRoomPrevious, idRoomSearch))
@@ -190,12 +193,14 @@ public class House : MonoBehaviour
             return true;
 
         if (_roomsGrid[idRoom.x, idRoom.y] is CheeseRoom)                                                                   // If the room is the cheese room
+        {
+            _roomsGrid[idRoom.x, idRoom.y].ValidatePath();                                                                  // Validate the path of the cheese room
             return true;
-        // Cheese room validation
+        }
 
         foreach (Junction junction in _roomsGrid[idRoom.x, idRoom.y].Opening)                                               // Check all the junctions of the room...
         {
-            IdRoom idRoomNext = junction.IdRoomConnected;                                                                   // ... and get the ID of room connected to the junction
+            IdRoom idRoomNext = junction.GetIdRoomConnected();                                                                // ... and get the ID of room connected to the junction
 
             if (idRoomNext.IsNull())                                                                                        // If the junction is not connected to another junction
                 continue;
@@ -213,27 +218,32 @@ public class House : MonoBehaviour
 
         if (_roomsGrid[idRoom.x, idRoom.y].NextRooms.Count == 0)                                                            // If the room is not connected to any room
         {
-            // room not valid
-            _roomsGrid[idRoom.x, idRoom.y].PreviousRooms.RemoveAt(_roomsGrid[idRoom.x, idRoom.y].PreviousRooms.Count - 1);
+            _roomsGrid[idRoom.x, idRoom.y].PreviousRooms.RemoveAt(_roomsGrid[idRoom.x, idRoom.y].PreviousRooms.Count - 1);  // Remove the previous room from the list of previous rooms
             return false;
         }
         else
         {
-            // room valid
+            _roomsGrid[idRoom.x, idRoom.y].ValidatePath();                                                                  // Validate the path of the room
             return true;
         }
     }
 
-    public bool BuildPath()
+    public void BuildPath()
     {
-        DefineIdRoom();                                                                                                     // Define the ID of each room in its junctions
-
-        IdRoom idRoomNext = _roomsGrid[_idStartRoom.x, _idStartRoom.y].Opening[0].IdRoomConnected;                          // Get the ID of the room connected to the junction of the start room
+        InitBuildPath();                                                                                                    // Define the ID of each room in its junctions
+        
+        IdRoom idRoomNext = _roomsGrid[_idStartRoom.x, _idStartRoom.y].Opening[0].GetIdRoomConnected();                     // Get the ID of the room connected to the junction of the start room
 
         if (idRoomNext.IsNull())                                                                                            // If the start room is not connected to another room
-            return false;
+        {
+            Debug.Log("Start room not connected");
+            return;
+        }    
 
-        return BuildPath(idRoomNext, _idStartRoom);
+        if (BuildPath(idRoomNext, _idStartRoom))                                                                            // Build the path from the next room and check if it is valid
+            DestroyInvalidRoom();
+        else
+            Debug.Log("Path not valid");
     }
 
     private void RemoveRoom(int x, int y)
@@ -249,20 +259,15 @@ public class House : MonoBehaviour
         else Debug.Log("Room not MovedAndRemoved, security = " + _roomsGrid[x, y].Security);
     }
 
-    public void DestroyInvalidRoom()
+    private void DestroyInvalidRoom()
     {
-        if (((StartRoom)_roomsGrid[_idStartRoom.x, _idStartRoom.y]).CheckPath())
+        for (int i = 0; i < _currentRoomNumber; i++)
         {
-            for (int i = 0; i < _currentRoomNumber; i++)
+            for (int j = 0; j < _currentRoomNumber; j++)
             {
-                for (int j = 0; j < _currentRoomNumber; j++)
-                {
-                    if (!_roomsGrid[i, j].CorrectPath)
-                        RemoveRoom(i, j);
-                }
+                if (!_roomsGrid[i, j].CorrectPath)
+                    RemoveRoom(i, j);
             }
         }
-        else
-            Debug.Log("The path is not valid");
     }
 }

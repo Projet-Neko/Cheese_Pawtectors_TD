@@ -4,31 +4,24 @@ using UnityEngine;
 public class Junction : MonoBehaviour
 {
     private IdRoom _idRoom;
-    private IdRoom _idRoomConnected;
+    private Junction _junctionConnected;
 
     public IdRoom IdRoom => _idRoom;
-    public IdRoom IdRoomConnected => _idRoomConnected;
 
-    //private Junction _junctionConnected = null;  // The Junction that this Junction is connected to
-
-
-
-    public event Func<Junction, bool> OnCheckPath;
-
-    private void Start()
+    private void Awake()
     {
         _idRoom = new IdRoom(-1, -1);
-        _idRoomConnected = new IdRoom(-1, -1);
+        _junctionConnected = null;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        _idRoomConnected = collision.gameObject.GetComponent<Junction>().IdRoom;
+        _junctionConnected = collider.gameObject.GetComponent<Junction>();
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider collider)
     {
-        _idRoomConnected.SetNull();
+        _junctionConnected = null;
     }
 
     public void SetIdRoom(int x, int y)
@@ -36,10 +29,11 @@ public class Junction : MonoBehaviour
         _idRoom = new IdRoom(x, y);
     }
 
-    // Check if the junction is connected to another junction and if the next room is in a valid path
-    public bool Validation()
+    public IdRoom GetIdRoomConnected()
     {
-        return true;
-        //return _junctionConnected && _junctionConnected.OnCheckPath != null && _junctionConnected.OnCheckPath.Invoke(_junctionConnected);
+        if (_junctionConnected != null)
+            return _junctionConnected.IdRoom;
+        else
+            return new IdRoom(-1, -1);
     }
 }

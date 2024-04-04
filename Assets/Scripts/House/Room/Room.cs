@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +21,39 @@ public enum RoomSecurity
     Overwritten         // A room can be placed over this one
 }
 
+public struct IdRoom
+{
+    public int x;
+    public int y;
+
+    public IdRoom(int xRoom, int yRoom)
+    {
+        x = xRoom;
+        y = yRoom;
+    }
+
+    public void SetNull()
+    {
+        x = -1;
+        y = -1;
+    }
+
+    public bool IsNull()
+    {
+        return x == -1 || y == -1;
+    }
+
+    public static bool operator ==(IdRoom id1, IdRoom id2)
+    {
+        return id1.x == id2.x && id1.y == id2.y;
+    }
+
+    public static bool operator !=(IdRoom id1, IdRoom id2)
+    {
+        return id1.x != id2.x || id1.y != id2.y;
+    }
+}
+
 public class Room : MonoBehaviour
 {
     [Header("Room")]
@@ -37,8 +71,11 @@ public class Room : MonoBehaviour
     public static event Action<int, int, RoomPattern> TileDestroyed;        // Notify the house that a room is destroyed
 
     // Getters
+    public List<Junction> Opening => _opening;
     public bool CorrectPath => _correctPath;
     public RoomSecurity Security => _security;
+    public List<IdRoom> PreviousRooms => _previousRooms;
+    public List<IdRoom> NextRooms => _nextRooms;
 
     protected RoomSecurity _security;
     protected bool _correctPath = false;        // True if the room is in a correct path
@@ -51,6 +88,9 @@ public class Room : MonoBehaviour
     private bool _moveModBool;
     private bool _isSelected;
     private int _currentLevel = 1;
+
+    private List<IdRoom> _previousRooms = new List<IdRoom>();
+    private List<IdRoom> _nextRooms = new List<IdRoom>();
 
     // Constants
     private const int _maxLevel = 3;
@@ -256,6 +296,12 @@ public class Room : MonoBehaviour
     /* * * * * * * * * * * * * * * * * * * *
     *        VALIDATION OF THE PATH
     * * * * * * * * * * * * * * * * * * * */
+
+    public void DefineIdRoom(int x, int y)
+    {
+        foreach (Junction junction in _opening)
+            junction.SetIdRoom(x, y);
+    }
 
     protected virtual bool CheckPath(Junction startJunction)
     {

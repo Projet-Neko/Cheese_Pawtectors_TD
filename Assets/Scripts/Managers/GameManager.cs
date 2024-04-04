@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // TODO -> vérifier si le jeu est à jour
@@ -97,6 +98,8 @@ public class GameManager : MonoBehaviour
 
         Module.OnInitComplete += Module_OnInitComplete;
         SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
+        SceneManager.sceneUnloaded += SceneManager_sceneUnloaded;
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 
         // Init all entities SO
         Mod<Mod_Entities>().Init(this);
@@ -119,6 +122,18 @@ public class GameManager : MonoBehaviour
         //Audio
         _audioManager = FindObjectOfType<AudioManager>();
         _audioManager.StartTitleMusic();
+    }
+
+    private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (mode != LoadSceneMode.Additive) return;
+        if (_isPopupSceneLoaded) SceneManager.UnloadSceneAsync(_popupSceneName);
+    }
+
+    private void SceneManager_sceneUnloaded(Scene scene)
+    {
+        Debug.Log(scene.isSubScene);
+        Debug.Log("scene unloaded");
     }
 
     private void Module_OnInitComplete(Type mod)

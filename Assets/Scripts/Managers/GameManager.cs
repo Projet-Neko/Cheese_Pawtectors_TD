@@ -88,6 +88,9 @@ public class GameManager : MonoBehaviour
     public void UpdateUsername(string username) => StartCoroutine(Mod<Mod_Account>().UpdateUsername(username));
     #endregion
 
+    // PowerUpMod
+    public PowerUpType PowerUpType => Mod<Mod_PowerUp>().PowerUpType;
+
     private T Mod<T>() where T : Module => _modules.OfType<T>().First();
 
     private void Start()

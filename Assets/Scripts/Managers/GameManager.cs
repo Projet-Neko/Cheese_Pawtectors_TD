@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     // PowerUpMod
-    public PowerUpType PowerUpType => Mod<Mod_PowerUp>().PowerUpType;
+    public bool IsPowerUpActive(PowerUpType powerUpType) => Mod<Mod_PowerUp>().IsPowerUpActive(powerUpType);
 
     private T Mod<T>() where T : Module => _modules.OfType<T>().First();
 

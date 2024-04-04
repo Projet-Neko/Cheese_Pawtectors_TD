@@ -41,7 +41,12 @@ public class Mod_Economy : Module
     }
     private void Entity_OnDeath(Entity obj, bool hasBeenKilledByPlayer)
     {
-        if (obj is Mouse && hasBeenKilledByPlayer) AddCurrency(Currency.Meat, obj.Level);
+        int meatToAdd = obj.Level;
+        if (GameManager.Instance.IsPowerUpActive(PowerUpType.DoubleMeat))
+        {
+            meatToAdd *= 2;
+        }
+        if (obj is Mouse && hasBeenKilledByPlayer) AddCurrency(Currency.Meat, meatToAdd);
     }
     #endregion
 

@@ -79,7 +79,7 @@ public class Cat : Entity
     public override void TakeDamage(Entity source)
     {
 
-        if (GameManager.Instance.PowerUpType == PowerUpType.NoSatiety)
+        if (GameManager.Instance.IsPowerUpActive(PowerUpType.NoSatiety))
         {
             Debug.Log($"Cat current satiety(noSatiety) : {_currentHealth}/{_baseHealth}");
             return;

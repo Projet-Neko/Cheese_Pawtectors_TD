@@ -30,7 +30,6 @@ public class Junction : MonoBehaviour
     public void SetIdRoom(int x, int y)
     {
         _idRoom = new IdRoom(x, y);
-        
     }
 
     public IdRoom GetIdRoomConnected()
@@ -44,11 +43,5 @@ public class Junction : MonoBehaviour
     public void ActivateArrow(bool activate)
     {
         _arrow.SetActive(activate);
-    }
-
-    public void ActiveArrow2()
-    {
-        if (_junctionConnected != null)
-            ActivateArrow(true);
     }
 }

@@ -11,11 +11,9 @@ public class SceneLoader : MonoBehaviour
     [SerializeField, Scene] private string _headBand;
     [SerializeField] private bool _isPermanent;
 
-
     private void Awake()
     {
-        GameManager.OnInitComplete += GameManager_OnInitComplete; // TODO -> Replace with title screen button event
-
+        GameManager.OnInitComplete += GameManager_OnInitComplete;
         if (_isPermanent) SceneManager.LoadScene(_scene, LoadSceneMode.Additive);
     }
 

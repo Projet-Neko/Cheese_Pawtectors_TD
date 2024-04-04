@@ -302,6 +302,8 @@ public class Room : MonoBehaviour
     public void ResetPath()
     {
         _correctPath = false;
+        _previousRooms.Clear();
+        _nextRooms.Clear();
     }
 
     public void ValidatePath()

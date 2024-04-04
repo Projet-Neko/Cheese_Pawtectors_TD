@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +21,34 @@ public enum RoomSecurity
     Overwritten         // A room can be placed over this one
 }
 
+public struct IdRoom
+{
+    public int x;
+    public int y;
+
+    public IdRoom(int xRoom, int yRoom)
+    {
+        x = xRoom;
+        y = yRoom;
+    }
+
+    public bool IsNull()
+    {
+        return x < 0 || y < 0;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        IdRoom id = (IdRoom)obj;
+        return x == id.x && y == id.y;
+    }
+
+    public override int GetHashCode() { return HashCode.Combine(x, y); }
+}
+
 public class Room : MonoBehaviour
 {
     [Header("Room")]
@@ -37,8 +66,11 @@ public class Room : MonoBehaviour
     public static event Action<int, int, RoomPattern> TileDestroyed;        // Notify the house that a room is destroyed
 
     // Getters
+    public List<Junction> Opening => _opening;
     public bool CorrectPath => _correctPath;
     public RoomSecurity Security => _security;
+    public List<IdRoom> PreviousRooms => _previousRooms;
+    public List<IdRoom> NextRooms => _nextRooms;
 
     protected RoomSecurity _security;
     protected bool _correctPath = false;        // True if the room is in a correct path
@@ -52,6 +84,9 @@ public class Room : MonoBehaviour
     private bool _isSelected;
     private bool _anotherTileSelected;
     private int _currentLevel = 1;
+
+    private List<IdRoom> _previousRooms = new List<IdRoom>();
+    private List<IdRoom> _nextRooms = new List<IdRoom>();
 
     // Constants
     private const int _maxLevel = 3;
@@ -69,19 +104,12 @@ public class Room : MonoBehaviour
     {
         // Unsubscribe from events
         TileSelected -= DeselectTile;
-
-        foreach (Junction junction in _opening)
-            junction.OnCheckPath -= CheckPath;
     }
     
     void Start()
     {
         // Subscribe to events
         TileSelected += DeselectTile;
-
-        foreach (Junction junction in _opening)
-            junction.OnCheckPath += CheckPath;
-
 
         _canMove = false;
         _moveModBool = false;
@@ -271,22 +299,20 @@ public class Room : MonoBehaviour
     *        VALIDATION OF THE PATH
     * * * * * * * * * * * * * * * * * * * */
 
-    protected virtual bool CheckPath(Junction startJunction)
+    public void ResetPath()
     {
-        // If the room is already in a correct path, return true
-        if (_correctPath)
-            return true;
+        _correctPath = false;
+    }
 
-        foreach (Junction junction in _opening)                         // Check all the junctions of the room...
-        {
-            if (junction != startJunction)                              // ... except the one that called the function
-            {
-                bool aux = junction.Validation();                       // Check if the room is in a correct path. We use a variable aux to avoid not getting into the job because of the OR operator
-                _correctPath = _correctPath || aux;                     // Update of the variable correctPath : if ONE junction is coorect, the room is in a correct path
-            }
-        }
+    public void ValidatePath()
+    {
+        _correctPath = true;
+    }
 
-        return _correctPath;
+    public void DefineIdRoom(int x, int y)
+    {
+        foreach (Junction junction in _opening)
+            junction.SetIdRoom(x, y);
     }
 
 

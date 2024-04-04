@@ -76,12 +76,13 @@ public class Room : MonoBehaviour
     protected bool _correctPath = false;        // True if the room is in a correct path
 
     // Events
-    private static event Action TileSelected;   // Deselect the other rooms when a room is selected
+    private static event Action<bool> TileSelected;   // Deselect the other rooms when a room is selected
 
     private Vector3 _oldPosition;
     private bool _canMove;
     private bool _moveModBool;
     private bool _isSelected;
+    private bool _anotherTileSelected;
     private int _currentLevel = 1;
 
     private List<IdRoom> _previousRooms = new List<IdRoom>();
@@ -143,11 +144,18 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-        _canMove = true;
-        Selected();
+        if (!_anotherTileSelected)
+        {
 
-        if (!_moveModBool) 
-            _HUDCanva.SetActive(!_HUDCanva.activeSelf);
+            _canMove = true;
+           
+
+            if (!_moveModBool)
+            {
+                Selected();
+            }
+        }
+
     }
 
     public void OnMouseUp()
@@ -157,11 +165,12 @@ public class Room : MonoBehaviour
 
     private void Selected()
     {
-        _isSelected = true;
-        TileSelected?.Invoke(); // Invoke the event to deselect the other rooms
+        _isSelected = !_isSelected;
+        _HUDCanva.SetActive(_isSelected);
+        TileSelected?.Invoke(_isSelected); // Invoke the event to deselect the other rooms
     }
 
-    private void DeselectTile()
+    private void DeselectTile(bool deselect)
     {
         if (!_isSelected)
         {
@@ -170,14 +179,15 @@ public class Room : MonoBehaviour
                 _HUDCanva.SetActive(false);
 
             // If the room is not selected, hide the Move Arrow gameobject
-            if (_moveModBool == true)
+            if (_moveModBool)
             {
                 _moveModBool = false;
                 _moveModCanva.SetActive(false);
                 MoveRoomOldPosition();
             }
+            _anotherTileSelected = deselect;
         }
-        _isSelected = false;
+        //_isSelected = false;
     }
 
     /* * * * * * * * * * * * * * * * * * * *
@@ -207,6 +217,9 @@ public class Room : MonoBehaviour
 
         _moveModCanva.SetActive(false);                                                 // Hide the Move Canvas
         ChangeTilePosition?.Invoke(_oldPosition, _room.transform.position, true);       //true because the room ask for position validation
+        TileSelected?.Invoke(false); // Invoke the event to deselect the other rooms
+        _isSelected = false;
+
     }
 
     /*private void ChangePosition(bool validate)
@@ -272,6 +285,7 @@ public class Room : MonoBehaviour
     public void Remove()
     {
         TileDestroyed?.Invoke((int)transform.position.x, (int)transform.position.y, RoomPattern.VoidRoom); // Notify the house that a room will be destroyed and that it must be replaced by a void room
+        TileSelected?.Invoke(false);
         Delete();
     }
 

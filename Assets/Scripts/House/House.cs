@@ -270,4 +270,24 @@ public class House : MonoBehaviour
             }
         }
     }
+
+    /* * * * * * * * * * * * * * * * * * * *
+    *        Delete room
+    * * * * * * * * * * * * * * * * * * * */
+
+    public void DestroyAllRoom()
+    {
+        for (int i = 0; i< _currentRoomNumber; i++)
+        {
+            for (int j = 0; j < _currentRoomNumber; j++)
+            {
+                //Ajouter les rooms a une liste ? 
+                // Rajouter toutes les rooms de la liste à l'inventaire ?
+                //ou juste les ajouter une par une
+                RemoveRoom(i, j);
+            }
+        }
+
+    }
+
 }

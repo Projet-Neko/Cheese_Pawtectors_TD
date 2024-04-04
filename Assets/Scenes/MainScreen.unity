@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: HeadBand
+  _headBand: 
   _isPermanent: 1
 --- !u!114 &32646881
 MonoBehaviour:
@@ -183,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: LoginPopup
+  _headBand: 
   _isPermanent: 0
 --- !u!1 &64492013
 GameObject:
@@ -1826,7 +1828,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 450, y: -82.99951}
+  m_AnchoredPosition: {x: 450, y: -31}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &496608037
@@ -1936,6 +1938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: BO_BuildMode
+  _headBand: 
   _isPermanent: 0
 --- !u!1 &520177992
 GameObject:
@@ -3525,7 +3528,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -490}
+  m_AnchoredPosition: {x: 0, y: -438.0005}
   m_SizeDelta: {x: 1080, y: 640}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1150333479
@@ -4590,6 +4593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: Catalog
+  _headBand: 
   _isPermanent: 0
 --- !u!1 &1485826812
 GameObject:
@@ -4628,7 +4632,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -369, y: -754.6}
+  m_AnchoredPosition: {x: -369, y: -702.60046}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &1485826814
@@ -5133,6 +5137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: Shop
+  _headBand: HeadBand
   _isPermanent: 0
 --- !u!114 &1594703521
 MonoBehaviour:
@@ -5178,6 +5183,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1594703520}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: UnloadHeadBand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1594703520}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadSceneAdditive

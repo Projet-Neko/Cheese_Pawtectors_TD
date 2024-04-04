@@ -39,9 +39,9 @@ public class Mod_Economy : Module
         Storage.OnStorageCheck -= CheckStorage_OnStorageCheck;
         CollectOfflineCurrency.OnCollect -= CheckOfflineCurrency;
     }
-    private void Entity_OnDeath(Entity obj)
+    private void Entity_OnDeath(Entity obj, bool hasBeenKilledByPlayer)
     {
-        if (obj is Mouse) AddCurrency(Currency.Meat, obj.Level);
+        if (obj is Mouse && hasBeenKilledByPlayer) AddCurrency(Currency.Meat, obj.Level);
     }
     #endregion
 
@@ -160,7 +160,7 @@ public class Mod_Economy : Module
         Debug.Log($"<color=lime>Gained {meatGained} meat offline !</color>");
         AddCurrency(Currency.Meat, meatGained);
     }
-    private int MeatPerSecond()
+    public int MeatPerSecond()
     {
         int mouseHealth = 4 + _gm.Data.MouseLevel;
 

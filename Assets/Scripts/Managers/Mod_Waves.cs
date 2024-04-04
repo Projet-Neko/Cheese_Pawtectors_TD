@@ -13,9 +13,13 @@ public class Mod_Waves : Module
     [Header("Options")]
     [SerializeField] private bool _enableWaves = false;
 
+    public int EnemyNumber => _enemyNumber;
+    public int MaxEnemyNumber => _maxEnemyNumber;
     public int SpawnTime => _spawnTime;
 
     private int _enemyNumber;
+    private int _spawnedEnemyNumber;
+    private int _maxEnemyNumber;
     private List<GameObject> _enemyObjects = new();
     private Vector3 _SpawnPos;
     private bool _hasCompleteSpawning;
@@ -49,11 +53,12 @@ public class Mod_Waves : Module
         _SpawnPos = transform.position;
         _SpawnPos.z = -4;
         _hasCompleteSpawning = false;
+        InitComplete();
     }
 
     public void StartWaves()
     {
-        _enemyNumber = 0;
+        _maxEnemyNumber = _enemyNumber = 0;
         _spawn = SpawnEnemies(false);
         if (_enableWaves) StartCoroutine(_spawn);
     }
@@ -62,18 +67,14 @@ public class Mod_Waves : Module
     {
         int index = 0;
         _hasCompleteSpawning = false;
-        int enemyToSpawn = 10;
+        _maxEnemyNumber = _enemyNumber = IsBossWave() ? 1 : 10;
         if (cooldown) yield return new WaitForSeconds(.5f);
-        if (IsBossWave())
-        {
-            enemyToSpawn = 1;
-        }
-        while (_enemyNumber < enemyToSpawn)
+        while (_spawnedEnemyNumber < _maxEnemyNumber)
         {
             Mouse m = Instantiate(_mousePrefab, _SpawnPos, Quaternion.identity).GetComponent<Mouse>();
             m.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             m.gameObject.name = $"{m.gameObject.name} #{index}";
-            _enemyNumber++;
+            _spawnedEnemyNumber++;
             index++;
             _enemyObjects.Add(m.gameObject);
             yield return new WaitForSeconds(1);
@@ -83,10 +84,14 @@ public class Mod_Waves : Module
         yield return null;
     }
 
-    private void Entity_OnDeath(Entity obj)
+    private void Entity_OnDeath(Entity obj, bool hasBeenKilledByPlayer)
     {
         if (obj is Cheese) Reload();
-        else if (obj is Mouse) _enemyNumber--;
+        else if (obj is Mouse)
+        {
+            _enemyNumber--;
+            _spawnedEnemyNumber--;
+        }
     }
 
     public bool IsBossWave()
@@ -109,16 +114,16 @@ public class Mod_Waves : Module
 
         if (!_hasCompleteSpawning) StopCoroutine(_spawn);
 
-        if (_enemyNumber != 0)
+        if (_spawnedEnemyNumber != 0)
         {
-            Debug.Log($"Destroying remaining {_enemyNumber} enemies...");
+            Debug.Log($"Destroying remaining {_spawnedEnemyNumber} enemies...");
 
             foreach (var enemy in _enemyObjects) if (enemy != null) Destroy(enemy);
             _enemyObjects.Clear();
         }
 
         OnWaveReload?.Invoke();
-        _enemyNumber = 0;
+        _spawnedEnemyNumber = 0;
         _spawn = SpawnEnemies(true);
         StartCoroutine(_spawn);
     }

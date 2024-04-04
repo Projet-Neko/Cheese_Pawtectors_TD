@@ -73,7 +73,7 @@ public class Room : MonoBehaviour
         foreach (Junction junction in _opening)
             junction.OnCheckPath -= CheckPath;
     }
-
+    
     void Start()
     {
         // Subscribe to events

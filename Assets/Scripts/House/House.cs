@@ -188,4 +188,21 @@ public class House : MonoBehaviour
         else
             Debug.Log("The path is not valid");
     }
+
+    /* * * * * * * * * * * * * * * * * * * *
+    *        Delete room
+    * * * * * * * * * * * * * * * * * * * */
+
+    public void DestroyAllRoom()
+    {
+        for (int i = 0; i< _currentRoomNumber; i++)
+        {
+            for (int j = 0; j < _currentRoomNumber; j++)
+            {
+                RemoveRoom(i, j);
+            }
+        }
+
+    }
+
 }

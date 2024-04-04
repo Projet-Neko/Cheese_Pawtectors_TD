@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Junction : MonoBehaviour
 {
+
+    [SerializeField] GameObject _arrow;
+
     private IdRoom _idRoom;
     private Junction _junctionConnected;
 
@@ -27,6 +30,7 @@ public class Junction : MonoBehaviour
     public void SetIdRoom(int x, int y)
     {
         _idRoom = new IdRoom(x, y);
+        
     }
 
     public IdRoom GetIdRoomConnected()
@@ -35,5 +39,16 @@ public class Junction : MonoBehaviour
             return _junctionConnected.IdRoom;
         else
             return new IdRoom(-1, -1);
+    }
+
+    public void ActivateArrow(bool activate)
+    {
+        _arrow.SetActive(activate);
+    }
+
+    public void ActiveArrow2()
+    {
+        if (_junctionConnected != null)
+            ActivateArrow(true);
     }
 }

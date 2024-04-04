@@ -314,7 +314,18 @@ public class Room : MonoBehaviour
     public void DefineIdRoom(int x, int y)
     {
         foreach (Junction junction in _opening)
+        {
             junction.SetIdRoom(x, y);
+            junction.ActivateArrow(false);
+        }
+    }
+
+    public void ActiveArrow()
+    {
+        foreach (Junction junction in _opening)
+        {
+            junction.ActiveArrow2();
+        }
     }
 
 

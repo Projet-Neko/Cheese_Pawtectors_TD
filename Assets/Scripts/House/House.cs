@@ -267,6 +267,8 @@ public class House : MonoBehaviour
             {
                 if (!_roomsGrid[i, j].CorrectPath)
                     RemoveRoom(i, j);
+                else
+                    _roomsGrid[i, j].ActiveArrow();
             }
         }
     }

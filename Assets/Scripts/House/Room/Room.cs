@@ -50,6 +50,7 @@ public class Room : MonoBehaviour
     private bool _canMove;
     private bool _moveModBool;
     private bool _isSelected;
+    private bool _anotherTileSelected;
     private int _currentLevel = 1;
 
     // Constants
@@ -115,11 +116,18 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-        _canMove = true;
-        Selected();
+        if (!_anotherTileSelected)
+        {
 
-        if (!_moveModBool) 
-            _HUDCanva.SetActive(!_HUDCanva.activeSelf);
+            _canMove = true;
+           
+
+            if (!_moveModBool)
+            {
+                Selected();
+            }
+        }
+
     }
 
     public void OnMouseUp()
@@ -129,7 +137,8 @@ public class Room : MonoBehaviour
 
     private void Selected()
     {
-        _isSelected = true;
+        _isSelected = !_isSelected;
+        _HUDCanva.SetActive(_isSelected);
         TileSelected?.Invoke(); // Invoke the event to deselect the other rooms
     }
 
@@ -148,8 +157,9 @@ public class Room : MonoBehaviour
                 _moveModCanva.SetActive(false);
                 MoveRoomOldPosition();
             }
+            _anotherTileSelected = !_anotherTileSelected;
         }
-        _isSelected = false;
+        //_isSelected = false;
     }
 
     /* * * * * * * * * * * * * * * * * * * *
@@ -179,6 +189,9 @@ public class Room : MonoBehaviour
 
         _moveModCanva.SetActive(false);                                                 // Hide the Move Canvas
         ChangeTilePosition?.Invoke(_oldPosition, _room.transform.position, true);       //true because the room ask for position validation
+        TileSelected?.Invoke(); // Invoke the event to deselect the other rooms
+        _isSelected = false;
+
     }
 
     /*private void ChangePosition(bool validate)
@@ -244,6 +257,7 @@ public class Room : MonoBehaviour
     public void Remove()
     {
         TileDestroyed?.Invoke((int)transform.position.x, (int)transform.position.y, RoomPattern.VoidRoom); // Notify the house that a room will be destroyed and that it must be replaced by a void room
+        TileSelected?.Invoke();
         Delete();
     }
 

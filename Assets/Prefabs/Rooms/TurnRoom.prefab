@@ -827,7 +827,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2804646719022953793}
         m_TargetAssemblyTypeName: Room, Assembly-CSharp
-        m_MethodName: Delete
+        m_MethodName: Remove
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1094,6 +1094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48076c5c7cd42a7448c38fff09c62b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _room: {fileID: 675617977283199060}
   _HUDCanva: {fileID: 1598087073017244203}
   _moveModCanva: {fileID: 6394173116750019655}
   _opening:

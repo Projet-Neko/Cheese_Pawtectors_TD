@@ -586,13 +586,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a7692f4bd3503840a97dec3754bd08d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _room: {fileID: 104032388545238699}
   _HUDCanva: {fileID: 6285127139490752415}
   _moveModCanva: {fileID: 8002742664615557043}
   _opening:
   - {fileID: 4632531544083108643}
   - {fileID: 7476222492324461218}
-  _oldPosition: {x: 0, y: 0, z: 0}
-  _newPosition: {x: 0, y: 0, z: 0}
 --- !u!61 &3733080520650093311
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1141,7 +1140,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1636404361455639622}
         m_TargetAssemblyTypeName: Room, Assembly-CSharp
-        m_MethodName: Delete
+        m_MethodName: Remove
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

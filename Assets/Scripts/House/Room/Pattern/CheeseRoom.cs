@@ -7,9 +7,4 @@ public class CheeseRoom : Room
     {
         _security = RoomSecurity.Moved;
     }
-
-    protected override bool CheckPath(Junction junction)
-    {
-        return true;
-    }
 }

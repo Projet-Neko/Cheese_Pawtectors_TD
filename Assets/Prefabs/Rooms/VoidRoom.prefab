@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 532a9f6fc054a9248a87c4335dc0a194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _room: {fileID: 675617977283199060}
   _HUDCanva: {fileID: 0}
   _moveModCanva: {fileID: 0}
   _opening: []

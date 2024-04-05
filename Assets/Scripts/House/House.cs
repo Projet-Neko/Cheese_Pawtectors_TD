@@ -281,7 +281,8 @@ public class House : MonoBehaviour
     {
         InitBuildPath();                                                                                                    // Define the ID of each room in its junctions
 
-        Junction junctionStart = _roomsGrid[_idStartRoom.x, _idStartRoom.y].Opening[0];                                     // Get the junction of the start room
+        Room startRoom = _roomsGrid[_idStartRoom.x, _idStartRoom.y];                                                        // Get the start room
+        Junction junctionStart = startRoom.Opening[0];                                                                      // Get the junction of the start room
         IdRoom idRoomNext = junctionStart.GetIdRoomConnected();                                                             // Get the ID of the room connected to the junction of the start room
 
         if (idRoomNext.IsNull())                                                                                            // If the start room is not connected to another room
@@ -292,8 +293,13 @@ public class House : MonoBehaviour
 
         if (BuildPath(idRoomNext, _idStartRoom))                                                                            // Build the path from the next room and check if it is valid
         {
+            startRoom.NextRooms.Add(idRoomNext);                                                                            // Add the next room to the list of next rooms of the start room
             DestroyInvalidRoom();                                                                                           // Destroy the rooms that are not connected to the path
             junctionStart.ActivateArrow(true);                                                                              // Activate the arrow of the junction of the start room
+            
+            Debug.Log("START !!!!!");
+            foreach (IdRoom idRoom in _roomsGrid[_idStartRoom.x, _idStartRoom.y].NextRooms)                                  // Display the path
+                Debug.Log(idRoom.x + " " + idRoom.y);
         }
         else
             Debug.Log("Path not valid");

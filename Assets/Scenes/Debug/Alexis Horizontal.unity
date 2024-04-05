@@ -1668,6 +1668,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: 
+  _headBand: 
+  _isPermanent: 0
 --- !u!114 &1156478840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2949,7 +2951,7 @@ PrefabInstance:
     - target: {fileID: 654895726392624424, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     - target: {fileID: 1617426674757085489, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.6001377

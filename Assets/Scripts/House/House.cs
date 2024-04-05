@@ -76,7 +76,7 @@ public class House : MonoBehaviour
 
     private void CreateRoom(int x, int y, RoomPattern roomPattern)
     {
-        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(x, y, 0), Quaternion.identity);
+        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(x, 0, y), Quaternion.identity);
         roomObject.transform.parent = transform;
         _roomsGrid[x, y] = roomObject.GetComponentInChildren<Room>();
     }

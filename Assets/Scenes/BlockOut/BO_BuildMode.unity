@@ -2315,6 +2315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: QuitBuildScene
+  _headBand: 
   _isPermanent: 0
 --- !u!114 &2049919022
 MonoBehaviour:

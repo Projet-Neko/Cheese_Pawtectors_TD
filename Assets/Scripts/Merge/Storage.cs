@@ -39,6 +39,7 @@ public class Storage : MonoBehaviour
 
     private void AdoptButton_OnAdoptButtonClick(int catLevel)
     {
+        _freeSlot = null;
         int slotIndex = -1;
 
         // Check if storage has free slot

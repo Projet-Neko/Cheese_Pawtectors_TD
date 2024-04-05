@@ -18,12 +18,14 @@ public class Mod_Entities : Module
     private void Awake()
     {
         Cheese.OnInit += Cheese_OnInit;
+        Cat.OnUnlock += Cat_OnUnlock;
         Mod_Waves.OnWaveReload += M_Wave_OnWaveReload;
     }
 
     private void OnDestroy()
     {
         Cheese.OnInit -= Cheese_OnInit;
+        Cat.OnUnlock -= Cat_OnUnlock;
         Mod_Waves.OnWaveReload -= M_Wave_OnWaveReload;
     }
 
@@ -36,12 +38,20 @@ public class Mod_Entities : Module
         _cats.OrderBy(x => x.name);
         _mouses.OrderBy(x => x.name);
 
+        Debug.Log($"Loaded {_cats.Length} cats SO !");
+
         InitComplete();
     }
 
     private void Cheese_OnInit(Cheese cheese)
     {
         _cheese = cheese;
+    }
+
+    private void Cat_OnUnlock(int catIndex)
+    {
+        Debug.Log($"<color=lime>{_cats[catIndex].Name} is unlocked !</color>");
+        _cats[catIndex].State = CatState.Unlock;
     }
 
     private void M_Wave_OnWaveReload()

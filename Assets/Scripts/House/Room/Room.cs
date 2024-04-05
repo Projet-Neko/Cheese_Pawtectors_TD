@@ -210,6 +210,14 @@ public class Room : MonoBehaviour
         _oldPosition = _room.transform.position;    // Save the currently position
     }
 
+    public void CancelMove()
+    {
+        _moveModBool = false;
+        _moveModCanva.SetActive(false);                                                 // Hide the Move Canvas
+        _isSelected = false;
+        _room.transform.position = _oldPosition;
+    }
+
     // When user click on Canvas/Move Arrow/Done button
     public void StopMove()
     {

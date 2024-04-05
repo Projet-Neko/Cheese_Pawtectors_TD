@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -73,10 +72,10 @@ public class Room : MonoBehaviour
     public List<IdRoom> NextRooms => _nextRooms;
 
     protected RoomSecurity _security;
-    protected bool _correctPath = false;        // True if the room is in a correct path
+    protected bool _correctPath = false;                                    // True if the room is in a correct path
 
     // Events
-    private static event Action<bool> TileSelected;   // Deselect the other rooms when a room is selected
+    private static event Action<bool> TileSelected;                         // Deselect the other rooms when a room is selected
 
     private Vector3 _oldPosition;
     private bool _canMove;
@@ -146,14 +145,10 @@ public class Room : MonoBehaviour
     {
         if (!_anotherTileSelected)
         {
-
             _canMove = true;
            
-
             if (!_moveModBool)
-            {
                 Selected();
-            }
         }
 
     }
@@ -221,29 +216,6 @@ public class Room : MonoBehaviour
         _isSelected = false;
 
     }
-
-    /*private void ChangePosition(bool validate)
-    {
-
-        if (_moveModBool)
-        {
-            if (validate)
-            {
-                //change Material to green
-            }
-            else
-            {
-                //change Material to red
-            }
-        }
-
-        if (_WaitForValidation)
-        {
-            MoveRoomOldPosition();
-            //change Material to normal           
-            _WaitForValidation = false;
-        }
-    }*/
 
     public void MoveRoom(int x, int y)
     {

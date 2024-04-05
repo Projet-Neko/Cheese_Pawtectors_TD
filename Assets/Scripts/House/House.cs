@@ -1,7 +1,4 @@
 using AYellowpaper.SerializedCollections;
-using System;
-using Unity.Mathematics;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class House : MonoBehaviour
@@ -232,20 +229,21 @@ public class House : MonoBehaviour
 
     private bool BuildPath(IdRoom idRoom, IdRoom idRoomPrevious)
     {
-        _roomsGrid[idRoom.x, idRoom.y].PreviousRooms.Add(idRoomPrevious);                                                   // Add the previous room to the list of previous rooms
+        Room room = _roomsGrid[idRoom.x, idRoom.y];                                                                         // Get the room
+        room.PreviousRooms.Add(idRoomPrevious);                                                                             // Add the previous room to the list of previous rooms
 
-        if (_roomsGrid[idRoom.x, idRoom.y].NextRooms.Count != 0)                                                            // If the room is already connected to the path under construction
+        if (room.NextRooms.Count != 0)                                                                                      // If the room is already connected to the path under construction
             return true;
 
-        if (_roomsGrid[idRoom.x, idRoom.y] is CheeseRoom)                                                                   // If the room is the cheese room
+        if (room is CheeseRoom)                                                                                             // If the room is the cheese room
         {
-            _roomsGrid[idRoom.x, idRoom.y].ValidatePath();                                                                  // Validate the path of the cheese room
+            room.ValidatePath();                                                                                            // Validate the path of the cheese room
             return true;
         }
 
-        foreach (Junction junction in _roomsGrid[idRoom.x, idRoom.y].Opening)                                               // Check all the junctions of the room...
+        foreach (Junction junction in room.Opening)                                                                         // Check all the junctions of the room...
         {
-            IdRoom idRoomNext = junction.GetIdRoomConnected();                                                                // ... and get the ID of room connected to the junction
+            IdRoom idRoomNext = junction.GetIdRoomConnected();                                                              // ... and get the ID of room connected to the junction
 
             if (idRoomNext.IsNull())                                                                                        // If the junction is not connected to another junction
                 continue;
@@ -253,26 +251,26 @@ public class House : MonoBehaviour
             if (IsPreviousRoom(idRoom, idRoomNext))                                                                         // If the next room is an ancestor of the current room
                 continue;
 
-            _roomsGrid[idRoom.x, idRoom.y].NextRooms.Add(idRoomNext);                                                       // Add the next room to the list of next rooms
+            room.NextRooms.Add(idRoomNext);                                                                                 // Add the next room to the list of next rooms
             junction.ActivateArrow(true);                                                                                   // Activate the arrow of the junction
 
             bool validPath = BuildPath(idRoomNext, idRoom);                                                                 // Build the path from the next room and check if it is valid
 
             if (!validPath)                                                                                                 // If the path is not valid...
             {
-                _roomsGrid[idRoom.x, idRoom.y].NextRooms.RemoveAt(_roomsGrid[idRoom.x, idRoom.y].NextRooms.Count - 1);      // ... remove the next room from the list of next rooms and ...
+                room.NextRooms.RemoveAt(room.NextRooms.Count - 1);                                                          // ... remove the next room from the list of next rooms and ...
                 junction.ActivateArrow(false);                                                                              // ... deactivate the arrow of the junction
             }
         }
 
-        if (_roomsGrid[idRoom.x, idRoom.y].NextRooms.Count == 0)                                                            // If the room is not connected to any room
+        if (room.NextRooms.Count == 0)                                                                                      // If the room is not connected to any room
         {
-            _roomsGrid[idRoom.x, idRoom.y].PreviousRooms.RemoveAt(_roomsGrid[idRoom.x, idRoom.y].PreviousRooms.Count - 1);  // Remove the previous room from the list of previous rooms
+            room.PreviousRooms.RemoveAt(room.PreviousRooms.Count - 1);                                                      // Remove the previous room from the list of previous rooms
             return false;
         }
         else
         {
-            _roomsGrid[idRoom.x, idRoom.y].ValidatePath();                                                                  // Validate the path of the room
+            room.ValidatePath();                                                                                            // Validate the path of the room
             return true;
         }
     }
@@ -296,10 +294,6 @@ public class House : MonoBehaviour
             startRoom.NextRooms.Add(idRoomNext);                                                                            // Add the next room to the list of next rooms of the start room
             DestroyInvalidRoom();                                                                                           // Destroy the rooms that are not connected to the path
             junctionStart.ActivateArrow(true);                                                                              // Activate the arrow of the junction of the start room
-            
-            Debug.Log("START !!!!!");
-            foreach (IdRoom idRoom in _roomsGrid[_idStartRoom.x, _idStartRoom.y].NextRooms)                                  // Display the path
-                Debug.Log(idRoom.x + " " + idRoom.y);
         }
         else
             Debug.Log("Path not valid");
@@ -341,14 +335,8 @@ public class House : MonoBehaviour
         for (int i = 0; i < _currentRoomNumber; i++)
         {
             for (int j = 0; j < _currentRoomNumber; j++)
-            {
-                //Ajouter les rooms a une liste ? 
-                // Rajouter toutes les rooms de la liste à l'inventaire ?
-                //ou juste les ajouter une par une
                 RemoveRoom(i, j);
-            }
         }
-
     }
 
 }

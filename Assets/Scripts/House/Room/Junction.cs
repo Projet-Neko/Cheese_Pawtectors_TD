@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
 
 public class Junction : MonoBehaviour
 {
-
     [SerializeField] GameObject _arrow;
 
     private IdRoom _idRoom;

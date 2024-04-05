@@ -57,6 +57,7 @@ public class Room : MonoBehaviour
     [Header("Room Canva")]
     [SerializeField] private GameObject _HUDCanva;
     [SerializeField] private GameObject _moveModCanva;
+    [SerializeField] GameObject _cantMoveThisRoomCanvas;
 
     [Header("Junction")]
     [SerializeField] protected List<Junction> _opening;
@@ -82,7 +83,7 @@ public class Room : MonoBehaviour
     private bool _canMove;
     private bool _moveModBool;
     private bool _isSelected;
-    private bool _anotherTileSelected;
+    protected bool _anotherTileSelected;
     private int _currentLevel = 1;
 
     private List<IdRoom> _previousRooms = new List<IdRoom>();
@@ -144,7 +145,11 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (!_anotherTileSelected)
+        if (_security == RoomSecurity.Protected)
+        {
+            _cantMoveThisRoomCanvas.SetActive(!_cantMoveThisRoomCanvas.activeSelf);
+        }
+        else if (!_anotherTileSelected)
         {
 
             _canMove = true;
@@ -155,6 +160,9 @@ public class Room : MonoBehaviour
                 Selected();
             }
         }
+
+        
+
 
     }
 

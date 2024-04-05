@@ -125,6 +125,8 @@ public class GameManager : MonoBehaviour
         if (mod == typeof(Mod_Account)) Mod<Mod_Economy>().Init(this);
         else if (mod == typeof(Mod_Economy)) Mod<Mod_Clans>().Init(this);
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
+        FindObjectOfType<Mod_Audio>().StartMainMusic();
+
     }
 
     private void OnDestroy()

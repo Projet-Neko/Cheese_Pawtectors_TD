@@ -7,10 +7,4 @@ public class StartRoom : Room
     {
         _security = RoomSecurity.Protected;
     }
-
-    public bool CheckPath()
-    {
-        _correctPath = _opening[0].Validation();
-        return _correctPath;
-    }
 }

@@ -1,54 +1,27 @@
 using NaughtyAttributes;
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    public static event Action<bool, string> OnPopupSceneToogle;
+    [SerializeField, Scene] protected string _scene;
+    [SerializeField] private bool _isAdditive = true;
 
-    [SerializeField, Scene] private string _scene;
-    [SerializeField, Scene] private string _headBand;
-    [SerializeField] private bool _isPermanent;
-
+    private LoadSceneMode _loadSceneMode;
 
     private void Awake()
     {
-        GameManager.OnInitComplete += GameManager_OnInitComplete; // TODO -> Replace with title screen button event
-
-        if (_isPermanent) SceneManager.LoadScene(_scene, LoadSceneMode.Additive);
+        GameManager.OnInitComplete += LoadScene;
+        _loadSceneMode = _isAdditive ? LoadSceneMode.Additive : LoadSceneMode.Single;
     }
 
     private void OnDestroy()
     {
-        GameManager.OnInitComplete -= GameManager_OnInitComplete;
-    }
-
-    private void GameManager_OnInitComplete()
-    {
-        LoadScene();
+        GameManager.OnInitComplete -= LoadScene;
     }
 
     public void LoadScene()
     {
-        SceneManager.LoadScene(_scene);
-    }
-
-    public void LoadSceneAdditive()
-    {
-        if (GameManager.Instance.IsPopupSceneLoaded) UnloadSceneAdditive();
-        SceneManager.LoadScene(_scene, LoadSceneMode.Additive);
-        OnPopupSceneToogle?.Invoke(true, _scene);
-    }
-
-    public void UnloadSceneAdditive()
-    {
-        SceneManager.UnloadSceneAsync(GameManager.Instance.PopupSceneName);
-        OnPopupSceneToogle?.Invoke(false, null);
-    }
-
-    public void UnloadHeadBand()
-    {
-        SceneManager.UnloadSceneAsync(_headBand);
+        SceneManager.LoadScene(_scene, _loadSceneMode);
     }
 }

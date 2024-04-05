@@ -13,17 +13,20 @@ public class Mod_Waves : Module
     [Header("Options")]
     [SerializeField] private bool _enableWaves = false;
 
-    public int EnemyNumber => _enemyNumber;
+    //public int EnemyNumber => _enemyNumber;
     public int MaxEnemyNumber => _maxEnemyNumber;
+    public int KilledEnemiesNumber => _killedEnemiesNumber;
     public int SpawnTime => _spawnTime;
 
-    private int _enemyNumber;
+    //private int _enemyNumber;
     private int _spawnedEnemyNumber;
     private int _maxEnemyNumber;
+    private int _killedEnemiesNumber;
     private List<GameObject> _enemyObjects = new();
     private Vector3 _SpawnPos;
     private bool _hasCompleteSpawning;
     private IEnumerator _spawn;
+    private bool _cheeseDead = false;
 
     private void Awake()
     {
@@ -44,7 +47,7 @@ public class Mod_Waves : Module
 
     private void Update()
     {
-        if (_hasCompleteSpawning && _enemyNumber == 0) NextWave();
+        if (_hasCompleteSpawning && _killedEnemiesNumber == _maxEnemyNumber) NextWave();
     }
 
     public override void Init(GameManager gm)
@@ -58,7 +61,7 @@ public class Mod_Waves : Module
 
     public void StartWaves()
     {
-        _maxEnemyNumber = _enemyNumber = 0;
+        _maxEnemyNumber = _killedEnemiesNumber = 0;
         _spawn = SpawnEnemies(false);
         if (_enableWaves) StartCoroutine(_spawn);
     }
@@ -67,7 +70,7 @@ public class Mod_Waves : Module
     {
         int index = 0;
         _hasCompleteSpawning = false;
-        _maxEnemyNumber = _enemyNumber = IsBossWave() ? 1 : 10;
+        _maxEnemyNumber = IsBossWave() ? 1 : 10;
         if (cooldown) yield return new WaitForSeconds(.5f);
         while (_spawnedEnemyNumber < _maxEnemyNumber)
         {
@@ -86,10 +89,14 @@ public class Mod_Waves : Module
 
     private void Entity_OnDeath(Entity obj, bool hasBeenKilledByPlayer)
     {
-        if (obj is Cheese) Reload();
-        else if (obj is Mouse)
+        if (obj is Cheese)
         {
-            _enemyNumber--;
+            _cheeseDead = true;
+            Reload();
+        }
+        else if (obj is Mouse && !_cheeseDead)
+        {
+            _killedEnemiesNumber++;
             _spawnedEnemyNumber--;
         }
     }
@@ -123,7 +130,8 @@ public class Mod_Waves : Module
         }
 
         OnWaveReload?.Invoke();
-        _spawnedEnemyNumber = 0;
+        _spawnedEnemyNumber = _killedEnemiesNumber = 0;
+        _cheeseDead = false;
         _spawn = SpawnEnemies(true);
         StartCoroutine(_spawn);
     }

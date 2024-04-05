@@ -123,69 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &32646876
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 32646878}
-  - component: {fileID: 32646880}
-  - component: {fileID: 32646881}
-  m_Layer: 0
-  m_Name: SceneLoader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &32646878
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32646876}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &32646880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32646876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scene: HeadBand
-  _headBand: 
-  _isPermanent: 1
---- !u!114 &32646881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32646876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b31fc8a8ddacfb49bcc8d5d336fe2da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scene: LoginPopup
-  _headBand: 
-  _isPermanent: 0
 --- !u!1 &64492013
 GameObject:
   m_ObjectHideFlags: 0
@@ -1699,6 +1636,7 @@ GameObject:
   - component: {fileID: 493263707}
   - component: {fileID: 493263706}
   - component: {fileID: 493263705}
+  - component: {fileID: 493263709}
   m_Layer: 5
   m_Name: UI/UX
   m_TagString: Untagged
@@ -1791,6 +1729,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &493263709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493263704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8745bcdc19ddd94b999a38a8d79ba50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneHeadBand: HeadBand
+  _sceneLoginPopup: LoginPopup
 --- !u!1 &496608035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1938,8 +1890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: BO_BuildMode
-  _headBand: 
-  _isPermanent: 0
+  _isAdditive: 0
 --- !u!1 &520177992
 GameObject:
   m_ObjectHideFlags: 0
@@ -4532,7 +4483,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1475787900}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadSceneAdditive
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4593,8 +4544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: Catalog
-  _headBand: 
-  _isPermanent: 0
+  _isAdditive: 1
 --- !u!1 &1485826812
 GameObject:
   m_ObjectHideFlags: 0
@@ -5137,8 +5087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: Shop
-  _headBand: HeadBand
-  _isPermanent: 0
+  _isAdditive: 1
 --- !u!114 &1594703521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5185,19 +5134,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1594703520}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: UnloadHeadBand
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1594703520}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadSceneAdditive
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6580,6 +6517,5 @@ SceneRoots:
   - {fileID: 839973077}
   - {fileID: 1670994541}
   - {fileID: 163567190}
-  - {fileID: 32646878}
   - {fileID: 1656288769}
   - {fileID: 416793910}

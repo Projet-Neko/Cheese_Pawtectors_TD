@@ -3399,7 +3399,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1225875225}
         m_TargetAssemblyTypeName: House, Assembly-CSharp
-        m_MethodName: DestroyInvalidRoom
+        m_MethodName: BuildPath
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

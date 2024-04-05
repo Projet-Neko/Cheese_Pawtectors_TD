@@ -1,22 +1,21 @@
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
-using static UnityEditor.Recorder.OutputPath;
-using System;
 
 public class House : MonoBehaviour
 {
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
-
-    public static event Action<bool> ValidatePositionChange; // bool == position validï¿½ ?
 
     private const int _maxRooms = 30;
     private const int _minRooms = 5;
 
     private int _currentRoomNumber;
 
-    private GameObject[,] _roomsGrid = new GameObject[_maxRooms, _maxRooms];
-    private StartRoom _startRoom;
+    private Room[,] _roomsGrid = new Room[_maxRooms, _maxRooms];
+    private IdRoom _idStartRoom;
 
+    /* * * * * * * * * * * * * * * * * * * *
+     *          BASIC FUNCTIONS
+     * * * * * * * * * * * * * * * * * * * */
     void Start()
     {
         // Create the Void Rooms and one Start Room, visible in the beginning
@@ -26,31 +25,26 @@ public class House : MonoBehaviour
         {
             for (int j = 0; j < _currentRoomNumber; j++)
             {
-                GameObject room;
                 // Place the Start Room
                 if (i == 0 && j == _currentRoomNumber / 2)
                 {
-                    room = Instantiate(_rooms[RoomPattern.StartRoom], new Vector3(i, j, 0), Quaternion.identity);
-                    _startRoom = room.GetComponentInChildren<StartRoom>();
+                    CreateRoom(i, j, RoomPattern.StartRoom);
+                    _idStartRoom = new IdRoom(i, j);
                 }
-
 
                 // Place the Cheese Room
                 else if (i == _currentRoomNumber - 1 && j == _currentRoomNumber / 2)
-                {
-                    room = Instantiate(_rooms[RoomPattern.CheeseRoom], new Vector3(i, j, 0), Quaternion.identity);
-                }
+                    CreateRoom(i, j, RoomPattern.CheeseRoom);
 
                 // Place Void Rooms
                 else
-                    room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(i, j, 1), Quaternion.identity);
-
-                room.transform.parent = transform;
-                _roomsGrid[i, j] = room;
+                    CreateRoom(i, j, RoomPattern.VoidRoom);
             }
         }
 
+        // Subscribe to events
         Room.ChangeTilePosition += CheckRoomPosition;
+        Room.TileDestroyed += CreateRoom;
 
         // TO DO : TO REMOVE (is a test)
         AddRoom(1, 2, RoomPattern.CorridorRoom);
@@ -65,142 +59,235 @@ public class House : MonoBehaviour
         //RemoveRoom(2, 1);
     }
 
-    public void ExtendHouse()
+    private void OnDestroy()
     {
-        // Security on the max index possible
-        if (_currentRoomNumber == _maxRooms)
-            return;
-
-        ++_currentRoomNumber;
-
-        for (int i = 0; i < _currentRoomNumber; i++)
-        {
-            GameObject room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(i, _currentRoomNumber - 1, 1), Quaternion.identity);
-
-            room.transform.parent = transform;
-            _roomsGrid[i, _currentRoomNumber - 1] = room;
-        }
-
-        for (int i = 0; i < _currentRoomNumber - 1; i++)
-        {
-            GameObject room = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(_currentRoomNumber - 1, i, 1), Quaternion.identity);
-
-            room.transform.parent = transform;
-            _roomsGrid[_currentRoomNumber - 1, i] = room;
-        }
+        // Unsubscribe to events
+        Room.ChangeTilePosition -= CheckRoomPosition;
+        Room.TileDestroyed -= CreateRoom;
     }
 
-    public void AddRoom(int x, int y, RoomPattern pattern)
+
+    /* * * * * * * * * * * * * * * * * * * *
+     *          CREATE ROOM
+     * * * * * * * * * * * * * * * * * * * */
+
+    private void CreateRoom(int x, int y, RoomPattern roomPattern)
     {
-        Room room = _roomsGrid[x, y].GetComponentInChildren<Room>();
-        if (!room)
-        {
-            Debug.Log("No room found at position (" + x + ", " + y + ")");
-            return;
-        }
-
-        if (room.Security == RoomSecurity.Overwritten)
-        {
-            // Destroy the old room
-            Destroy(_roomsGrid[x, y]);
-
-            // Create the new room
-            GameObject roomObject = Instantiate(_rooms[pattern], new Vector3(x, y, 0), Quaternion.identity);
-            roomObject.transform.parent = transform;
-            _roomsGrid[x, y] = roomObject;
-        }
-        else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, y].GetComponent<Room>().Security);
+        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(x, y, 0), Quaternion.identity);
+        roomObject.transform.parent = transform;
+        _roomsGrid[x, y] = roomObject.GetComponentInChildren<Room>();
     }
 
-    public void RemoveRoom(int x, int y)
+
+    /* * * * * * * * * * * * * * * * * * * *
+     *          HUD INTERACTIONS
+     * * * * * * * * * * * * * * * * * * * */
+
+    private bool IsInGrid(int x, int y)
     {
-        Room room = _roomsGrid[x, y].GetComponentInChildren<Room>();
-        if (!room)
-        {
-            Debug.Log("No room found at position (" + x + ", " + y + ")");
-            return;
-        }
-
-        if (room.Security == RoomSecurity.MovedAndRemoved)
-        {
-            // Destroy the old room
-            Destroy(_roomsGrid[x, y]);
-
-            // Create the new room
-            GameObject roomObject = Instantiate(_rooms[RoomPattern.VoidRoom], new Vector3(x, y, 0), Quaternion.identity);
-            roomObject.transform.parent = transform;
-            _roomsGrid[x, y] = roomObject;
-        }
-    }
-
-    public void MoveRoom(int xStart, int yStart, int xEnd, int yEnd)
-    {
-        Room room = _roomsGrid[xEnd, yEnd].GetComponentInChildren<Room>();
-        if (!room)
-        {
-            Debug.Log("No room found at position (" + xEnd + ", " + yEnd + ")");
-            return;
-        }
-
-        Room endRoom = _roomsGrid[xEnd, yEnd].GetComponentInChildren<Room>();
-        if (endRoom.Security == RoomSecurity.Protected) return; // Ajouter une popup "You can't move this room" ?
-
-        GameObject startRoom = _roomsGrid[xStart, yStart];
-        _roomsGrid[xStart, yStart] = _roomsGrid[xEnd, yEnd];
-        _roomsGrid[xEnd, yEnd] = startRoom;
-        startRoom.transform.position = new Vector3(xEnd, yEnd, 0);
-        endRoom.transform.position = new Vector3(xStart, yStart, 0);
-        endRoom.UpdateCanvaPosition();
-    }
-
-    public void DestroyInvalidRoom()
-    {
-        if (_startRoom.CheckPath())
-        {
-            for (int i = 0; i < _currentRoomNumber; i++)
-            {
-                for (int j = 0; j < _currentRoomNumber; j++)
-                {
-                    Room room = _roomsGrid[i, j].GetComponentInChildren<Room>();
-                    if (!room.CorrectPath)
-                        RemoveRoom(i, j);
-                }
-            }
-        }
-        else
-            Debug.Log("The path is not valid");
+        return x >= 0 && x < _currentRoomNumber && y >= 0 && y < _currentRoomNumber;
     }
 
     private void CheckRoomPosition(Vector3 oldPosition, Vector3 newPosition, bool validate)
     {
+        int xStart = (int)oldPosition.x;
+        int yStart = (int)oldPosition.y;
         int xEnd = (int)newPosition.x;
         int yEnd = (int)newPosition.y;
 
-        if (xEnd < 0 || xEnd >= _currentRoomNumber || yEnd < 0 || yEnd >= _currentRoomNumber)
+        // Check if the new position is in the grid and if the room is movable
+        if (!IsInGrid(xEnd, yEnd) || _roomsGrid[xEnd, yEnd].Security == RoomSecurity.Protected)
         {
-            ValidatePositionChange?.Invoke(false);
+            _roomsGrid[xStart, yStart].MoveRoomOldPosition();
             return;
         }
 
-        int xStart = (int)oldPosition.x;
-        int yStart = (int)oldPosition.y;
-
-        if (_roomsGrid[xEnd, yEnd].GetComponentInChildren<Room>().Security == RoomSecurity.Protected)
-        {
-            ValidatePositionChange?.Invoke(false);
-            return;
-        }
-
-
-        ValidatePositionChange?.Invoke(true);
-
-        if (validate) MoveRoom(xStart, yStart, xEnd, yEnd);
-
+        if (validate)
+            MoveRoom(xStart, yStart, xEnd, yEnd);
     }
 
-    private void OnDestroy()
+    private void MoveRoom(int xStart, int yStart, int xEnd, int yEnd)
     {
-        Room.ChangeTilePosition -= CheckRoomPosition;
+        Room startRoom = _roomsGrid[xStart, yStart];
+        Room endRoom = _roomsGrid[xEnd, yEnd];
+
+        if (endRoom.Security == RoomSecurity.Protected) return; // Ajouter une popup "You can't move this room" ?
+
+        // Swap the rooms in the scene
+        endRoom.MoveRoom(xStart, yStart);
+        startRoom.MoveRoom(xEnd, yEnd);
+
+        // Swap the rooms in the grid
+        _roomsGrid[xStart, yStart] = endRoom;
+        _roomsGrid[xEnd, yEnd] = startRoom;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * *
+     *              NEW ROOM
+     * * * * * * * * * * * * * * * * * * * */
+
+    private void AddRoom(int x, int y, RoomPattern pattern)
+    {
+        if (_roomsGrid[x, y].Security == RoomSecurity.Overwritten)
+        {
+            // Destroy the old room
+            _roomsGrid[x, y].Delete();
+
+            // Create the new room
+            CreateRoom(x, y, pattern);
+        }
+        else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, y].Security);
+    }
+
+    public void ExtendHouse()
+    {
+        // Security on the max index possible
+        if (_currentRoomNumber == _maxRooms) return;
+
+        ++_currentRoomNumber;
+
+        // Create the new rooms on the top
+        for (int i = 0; i < _currentRoomNumber; i++)
+            CreateRoom(i, _currentRoomNumber - 1, RoomPattern.VoidRoom);
+
+        // Create the new rooms on the right
+        for (int i = 0; i < _currentRoomNumber - 1; i++)
+            CreateRoom(_currentRoomNumber - 1, i, RoomPattern.VoidRoom);
+    }
+
+    /* * * * * * * * * * * * * * * * * * * *
+    *        VALIDATION OF THE PATH
+    * * * * * * * * * * * * * * * * * * * */
+
+    private void InitBuildPath()
+    {
+        for (int x = 0; x < _currentRoomNumber; x++)
+        {
+            for (int y = 0; y < _currentRoomNumber; y++)
+            {
+                _roomsGrid[x, y].DefineIdRoom(x, y);
+                _roomsGrid[x, y].ResetPath();
+            }
+        }
+    }
+
+    private bool IsPreviousRoom(IdRoom idRoom, IdRoom idRoomSearch)
+    {
+        foreach (IdRoom idRoomPrevious in _roomsGrid[idRoom.x, idRoom.y].PreviousRooms)
+        {
+            if (idRoomPrevious.Equals(idRoomSearch))
+                return true;
+
+            if (IsPreviousRoom(idRoomPrevious, idRoomSearch))
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool BuildPath(IdRoom idRoom, IdRoom idRoomPrevious)
+    {
+        _roomsGrid[idRoom.x, idRoom.y].PreviousRooms.Add(idRoomPrevious);                                                   // Add the previous room to the list of previous rooms
+
+        if (_roomsGrid[idRoom.x, idRoom.y].NextRooms.Count != 0)                                                            // If the room is already connected to the path under construction
+            return true;
+
+        if (_roomsGrid[idRoom.x, idRoom.y] is CheeseRoom)                                                                   // If the room is the cheese room
+        {
+            _roomsGrid[idRoom.x, idRoom.y].ValidatePath();                                                                  // Validate the path of the cheese room
+            return true;
+        }
+
+        foreach (Junction junction in _roomsGrid[idRoom.x, idRoom.y].Opening)                                               // Check all the junctions of the room...
+        {
+            IdRoom idRoomNext = junction.GetIdRoomConnected();                                                                // ... and get the ID of room connected to the junction
+
+            if (idRoomNext.IsNull())                                                                                        // If the junction is not connected to another junction
+                continue;
+
+            if (IsPreviousRoom(idRoom, idRoomNext))                                                                         // If the next room is an ancestor of the current room
+                continue;
+
+            _roomsGrid[idRoom.x, idRoom.y].NextRooms.Add(idRoomNext);                                                       // Add the next room to the list of next rooms
+
+            bool validPath = BuildPath(idRoomNext, idRoom);                                                                 // Build the path from the next room and check if it is valid
+
+            if (!validPath)                                                                                                 // If the path is not valid...
+                _roomsGrid[idRoom.x, idRoom.y].NextRooms.RemoveAt(_roomsGrid[idRoom.x, idRoom.y].NextRooms.Count - 1);      // ... remove the next room from the list of next rooms
+        }
+
+        if (_roomsGrid[idRoom.x, idRoom.y].NextRooms.Count == 0)                                                            // If the room is not connected to any room
+        {
+            _roomsGrid[idRoom.x, idRoom.y].PreviousRooms.RemoveAt(_roomsGrid[idRoom.x, idRoom.y].PreviousRooms.Count - 1);  // Remove the previous room from the list of previous rooms
+            return false;
+        }
+        else
+        {
+            _roomsGrid[idRoom.x, idRoom.y].ValidatePath();                                                                  // Validate the path of the room
+            return true;
+        }
+    }
+
+    public void BuildPath()
+    {
+        InitBuildPath();                                                                                                    // Define the ID of each room in its junctions
+        
+        IdRoom idRoomNext = _roomsGrid[_idStartRoom.x, _idStartRoom.y].Opening[0].GetIdRoomConnected();                     // Get the ID of the room connected to the junction of the start room
+
+        if (idRoomNext.IsNull())                                                                                            // If the start room is not connected to another room
+        {
+            Debug.Log("Start room not connected");
+            return;
+        }    
+
+        if (BuildPath(idRoomNext, _idStartRoom))                                                                            // Build the path from the next room and check if it is valid
+            DestroyInvalidRoom();
+        else
+            Debug.Log("Path not valid");
+    }
+
+    private void RemoveRoom(int x, int y)
+    {
+        if (_roomsGrid[x, y].Security == RoomSecurity.MovedAndRemoved)
+        {
+            // Destroy the old room
+            _roomsGrid[x, y].Delete();
+
+            // Create the new room
+            CreateRoom(x, y, RoomPattern.VoidRoom);
+        }
+        else Debug.Log("Room not MovedAndRemoved, security = " + _roomsGrid[x, y].Security);
+    }
+
+    private void DestroyInvalidRoom()
+    {
+        for (int i = 0; i < _currentRoomNumber; i++)
+        {
+            for (int j = 0; j < _currentRoomNumber; j++)
+            {
+                if (!_roomsGrid[i, j].CorrectPath)
+                    RemoveRoom(i, j);
+            }
+        }
+    }
+
+    /* * * * * * * * * * * * * * * * * * * *
+    *        Delete room
+    * * * * * * * * * * * * * * * * * * * */
+
+    public void DestroyAllRoom()
+    {
+        for (int i = 0; i< _currentRoomNumber; i++)
+        {
+            for (int j = 0; j < _currentRoomNumber; j++)
+            {
+                //Ajouter les rooms a une liste ? 
+                // Rajouter toutes les rooms de la liste à l'inventaire ?
+                //ou juste les ajouter une par une
+                RemoveRoom(i, j);
+            }
+        }
+
     }
 
 }

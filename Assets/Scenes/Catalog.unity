@@ -762,6 +762,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -25
       objectReference: {fileID: 0}
+    - target: {fileID: 5509317439081306090, guid: 7b87e4ead4d895949accb1301487bbb1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2033859848}
+    - target: {fileID: 5509317439081306090, guid: 7b87e4ead4d895949accb1301487bbb1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClosePopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 5509317439081306090, guid: 7b87e4ead4d895949accb1301487bbb1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ClosePopupBackground, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 5711565643801828522, guid: 7b87e4ead4d895949accb1301487bbb1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1317,8 +1329,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1734254772}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: UnloadSceneAdditive
+        m_TargetAssemblyTypeName: SceneUnloader, Assembly-CSharp
+        m_MethodName: UnloadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1375,12 +1387,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1734254767}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c5628f35c948e04a98f810e41ce8bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scene: Catalog
-  _headBand: 
-  _isPermanent: 0
 --- !u!1 &1776486977
 GameObject:
   m_ObjectHideFlags: 0
@@ -1492,6 +1501,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 125}
   m_SizeDelta: {x: 0, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2033859848 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9103313021178765294, guid: 7b87e4ead4d895949accb1301487bbb1, type: 3}
+  m_PrefabInstance: {fileID: 650177892}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fe21f0418de9f443b061a8f4568a0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -3,23 +3,37 @@ using UnityEngine;
 
 public class Junction : MonoBehaviour
 {
-    private Junction _junctionConnected = null;  // The Junction that this Junction is connected to
+    private IdRoom _idRoom;
+    private Junction _junctionConnected;
 
-    public event Func<Junction, bool> OnCheckPath;
+    public IdRoom IdRoom => _idRoom;
 
-    private void OnCollisionEnter(Collision collision)
+    private void Awake()
     {
-        _junctionConnected = collision.gameObject.GetComponent<Junction>();
+        _idRoom = new IdRoom(-1, -1);
+        _junctionConnected = null;
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerEnter(Collider collider)
+    {
+        _junctionConnected = collider.gameObject.GetComponent<Junction>();
+    }
+
+    private void OnTriggerExit(Collider collider)
     {
         _junctionConnected = null;
     }
 
-    // Check if the junction is connected to another junction and if the next room is in a valid path
-    public bool Validation()
+    public void SetIdRoom(int x, int y)
     {
-        return _junctionConnected && _junctionConnected.OnCheckPath != null && _junctionConnected.OnCheckPath.Invoke(_junctionConnected);
+        _idRoom = new IdRoom(x, y);
+    }
+
+    public IdRoom GetIdRoomConnected()
+    {
+        if (_junctionConnected != null)
+            return _junctionConnected.IdRoom;
+        else
+            return new IdRoom(-1, -1);
     }
 }

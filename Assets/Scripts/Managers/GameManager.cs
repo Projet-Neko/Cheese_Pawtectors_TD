@@ -87,9 +87,6 @@ public class GameManager : MonoBehaviour
 
     private T Mod<T>() where T : Module => _modules.OfType<T>().First();
 
-    //Audio
-    AudioSource _audioManager;
-
     private void Start()
     {
         if (!Init()) return;

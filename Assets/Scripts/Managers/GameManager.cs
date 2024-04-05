@@ -208,6 +208,7 @@ public class GameManager : MonoBehaviour
 
     private void DebugOnly()
     {
+        Debug.Log("debug of game manager");
         //DeleteLocalDatas(); // Reset local datas
     }
 

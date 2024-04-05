@@ -5,8 +5,6 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
-// TODO -> save clan as local data
-
 [Serializable]
 public class Data
 {
@@ -29,6 +27,7 @@ public class Data
     public List<Data_Rooms> Rooms = new();
 
     // Social
+    public int Clan = -1;
     public List<Data_Leaderboards> Leaderboards = new();
     public int Score => Leaderboards[0].Value;
 
@@ -79,7 +78,11 @@ public class Data
         CatsUnlocked = data.CatsUnlocked;
         Storage = data.Storage;
         Rooms = data.Rooms;
+
+        // Social
+        Clan = data.Clan;
         Leaderboards = data.Leaderboards;
+
         _lastUpdate = DateTime.Parse(data.LastUpdateString);
 
         for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
@@ -142,6 +145,12 @@ public class Data
     public void UpdateStorage(int slotIndex, int catIndex)
     {
         Storage[slotIndex].CatIndex = catIndex;
+        Update();
+    }
+
+    public void UpdateClan(Clan clan)
+    {
+        Clan = (int)clan;
         Update();
     }
 

@@ -216,7 +216,8 @@ public class Mod_Economy : Module
 
         if (_currencies[Currency.Meat] < _catPrices[catLevel - 1])
         {
-            Debug.Log(" You can't adopt this cat : not enough money!");
+            Debug.LogError(" You can't adopt this cat : not enough money!");
+            // TODO -> show error popup
             canAdopt = false;
         }
         else

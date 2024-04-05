@@ -1379,6 +1379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: Catalog
+  _headBand: 
   _isPermanent: 0
 --- !u!1 &1776486977
 GameObject:

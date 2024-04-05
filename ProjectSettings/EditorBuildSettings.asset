@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Settings.unity
     guid: 979153e39fd53e34489c2a65468774e8
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BO_BuildMode.unity
+    path: Assets/Scenes/Build.unity
     guid: 5f7927bcda7adec4daa218c7070b3052
   - enabled: 1
     path: Assets/Scenes/Catalog.unity

@@ -16,7 +16,7 @@ public class Data
     public List<bool> CatsUnlocked = new();
     public List<Data_Storage> Storage = new();
     public int LastCatUnlockedIndex;
-    public Cheese Cheese = new();
+    //public Cheese Cheese = new();
 
     // Waves
     public int WaveNumber = 1;

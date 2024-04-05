@@ -69,7 +69,7 @@ public class Mod_Waves : Module
     public IEnumerator SpawnEnemies(bool cooldown)
     {
         int index = 0;
-        _hasCompleteSpawning = _cheeseDead = false;
+        _hasCompleteSpawning = false;
         _maxEnemyNumber = IsBossWave() ? 1 : 10;
         if (cooldown) yield return new WaitForSeconds(.5f);
         while (_spawnedEnemyNumber < _maxEnemyNumber)
@@ -91,8 +91,8 @@ public class Mod_Waves : Module
     {
         if (obj is Cheese)
         {
-            Reload();
             _cheeseDead = true;
+            Reload();
         }
         else if (obj is Mouse && !_cheeseDead)
         {
@@ -131,6 +131,7 @@ public class Mod_Waves : Module
 
         OnWaveReload?.Invoke();
         _spawnedEnemyNumber = _killedEnemiesNumber = 0;
+        _cheeseDead = false;
         _spawn = SpawnEnemies(true);
         StartCoroutine(_spawn);
     }

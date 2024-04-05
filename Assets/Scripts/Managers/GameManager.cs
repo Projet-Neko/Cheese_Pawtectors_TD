@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // TODO -> vérifier si le jeu est à jour
@@ -42,10 +43,9 @@ public class GameManager : MonoBehaviour
     private Data _data;
 
     // --- Scenes ---
-    public bool IsPopupSceneLoaded => _isPopupSceneLoaded;
+    public bool IsPopupSceneLoaded => !string.IsNullOrEmpty(_popupSceneName);
     public string PopupSceneName => _popupSceneName;
 
-    private bool _isPopupSceneLoaded;
     private string _popupSceneName;
     private bool _hasLoginPopupLoad;
 
@@ -93,7 +93,8 @@ public class GameManager : MonoBehaviour
         _loadingSlider.value = 0;
 
         Module.OnInitComplete += Module_OnInitComplete;
-        SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
+        SceneManager.sceneUnloaded += SceneManager_sceneUnloaded;
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 
         // Init all entities SO
         Mod<Mod_Entities>().Init(this);
@@ -118,6 +119,19 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (mode != LoadSceneMode.Additive) return;
+        //if (IsPopupSceneLoaded) SceneManager.UnloadSceneAsync(_popupSceneName);
+        _popupSceneName = scene.name;
+    }
+
+    private void SceneManager_sceneUnloaded(Scene scene)
+    {
+        if (scene.name != _popupSceneName) return;
+        _popupSceneName = null;
+    }
+
     private void Module_OnInitComplete(Type mod)
     {
         _loadingSlider.value += Mathf.Ceil(100.0f / _modules.Count);
@@ -136,7 +150,6 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         Module.OnInitComplete -= Module_OnInitComplete;
-        SceneLoader.OnPopupSceneToogle -= SceneLoader_OnPopupSceneToogle;
 
         // Data events
         StorageSlot.OnSlotChanged -= (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
@@ -159,14 +172,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("<color=yellow>Game Manager created.</color>");
         return true;
     }
-
-    #region Gestion des events
-    private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded, string popupName)
-    {
-        _isPopupSceneLoaded = isPopupSceneLoaded;
-        _popupSceneName = popupName;
-    }
-    #endregion
 
     public bool HasLoginPopupLoad()
     {

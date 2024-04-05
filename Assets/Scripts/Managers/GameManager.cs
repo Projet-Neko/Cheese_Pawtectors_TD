@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Slider _loadingSlider;
     [SerializeField] private TMP_Text _loadingText;
 
+    [SerializeField] private GameObject _catPrefab;
+    [SerializeField] private GameObject _mousePrefab;
+
     // --- Requests events ---
     public static event Action<string> OnError;
     public static event Action<string> OnSuccessMessage;
@@ -210,6 +213,18 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("debug of game manager");
         //DeleteLocalDatas(); // Reset local datas
+        GameObject gameObject = Instantiate(_catPrefab, transform.position, Quaternion.identity);
+        Cat catComponent = gameObject.GetComponent<Cat>();
+
+        GameObject gameObject2 = Instantiate(_mousePrefab, transform.position, Quaternion.identity);
+        Mouse mouseComponent = gameObject2.GetComponent<Mouse>();
+
+        Mod<Mod_PowerUp>().ActivatePowerUp(PowerUpType.NoSatiety);
+        if (IsPowerUpActive(PowerUpType.NoSatiety))
+        {
+            Debug.Log($"Cat current satiety(noSatiety)" + Mod<Mod_PowerUp>().ActivePowerUps + "lol");
+        }
+        catComponent.TakeDamage(mouseComponent);
     }
 
     private void OnApplicationPause(bool pause)

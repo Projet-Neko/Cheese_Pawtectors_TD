@@ -16,6 +16,8 @@ public class Mod_PowerUp : Module
     // List of single elements
     private HashSet<PowerUpType> activePowerUps = new HashSet<PowerUpType>();
 
+    public HashSet<PowerUpType> ActivePowerUps => activePowerUps;
+
     public bool IsPowerUpActive(PowerUpType powerUpType)
     {
         return activePowerUps.Contains(powerUpType);

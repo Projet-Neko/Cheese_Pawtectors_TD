@@ -1337,6 +1337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: MainScreen
+  _headBand: 
   _isPermanent: 0
 --- !u!1001 &636459826
 PrefabInstance:
@@ -1465,10 +1466,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8009994241535558679, guid: 4bdcf903d67a57447b80db86a60756d2, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6986865641701312730, guid: 4bdcf903d67a57447b80db86a60756d2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1917506712}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4919331947564146713, guid: 4bdcf903d67a57447b80db86a60756d2, type: 3}
       insertIndex: -1
@@ -1673,6 +1671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: LoginPopup
+  _headBand: 
   _isPermanent: 0
 --- !u!114 &756218756
 MonoBehaviour:
@@ -2702,6 +2701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: Profil
+  _headBand: 
   _isPermanent: 0
 --- !u!1 &1917506711
 GameObject:
@@ -2736,7 +2736,7 @@ RectTransform:
   - {fileID: 960352064}
   - {fileID: 637914997}
   - {fileID: 936284027}
-  m_Father: {fileID: 636459827}
+  m_Father: {fileID: 2097585412}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2990,6 +2990,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 636459827}
+  - {fileID: 1917506712}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

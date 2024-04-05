@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
     public void AlbinoHasSpawned() => Mod<Mod_Entities>().AlbinoHasSpawned();
 
     // WaveMod
-    public int EnemyNumber => Mod<Mod_Waves>().EnemyNumber;
+    public int KilledEnemiesNumber => Mod<Mod_Waves>().KilledEnemiesNumber;
     public int MaxEnemyNumber => Mod<Mod_Waves>().MaxEnemyNumber;
     public int SpawnTime => Mod<Mod_Waves>().SpawnTime;
 
@@ -122,7 +122,11 @@ public class GameManager : MonoBehaviour
     {
         _loadingSlider.value += Mathf.Ceil(100.0f / _modules.Count);
         _loadingText.text = _loadingSlider.value.ToString() + "%";
-        if (mod == typeof(Mod_Account)) Mod<Mod_Economy>().Init(this);
+        if (mod == typeof(Mod_Account))
+        {
+            Mod<Mod_Economy>().Init(this);
+            _loadingSlider.gameObject.SetActive(true);
+        }
         else if (mod == typeof(Mod_Economy)) Mod<Mod_Clans>().Init(this);
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
         FindObjectOfType<Mod_Audio>().StartMainMusic();

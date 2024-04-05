@@ -4,19 +4,16 @@ using UnityEngine;
 
 public enum PowerUpType
 {
-    NoSatiety,
-    DoubleMeat,
-    DoubleDamage,
-    DoubleAttackSpeed
+    NoSatiety = 60,
+    DoubleMeat = 120,
+    DoubleDamage = 120,
+    DoubleAttackSpeed = 60
 }
 
 
 public class Mod_PowerUp : Module
 {
-
-    private PowerUpType _powerUpType = PowerUpType.None;
-    public PowerUpType PowerUpType => _powerUpType;
-
+    // List of single elements
     private HashSet<PowerUpType> activePowerUps = new HashSet<PowerUpType>();
 
     public bool IsPowerUpActive(PowerUpType powerUpType)
@@ -24,9 +21,10 @@ public class Mod_PowerUp : Module
         return activePowerUps.Contains(powerUpType);
     }
 
-    public void ActivatePowerUp(PowerUpType powerUpType, float duration)
+    public void ActivatePowerUp(PowerUpType powerUpType)
     {
         activePowerUps.Add(powerUpType);
+        float duration = (float)powerUpType;
         StartCoroutine(ResetPowerUp(powerUpType, duration));
     }
 

@@ -65,11 +65,10 @@ public class Cat : Entity
     public void LevelUp()
     {
         _level++;
-
-        if (_data.State == CatState.Lock) OnUnlock?.Invoke(_level - 1);
-
         Init(_level);
         //Debug.Log($"Level up to lvl {_level}");
+
+        if (_data.State == CatState.Lock) OnUnlock?.Invoke(_level - 1);
     }
 
     public override void TakeDamage(Entity source)

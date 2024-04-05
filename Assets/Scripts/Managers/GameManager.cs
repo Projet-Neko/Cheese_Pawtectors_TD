@@ -19,9 +19,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Slider _loadingSlider;
     [SerializeField] private TMP_Text _loadingText;
 
-    //Audio Manager
-    private AudioManager _audioManager;
-
     // --- Requests events ---
     public static event Action<string> OnError;
     public static event Action<string> OnSuccessMessage;
@@ -115,10 +112,10 @@ public class GameManager : MonoBehaviour
         Mod<Mod_Waves>().Init(this);
         Mod<Mod_Leaderboards>().Init(this);
         Mod<Mod_Account>().Init(this);
+        Mod<Mod_Audio>().Init(this);
 
-        //Audio
-        _audioManager = FindObjectOfType<AudioManager>();
-        _audioManager.StartTitleMusic();
+        FindObjectOfType<Mod_Audio>().StartTitleMusic();
+
     }
 
     private void Module_OnInitComplete(Type mod)
@@ -132,6 +129,8 @@ public class GameManager : MonoBehaviour
         }
         else if (mod == typeof(Mod_Economy)) Mod<Mod_Clans>().Init(this);
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
+        FindObjectOfType<Mod_Audio>().StartMainMusic();
+
     }
 
     private void OnDestroy()

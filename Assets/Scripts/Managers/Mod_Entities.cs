@@ -25,7 +25,7 @@ public class Mod_Entities : Module
     private void OnDestroy()
     {
         Cheese.OnInit -= Cheese_OnInit;
-        Cat.OnUnlock += Cat_OnUnlock;
+        Cat.OnUnlock -= Cat_OnUnlock;
         Mod_Waves.OnWaveReload -= M_Wave_OnWaveReload;
     }
 
@@ -50,9 +50,7 @@ public class Mod_Entities : Module
 
     private void Cat_OnUnlock(int catIndex)
     {
-        Debug.Log(catIndex);
-        Debug.Log(_cats.Length);
-        Debug.Log($"{_cats[catIndex].Name} is unlocked !");
+        Debug.Log($"<color=lime>{_cats[catIndex].Name} is unlocked !</color>");
         _cats[catIndex].State = CatState.Unlock;
     }
 

@@ -3,6 +3,8 @@ using System.Linq;
 
 public class Mod_Audio : Module
 {
+    AudioSource _audioSource;
+
     [Header("Musics")]
     [SerializeField] private AudioSource _titleScreen;
     [SerializeField] private AudioSource _mainScreen;
@@ -11,21 +13,21 @@ public class Mod_Audio : Module
     [SerializeField] private AudioSource _boss;
 
     [Header("SoundEffects")]
-    [SerializeField] private AudioClip _loading;
-    [SerializeField] private AudioClip _meat;
-    [SerializeField] private AudioClip _merge;
-    [SerializeField] private AudioClip _albinos;
-    [SerializeField] private AudioClip _button;
-    [SerializeField] private AudioClip _newRoomOrCat;
-    [SerializeField] private AudioClip _mouse;
-    [SerializeField] private AudioClip _chase;
-    [SerializeField] private AudioClip _catBox;
-    [SerializeField] private AudioClip _addCat;
-    [SerializeField] private AudioClip _fight;
-    [SerializeField] private AudioClip _catFull;
-    [SerializeField] private AudioClip _dragCoin;
-    [SerializeField] private AudioClip _dropCoin;
-    [SerializeField] private AudioClip _full;
+    public AudioClip _loading;
+    public AudioClip _meat;
+    public AudioClip _merge;
+    public AudioClip _albinos;
+    public AudioClip _button;
+    public AudioClip _newRoomOrCat;
+    public AudioClip _mouse;
+    public AudioClip _chase;
+    public AudioClip _catBox;
+    public AudioClip _addCat;
+    public AudioClip _fight;
+    public AudioClip _catFull;
+    public AudioClip _dragCoin;
+    public AudioClip _dropCoin;
+    public AudioClip _full;
 
 
     private bool _titleIsPlaying = false;
@@ -33,8 +35,11 @@ public class Mod_Audio : Module
     private bool _buildIsPlaying = false;
     private bool _shopIsPlaying = false;
     private bool _bossIsPlaying = false;
-    
 
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
     public void StartTitleMusic()
     {
         if (!_titleIsPlaying)
@@ -115,5 +120,80 @@ public class Mod_Audio : Module
             _shopIsPlaying = false;
             _bossIsPlaying = true;
         }
+    }
+    public void LoadingSound()
+    {
+        _audioSource.clip = _loading;
+        _audioSource.Play();
+    }
+    public void MeatSound()
+    {
+        _audioSource.clip = _meat;
+        _audioSource.Play();
+    }
+    public void MergeSound()
+    {
+        _audioSource.clip = _merge;
+        _audioSource.Play();
+    }
+    public void AlbinosSound()
+    {
+        _audioSource.clip = _albinos;
+        _audioSource.Play();
+    }
+    public void ButtonSound()
+    {
+        _audioSource.clip = _button;
+        _audioSource.Play();
+    }
+    public void NewRoomOrCatSound()
+    {
+        _audioSource.clip = _newRoomOrCat;
+        _audioSource.Play();
+    }
+    public void MouseSound()
+    {
+        _audioSource.clip = _mouse;
+        _audioSource.Play();
+    }
+    public void ChaseSound()
+    {
+        _audioSource.clip = _chase;
+        _audioSource.Play();
+    }
+    public void CatBoxSound()
+    {
+        _audioSource.clip = _catBox;
+        _audioSource.Play();
+    }
+    public void AddCatSound()
+    {
+        _audioSource.clip = _addCat;
+        _audioSource.Play();
+    }
+    public void FightSound()
+    {
+        _audioSource.clip = _fight;
+        _audioSource.Play();
+    }
+    public void CatFullSound()
+    {
+        _audioSource.clip = _catFull;
+        _audioSource.Play();
+    }
+    public void DragCoinSound()
+    {
+        _audioSource.clip = _dragCoin;
+        _audioSource.Play();
+    }
+    public void DropCoinSound()
+    {
+        _audioSource.clip = _dropCoin;
+        _audioSource.Play();
+    }
+    public void FullSound()
+    {
+        _audioSource.clip = _full;
+        _audioSource.Play();
     }
 }

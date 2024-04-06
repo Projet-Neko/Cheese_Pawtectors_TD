@@ -29,96 +29,64 @@ public class Mod_Audio : Module
     public AudioClip _dropCoin;
     public AudioClip _full;
 
-
-    private bool _titleIsPlaying = false;
-    private bool _mainIsPlaying = false;
-    private bool _buildIsPlaying = false;
-    private bool _shopIsPlaying = false;
-    private bool _bossIsPlaying = false;
-
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
     }
     public void StartTitleMusic()
     {
-        if (!_titleIsPlaying)
+        if (!_titleScreen.isPlaying)
         {
             _titleScreen.Play();
             _mainScreen.Stop();
             _build.Stop();
             _shop.Stop();
             _boss.Stop();
-            _titleIsPlaying = true;
-            _mainIsPlaying = false;
-            _buildIsPlaying = false;
-            _shopIsPlaying = false;
-            _bossIsPlaying = false;
         }
     }
 
     public void StartMainMusic()
     {
-        if (!_mainIsPlaying)
+        if (!_mainScreen.isPlaying)
         {
             _titleScreen.Stop();
             _mainScreen.Play();
             _build.Stop();
             _shop.Stop();
             _boss.Stop();
-            _titleIsPlaying = false;
-            _mainIsPlaying = true;
-            _buildIsPlaying = false;
-            _shopIsPlaying = false;
-            _bossIsPlaying = false;
         }
     }
     public void StartBuildMusic()
     {
-        if (!_buildIsPlaying)
+        if (!_build.isPlaying)
         {
             _titleScreen.Stop();
             _mainScreen.Stop();
             _build.Play();
             _shop.Stop();
             _boss.Stop();
-            _titleIsPlaying = false;
-            _mainIsPlaying = false;
-            _buildIsPlaying = true;
-            _shopIsPlaying = false;
-            _bossIsPlaying = false;
         }
     }
     public void StartShopMusic()
     {
-        if (!_shopIsPlaying)
+        if (!_shop.isPlaying)
         {
             _titleScreen.Stop();
             _mainScreen.Stop();
             _build.Stop();
             _shop.Play();
             _boss.Stop();
-            _titleIsPlaying = false;
-            _mainIsPlaying = false;
-            _buildIsPlaying = false;
-            _shopIsPlaying = true;
-            _bossIsPlaying = false;
         }
     }
     public void StartBossMusic()
     {
-        if (!_bossIsPlaying)
+        if (!_boss.isPlaying)
         {
             _titleScreen.Stop();
             _mainScreen.Stop();
             _build.Stop();
             _shop.Stop();
             _boss.Play();
-            _titleIsPlaying = false;
-            _mainIsPlaying = false;
-            _buildIsPlaying = false;
-            _shopIsPlaying = false;
-            _bossIsPlaying = true;
         }
     }
     public void LoadingSound()

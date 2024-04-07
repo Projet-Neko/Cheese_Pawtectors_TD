@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class CatBoxSpawner : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class CatBoxSpawner : MonoBehaviour
     [Header("Spawn Time")]
     [SerializeField] private float minSpawnTime = 15f;
     [SerializeField] private float maxSpawnTime = 20f;
+
+    private List<int> _availableSlots;
 
     private void Awake()
     {
@@ -31,13 +34,30 @@ public class CatBoxSpawner : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(UnityEngine.Random.Range(minSpawnTime, maxSpawnTime)); // Attente du délai aléatoire
-            Debug.Log("spawning");
+            if (!CanSpawn()) continue;
 
             int randomSlotIndex = UnityEngine.Random.Range(0, _slots.Length);
-            Transform selectedSlot = _slots[randomSlotIndex];
+            
+            while (!_availableSlots.Contains(randomSlotIndex))
+            {
+                randomSlotIndex = UnityEngine.Random.Range(0, _slots.Length);
+            }
 
+            Transform selectedSlot = _slots[randomSlotIndex];
             if (selectedSlot.childCount == 0) SpawnBox(selectedSlot);
         }
+    }
+
+    private bool CanSpawn()
+    {
+        _availableSlots = new();
+
+        foreach (var slot in _slots)
+        {
+            if (slot.childCount == 0) _availableSlots.Add(int.Parse(slot.name.Split('_')[1]));
+        }
+
+        return _availableSlots.Count > 2;
     }
 
     private void SpawnBox(Transform slot)

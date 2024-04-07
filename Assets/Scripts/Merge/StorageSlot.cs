@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class StorageSlot : DragAndDropHandler
 {
-    public static event Action<int, int> OnSlotChanged;
+    public static event Action<int, int> OnSlotChanged; // Slot index, cat level
 
     [SerializeField] private Cat _currentCat;
 

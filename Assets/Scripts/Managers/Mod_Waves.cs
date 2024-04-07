@@ -76,7 +76,7 @@ public class Mod_Waves : Module
         {
             Mouse m = Instantiate(_mousePrefab, _SpawnPos, Quaternion.identity).GetComponent<Mouse>();
             m.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-            m.gameObject.name = $"{m.gameObject.name} #{index}";
+            m.WaveIndex = index + 1;
             _spawnedEnemyNumber++;
             index++;
             _enemyObjects.Add(m.gameObject);

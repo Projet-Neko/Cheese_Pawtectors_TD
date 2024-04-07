@@ -205,8 +205,7 @@ public class GameManager : MonoBehaviour
 
     private void DebugOnly()
     {
-        Debug.Log("debug of game manager");
-        //DeleteLocalDatas(); // Reset local datas
+        //DeleteAccountData();
     }
 
     private void OnApplicationPause(bool pause)
@@ -259,9 +258,9 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public void DeleteLocalDatas()
+    public void DeleteAccountData()
     {
         _data = new();
-        _data.Update();
+        StartCoroutine(Mod<Mod_Account>().UpdateData());
     }
 }

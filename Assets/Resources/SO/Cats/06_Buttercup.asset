@@ -15,3 +15,4 @@ MonoBehaviour:
   SpriteAbove: {fileID: 0}
   SpriteFront: {fileID: 0}
   Lore: "Une bo\xEEte ? Instantan\xE9ment, il y saute."
+  State: 0

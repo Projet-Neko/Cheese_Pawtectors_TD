@@ -87,7 +87,7 @@ public class Data
 
         for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
         {
-            GameManager.Instance.Cats[i].State = CatsUnlocked[i] ? CatState.Unlock : CatState.Lock;
+            //GameManager.Instance.Cats[i].State = CatsUnlocked[i] ? CatState.Unlock : CatState.Lock;
             if (CatsUnlocked[i]) LastCatUnlockedIndex = i;
         }
 

@@ -20,10 +20,16 @@ public class DragAndDrop : MonoBehaviour
         transform.position = new Vector3(mousePosition.x, mousePosition.y, transform.position.z);
     }
 
-    private void OnMouseDown() => Grab(true);
+    private void OnMouseDown()
+    {
+        if (GameManager.Instance.IsPopupSceneLoaded) return;
+        Grab(true);
+    }
 
     private void OnMouseUp()
     {
+        if (!_isBeingDragged) return;
+
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = -1f;
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);

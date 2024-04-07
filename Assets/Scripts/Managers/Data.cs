@@ -141,10 +141,18 @@ public class Data
         Update();
     }
 
-    public void UpdateWaves()
+    public void UpdateWaves(bool won, bool bossFightLost = false)
     {
-        MouseLevel++;
-        WaveNumber++;
+        if (!won && bossFightLost)
+        {
+            WaveNumber--;
+        }
+        else if (won)
+        {
+            MouseLevel++;
+            WaveNumber++;
+        }
+
         Update();
     }
 

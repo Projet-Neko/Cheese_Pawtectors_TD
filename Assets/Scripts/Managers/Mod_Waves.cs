@@ -87,17 +87,16 @@ public class Mod_Waves : Module
         yield return null;
     }
 
-    private void Entity_OnDeath(Entity obj, bool hasBeenKilledByPlayer)
+    private void Entity_OnDeath(Entity entity, bool hasBeenKilledByPlayer)
     {
-        if (obj is Cheese)
+        if (entity is Cheese)
         {
             _cheeseDead = true;
-            Reload();
+            GameOver();
         }
-        else if (obj is Mouse && !_cheeseDead)
+        else if (entity is Mouse && !_cheeseDead)
         {
             _killedEnemiesNumber++;
-            _spawnedEnemyNumber--;
         }
     }
 
@@ -109,9 +108,15 @@ public class Mod_Waves : Module
 
     public void NextWave()
     {
-        _gm.Data.UpdateWaves();
+        _gm.Data.UpdateWaves(true);
         Debug.Log($"Next wave : {_gm.Data.WaveNumber}.");
 
+        Reload();
+    }
+
+    private void GameOver()
+    {
+        _gm.Data.UpdateWaves(false, IsBossWave());
         Reload();
     }
 

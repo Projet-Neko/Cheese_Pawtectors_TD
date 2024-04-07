@@ -22,6 +22,7 @@ public class Data
 
     // Economy
     public List<int> AmountOfPurchases = new();
+    public List<Data_Currencies> Currencies = new();
 
     // Rooms
     public List<Data_Rooms> Rooms = new();
@@ -74,9 +75,14 @@ public class Data
         Data data = JsonUtility.FromJson<Data>(json);
         MouseLevel = data.MouseLevel;
         WaveNumber = data.WaveNumber;
-        AmountOfPurchases = data.AmountOfPurchases;
         CatsUnlocked = data.CatsUnlocked;
         Storage = data.Storage;
+
+        // Economy
+        AmountOfPurchases = data.AmountOfPurchases;
+        Currencies = data.Currencies;
+
+        // Rooms
         Rooms = data.Rooms;
 
         // Social

@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
     private int _requests;
     public string Token { get; set; }
     public PlayFab.ClientModels.EntityKey Entity => Mod<Mod_Account>().Entity;
-    //public bool AccountChecked { get; set; }
     //public bool IsObsolete { get; private set; }
 
     // --- Datas ---
@@ -68,7 +67,6 @@ public class GameManager : MonoBehaviour
     public bool IsBossWave() => Mod<Mod_Waves>().IsBossWave();
 
     // EconomyMod
-    public Dictionary<Currency, int> Currencies => Mod<Mod_Economy>().Currencies;
     public List<int> CatPrices => Mod<Mod_Economy>().CatPrices;
 
     public int MeatPerSecond() => Mod<Mod_Economy>().MeatPerSecond();
@@ -116,7 +114,6 @@ public class GameManager : MonoBehaviour
         Mod<Mod_Audio>().Init(this);
 
         FindObjectOfType<Mod_Audio>().StartTitleMusic();
-
     }
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
@@ -136,15 +133,17 @@ public class GameManager : MonoBehaviour
     {
         _loadingSlider.value += Mathf.Ceil(100.0f / _modules.Count);
         _loadingText.text = _loadingSlider.value.ToString() + "%";
+
         if (mod == typeof(Mod_Account))
         {
             Mod<Mod_Economy>().Init(this);
             _loadingSlider.gameObject.SetActive(true);
         }
+
         else if (mod == typeof(Mod_Economy)) Mod<Mod_Clans>().Init(this);
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
-        FindObjectOfType<Mod_Audio>().StartMainMusic();
 
+        FindObjectOfType<Mod_Audio>().StartMainMusic();
     }
 
     private void OnDestroy()
@@ -198,14 +197,14 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(60);
             Debug.Log("Starting auto save...");
-            foreach (var currency in Currencies) yield return Mod<Mod_Economy>().UpdateCurrency(currency.Key);
+            foreach (var currency in _data.Currencies) yield return Mod<Mod_Economy>().UpdateCurrency((Currency)currency.Index);
             yield return Mod<Mod_Account>().UpdateData();
         }
     }
 
     private void DebugOnly()
     {
-        //DeleteLocalDatas(); // Reset local datas
+        //DeleteAccountData();
     }
 
     private void OnApplicationPause(bool pause)
@@ -258,9 +257,10 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public void DeleteLocalDatas()
+    public void DeleteAccountData()
     {
         _data = new();
-        _data.Update();
+        Mod<Mod_Economy>().UpdateCatPrices();
+        StartCoroutine(Mod<Mod_Account>().UpdateData());
     }
 }

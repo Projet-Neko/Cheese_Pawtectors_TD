@@ -5,8 +5,6 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
-// TODO -> save clan as local data
-
 [Serializable]
 public class Data
 {
@@ -24,11 +22,13 @@ public class Data
 
     // Economy
     public List<int> AmountOfPurchases = new();
+    public List<Data_Currencies> Currencies = new();
 
     // Rooms
     public List<Data_Rooms> Rooms = new();
 
     // Social
+    public int Clan = -1;
     public List<Data_Leaderboards> Leaderboards = new();
     public int Score => Leaderboards[0].Value;
 
@@ -75,16 +75,25 @@ public class Data
         Data data = JsonUtility.FromJson<Data>(json);
         MouseLevel = data.MouseLevel;
         WaveNumber = data.WaveNumber;
-        AmountOfPurchases = data.AmountOfPurchases;
         CatsUnlocked = data.CatsUnlocked;
         Storage = data.Storage;
+
+        // Economy
+        AmountOfPurchases = data.AmountOfPurchases;
+        Currencies = data.Currencies;
+
+        // Rooms
         Rooms = data.Rooms;
+
+        // Social
+        Clan = data.Clan;
         Leaderboards = data.Leaderboards;
+
         _lastUpdate = DateTime.Parse(data.LastUpdateString);
 
         for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
         {
-            GameManager.Instance.Cats[i].State = CatsUnlocked[i] ? CatState.Unlock : CatState.Lock;
+            //GameManager.Instance.Cats[i].State = CatsUnlocked[i] ? CatState.Unlock : CatState.Lock;
             if (CatsUnlocked[i]) LastCatUnlockedIndex = i;
         }
 
@@ -142,6 +151,12 @@ public class Data
     public void UpdateStorage(int slotIndex, int catIndex)
     {
         Storage[slotIndex].CatIndex = catIndex;
+        Update();
+    }
+
+    public void UpdateClan(Clan clan)
+    {
+        Clan = (int)clan;
         Update();
     }
 

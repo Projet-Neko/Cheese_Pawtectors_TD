@@ -1,9 +1,11 @@
 using AYellowpaper.SerializedCollections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class House : MonoBehaviour
 {
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
+    [SerializeField] private GameObject _mousePrefab;
 
     private const int _maxRooms = 30;
     private const int _minRooms = 5;
@@ -12,6 +14,8 @@ public class House : MonoBehaviour
 
     private Room[,] _roomsGrid = new Room[_maxRooms, _maxRooms];
     private IdRoom _idStartRoom;
+
+    private List<Mouse> _mouseList = new();
 
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
@@ -57,6 +61,7 @@ public class House : MonoBehaviour
         AddRoom(2, 0, RoomPattern.CrossraodRoom);
         AddRoom(0, 0, RoomPattern.CrossraodRoom);
         //RemoveRoom(2, 1);
+        _mouseList.Add(Instantiate(_mousePrefab, new Vector3(_idStartRoom.x, _idStartRoom.y, -2), Quaternion.identity).GetComponent<Mouse>());
     }
 
     private void OnDestroy()

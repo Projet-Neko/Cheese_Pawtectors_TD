@@ -22,7 +22,9 @@ public class StorageSlot : DragAndDropHandler
 
     public override void HandleDragAndDrop(Cat cat, Vector3 initialPosition)
     {
+        if (transform.childCount == 0) _currentCat = null;
         _previousSlotIndex = int.Parse(cat.transform.parent.name.Split('_')[1]);
+        //Debug.Log(_currentCat == null ? "No current cat" : _currentCat.gameObject.name);
 
         if (_currentCat == null) MoveCat(cat);
         else if (_currentCat.Level == cat.Level) MergeCat(cat);

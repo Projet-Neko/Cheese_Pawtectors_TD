@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Leaderboards.unity
     guid: 72eaa0f111d48124599429e4905bda1b
   - enabled: 1
-    path: Assets/Scenes/Settings.unity
+    path: Assets/Scenes/Phone/Settings.unity
     guid: 979153e39fd53e34489c2a65468774e8
   - enabled: 1
     path: Assets/Scenes/Build.unity

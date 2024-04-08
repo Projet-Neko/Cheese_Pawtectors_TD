@@ -6,6 +6,7 @@ using UnityEngine;
 public class Mod_Waves : Module
 {
     public static event Action OnWaveReload;
+    public static event Action OnBossDefeated;
 
     [SerializeField] private GameObject _mousePrefab;
     [SerializeField] private int _spawnTime = 1;
@@ -47,7 +48,7 @@ public class Mod_Waves : Module
 
     private void Update()
     {
-        if (_hasCompleteSpawning && _killedEnemiesNumber == _maxEnemyNumber) NextWave();
+        
     }
 
     public override void Init(GameManager gm)
@@ -98,6 +99,12 @@ public class Mod_Waves : Module
         {
             _killedEnemiesNumber++;
             _spawnedEnemyNumber--;
+
+            if (obj is Mouse m && m.IsBoss)
+            {
+                OnBossDefeated?.Invoke();
+            }
+            if (_hasCompleteSpawning && _killedEnemiesNumber == _maxEnemyNumber) NextWave();
         }
     }
 

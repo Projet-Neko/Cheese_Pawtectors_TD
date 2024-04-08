@@ -48,6 +48,7 @@ public class House : MonoBehaviour
         // Subscribe to events
         Room.ChangeTilePosition += CheckRoomPosition;
         Room.TileDestroyed += CreateRoom;
+        Mod_Waves.OnBossDefeated += CreateRandomRoom;
 
         // TO DO : TO REMOVE (is a test)
         AddRoom(1, 2, RoomPattern.CorridorRoom);
@@ -81,9 +82,9 @@ public class House : MonoBehaviour
         _roomsGrid[x, y] = roomObject.GetComponentInChildren<Room>();
     }
 
-    /*private void CreateRandomRoom()
+    private void CreateRandomRoom()
     {
-        int random = UnityEngine.Random.Range(0, 2);
+        /*int random = UnityEngine.Random.Range(0, 2);
         RoomPattern roomPattern;
         switch (random)
         {
@@ -103,10 +104,12 @@ public class House : MonoBehaviour
                 roomPattern = RoomPattern.CorridorRoom;
                 break;
         }
-        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity); // TO DO : Change the position to inventaire
         roomObject.transform.parent = transform;
-        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();
-    }*/
+        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();*/
+
+        // TO DO : Add the (image of the) room to the inventory 
+    }
 
     /* * * * * * * * * * * * * * * * * * * *
      *          HUD INTERACTIONS

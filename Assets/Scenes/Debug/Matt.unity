@@ -3535,10 +3535,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TurnRoom
       objectReference: {fileID: 0}
-    - target: {fileID: 675617977283199060, guid: 31da9b6ca26f9cf4ea088ac4657ef23e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6618524555710191469, guid: 31da9b6ca26f9cf4ea088ac4657ef23e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.66184
@@ -3636,10 +3632,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CrossraodRoom
       objectReference: {fileID: 0}
-    - target: {fileID: 4366641987968570484, guid: 13484126a83c4cc4088d338e72f851b3, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3656,10 +3648,6 @@ PrefabInstance:
     - target: {fileID: 3913000099428562036, guid: 489e24520099990468a4fa812e0e61b4, type: 3}
       propertyPath: m_Name
       value: StartRoom
-      objectReference: {fileID: 0}
-    - target: {fileID: 3913000099428562036, guid: 489e24520099990468a4fa812e0e61b4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5031148661404859147, guid: 489e24520099990468a4fa812e0e61b4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3757,10 +3745,6 @@ PrefabInstance:
     - target: {fileID: 104032388545238699, guid: d8944dbd0f37f6447926bc4ea325426b, type: 3}
       propertyPath: m_Name
       value: CorridorRoom
-      objectReference: {fileID: 0}
-    - target: {fileID: 104032388545238699, guid: d8944dbd0f37f6447926bc4ea325426b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

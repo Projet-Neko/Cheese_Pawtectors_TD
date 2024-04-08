@@ -121,6 +121,7 @@ public class Room : MonoBehaviour
         if (_moveModBool && _canMove)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //mousePosition.z = mousePosition.y;
             _room.transform.position = RoundPosition(mousePosition);
         }
     }
@@ -132,9 +133,9 @@ public class Room : MonoBehaviour
     private Vector3 RoundPosition(Vector3 startPosition)
     {
         Vector3 position = startPosition;
-        position.x = Mathf.Round(position.x);
-        position.y = Mathf.Round(position.y);
-        position.z = -1;                        // To be sure the room is in front of the other rooms
+        position.x = Mathf.Round(position.x);                        
+        position.y = _oldPosition.y;                                // To be sure the room is on the same line
+        position.z = Mathf.Round(position.z);
 
         return position;
     }
@@ -180,22 +181,7 @@ public class Room : MonoBehaviour
 
     private void DeselectTile(bool deselect)
     {
-        if (!_isSelected)
-        {
-            // If the room is not selected, hide the HUD gameobject
-            if (_HUDCanva != null)
-                _HUDCanva.SetActive(false);
-
-            // If the room is not selected, hide the Move Arrow gameobject
-            if (_moveModBool)
-            {
-                _moveModBool = false;
-                _moveModCanva.SetActive(false);
-                MoveRoomOldPosition();
-            }
-            _anotherTileSelected = deselect;
-        }
-        //_isSelected = false;
+        if (!_isSelected) _anotherTileSelected = deselect;
     }
 
     /* * * * * * * * * * * * * * * * * * * *
@@ -224,6 +210,8 @@ public class Room : MonoBehaviour
         _moveModCanva.SetActive(false);                                                 // Hide the Move Canvas
         _isSelected = false;
         _room.transform.position = _oldPosition;
+        TileSelected?.Invoke(false); 
+
     }
 
     // When user click on Canvas/Move Arrow/Done button
@@ -274,22 +262,22 @@ public class Room : MonoBehaviour
     /****** ROTATE ROOM ******/
 
     // When user click on Canvas/HUD/Rotate [Clock/AntiClock]
-    public void RotationRoom(bool clockwise)
+    public void RotationRoom(bool clockwise) 
     {
         Vector3 rotation = transform.eulerAngles;
 
         if (clockwise)
         {
-            rotation.z -= 90;
+            rotation.y -= 90;
 
-            if (rotation.z >= 360) rotation.z -= 360;
+            if (rotation.y >= 360) rotation.y -= 360;
 
         }
         else
         {
-            rotation.z += 90;
+            rotation.y += 90;
 
-            if (rotation.z < 0) rotation.z += 360;
+            if (rotation.y < 0) rotation.y += 360;
         }
 
         transform.eulerAngles = rotation;

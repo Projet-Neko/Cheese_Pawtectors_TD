@@ -76,7 +76,7 @@ public class Cat : Entity
 
         if (GameManager.Instance.IsPowerUpActive(PowerUpType.NoSatiety))
         {
-            Debug.Log($"Cat current satiety(noSatiety) : {_currentHealth}/{_baseHealth}");
+            //Debug.Log($"Cat current satiety(noSatiety) : {_currentHealth}/{_baseHealth}");
             return;
         }
         else

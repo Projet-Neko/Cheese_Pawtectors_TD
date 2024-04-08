@@ -33,7 +33,12 @@ public class Mod_Audio : Module
     private bool _buildIsPlaying = false;
     private bool _shopIsPlaying = false;
     private bool _bossIsPlaying = false;
-    
+
+    public override void Init(GameManager gm)
+    {
+        base.Init(gm);
+        InitComplete();
+    }
 
     public void StartTitleMusic()
     {

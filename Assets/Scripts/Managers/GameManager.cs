@@ -88,7 +88,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         if (!CreateInstance()) return;
-        _loadingSlider.value = 0;
 
         Module.OnInitComplete += Module_OnInitComplete;
         SceneManager.sceneUnloaded += SceneManager_sceneUnloaded;
@@ -139,10 +138,7 @@ public class GameManager : MonoBehaviour
         Storage.OnCatSpawn += (slotIndex, catIndex, free) => _data.AdoptCat(catIndex - 1, slotIndex, free);
         Cat.OnUnlock += _data.UnlockCat;
 
-        Mod<Mod_Waves>().Init(this);
-        Mod<Mod_Leaderboards>().Init(this);
         Mod<Mod_Account>().Init(this);
-        Mod<Mod_Audio>().Init(this);
 
         FindObjectOfType<Mod_Audio>().StartTitleMusic();
     }
@@ -163,14 +159,14 @@ public class GameManager : MonoBehaviour
     private void Module_OnInitComplete(Type mod)
     {
         _loadingSlider.value += Mathf.Ceil(100.0f / _modules.Count);
-        _loadingText.text = _loadingSlider.value.ToString() + "%";
 
         if (mod == typeof(Mod_Account))
         {
+            Mod<Mod_Waves>().Init(this);
+            Mod<Mod_Leaderboards>().Init(this);
+            Mod<Mod_Audio>().Init(this);
             Mod<Mod_Economy>().Init(this);
-            _loadingSlider.gameObject.SetActive(true);
         }
-
         else if (mod == typeof(Mod_Economy)) Mod<Mod_Clans>().Init(this);
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
 

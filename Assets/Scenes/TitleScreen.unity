@@ -830,7 +830,7 @@ RectTransform:
   m_Father: {fileID: 1861099775}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1122,13 +1122,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1346184815}
   - component: {fileID: 1346184816}
+  - component: {fileID: 1346184817}
   m_Layer: 5
   m_Name: LoadingBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1346184815
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1145,9 +1146,9 @@ RectTransform:
   - {fileID: 1997275815}
   m_Father: {fileID: 1762167956}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 540, y: -600}
   m_SizeDelta: {x: 980, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1346184816
@@ -1201,6 +1202,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1346184817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346184814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0e7e94b418caaf44b71963972af2f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loadingTips: {fileID: 1997275816}
+  _tips: {fileID: 11400000, guid: 9e266e9e38bf9a3498ae53c319307f00, type: 2}
 --- !u!1 &1394708820
 GameObject:
   m_ObjectHideFlags: 0
@@ -1359,6 +1374,7 @@ MonoBehaviour:
   - {fileID: 157242877}
   - {fileID: 1810181505}
   _checkingText: {fileID: 150561637}
+  _loadingGO: {fileID: 1346184814}
 --- !u!114 &1399233956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1815,10 +1831,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1346184815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1997275816
 MonoBehaviour:
@@ -1840,7 +1856,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0%
+  m_text: Loading Tips...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

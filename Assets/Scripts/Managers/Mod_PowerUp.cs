@@ -10,7 +10,6 @@ public enum PowerUpType
     DoubleAttackSpeed
 }
 
-
 public class Mod_PowerUp : Module
 {
     // List of single elements
@@ -26,6 +25,12 @@ public class Mod_PowerUp : Module
         { PowerUpType.DoubleDamage, 120f },
         { PowerUpType.DoubleAttackSpeed, 60f }
     };
+
+    public override void Init(GameManager gm)
+    {
+        base.Init(gm);
+        InitComplete();
+    }
 
     private float GetDuration(PowerUpType powerUpType)
     {

@@ -7,7 +7,7 @@ public class Module : MonoBehaviour
 
     protected GameManager _gm;
 
-    private void OnDestroy() => Debug.Log($"<color=red>Module {GetType().Name} destroyed</color>");
+    //private void OnDestroy() => Debug.Log($"<color=red>Module {GetType().Name} destroyed</color>");
 
     public virtual void Init(GameManager gm) { _gm = gm; }
 

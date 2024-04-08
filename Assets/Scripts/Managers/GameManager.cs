@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using PlayFab;
 using System;
 using System.Collections;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private List<Module> _modules;
+    [SerializeField, Scene] private string _loadingPopup;
 
     [Header("Loading Bar")]
     [SerializeField] private Slider _loadingSlider;
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
     private int _requests;
     public string Token { get; set; }
     public PlayFab.ClientModels.EntityKey Entity => Mod<Mod_Account>().Entity;
+    private bool _isLoadingPopupOpen;
 
     // --- Datas ---
     public Data Data => _data;
@@ -69,7 +72,7 @@ public class GameManager : MonoBehaviour
     // EconomyMod
     public List<int> CatPrices => Mod<Mod_Economy>().CatPrices;
 
-    public int MeatPerSecond() => Mod<Mod_Economy>().MeatPerSecond();
+    public int TreatPerSecond() => Mod<Mod_Economy>().MeatPerSecond();
     public int GetCheapestCatIndex() => Mod<Mod_Economy>().GetCheapestCatIndex();
     public void AddCurrency(Currency currency, int amount) => Mod<Mod_Economy>().AddCurrency(currency, amount);
     public void RemoveCurrency(Currency currency, int amount) => Mod<Mod_Economy>().RemoveCurrency(currency, amount);
@@ -91,7 +94,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         if (!CreateInstance()) return;
-        _loadingSlider.value = 0;
 
         Module.OnInitComplete += Module_OnInitComplete;
         SceneManager.sceneUnloaded += SceneManager_sceneUnloaded;
@@ -142,10 +144,7 @@ public class GameManager : MonoBehaviour
         Storage.OnCatSpawn += (slotIndex, catIndex, free) => _data.AdoptCat(catIndex - 1, slotIndex, free);
         Cat.OnUnlock += _data.UnlockCat;
 
-        Mod<Mod_Waves>().Init(this);
-        Mod<Mod_Leaderboards>().Init(this);
         Mod<Mod_Account>().Init(this);
-        Mod<Mod_Audio>().Init(this);
 
         FindObjectOfType<Mod_Audio>().StartTitleMusic();
     }
@@ -166,15 +165,18 @@ public class GameManager : MonoBehaviour
     private void Module_OnInitComplete(Type mod)
     {
         _loadingSlider.value += Mathf.Ceil(100.0f / _modules.Count);
-        _loadingText.text = _loadingSlider.value.ToString() + "%";
 
         if (mod == typeof(Mod_Account))
         {
+            Mod<Mod_Waves>().Init(this);
+            Mod<Mod_Audio>().Init(this);
             Mod<Mod_Economy>().Init(this);
-            _loadingSlider.gameObject.SetActive(true);
         }
-
-        else if (mod == typeof(Mod_Economy)) Mod<Mod_Clans>().Init(this);
+        else if (mod == typeof(Mod_Economy))
+        {
+            Mod<Mod_Leaderboards>().Init(this);
+            Mod<Mod_Clans>().Init(this);
+        }
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
 
         FindObjectOfType<Mod_Audio>().StartMainMusic();
@@ -261,6 +263,13 @@ public class GameManager : MonoBehaviour
     {
         OnLoadingStart?.Invoke();
         OnRequest?.Invoke();
+
+        if (_isInitCompleted && !_isLoadingPopupOpen)
+        {
+            _isLoadingPopupOpen = true;
+            SceneManager.LoadSceneAsync(_loadingPopup, LoadSceneMode.Additive);
+        }
+
         int currentRequest = _requests;
         _requests++;
         if (!string.IsNullOrEmpty(log)) Debug.Log($"<color=orange>{log}</color>");
@@ -270,6 +279,13 @@ public class GameManager : MonoBehaviour
     {
         OnLoadingEnd?.Invoke();
         OnEndRequest?.Invoke();
+
+        if (_isLoadingPopupOpen)
+        {
+            _isLoadingPopupOpen = false;
+            SceneManager.UnloadSceneAsync(_loadingPopup);
+        }
+
         _requests--;
 
         if (!string.IsNullOrEmpty(log))

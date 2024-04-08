@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class Mod_Audio : Module
 {
@@ -32,7 +33,14 @@ public class Mod_Audio : Module
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
+
+    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void StartTitleMusic()
     {
         if (!_titleScreen.isPlaying)
@@ -44,6 +52,7 @@ public class Mod_Audio : Module
             _boss.Stop();
         }
     }
+
 
     public void StartMainMusic()
     {

@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public static event Action OnLoadingEnd;
     public static event Action OnRequest;
     public static event Action OnEndRequest;
+    public static event Action ChangeSound;
 
     // --- Requests ---
     private int _requests;
@@ -178,7 +179,7 @@ public class GameManager : MonoBehaviour
         _isInitCompleted = true;
         DebugOnly();
         Mod<Mod_Audio>().LoadingSound();
-        Mod<Mod_Audio>().StartMainMusic();
+        //Mod<Mod_Audio>().StartMainMusic();
         yield return StartUpdates();
     }
 

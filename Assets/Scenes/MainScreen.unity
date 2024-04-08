@@ -171,6 +171,7 @@ MonoBehaviour:
   _scene: HeadBand
   _headBand: 
   _isPermanent: 1
+  _song: {fileID: 0}
 --- !u!114 &32646881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +187,7 @@ MonoBehaviour:
   _scene: LoginPopup
   _headBand: 
   _isPermanent: 0
+  _song: {fileID: 0}
 --- !u!1 &64492013
 GameObject:
   m_ObjectHideFlags: 0
@@ -1938,8 +1940,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: BO_BuildMode
-  _headBand: 
+  _headBand: LoginPopup
   _isPermanent: 0
+  _song: {fileID: 0}
 --- !u!1 &520177992
 GameObject:
   m_ObjectHideFlags: 0
@@ -4593,8 +4596,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: Catalog
-  _headBand: 
+  _headBand: LoginPopup
   _isPermanent: 0
+  _song: {fileID: 0}
 --- !u!1 &1485826812
 GameObject:
   m_ObjectHideFlags: 0
@@ -5139,6 +5143,7 @@ MonoBehaviour:
   _scene: Shop
   _headBand: HeadBand
   _isPermanent: 0
+  _song: {fileID: 0}
 --- !u!114 &1594703521
 MonoBehaviour:
   m_ObjectHideFlags: 0

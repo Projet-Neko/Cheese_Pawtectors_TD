@@ -360,6 +360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: LoginPopup
+  _headBand: LoginPopup
   _isPermanent: 0
 --- !u!1 &469949966
 GameObject:
@@ -520,6 +521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: LoginPopup
+  _headBand: LoginPopup
   _isPermanent: 0
 --- !u!1 &930292789
 GameObject:

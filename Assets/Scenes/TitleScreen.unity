@@ -565,6 +565,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 390857035}
   m_CullTransparentMesh: 1
+--- !u!1 &673151043 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4200296723891686148, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+  m_PrefabInstance: {fileID: 1318986572}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &709681146
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,6 +1379,7 @@ MonoBehaviour:
   _scene: MainScreen
   _headBand: LoginPopup
   _isPermanent: 0
+  _song: {fileID: 673151043}
 --- !u!1 &1418085829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1764,6 +1770,7 @@ MonoBehaviour:
   _scene: MainScreen
   _headBand: LoginPopup
   _isPermanent: 0
+  _song: {fileID: 0}
 --- !u!1 &1861099774
 GameObject:
   m_ObjectHideFlags: 0

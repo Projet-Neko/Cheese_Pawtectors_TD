@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     // --- Requests events ---
     public static event Action<string> OnError;
     public static event Action<string> OnSuccessMessage;
+    public static event Action OnObsoleteVersion;
 
     // --- Loading events ---
     public static event Action OnInitComplete;
@@ -35,7 +36,6 @@ public class GameManager : MonoBehaviour
     private int _requests;
     public string Token { get; set; }
     public PlayFab.ClientModels.EntityKey Entity => Mod<Mod_Account>().Entity;
-    //public bool IsObsolete { get; private set; }
 
     // --- Datas ---
     public Data Data => _data;
@@ -87,13 +87,44 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (!Init()) return;
+        if (!CreateInstance()) return;
         _loadingSlider.value = 0;
 
         Module.OnInitComplete += Module_OnInitComplete;
         SceneManager.sceneUnloaded += SceneManager_sceneUnloaded;
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 
+        StartCoroutine(CheckGameVersion());
+    }
+
+    private IEnumerator CheckGameVersion()
+    {
+        yield return StartAsyncRequest();
+
+        PlayFabClientAPI.LoginWithCustomID(new()
+        {
+            CustomId = "CheckingVersion",
+            CreateAccount = true,
+        }, res =>
+        {
+            PlayFabClientAPI.GetTitleData(new(), res =>
+            {
+                EndRequest();
+
+                if (res.Data["Version"] != Application.version)
+                {
+                    Debug.LogError("Version is obsolete !");
+                    OnObsoleteVersion?.Invoke();
+                    return;
+                }
+
+                Init();
+            }, OnRequestError);
+        }, OnRequestError);
+    }
+
+    private void Init()
+    {
         // Init all entities SO
         Mod<Mod_Entities>().Init(this);
 
@@ -158,7 +189,7 @@ public class GameManager : MonoBehaviour
         Storage.OnCatSpawn -= (slotIndex, catIndex, free) => _data.AdoptCat(catIndex - 1, slotIndex, free);
     }
 
-    private bool Init()
+    private bool CreateInstance()
     {
         if (Instance != null)
         {

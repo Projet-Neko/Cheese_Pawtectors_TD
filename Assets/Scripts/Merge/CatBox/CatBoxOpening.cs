@@ -9,6 +9,7 @@ public class CatBoxOpening : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (GameManager.Instance.IsPopupSceneLoaded) return;
         OnBoxOpen?.Invoke(transform.parent);
         Destroy(gameObject);
     }

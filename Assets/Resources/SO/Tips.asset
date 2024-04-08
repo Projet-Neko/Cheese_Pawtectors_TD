@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52b4dcde90547a14280238f8007c73b4, type: 3}
+  m_Name: Tips
+  m_EditorClassIdentifier: 
+  Tips:
+  - "Entra\xEEnement intensif des chats..."
+  - "Assemblage de pi\xE8ges \xE0 souris..."
+  - "Chargement des troupes f\xE9lines..."
+  - "Optimisation des tactiques de d\xE9fense..."
+  - "V\xE9rification des r\xE9serves d'herbe \xE0 chat..."
+  - "Aiguisage des griffes sur l'arbre \xE0 chat..."
+  - Cuisson du fromage...
+  - Distribution de friandises pour chat...
+  - "Test de rapidit\xE9 avec des lasers et des pointeurs..."
+  - "Mise en place de la machine \xE0 ronron..."
+  - "R\xE9vision des tactiques de camouflage dans les rideaux..."
+  - "V\xE9rification de l'inventaire de jouets..."
+  - "Test de r\xE9sistance aux gratouilles sous le menton..."
+  - "Assemblage des pi\xE8ces..."
+  - "Pr\xE9paration du concerto de miaulement..."
+  - Optimisation des rations de croquettes...
+  - Petite pause sieste...
+  - Adoption de nouveaux chats...
+  - "S\xE9ance de toilettage intensive..."
+  - "R\xE9novation de la cave \xE0 fromage..."

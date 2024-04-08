@@ -565,11 +565,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 390857035}
   m_CullTransparentMesh: 1
---- !u!1 &673151043 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4200296723891686148, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-  m_PrefabInstance: {fileID: 1318986572}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &709681146
 GameObject:
   m_ObjectHideFlags: 0
@@ -1377,9 +1372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: MainScreen
-  _headBand: LoginPopup
-  _isPermanent: 0
-  _song: {fileID: 673151043}
+  _isAdditive: 0
 --- !u!1 &1418085829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1621,7 +1614,6 @@ GameObject:
   - component: {fileID: 1810181509}
   - component: {fileID: 1810181508}
   - component: {fileID: 1810181507}
-  - component: {fileID: 1810181510}
   m_Layer: 5
   m_Name: Guest
   m_TagString: Untagged
@@ -1755,22 +1747,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810181505}
   m_CullTransparentMesh: 1
---- !u!114 &1810181510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810181505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scene: MainScreen
-  _headBand: LoginPopup
-  _isPermanent: 0
-  _song: {fileID: 0}
 --- !u!1 &1861099774
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,7 +34,6 @@ public class AdoptButton : MonoBehaviour
 
     private void Mod_Economy_OnAdoptCheck(bool canAdopt, int catIndex)
     {
-        // Update price if adopted
         if (!canAdopt) return;
         if (_cat == null) UpdateCheapestCat();
 
@@ -47,6 +46,12 @@ public class AdoptButton : MonoBehaviour
 
         if (_cat == null) catLevel = _cheapestCatIndex + 1;
         else catLevel = _cat.Level;
+
+        if (!GameManager.Instance.Data.CatsUnlocked[catLevel - 1])
+        {
+            Debug.LogError("Cat is lock"); // TODO -> show error popup
+            return;
+        }
 
         OnAdoptButtonClick?.Invoke(catLevel);
     }

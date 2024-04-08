@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // TODO -> vérifier si le jeu est à jour
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     // --- Requests events ---
     public static event Action<string> OnError;
     public static event Action<string> OnSuccessMessage;
+    public static event Action OnObsoleteVersion;
 
     // --- Loading events ---
     public static event Action OnInitComplete;
@@ -29,24 +31,20 @@ public class GameManager : MonoBehaviour
     public static event Action OnLoadingEnd;
     public static event Action OnRequest;
     public static event Action OnEndRequest;
-    public static event Action ChangeSound;
 
     // --- Requests ---
     private int _requests;
     public string Token { get; set; }
     public PlayFab.ClientModels.EntityKey Entity => Mod<Mod_Account>().Entity;
-    //public bool AccountChecked { get; set; }
-    //public bool IsObsolete { get; private set; }
 
     // --- Datas ---
     public Data Data => _data;
     private Data _data;
 
     // --- Scenes ---
-    public bool IsPopupSceneLoaded => _isPopupSceneLoaded;
+    public bool IsPopupSceneLoaded => !string.IsNullOrEmpty(_popupSceneName);
     public string PopupSceneName => _popupSceneName;
 
-    private bool _isPopupSceneLoaded;
     private string _popupSceneName;
     private bool _hasLoginPopupLoad;
 
@@ -69,7 +67,6 @@ public class GameManager : MonoBehaviour
     public bool IsBossWave() => Mod<Mod_Waves>().IsBossWave();
 
     // EconomyMod
-    public Dictionary<Currency, int> Currencies => Mod<Mod_Economy>().Currencies;
     public List<int> CatPrices => Mod<Mod_Economy>().CatPrices;
 
     public int MeatPerSecond() => Mod<Mod_Economy>().MeatPerSecond();
@@ -90,12 +87,44 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (!Init()) return;
+        if (!CreateInstance()) return;
         _loadingSlider.value = 0;
 
         Module.OnInitComplete += Module_OnInitComplete;
-        SceneLoader.OnPopupSceneToogle += SceneLoader_OnPopupSceneToogle;
+        SceneManager.sceneUnloaded += SceneManager_sceneUnloaded;
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 
+        StartCoroutine(CheckGameVersion());
+    }
+
+    private IEnumerator CheckGameVersion()
+    {
+        yield return StartAsyncRequest();
+
+        PlayFabClientAPI.LoginWithCustomID(new()
+        {
+            CustomId = "CheckingVersion",
+            CreateAccount = true,
+        }, res =>
+        {
+            PlayFabClientAPI.GetTitleData(new(), res =>
+            {
+                EndRequest();
+
+                if (res.Data["Version"] != Application.version)
+                {
+                    Debug.LogError("Version is obsolete !");
+                    OnObsoleteVersion?.Invoke();
+                    return;
+                }
+
+                Init();
+            }, OnRequestError);
+        }, OnRequestError);
+    }
+
+    private void Init()
+    {
         // Init all entities SO
         Mod<Mod_Entities>().Init(this);
 
@@ -113,26 +142,44 @@ public class GameManager : MonoBehaviour
         Mod<Mod_Waves>().Init(this);
         Mod<Mod_Leaderboards>().Init(this);
         Mod<Mod_Account>().Init(this);
-        Mod<Mod_Audio>().StartTitleMusic();
+        Mod<Mod_Audio>().Init(this);
+
+        FindObjectOfType<Mod_Audio>().StartTitleMusic();
+    }
+
+    private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (mode != LoadSceneMode.Additive) return;
+        //if (IsPopupSceneLoaded) SceneManager.UnloadSceneAsync(_popupSceneName);
+        _popupSceneName = scene.name;
+    }
+
+    private void SceneManager_sceneUnloaded(Scene scene)
+    {
+        if (scene.name != _popupSceneName) return;
+        _popupSceneName = null;
     }
 
     private void Module_OnInitComplete(Type mod)
     {
         _loadingSlider.value += Mathf.Ceil(100.0f / _modules.Count);
         _loadingText.text = _loadingSlider.value.ToString() + "%";
+
         if (mod == typeof(Mod_Account))
         {
             Mod<Mod_Economy>().Init(this);
             _loadingSlider.gameObject.SetActive(true);
         }
+
         else if (mod == typeof(Mod_Economy)) Mod<Mod_Clans>().Init(this);
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
+
+        FindObjectOfType<Mod_Audio>().StartMainMusic();
     }
 
     private void OnDestroy()
     {
         Module.OnInitComplete -= Module_OnInitComplete;
-        SceneLoader.OnPopupSceneToogle -= SceneLoader_OnPopupSceneToogle;
 
         // Data events
         StorageSlot.OnSlotChanged -= (slotIndex, catIndex) => _data.UpdateStorage(slotIndex, catIndex);
@@ -142,7 +189,7 @@ public class GameManager : MonoBehaviour
         Storage.OnCatSpawn -= (slotIndex, catIndex, free) => _data.AdoptCat(catIndex - 1, slotIndex, free);
     }
 
-    private bool Init()
+    private bool CreateInstance()
     {
         if (Instance != null)
         {
@@ -155,14 +202,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("<color=yellow>Game Manager created.</color>");
         return true;
     }
-
-    #region Gestion des events
-    private void SceneLoader_OnPopupSceneToogle(bool isPopupSceneLoaded, string popupName)
-    {
-        _isPopupSceneLoaded = isPopupSceneLoaded;
-        _popupSceneName = popupName;
-    }
-    #endregion
 
     public bool HasLoginPopupLoad()
     {
@@ -178,8 +217,6 @@ public class GameManager : MonoBehaviour
         OnInitComplete?.Invoke();
         _isInitCompleted = true;
         DebugOnly();
-        Mod<Mod_Audio>().LoadingSound();
-        //Mod<Mod_Audio>().StartMainMusic();
         yield return StartUpdates();
     }
 
@@ -191,14 +228,14 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(60);
             Debug.Log("Starting auto save...");
-            foreach (var currency in Currencies) yield return Mod<Mod_Economy>().UpdateCurrency(currency.Key);
+            foreach (var currency in _data.Currencies) yield return Mod<Mod_Economy>().UpdateCurrency((Currency)currency.Index);
             yield return Mod<Mod_Account>().UpdateData();
         }
     }
 
     private void DebugOnly()
     {
-        //DeleteLocalDatas(); // Reset local datas
+        //DeleteAccountData();
     }
 
     private void OnApplicationPause(bool pause)
@@ -251,9 +288,10 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public void DeleteLocalDatas()
+    public void DeleteAccountData()
     {
         _data = new();
-        _data.Update();
+        Mod<Mod_Economy>().UpdateCatPrices();
+        StartCoroutine(Mod<Mod_Account>().UpdateData());
     }
 }

@@ -20,9 +20,9 @@ public class SceneUI_HeadBand : MonoBehaviour
         _username.text = GameManager.Instance.Username;
         _waveNumber.text = "WAVE " + GameManager.Instance.Data.WaveNumber.ToString();
         _score.text = GameManager.Instance.Data.Score.ToString();
-        _meatNumber.text = GameManager.Instance.Currencies[Currency.Meat].ToString(); // UC
+        _meatNumber.text = CurrencyFormat.Get(GameManager.Instance.Data.Currencies[(int)Currency.Meat].Amount);
         _meatPerSecond.text = $"(+{GameManager.Instance.MeatPerSecond()}/sec)";
-        _mewstonesNumber.text = GameManager.Instance.Currencies[Currency.Meowstone].ToString(); // UC
+        _mewstonesNumber.text = CurrencyFormat.Get(GameManager.Instance.Data.Currencies[(int)Currency.Meowstone].Amount);
         _enemiesNumber.value = GameManager.Instance.KilledEnemiesNumber;
         _enemiesNumber.maxValue = GameManager.Instance.MaxEnemyNumber;
         //Debug.Log($"{GameManager.Instance.EnemyNumber}/{GameManager.Instance.MaxEnemyNumber}");

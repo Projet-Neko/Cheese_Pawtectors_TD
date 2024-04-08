@@ -1,6 +1,8 @@
 using AYellowpaper.SerializedCollections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class House : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class House : MonoBehaviour
     private IdRoom _idStartRoom;
 
     private List<Mouse> _mouseList = new();
+
+    private bool _isWave = false;
 
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
@@ -61,7 +65,6 @@ public class House : MonoBehaviour
         AddRoom(2, 0, RoomPattern.CrossraodRoom);
         AddRoom(0, 0, RoomPattern.CrossraodRoom);
         //RemoveRoom(2, 1);
-        _mouseList.Add(Instantiate(_mousePrefab, new Vector3(_idStartRoom.x, _idStartRoom.y, -2), Quaternion.identity).GetComponent<Mouse>());
     }
 
     private void OnDestroy()
@@ -344,4 +347,83 @@ public class House : MonoBehaviour
         }
     }
 
+
+    /* * * * * * * * * * * * * * * * * * * *
+    *               MOUSE
+    * * * * * * * * * * * * * * * * * * * */
+
+    public void StartWave()
+    {
+        _isWave = true;
+
+        StartCoroutine(SpawnMouse(5));
+
+        StartCoroutine(Wave());
+    }
+
+    private IEnumerator Wave()
+    {
+        Debug.Log("Wave started");
+        while (_isWave)
+        {
+            for (int i = 0; i < _mouseList.Count; i++)
+            {
+                Mouse mouse = _mouseList[i];
+                Room currentRoom = _roomsGrid[(int)mouse.transform.position.x, (int)mouse.transform.position.y];
+
+                if (mouse.HasEaten)                                                     // Mouse come back to the start room
+                {
+                    if (mouse.TargetReached())
+                    {
+                        int numberPreviousRooms = currentRoom.PreviousRooms.Count;
+                        if (numberPreviousRooms == 0)
+                        {
+                            _mouseList.RemoveAt(i);
+                            Destroy(mouse.gameObject);
+                            continue;
+                        }
+
+                        int random = Random.Range(0, numberPreviousRooms);
+                        mouse.DefineTarget(currentRoom.PreviousRooms[random]);
+                    }
+                }
+                else                                                                    // Mouse go to the cheese room
+                {
+                    if (mouse.TargetReached())
+                    {
+                        int numberNextRooms = currentRoom.NextRooms.Count;
+                        if (numberNextRooms == 0)
+                        {
+                            mouse.Eat();
+                            Debug.Log("Mouse has eaten");
+                            mouse.DefineTarget(currentRoom.PreviousRooms[0]);
+                            continue;
+                        }
+
+                        int random = Random.Range(0, numberNextRooms);
+                        mouse.DefineTarget(currentRoom.NextRooms[random]);
+                    }
+                }
+                
+                mouse.Move();
+            }
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator SpawnMouse(int nbMouse)
+    {
+        while (nbMouse > 0)
+        {
+            Mouse mouse = Instantiate(_mousePrefab, new Vector3(_idStartRoom.x, _idStartRoom.y, -2), Quaternion.identity).GetComponent<Mouse>();
+            mouse.DefineTarget(_roomsGrid[_idStartRoom.x, _idStartRoom.y].NextRooms[0]);
+            _mouseList.Add(mouse);
+
+            --nbMouse;
+            yield return new WaitForSeconds(1f);
+        }
+
+        yield return null;
+    }
 }

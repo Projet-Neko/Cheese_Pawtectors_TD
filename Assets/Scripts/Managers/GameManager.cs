@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-// TODO -> vérifier si le jeu est à jour
+// TODO -> vï¿½rifier si le jeu est ï¿½ jour
 
 public class GameManager : MonoBehaviour
 {
@@ -85,6 +85,9 @@ public class GameManager : MonoBehaviour
 
     public void UpdateUsername(string username) => StartCoroutine(Mod<Mod_Account>().UpdateUsername(username));
     #endregion
+
+    // PowerUpMod
+    public bool IsPowerUpActive(PowerUpType powerUpType) => Mod<Mod_PowerUp>().IsPowerUpActive(powerUpType);
 
     private T Mod<T>() where T : Module => _modules.OfType<T>().First();
 
@@ -234,7 +237,8 @@ public class GameManager : MonoBehaviour
 
     private void DebugOnly()
     {
-        //DeleteAccountData();
+        Debug.Log("debug of game manager");
+        //DeleteLocalDatas(); // Reset local datas
     }
 
     private void OnApplicationPause(bool pause)

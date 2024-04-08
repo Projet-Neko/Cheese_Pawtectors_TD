@@ -376,7 +376,7 @@ public class House : MonoBehaviour
             for (int i = 0; i < _mouseList.Count; i++)
             {
                 Mouse mouse = _mouseList[i];
-                Room currentRoom = _roomsGrid[(int)mouse.transform.position.x, (int)mouse.transform.position.y];
+                Room currentRoom = _roomsGrid[(int)mouse.transform.position.x, (int)mouse.transform.position.z];
 
                 if (mouse.HasEaten)                                                     // Mouse come back to the start room
                 {
@@ -423,8 +423,8 @@ public class House : MonoBehaviour
     {
         while (nbMouse > 0)
         {
-            Mouse mouse = Instantiate(_mousePrefab, new Vector3(_idStartRoom.x, _idStartRoom.y, -2), Quaternion.identity).GetComponent<Mouse>();
-            mouse.DefineTarget(_roomsGrid[_idStartRoom.x, _idStartRoom.y].NextRooms[0]);
+            Mouse mouse = Instantiate(_mousePrefab, new Vector3(_idStartRoom.x, 0.1f, _idStartRoom.z), Quaternion.identity).GetComponent<Mouse>();
+            mouse.DefineTarget(_roomsGrid[_idStartRoom.x, _idStartRoom.z].NextRooms[0]);
             _mouseList.Add(mouse);
 
             --nbMouse;

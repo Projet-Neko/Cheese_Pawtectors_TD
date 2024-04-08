@@ -80,7 +80,7 @@ public class Mouse : Entity
     public void DefineTarget(IdRoom target)
     {
         _speed = 1; // TO DO : change this
-        _target = new Vector3(target.x, target.y, transform.position.z);
+        _target = new Vector3(target.x, transform.position.y, target.z);
         _direction = (_target - transform.position).normalized;
     }
 

@@ -13,6 +13,7 @@ public class Mod_Account : Module
 {
     public static event Action<bool> OnLocalDataCheck;
     public static event Action OnCloudUpdate;
+    public static event Action OnLoginStart;
 
     // PlayFab datas
     public PlayFab.ClientModels.EntityKey Entity => _entity;
@@ -99,6 +100,8 @@ public class Mod_Account : Module
     }
     public void Login()
     {
+        OnLoginStart?.Invoke();
+
         if (string.IsNullOrEmpty(_authData.Email))
         {
             _gm.StartRequest("Starting anonymous login...");
@@ -116,6 +119,7 @@ public class Mod_Account : Module
     }
     public void Login(string email, string password) // Called from login popup
     {
+        OnLoginStart?.Invoke();
         _gm.StartRequest($"Starting login to {email}...");
 
         _authData = new()

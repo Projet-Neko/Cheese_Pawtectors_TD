@@ -2072,7 +2072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scene: BO_BuildMode
+  _scene: Build
   _isAdditive: 0
 --- !u!1 &520177992
 GameObject:
@@ -5475,7 +5475,7 @@ GameObject:
   - component: {fileID: 1594703521}
   - component: {fileID: 1594703520}
   m_Layer: 0
-  m_Name: Shop
+  m_Name: Phone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5513,7 +5513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5ecc21125529446be012dac075a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scene: Shop
+  _scene: Phone
   _isAdditive: 1
 --- !u!114 &1594703521
 MonoBehaviour:
@@ -5961,6 +5961,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1033424655005935924, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
+      propertyPath: _level
+      value: 39
+      objectReference: {fileID: 0}
     - target: {fileID: 1617426674757085489, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.36

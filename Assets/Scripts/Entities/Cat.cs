@@ -73,14 +73,23 @@ public class Cat : Entity
 
     public override void TakeDamage(Entity source)
     {
-        _currentHealth += source.Damage;
 
-        Mathf.Clamp(_currentHealth, 0f, _baseHealth);
-        Debug.Log($"Cat current satiety : {_currentHealth}/{_baseHealth}");
+        if (GameManager.Instance.IsPowerUpActive(PowerUpType.NoSatiety))
+        {
+            //Debug.Log($"Cat current satiety(noSatiety) : {_currentHealth}/{_baseHealth}");
+            return;
+        }
+        else
+        {
+            _currentHealth += source.Damage;
 
-        SetHealth();
+            Mathf.Clamp(_currentHealth, 0f, _baseHealth);
+            Debug.Log($"Cat current satiety : {_currentHealth}/{_baseHealth}");
 
-        if (_currentHealth == _baseHealth) Sleep();
+            SetHealth();
+
+            if (_currentHealth == _baseHealth) Sleep();
+        }
     }
 
     private void Sleep()

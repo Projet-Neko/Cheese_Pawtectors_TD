@@ -15,3 +15,4 @@ MonoBehaviour:
   SpriteAbove: {fileID: 21300000, guid: 98586e27b8a6c684cb2653ac4a737f7c, type: 3}
   SpriteFront: {fileID: 0}
   Lore: "Fourbe cr\xE9ature \xE0 l'\xE2me aussi noire que son pelage."
+  State: 0

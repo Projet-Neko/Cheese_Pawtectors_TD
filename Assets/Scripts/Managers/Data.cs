@@ -22,6 +22,7 @@ public class Data
 
     // Economy
     public List<int> AmountOfPurchases = new();
+    public List<Data_Currencies> Currencies = new();
 
     // Rooms
     public List<Data_Rooms> Rooms = new();
@@ -74,9 +75,14 @@ public class Data
         Data data = JsonUtility.FromJson<Data>(json);
         MouseLevel = data.MouseLevel;
         WaveNumber = data.WaveNumber;
-        AmountOfPurchases = data.AmountOfPurchases;
         CatsUnlocked = data.CatsUnlocked;
         Storage = data.Storage;
+
+        // Economy
+        AmountOfPurchases = data.AmountOfPurchases;
+        Currencies = data.Currencies;
+
+        // Rooms
         Rooms = data.Rooms;
 
         // Social
@@ -87,7 +93,7 @@ public class Data
 
         for (int i = 0; i < GameManager.Instance.Cats.Length; i++)
         {
-            GameManager.Instance.Cats[i].State = CatsUnlocked[i] ? CatState.Unlock : CatState.Lock;
+            //GameManager.Instance.Cats[i].State = CatsUnlocked[i] ? CatState.Unlock : CatState.Lock;
             if (CatsUnlocked[i]) LastCatUnlockedIndex = i;
         }
 
@@ -135,10 +141,18 @@ public class Data
         Update();
     }
 
-    public void UpdateWaves()
+    public void UpdateWaves(bool won, bool bossFightLost = false)
     {
-        MouseLevel++;
-        WaveNumber++;
+        if (!won && bossFightLost)
+        {
+            WaveNumber--;
+        }
+        else if (won)
+        {
+            MouseLevel++;
+            WaveNumber++;
+        }
+
         Update();
     }
 

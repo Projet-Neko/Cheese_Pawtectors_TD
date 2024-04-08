@@ -1,5 +1,3 @@
-using NaughtyAttributes;
-using System;
 using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
@@ -9,14 +7,9 @@ public class DragAndDrop : MonoBehaviour
     [SerializeField] private GameObject _hud;
     [SerializeField] private Cat _cat;
     [SerializeField] private Room _room;
-
-    [Header("Layers")]
-    [SerializeField, Layer] private int _catLayer;
-    [SerializeField, Layer] private int _discardLayer;
-    [SerializeField, Layer] private int _slotLayer;
+    [SerializeField] private Collider2D _collider;
 
     private bool _isBeingDragged = false;
-    private GameObject _target;
     private Vector3 _initialPosition;
 
     private void OnMouseDrag()
@@ -24,27 +17,32 @@ public class DragAndDrop : MonoBehaviour
         if (!_isBeingDragged) return;
 
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = transform.position.z;
         transform.position = new Vector3(mousePosition.x, mousePosition.y, transform.position.z);
     }
 
     private void OnMouseDown()
     {
+        if (GameManager.Instance.IsPopupSceneLoaded) return;
         Grab(true);
     }
 
     private void OnMouseUp()
     {
-        Grab(false);
+        if (!_isBeingDragged) return;
 
-        if (_target == null) transform.position = _initialPosition;
-        else if (_target.TryGetComponent(out DragAndDropHandler component))
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = -1f;
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+        if (hit.collider != null && hit.collider.gameObject.TryGetComponent(out DragAndDropHandler component))
         {
-            Debug.Log("get drag and drop handler");
+            //Debug.Log($"raycast on {hit.collider.gameObject.name}");
             if (_cat != null) component.HandleDragAndDrop(_cat, _initialPosition);
             else if (_room != null) component.HandleDragAndDrop(_room, _initialPosition);
         }
         else transform.position = _initialPosition;
+
+        Grab(false);
     }
 
     private void Grab(bool isGrabbed)
@@ -52,26 +50,7 @@ public class DragAndDrop : MonoBehaviour
         if (isGrabbed) _initialPosition = transform.position;
         _isBeingDragged = isGrabbed;
         _hud.SetActive(!isGrabbed);
+        _collider.enabled = isGrabbed ? false : true;
         _sprite.sortingOrder = isGrabbed ? 99 : 6;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!_isBeingDragged) return;
-        _target = collision.gameObject;
-        Debug.Log($"Targeting {_target.name}");
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (!_isBeingDragged) return;
-
-        if (collision.gameObject == _target)
-        {
-            _target = null;
-            Debug.Log("Remove target");
-        }
-
-        // TODO -> parfois la target se retire alors que le trigger n'est pas exit
     }
 }

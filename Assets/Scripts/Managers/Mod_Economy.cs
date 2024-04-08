@@ -15,10 +15,7 @@ public class Mod_Economy : Module
     public static event Action<bool, int> OnAdoptCheck;
 
     public List<int> CatPrices => _catPrices;
-    public Dictionary<Currency, int> Currencies => _currencies; // Local currencies
-
     private List<int> _catPrices;
-    private readonly Dictionary<Currency, int> _currencies = new();
 
     // PlayFab Catalog
     private readonly List<CatalogItem> _catalogItems = new();
@@ -90,19 +87,8 @@ public class Mod_Economy : Module
                 Debug.Log($"Found currency {item.AlternateIds[0].Value} !");
                 _currenciesNameById[item.Id] = Enum.Parse<Currency>(item.AlternateIds[0].Value);
                 _currenciesIdByName[_currenciesNameById[item.Id]] = item.Id;
-                _currencies[_currenciesNameById[item.Id]] = 0;
+                _gm.Data.Currencies.Add(new(_currenciesNameById[item.Id]));
             }
-            //else if (item.Type == "catalogItem" || item.Type == "bundle")
-            //{
-            //    _itemsById[item.Id] = item.AlternateIds[0].Value;
-            //    _itemsByName[item.AlternateIds[0].Value] = item.Id;
-            //}
-            //else if (item.Type == "store")
-            //{
-            //    _storesById[item.Id] = item.AlternateIds[0].Value;
-            //    _storesByName[item.AlternateIds[0].Value] = item.Id;
-            //    Stores[item.Id] = item;
-            //}
         }
 
         if (_gm.LastLogin == null) // First time player
@@ -131,28 +117,11 @@ public class Mod_Economy : Module
 
                 foreach (InventoryItem item in res.Items)
                 {
-                    //if (_gm.IsAccountReset)
-                    //{
-                    //    StartCoroutine(DeleteItem(item));
-                    //    continue;
-                    //}
-
-                    if (item.Type == "currency") Currencies[_currenciesNameById[item.Id]] = (int)item.Amount;
-                    //else if (item.Type == "catalogItem")
-                    //{
-                    //    Type type = Type.GetType(_itemsById[item.Id]);
-                    //    Activator.CreateInstance(type, item);
-                    //}
+                    if (item.Type != "currency") continue;
+                    _gm.Data.Currencies[(int)_currenciesNameById[item.Id]].Amount = (int)item.Amount;
                 }
 
-                //if (_gm.IsAccountReset)
-                //{
-                //    StartCoroutine(CreateInitialCurrencies());
-                //    return;
-                //}
-
                 CompleteEconomyInit();
-                //StartCoroutine(CheckOfflineCurrency());
             }, _gm.OnRequestError);
         }, _gm.OnRequestError);
     }
@@ -192,6 +161,13 @@ public class Mod_Economy : Module
 
     private void CompleteEconomyInit()
     {
+        UpdateCatPrices();
+        InitComplete();
+        DebugOnly();
+    }
+
+    public void UpdateCatPrices()
+    {
         _catPrices = new();
 
         for (int i = 0; i < _gm.Cats.Length; i++)
@@ -203,9 +179,6 @@ public class Mod_Economy : Module
             for (int j = 0; j < _gm.Data.AmountOfPurchases[i]; j++) IncreasePrice(i);
             Debug.Log($"{_gm.Cats[i].Name} price is {catPrice}. (bought {_gm.Data.AmountOfPurchases[i]} time)");
         }
-
-        InitComplete();
-        DebugOnly();
     }
 
     #region Gestion de l'adoption
@@ -214,7 +187,7 @@ public class Mod_Economy : Module
         if (slotIndex == -1) return;
         bool canAdopt;
 
-        if (_currencies[Currency.Meat] < _catPrices[catLevel - 1])
+        if (_gm.Data.Currencies[(int)Currency.Meat].Amount < _catPrices[catLevel - 1])
         {
             Debug.LogError(" You can't adopt this cat : not enough money!");
             // TODO -> show error popup
@@ -250,13 +223,15 @@ public class Mod_Economy : Module
     #region Gestion des currencies
     public void AddCurrency(Currency currency, int amount)
     {
-        _currencies[currency] += amount;
-        Debug.Log($"<color=lime>Added {amount} {currency} ! Current {currency} = {_currencies[currency]}</color>");
+        _gm.Data.Currencies[(int)currency].Amount += amount;
+        Debug.Log($"<color=lime>Added {amount} {currency} ! Current {currency} = {_gm.Data.Currencies[(int)currency].Amount}</color>");
+        _gm.Data.Update();
     }
     public void RemoveCurrency(Currency currency, int amount)
     {
-        _currencies[currency] -= amount;
-        Debug.Log($"Removed {amount} {currency} ! Current {currency} = {_currencies[currency]}");
+        _gm.Data.Currencies[(int)currency].Amount -= amount;
+        Debug.Log($"Removed {amount} {currency} ! Current {currency} = {_gm.Data.Currencies[(int)currency].Amount}");
+        _gm.Data.Update();
     }
     public IEnumerator UpdateCurrency(Currency currency)
     {
@@ -267,7 +242,7 @@ public class Mod_Economy : Module
             Entity = new() { Id = _gm.Entity.Id, Type = _gm.Entity.Type },
             Item = new()
             {
-                Amount = _currencies[currency],
+                Amount = _gm.Data.Currencies[(int)currency].Amount,
                 Id = _currenciesIdByName[currency]
             }
         }, res => _gm.EndRequest($"Updated {currency} !"), _gm.OnRequestError);

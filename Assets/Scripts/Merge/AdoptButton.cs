@@ -47,7 +47,7 @@ public class AdoptButton : MonoBehaviour
         if (_cat == null) catLevel = _cheapestCatIndex + 1;
         else catLevel = _cat.Level;
 
-        if (GameManager.Instance.Cats[catLevel - 1].State == CatState.Lock)
+        if (!GameManager.Instance.Data.CatsUnlocked[catLevel - 1])
         {
             Debug.LogError("Cat is lock"); // TODO -> show error popup
             return;

@@ -101,4 +101,9 @@ public class Mouse : Entity
     //    _targetedBy = source as Cat;
     //    base.TakeDamage(source);
     //}
+
+    public void DropCurrencies()
+    {
+        //GameManager.Instance.AddCurrency();
+    }
 }

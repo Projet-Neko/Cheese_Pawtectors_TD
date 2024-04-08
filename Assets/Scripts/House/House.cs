@@ -366,6 +366,13 @@ public class House : MonoBehaviour
         Debug.Log("Wave started");
         while (_isWave)
         {
+            if (_mouseList.Count == 0)
+            {
+                Debug.Log("Wave finished");
+                _isWave = false;
+                yield break;
+            }
+
             for (int i = 0; i < _mouseList.Count; i++)
             {
                 Mouse mouse = _mouseList[i];

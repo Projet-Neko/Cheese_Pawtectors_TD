@@ -22,10 +22,10 @@ public class Mouse : Entity
     private Rigidbody2D _rb;*/
 
     private bool _hasEaten = false;
-    public bool HasEaten => _hasEaten;
-
     private Vector3 _target;
     private Vector3 _direction;
+
+    public bool HasEaten => _hasEaten;
 
     public override void Init()
     {

@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using PlayFab;
 using System;
 using System.Collections;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private List<Module> _modules;
+    [SerializeField, Scene] private string _loadingPopup;
 
     [Header("Loading Bar")]
     [SerializeField] private Slider _loadingSlider;
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
     private int _requests;
     public string Token { get; set; }
     public PlayFab.ClientModels.EntityKey Entity => Mod<Mod_Account>().Entity;
+    private bool _isLoadingPopupOpen;
 
     // --- Datas ---
     public Data Data => _data;
@@ -253,6 +256,13 @@ public class GameManager : MonoBehaviour
     {
         OnLoadingStart?.Invoke();
         OnRequest?.Invoke();
+
+        if (_isInitCompleted && !_isLoadingPopupOpen)
+        {
+            _isLoadingPopupOpen = true;
+            SceneManager.LoadSceneAsync(_loadingPopup, LoadSceneMode.Additive);
+        }
+
         int currentRequest = _requests;
         _requests++;
         if (!string.IsNullOrEmpty(log)) Debug.Log($"<color=orange>{log}</color>");
@@ -262,6 +272,13 @@ public class GameManager : MonoBehaviour
     {
         OnLoadingEnd?.Invoke();
         OnEndRequest?.Invoke();
+
+        if (_isLoadingPopupOpen)
+        {
+            _isLoadingPopupOpen = false;
+            SceneManager.UnloadSceneAsync(_loadingPopup);
+        }
+
         _requests--;
 
         if (!string.IsNullOrEmpty(log))

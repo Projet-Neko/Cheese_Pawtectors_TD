@@ -2315,6 +2315,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: MainScreen
+  _headBand: 
+  _isPermanent: 0
 --- !u!114 &2049919022
 MonoBehaviour:
   m_ObjectHideFlags: 0

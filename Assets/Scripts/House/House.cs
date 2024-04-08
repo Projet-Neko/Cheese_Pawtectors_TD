@@ -79,11 +79,11 @@ public class House : MonoBehaviour
      *          CREATE ROOM
      * * * * * * * * * * * * * * * * * * * */
 
-    private void CreateRoom(int x, int y, RoomPattern roomPattern)
+    private void CreateRoom(int x, int z, RoomPattern roomPattern)
     {
-        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(x, y, 0), Quaternion.identity);
+        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(x, 0, z), Quaternion.identity);
         roomObject.transform.parent = transform;
-        _roomsGrid[x, y] = roomObject.GetComponentInChildren<Room>();
+        _roomsGrid[x, z] = roomObject.GetComponentInChildren<Room>();
     }
 
     /*private void CreateRandomRoom()
@@ -117,67 +117,67 @@ public class House : MonoBehaviour
      *          HUD INTERACTIONS
      * * * * * * * * * * * * * * * * * * * */
 
-    private bool IsInGrid(int x, int y)
+    private bool IsInGrid(int x, int z)
     {
-        return x >= 0 && x < _currentRoomNumber && y >= 0 && y < _currentRoomNumber;
+        return x >= 0 && x < _currentRoomNumber && z >= 0 && z < _currentRoomNumber;
     }
 
     private void CheckRoomPosition(Vector3 oldPosition, Vector3 newPosition, bool validate)
     {
         int xStart = (int)oldPosition.x;
-        int yStart = (int)oldPosition.y;
+        int zStart = (int)oldPosition.z;
         int xEnd = (int)newPosition.x;
-        int yEnd = (int)newPosition.y;
+        int zEnd = (int)newPosition.z;
 
         // Check if the new position is in the grid and if the room is movable
-        if (!IsInGrid(xEnd, yEnd) || _roomsGrid[xEnd, yEnd].Security == RoomSecurity.Protected)
+        if (!IsInGrid(xEnd, zEnd) || _roomsGrid[xEnd, zEnd].Security == RoomSecurity.Protected)
         {
-            _roomsGrid[xStart, yStart].MoveRoomOldPosition();
+            _roomsGrid[xStart, zStart].MoveRoomOldPosition();
             return;
         }
 
         if (validate)
-            MoveRoom(xStart, yStart, xEnd, yEnd);
+            MoveRoom(xStart, zStart, xEnd, zEnd);
     }
 
-    private void MoveRoom(int xStart, int yStart, int xEnd, int yEnd)
+    private void MoveRoom(int xStart, int zStart, int xEnd, int zEnd)
     {
-        Room startRoom = _roomsGrid[xStart, yStart];
-        Room endRoom = _roomsGrid[xEnd, yEnd];
+        Room startRoom = _roomsGrid[xStart, zStart];
+        Room endRoom = _roomsGrid[xEnd, zEnd];
 
         if (endRoom.Security == RoomSecurity.Protected) return; // Ajouter une popup "You can't move this room" ?
 
         // Swap the rooms in the scene
-        endRoom.MoveRoom(xStart, yStart);
-        startRoom.MoveRoom(xEnd, yEnd);
+        endRoom.MoveRoom(xStart, zStart);
+        startRoom.MoveRoom(xEnd, zEnd);
 
         // Swap the rooms in the grid
-        _roomsGrid[xStart, yStart] = endRoom;
-        _roomsGrid[xEnd, yEnd] = startRoom;
+        _roomsGrid[xStart, zStart] = endRoom;
+        _roomsGrid[xEnd, zEnd] = startRoom;
     }
 
     /* * * * * * * * * * * * * * * * * * * *
      *              NEW ROOM
      * * * * * * * * * * * * * * * * * * * */
 
-    private void AddRoom(int x, int y, RoomPattern pattern)
+    private void AddRoom(int x, int z, RoomPattern pattern)
     {
-        if (_roomsGrid[x, y].Security == RoomSecurity.Overwritten)
+        if (_roomsGrid[x, z].Security == RoomSecurity.Overwritten)
         {
             // Destroy the old room (void)
-            _roomsGrid[x, y].Delete();
+            _roomsGrid[x, z].Delete();
 
             // Create the new room
-            CreateRoom(x, y, pattern);
+            CreateRoom(x, z, pattern);
         }
-        else if (_roomsGrid[x, y].Security == RoomSecurity.MovedAndRemoved)
+        else if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
             //Ajout de la vieille piece dans l'inventaire
 
-            CreateRoom(x, y, pattern);
+            CreateRoom(x, z, pattern);
 
         }
-        else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, y].Security);
+        else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, z].Security);
     }
 
     public void ExtendHouse()
@@ -204,10 +204,10 @@ public class House : MonoBehaviour
     {
         for (int x = 0; x < _currentRoomNumber; x++)
         {
-            for (int y = 0; y < _currentRoomNumber; y++)
+            for (int z = 0; z < _currentRoomNumber; z++)
             {
-                _roomsGrid[x, y].DefineIdRoom(x, y);
-                _roomsGrid[x, y].ResetPath();
+                _roomsGrid[x, z].DefineIdRoom(x, z);
+                _roomsGrid[x, z].ResetPath();
             }
         }
     }
@@ -216,14 +216,14 @@ public class House : MonoBehaviour
     {
         for (int x = 0; x < _currentRoomNumber; x++)
         {
-            for (int y = 0; y < _currentRoomNumber; y++)
-                _roomsGrid[x, y].ResetArrows();
+            for (int z = 0; z < _currentRoomNumber; z++)
+                _roomsGrid[x, z].ResetArrows();
         }
     }
 
     private bool IsPreviousRoom(IdRoom idRoom, IdRoom idRoomSearch)
     {
-        foreach (IdRoom idRoomPrevious in _roomsGrid[idRoom.x, idRoom.y].PreviousRooms)
+        foreach (IdRoom idRoomPrevious in _roomsGrid[idRoom.x, idRoom.z].PreviousRooms)
         {
             if (idRoomPrevious.Equals(idRoomSearch))
                 return true;
@@ -237,7 +237,7 @@ public class House : MonoBehaviour
 
     private bool BuildPath(IdRoom idRoom, IdRoom idRoomPrevious)
     {
-        Room room = _roomsGrid[idRoom.x, idRoom.y];                                                                         // Get the room
+        Room room = _roomsGrid[idRoom.x, idRoom.z];                                                                         // Get the room
         room.PreviousRooms.Add(idRoomPrevious);                                                                             // Add the previous room to the list of previous rooms
 
         if (room.NextRooms.Count != 0)                                                                                      // If the room is already connected to the path under construction
@@ -287,7 +287,7 @@ public class House : MonoBehaviour
     {
         InitBuildPath();                                                                                                    // Define the ID of each room in its junctions
 
-        Room startRoom = _roomsGrid[_idStartRoom.x, _idStartRoom.y];                                                        // Get the start room
+        Room startRoom = _roomsGrid[_idStartRoom.x, _idStartRoom.z];                                                        // Get the start room
         Junction junctionStart = startRoom.Opening[0];                                                                      // Get the junction of the start room
         IdRoom idRoomNext = junctionStart.GetIdRoomConnected();                                                             // Get the ID of the room connected to the junction of the start room
 
@@ -307,19 +307,19 @@ public class House : MonoBehaviour
             Debug.Log("Path not valid");
     }
 
-    private void RemoveRoom(int x, int y)
+    private void RemoveRoom(int x, int z)
     {
-        if (_roomsGrid[x, y].Security == RoomSecurity.MovedAndRemoved)
+        if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
             // Destroy the old room
-            _roomsGrid[x, y].Delete();
+            _roomsGrid[x, z].Delete();
 
             //Ajout dans l'inventaire
 
             // Create the new room
-            CreateRoom(x, y, RoomPattern.VoidRoom);
+            CreateRoom(x, z, RoomPattern.VoidRoom);
         }
-        else Debug.Log("Room not MovedAndRemoved, security = " + _roomsGrid[x, y].Security);
+        else Debug.Log("Room not MovedAndRemoved, security = " + _roomsGrid[x, z].Security);
     }
 
     private void DestroyInvalidRoom()

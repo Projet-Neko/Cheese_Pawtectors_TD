@@ -1,10 +1,13 @@
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Mod_Audio : Module
 {
     AudioSource _audioSource;
+
+    public static event Action ChangeSound;
 
     [Header("Musics")]
     [SerializeField] private AudioSource _titleScreen;
@@ -30,17 +33,21 @@ public class Mod_Audio : Module
     public AudioClip _dropCoin;
     public AudioClip _full;
 
+
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
-
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        throw new System.NotImplementedException();
+        ChangeSound.Invoke();
     }
 
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
+    }
     public void StartTitleMusic()
     {
         if (!_titleScreen.isPlaying)

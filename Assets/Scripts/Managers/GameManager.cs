@@ -95,6 +95,8 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 
         StartCoroutine(CheckGameVersion());
+
+        Mod<Mod_Audio>().StartTitleMusic();
     }
 
     private IEnumerator CheckGameVersion()
@@ -142,9 +144,6 @@ public class GameManager : MonoBehaviour
         Mod<Mod_Waves>().Init(this);
         Mod<Mod_Leaderboards>().Init(this);
         Mod<Mod_Account>().Init(this);
-        Mod<Mod_Audio>().Init(this);
-
-        FindObjectOfType<Mod_Audio>().StartTitleMusic();
     }
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
@@ -173,8 +172,6 @@ public class GameManager : MonoBehaviour
 
         else if (mod == typeof(Mod_Economy)) Mod<Mod_Clans>().Init(this);
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
-
-        FindObjectOfType<Mod_Audio>().StartMainMusic();
     }
 
     private void OnDestroy()
@@ -217,6 +214,8 @@ public class GameManager : MonoBehaviour
         OnInitComplete?.Invoke();
         _isInitCompleted = true;
         DebugOnly();
+        Mod<Mod_Audio>().LoadingSound();
+        Mod<Mod_Audio>().StartMainMusic();
         yield return StartUpdates();
     }
 

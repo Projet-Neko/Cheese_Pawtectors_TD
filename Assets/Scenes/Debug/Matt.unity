@@ -2395,10 +2395,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1609134327833247324, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7375615883811057989, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
       propertyPath: m_Name
       value: NekoCamera

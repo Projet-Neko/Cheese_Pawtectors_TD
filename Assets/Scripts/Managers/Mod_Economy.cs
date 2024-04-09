@@ -7,7 +7,7 @@ using UnityEngine;
 
 public enum Currency
 {
-    Meat, Pawsie, Meowstone
+    Treats, Pawsie, Meowcoin
 }
 
 public class Mod_Economy : Module
@@ -45,7 +45,7 @@ public class Mod_Economy : Module
             meatToAdd *= 2;
             //Debug.Log($"Cat current meatToAdd(DoubleMeat) : {meatToAdd}");
         }
-        if (obj is Mouse && hasBeenKilledByPlayer) AddCurrency(Currency.Meat, meatToAdd);
+        if (obj is Mouse && hasBeenKilledByPlayer) AddCurrency(Currency.Treats, meatToAdd);
     }
     #endregion
 
@@ -134,7 +134,7 @@ public class Mod_Economy : Module
     {
         int meatGained = MeatGainedOffline(_gm.LastLogin);
         Debug.Log($"<color=lime>Gained {meatGained} meat offline !</color>");
-        AddCurrency(Currency.Meat, meatGained);
+        AddCurrency(Currency.Treats, meatGained);
     }
     public int MeatPerSecond()
     {
@@ -189,7 +189,7 @@ public class Mod_Economy : Module
         if (slotIndex == -1) return;
         bool canAdopt;
 
-        if (_gm.Data.Currencies[(int)Currency.Meat].Amount < _catPrices[catLevel - 1])
+        if (_gm.Data.Currencies[(int)Currency.Treats].Amount < _catPrices[catLevel - 1])
         {
             Debug.LogError(" You can't adopt this cat : not enough money!");
             // TODO -> show error popup
@@ -198,7 +198,7 @@ public class Mod_Economy : Module
         else
         {
             canAdopt = true;
-            RemoveCurrency(Currency.Meat, _catPrices[catLevel - 1]);
+            RemoveCurrency(Currency.Treats, _catPrices[catLevel - 1]);
             IncreasePrice(catLevel - 1);
         }
 
@@ -254,6 +254,6 @@ public class Mod_Economy : Module
     protected override void DebugOnly()
     {
         base.DebugOnly();
-        AddCurrency(Currency.Meat, 1000);
+        AddCurrency(Currency.Treats, 1000);
     }
 }

@@ -1746,18 +1746,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rooms:
     _serializedList:
-    - Key: 5
+    - Key: 6
       Value: {fileID: 675617977283199060, guid: a5b17ab4f887f644ebf6d3e9dc129268, type: 3}
+    - Key: 5
+      Value: {fileID: 675617977283199060, guid: 31da9b6ca26f9cf4ea088ac4657ef23e, type: 3}
     - Key: 0
       Value: {fileID: 7812398506617135315, guid: 04d53dd7769607b469a76644c0f9ac25, type: 3}
     - Key: 1
       Value: {fileID: 104032388545238699, guid: d8944dbd0f37f6447926bc4ea325426b, type: 3}
     - Key: 2
-      Value: {fileID: 4366641987968570484, guid: 13484126a83c4cc4088d338e72f851b3, type: 3}
+      Value: {fileID: 675617977283199060, guid: e6dcdec3f05ba89459b6228ac022675c, type: 3}
     - Key: 3
-      Value: {fileID: 3913000099428562036, guid: 489e24520099990468a4fa812e0e61b4, type: 3}
+      Value: {fileID: 4366641987968570484, guid: 13484126a83c4cc4088d338e72f851b3, type: 3}
     - Key: 4
-      Value: {fileID: 675617977283199060, guid: 31da9b6ca26f9cf4ea088ac4657ef23e, type: 3}
+      Value: {fileID: 3913000099428562036, guid: 489e24520099990468a4fa812e0e61b4, type: 3}
+  _mousePrefab: {fileID: 0}
 --- !u!1 &1230428260
 GameObject:
   m_ObjectHideFlags: 0

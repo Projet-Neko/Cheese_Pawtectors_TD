@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
 
     // AccountMod
     public bool IsLoggedIn => Mod<Mod_Account>().IsLoggedIn;
+    public bool IsFirstLogin => Mod<Mod_Account>().IsFirstLogin;
     public DateTime? LastLogin => Mod<Mod_Account>().LastLogin;
     public string Username => Mod<Mod_Account>().Username;
     public bool HasChangedUsername => Mod<Mod_Account>().HasChangedUsername;
@@ -217,7 +218,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator CompleteInit()
     {
-        if (LastLogin == null) yield return Mod<Mod_Account>().UpdateData();
+        if (IsFirstLogin) yield return Mod<Mod_Account>().UpdateData();
         Debug.Log("<color=yellow>----- GAME MANAGER INIT COMPLETED ! -----</color>");
         OnInitComplete?.Invoke();
         _isInitCompleted = true;

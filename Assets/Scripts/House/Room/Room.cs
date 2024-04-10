@@ -162,10 +162,6 @@ public class Room : MonoBehaviour
             if (!_moveModBool)
                 Selected();
         }
-
-        
-
-
     }
 
     public void OnMouseUp()

@@ -100,7 +100,7 @@ public class Mod_Waves : Module
             _killedEnemiesNumber++;
             _spawnedEnemyNumber--;
 
-            if (obj is Mouse m && m.IsBoss)
+            if (entity is Mouse m && m.IsBoss)
             {
                 OnBossDefeated?.Invoke();
             }

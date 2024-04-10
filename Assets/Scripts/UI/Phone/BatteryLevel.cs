@@ -20,7 +20,7 @@ public class BatteryLevel : MonoBehaviour
             // Convertit en pourcentage (0-100)
             int batteryPercent = Mathf.FloorToInt(batteryLevel * 100);
 
-            batteryText.text = batteryPercent.ToString() ;
+            batteryText.text = batteryPercent.ToString() + "%";
         }
         else
         {

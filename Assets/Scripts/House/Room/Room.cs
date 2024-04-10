@@ -1,16 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum RoomPattern
 {
-    CheeseRoom,     // Moved
-    CorridorRoom,   // MovedAndRemoved
-    CrossraodRoom,  // MovedAndRemoved
-    StartRoom,      // Protected
-    TurnRoom,       // MovedAndRemoved
-    VoidRoom        // Overwritten
+    CheeseRoom,         // Moved
+    CorridorRoom,       // MovedAndRemoved
+    IntersectionRoom,   // MovedAndRemoved
+    CrossraodRoom,      // MovedAndRemoved
+    StartRoom,          // Protected
+    TurnRoom,           // MovedAndRemoved
+    VoidRoom            // Overwritten
 }
 
 public enum RoomSecurity
@@ -24,17 +24,17 @@ public enum RoomSecurity
 public struct IdRoom
 {
     public int x;
-    public int y;
+    public int z;
 
     public IdRoom(int xRoom, int yRoom)
     {
         x = xRoom;
-        y = yRoom;
+        z = yRoom;
     }
 
     public bool IsNull()
     {
-        return x < 0 || y < 0;
+        return x < 0 || z < 0;
     }
 
     public override bool Equals(object obj)
@@ -43,10 +43,10 @@ public struct IdRoom
             return false;
 
         IdRoom id = (IdRoom)obj;
-        return x == id.x && y == id.y;
+        return x == id.x && z == id.z;
     }
 
-    public override int GetHashCode() { return HashCode.Combine(x, y); }
+    public override int GetHashCode() { return HashCode.Combine(x, z); }
 }
 
 public class Room : MonoBehaviour
@@ -57,6 +57,7 @@ public class Room : MonoBehaviour
     [Header("Room Canva")]
     [SerializeField] private GameObject _HUDCanva;
     [SerializeField] private GameObject _moveModCanva;
+    [SerializeField] GameObject _cantMoveThisRoomCanvas;
 
     [Header("Junction")]
     [SerializeField] protected List<Junction> _opening;
@@ -73,16 +74,16 @@ public class Room : MonoBehaviour
     public List<IdRoom> NextRooms => _nextRooms;
 
     protected RoomSecurity _security;
-    protected bool _correctPath = false;        // True if the room is in a correct path
+    protected bool _correctPath = false;                                    // True if the room is in a correct path
 
     // Events
-    private static event Action<bool> TileSelected;   // Deselect the other rooms when a room is selected
+    private static event Action<bool> TileSelected;                         // Deselect the other rooms when a room is selected
 
     private Vector3 _oldPosition;
     private bool _canMove;
     private bool _moveModBool;
     private bool _isSelected;
-    private bool _anotherTileSelected;
+    protected bool _anotherTileSelected;
     private int _currentLevel = 1;
 
     private List<IdRoom> _previousRooms = new List<IdRoom>();
@@ -90,6 +91,7 @@ public class Room : MonoBehaviour
 
     // Constants
     private const int _maxLevel = 3;
+    private Plane _plane = new Plane(Vector3.up, 0);
 
 
     //change OnMouseDown to Button to avoid click error
@@ -119,8 +121,13 @@ public class Room : MonoBehaviour
     {
         if (_moveModBool && _canMove)
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _room.transform.position = RoundPosition(mousePosition);
+            float distance;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (_plane.Raycast(ray, out distance))
+            {
+                Vector3 mousePosition = ray.GetPoint(distance);
+                _room.transform.position = RoundPosition(mousePosition);
+            }
         }
     }
 
@@ -131,9 +138,9 @@ public class Room : MonoBehaviour
     private Vector3 RoundPosition(Vector3 startPosition)
     {
         Vector3 position = startPosition;
-        position.x = Mathf.Round(position.x);
-        position.y = Mathf.Round(position.y);
-        position.z = -1;                        // To be sure the room is in front of the other rooms
+        position.x = Mathf.Round(position.x);                        
+        position.y = 0;                                // To be sure the room is on the same line
+        position.z = Mathf.Round(position.z);
 
         return position;
     }
@@ -144,17 +151,20 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (!_anotherTileSelected)
+        if (_security == RoomSecurity.Protected)
         {
-
+            _cantMoveThisRoomCanvas.SetActive(!_cantMoveThisRoomCanvas.activeSelf);
+        }
+        else if (!_anotherTileSelected)
+        {
             _canMove = true;
            
-
             if (!_moveModBool)
-            {
                 Selected();
-            }
         }
+
+        
+
 
     }
 
@@ -172,22 +182,7 @@ public class Room : MonoBehaviour
 
     private void DeselectTile(bool deselect)
     {
-        if (!_isSelected)
-        {
-            // If the room is not selected, hide the HUD gameobject
-            if (_HUDCanva != null)
-                _HUDCanva.SetActive(false);
-
-            // If the room is not selected, hide the Move Arrow gameobject
-            if (_moveModBool)
-            {
-                _moveModBool = false;
-                _moveModCanva.SetActive(false);
-                MoveRoomOldPosition();
-            }
-            _anotherTileSelected = deselect;
-        }
-        //_isSelected = false;
+        if (!_isSelected) _anotherTileSelected = deselect;
     }
 
     /* * * * * * * * * * * * * * * * * * * *
@@ -208,6 +203,16 @@ public class Room : MonoBehaviour
         _HUDCanva.SetActive(false);                 // Hide the HUD
         _moveModCanva.SetActive(true);              // Show the Move Canvas
         _oldPosition = _room.transform.position;    // Save the currently position
+    }
+
+    public void CancelMove()
+    {
+        _moveModBool = false;
+        _moveModCanva.SetActive(false);                                                 // Hide the Move Canvas
+        _isSelected = false;
+        _room.transform.position = _oldPosition;
+        TileSelected?.Invoke(false); 
+
     }
 
     // When user click on Canvas/Move Arrow/Done button
@@ -245,9 +250,9 @@ public class Room : MonoBehaviour
         }
     }*/
 
-    public void MoveRoom(int x, int y)
+    public void MoveRoom(int x, int z)
     {
-        _room.transform.position = new Vector3(x, y, 0);
+        _room.transform.position = new Vector3(x, 0, z);
     }
 
     public void MoveRoomOldPosition()
@@ -258,22 +263,22 @@ public class Room : MonoBehaviour
     /****** ROTATE ROOM ******/
 
     // When user click on Canvas/HUD/Rotate [Clock/AntiClock]
-    public void RotationRoom(bool clockwise)
+    public void RotationRoom(bool clockwise) 
     {
         Vector3 rotation = transform.eulerAngles;
 
         if (clockwise)
         {
-            rotation.z -= 90;
+            rotation.y -= 90;
 
-            if (rotation.z >= 360) rotation.z -= 360;
+            if (rotation.y >= 360) rotation.y -= 360;
 
         }
         else
         {
-            rotation.z += 90;
+            rotation.y += 90;
 
-            if (rotation.z < 0) rotation.z += 360;
+            if (rotation.y < 0) rotation.y += 360;
         }
 
         transform.eulerAngles = rotation;
@@ -284,7 +289,7 @@ public class Room : MonoBehaviour
     // When user click on Canvas/HUD/Suppr button
     public void Remove()
     {
-        TileDestroyed?.Invoke((int)transform.position.x, (int)transform.position.y, RoomPattern.VoidRoom); // Notify the house that a room will be destroyed and that it must be replaced by a void room
+        TileDestroyed?.Invoke((int)transform.position.x, (int)transform.position.z, RoomPattern.VoidRoom); // Notify the house that a room will be destroyed and that it must be replaced by a void room
         TileSelected?.Invoke(false);
         Delete();
     }
@@ -311,10 +316,16 @@ public class Room : MonoBehaviour
         _correctPath = true;
     }
 
-    public void DefineIdRoom(int x, int y)
+    public void DefineIdRoom(int x, int z)
     {
         foreach (Junction junction in _opening)
-            junction.SetIdRoom(x, y);
+            junction.SetIdRoom(x, z);
+    }
+
+    public void ResetArrows()
+    {
+        foreach (Junction junction in _opening)
+            junction.ActivateArrow(false);
     }
 
 

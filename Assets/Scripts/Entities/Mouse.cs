@@ -4,6 +4,7 @@ public class Mouse : Entity
 {
     [Header("Debug")]
     [SerializeField] private bool _forceAlbino = false;
+
     //[SerializeField] private bool _forceBoss = false;
 
     //[SerializeField] private List<Vector3> _checkPoint;
@@ -12,6 +13,7 @@ public class Mouse : Entity
     public bool IsBoss => _isBoss;
     public int WaveIndex { get; set; }
 
+
     private MouseSO _data;
     private bool _isBoss;
 
@@ -19,6 +21,9 @@ public class Mouse : Entity
     private float _distance;
     private Vector2 _destination;
     private Rigidbody2D _rb;*/
+
+    private Vector3 _target;
+    private Vector3 _direction;
 
     public override void Init()
     {
@@ -69,31 +74,28 @@ public class Mouse : Entity
         }
     }
 
-    private void Move()
+    // Define the next coord that the mouse will go to
+    public void DefineTarget(IdRoom target)
     {
-        /*_distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
+        _target = new Vector3(target.x, transform.position.y, target.z);
+        _direction = (_target - transform.position).normalized;
+    }
 
-        _rb.velocity = _destination * _speed ;
-        
-        if (_distance < 0.05f)
-        {
-            _nextPoint++;
+    // Move the mouse to the target
+    public void Move()
+    {
+        Vector3 movement = _direction * _speed * Time.deltaTime;
 
-            if (_nextPoint == _checkPoint.Count) //arrivé au fromage 
-            {
-                _rb.velocity = new Vector2(0, 0);
-                _stop = true;
-                
-                Attack();
-            }
-            else
-            {
-                _destination = (_checkPoint[_nextPoint] - transform.position);
-                _destination.Normalize();
-                _rb.velocity = _destination.normalized * _speed;
+        if (movement.magnitude > Vector3.Distance(transform.position, _target))
+            transform.position = _target;
+        else
+            transform.position += movement;
+    }
 
-            }
-        }*/
+    // Check if the mouse has reached the target
+    public bool TargetReached()
+    {
+        return transform.position == _target;
     }
 
     //public override void TakeDamage(Entity source)

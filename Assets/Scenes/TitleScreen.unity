@@ -1110,7 +1110,7 @@ PrefabInstance:
       objectReference: {fileID: 1346184816}
     - target: {fileID: 7030047405026936483, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
       propertyPath: _enableWaves
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1380,6 +1380,7 @@ MonoBehaviour:
   - {fileID: 1810181505}
   _checkingText: {fileID: 150561637}
   _loadingGO: {fileID: 1346184814}
+  _sceneUpdatePopup: UpdatePopup
 --- !u!114 &1399233956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1515,7 +1516,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 368.34}
+  m_AnchoredPosition: {x: 0, y: 368.33997}
   m_SizeDelta: {x: 0, y: 306.36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1762167957

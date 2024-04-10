@@ -2,12 +2,13 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using System;
+using System.Collections.Generic;
 
 public class Mod_Audio : Module
 {
     AudioSource _audioSource;
 
-    public static event Action ChangeSound;
+    List<string> _musics = new List<string>() {"TitleScreen", "MainScreen", "Build", "Shop", "Boss"};
 
     [Header("Musics")]
     [SerializeField] private AudioSource _titleScreen;
@@ -16,7 +17,7 @@ public class Mod_Audio : Module
     [SerializeField] private AudioSource _shop;
     [SerializeField] private AudioSource _boss;
 
-    [Header("SoundEffects")]
+    /*[Header("SoundEffects")]
     public AudioClip _loading;
     public AudioClip _meat;
     public AudioClip _merge;
@@ -31,7 +32,7 @@ public class Mod_Audio : Module
     public AudioClip _catFull;
     public AudioClip _dragCoin;
     public AudioClip _dropCoin;
-    public AudioClip _full;
+    public AudioClip _full;*/
 
 
     private void Awake()
@@ -41,17 +42,52 @@ public class Mod_Audio : Module
     }
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        ChangeSound.Invoke();
+        for (int i = 0;  i < _musics.Count; i++)
+        {
+           
+            if (_titleScreen.clip.name == "TitleScreen")
+            {
+                _titleScreen.Play();
+                _mainScreen.Stop();
+                _build.Stop();
+                _shop.Stop();
+            }
+
+            if (_mainScreen.clip.name == "MainScreen")
+            {
+                _titleScreen.Stop();
+                _mainScreen.Play();
+                _build.Stop();
+                _shop.Stop();
+            }
+
+            if (_build.clip.name == "Build")
+            {
+                _titleScreen.Stop();
+                _mainScreen.Stop();
+                _build.Play();
+                _shop.Stop();
+            }
+
+            if (_shop.clip.name == "Shop")
+            {
+                _titleScreen.Stop();
+                _mainScreen.Stop();
+                _build.Stop();
+                _shop.Play();
+            }
+        }
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
     }
-    public void StartTitleMusic()
+    /*public void StartTitleMusic()
     {
         if (!_titleScreen.isPlaying)
         {
+            _titleScreen.clip.name
             _titleScreen.Play();
             _mainScreen.Stop();
             _build.Stop();
@@ -179,5 +215,5 @@ public class Mod_Audio : Module
     {
         _audioSource.clip = _full;
         _audioSource.Play();
-    }
+    }*/
 }

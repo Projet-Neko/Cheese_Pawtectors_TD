@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(CheckGameVersion());
 
-        Mod<Mod_Audio>().StartTitleMusic();
+        Mod<Mod_Audio>().Init(this);
     }
 
     private IEnumerator CheckGameVersion()
@@ -221,8 +221,6 @@ public class GameManager : MonoBehaviour
         OnInitComplete?.Invoke();
         _isInitCompleted = true;
         DebugOnly();
-        Mod<Mod_Audio>().LoadingSound();
-        Mod<Mod_Audio>().StartMainMusic();
         yield return StartUpdates();
     }
 

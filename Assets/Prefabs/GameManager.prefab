@@ -52,7 +52,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9043659618155142799
 Transform:
   m_ObjectHideFlags: 0
@@ -324,21 +324,6 @@ MonoBehaviour:
   _build: {fileID: 5932817695475289852}
   _shop: {fileID: 8343597956210386040}
   _boss: {fileID: 116708990408269481}
-  _loading: {fileID: 8300000, guid: 85c8dcc8e9952b44dbe9f6658a08e9c6, type: 3}
-  _meat: {fileID: 8300000, guid: 062af0f8d5c00314ba8b3ae8321da7e7, type: 3}
-  _merge: {fileID: 0}
-  _albinos: {fileID: 0}
-  _button: {fileID: 8300000, guid: d098bb4cb82bef745834b16875fa47f5, type: 3}
-  _newRoomOrCat: {fileID: 8300000, guid: fd692fc7efccbe14a8ba1c351dc6f450, type: 3}
-  _mouse: {fileID: 8300000, guid: 06ae5d65fbea42c479ea217ab7dddf6e, type: 3}
-  _chase: {fileID: 0}
-  _catBox: {fileID: 0}
-  _addCat: {fileID: 0}
-  _fight: {fileID: 8300000, guid: 122480af25b636a4180e8013ee7fa129, type: 3}
-  _catFull: {fileID: 8300000, guid: d2195ae47b7f9394886c7ea58d0cd192, type: 3}
-  _dragCoin: {fileID: 0}
-  _dropCoin: {fileID: 0}
-  _full: {fileID: 0}
 --- !u!82 &8336248922547432090
 AudioSource:
   m_ObjectHideFlags: 0

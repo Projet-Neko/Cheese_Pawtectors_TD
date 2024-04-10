@@ -32,6 +32,7 @@ public class Mod_Account : Module
     // Login
     public DateTime? LastLogin => _lastLogin;
     public bool IsLoggedIn => _isLoggedIn;
+    public bool IsFirstLogin => _isFirstLogin;
 
     private bool _isFirstLogin;
     private bool _isLoggedIn = false;
@@ -176,17 +177,17 @@ public class Mod_Account : Module
             yield break;
         }
 
+        yield return SetFirstLoginData();
+    }
+    private IEnumerator SetFirstLoginData()
+    {
         Debug.LogWarning("First login !");
 
         // --- Create Username ---
         yield return (UpdateUsername(_defaultUsername));
 
-        // --- Create Data ---
-        // TODO
-
         CompleteLogin();
         yield return null;
-        //yield return UpdateData();
     }
     private void UpdateLocalSave()
     {
@@ -240,6 +241,14 @@ public class Mod_Account : Module
         }, res =>
         {
             _gm.EndRequest($"Obtained {res.Metadata.Count} file(s) !");
+
+            if (res.Metadata.Count == 0)
+            {
+                _isFirstLogin = true;
+                StartCoroutine(SetFirstLoginData());
+                return;
+            }
+
             GetFilesDatas(res.Metadata[_gm.Data.GetType().Name]);
         }, _gm.OnRequestError);
     }

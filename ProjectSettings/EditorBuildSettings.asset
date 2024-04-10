@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/HeadBand.unity
     guid: 976db888d08beee4eb09c0e9566d8ae0
   - enabled: 1
-    path: Assets/Scenes/Phone/Profil.unity
+    path: Assets/Scenes/Phone/Profile.unity
     guid: bf07bb36ff760f6488cfd4f0ff1cf082
   - enabled: 1
     path: Assets/Scenes/Phone/Settings.unity

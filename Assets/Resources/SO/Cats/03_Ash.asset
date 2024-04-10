@@ -15,3 +15,4 @@ MonoBehaviour:
   SpriteAbove: {fileID: 0}
   SpriteFront: {fileID: 0}
   Lore: "Traque les mouches avec une d\xE9termination sans faille."
+  State: 0

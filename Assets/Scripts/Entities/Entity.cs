@@ -45,7 +45,14 @@ public abstract class Entity : MonoBehaviour
         if (_currentHealth <= 0) return;
         _isAttacked = true;
         _slider.gameObject.SetActive(true);
-        _currentHealth -= source.Damage;
+        float sourceDamage = source.Damage;
+        //Debug.Log($"Cat current sourceDamage(Base) : {sourceDamage}");
+        if (source is Cat && GameManager.Instance.IsPowerUpActive(PowerUpType.DoubleDamage))
+        {
+            sourceDamage *= 2;
+            //Debug.Log($"Cat current sourceDamage(DoubleDamage) : {sourceDamage}");
+        }
+        _currentHealth -= sourceDamage;
 
         Mathf.Clamp(_currentHealth, 0f, _baseHealth);
         //Debug.Log($"Current health after damages : {_currentHealth}");

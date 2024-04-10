@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public enum CatState
@@ -64,28 +65,31 @@ public class Cat : Entity
     public void LevelUp()
     {
         _level++;
-
-        if (_data.State == CatState.Lock)
-        {
-            Debug.Log($"{_data.Name} is unlocked !");
-            _data.State = CatState.Unlock;
-            OnUnlock?.Invoke(_level - 1);
-        }
-
         Init(_level);
         //Debug.Log($"Level up to lvl {_level}");
+
+        if (_data.State == CatState.Lock) OnUnlock?.Invoke(_level - 1);
     }
 
     public override void TakeDamage(Entity source)
     {
-        _currentHealth += source.Damage;
 
-        Mathf.Clamp(_currentHealth, 0f, _baseHealth);
-        Debug.Log($"Cat current satiety : {_currentHealth}/{_baseHealth}");
+        if (GameManager.Instance.IsPowerUpActive(PowerUpType.NoSatiety))
+        {
+            //Debug.Log($"Cat current satiety(noSatiety) : {_currentHealth}/{_baseHealth}");
+            return;
+        }
+        else
+        {
+            _currentHealth += source.Damage;
 
-        SetHealth();
+            Mathf.Clamp(_currentHealth, 0f, _baseHealth);
+            Debug.Log($"Cat current satiety : {_currentHealth}/{_baseHealth}");
 
-        if (_currentHealth == _baseHealth) Sleep();
+            SetHealth();
+
+            if (_currentHealth == _baseHealth) Sleep();
+        }
     }
 
     private void Sleep()

@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 6986865641701312730}
   - component: {fileID: 4409870818491205380}
   - component: {fileID: 8012498421460124366}
-  - component: {fileID: 8009994241535558679}
   - component: {fileID: 6703967180278778899}
+  - component: {fileID: 8009994241535558679}
+  - component: {fileID: 4728155364982734900}
   m_Layer: 5
   m_Name: ClosePopupBackground
   m_TagString: Untagged
@@ -77,19 +78,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8009994241535558679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4919331947564146713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fe21f0418de9f443b061a8f4568a0c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _popupToClose: {fileID: 0}
 --- !u!114 &6703967180278778899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,9 +122,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8009994241535558679}
-        m_TargetAssemblyTypeName: ClosePopupBackground, Assembly-CSharp
-        m_MethodName: ClosePopup
+      - m_Target: {fileID: 4728155364982734900}
+        m_TargetAssemblyTypeName: SceneUnloader, Assembly-CSharp
+        m_MethodName: UnloadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -146,3 +134,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8009994241535558679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4919331947564146713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fe21f0418de9f443b061a8f4568a0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _popupToClose: {fileID: 0}
+--- !u!114 &4728155364982734900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4919331947564146713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c5628f35c948e04a98f810e41ce8bc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

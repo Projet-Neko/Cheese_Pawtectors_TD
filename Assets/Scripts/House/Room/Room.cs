@@ -1,16 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum RoomPattern
 {
-    CheeseRoom,     // Moved
-    CorridorRoom,   // MovedAndRemoved
-    CrossraodRoom,  // MovedAndRemoved
-    StartRoom,      // Protected
-    TurnRoom,       // MovedAndRemoved
-    VoidRoom        // Overwritten
+    CheeseRoom,         // Moved
+    CorridorRoom,       // MovedAndRemoved
+    IntersectionRoom,   // MovedAndRemoved
+    CrossraodRoom,      // MovedAndRemoved
+    StartRoom,          // Protected
+    TurnRoom,           // MovedAndRemoved
+    VoidRoom            // Overwritten
 }
 
 public enum RoomSecurity
@@ -24,17 +24,17 @@ public enum RoomSecurity
 public struct IdRoom
 {
     public int x;
-    public int y;
+    public int z;
 
     public IdRoom(int xRoom, int yRoom)
     {
         x = xRoom;
-        y = yRoom;
+        z = yRoom;
     }
 
     public bool IsNull()
     {
-        return x < 0 || y < 0;
+        return x < 0 || z < 0;
     }
 
     public override bool Equals(object obj)
@@ -43,10 +43,10 @@ public struct IdRoom
             return false;
 
         IdRoom id = (IdRoom)obj;
-        return x == id.x && y == id.y;
+        return x == id.x && z == id.z;
     }
 
-    public override int GetHashCode() { return HashCode.Combine(x, y); }
+    public override int GetHashCode() { return HashCode.Combine(x, z); }
 }
 
 public class Room : MonoBehaviour
@@ -74,10 +74,10 @@ public class Room : MonoBehaviour
     public List<IdRoom> NextRooms => _nextRooms;
 
     protected RoomSecurity _security;
-    protected bool _correctPath = false;        // True if the room is in a correct path
+    protected bool _correctPath = false;                                    // True if the room is in a correct path
 
     // Events
-    private static event Action<bool> TileSelected;   // Deselect the other rooms when a room is selected
+    private static event Action<bool> TileSelected;                         // Deselect the other rooms when a room is selected
 
     private Vector3 _oldPosition;
     private bool _canMove;
@@ -91,6 +91,7 @@ public class Room : MonoBehaviour
 
     // Constants
     private const int _maxLevel = 3;
+    private Plane _plane = new Plane(Vector3.up, 0);
 
 
     //change OnMouseDown to Button to avoid click error
@@ -120,9 +121,13 @@ public class Room : MonoBehaviour
     {
         if (_moveModBool && _canMove)
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //mousePosition.z = mousePosition.y;
-            _room.transform.position = RoundPosition(mousePosition);
+            float distance;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (_plane.Raycast(ray, out distance))
+            {
+                Vector3 mousePosition = ray.GetPoint(distance);
+                _room.transform.position = RoundPosition(mousePosition);
+            }
         }
     }
 
@@ -134,7 +139,7 @@ public class Room : MonoBehaviour
     {
         Vector3 position = startPosition;
         position.x = Mathf.Round(position.x);                        
-        position.y = _oldPosition.y;                                // To be sure the room is on the same line
+        position.y = 0;                                // To be sure the room is on the same line
         position.z = Mathf.Round(position.z);
 
         return position;
@@ -152,14 +157,10 @@ public class Room : MonoBehaviour
         }
         else if (!_anotherTileSelected)
         {
-
             _canMove = true;
            
-
             if (!_moveModBool)
-            {
                 Selected();
-            }
         }
 
         
@@ -249,9 +250,9 @@ public class Room : MonoBehaviour
         }
     }*/
 
-    public void MoveRoom(int x, int y)
+    public void MoveRoom(int x, int z)
     {
-        _room.transform.position = new Vector3(x, y, 0);
+        _room.transform.position = new Vector3(x, 0, z);
     }
 
     public void MoveRoomOldPosition()
@@ -288,7 +289,7 @@ public class Room : MonoBehaviour
     // When user click on Canvas/HUD/Suppr button
     public void Remove()
     {
-        TileDestroyed?.Invoke((int)transform.position.x, (int)transform.position.y, RoomPattern.VoidRoom); // Notify the house that a room will be destroyed and that it must be replaced by a void room
+        TileDestroyed?.Invoke((int)transform.position.x, (int)transform.position.z, RoomPattern.VoidRoom); // Notify the house that a room will be destroyed and that it must be replaced by a void room
         TileSelected?.Invoke(false);
         Delete();
     }
@@ -315,10 +316,10 @@ public class Room : MonoBehaviour
         _correctPath = true;
     }
 
-    public void DefineIdRoom(int x, int y)
+    public void DefineIdRoom(int x, int z)
     {
         foreach (Junction junction in _opening)
-            junction.SetIdRoom(x, y);
+            junction.SetIdRoom(x, z);
     }
 
     public void ResetArrows()

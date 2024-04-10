@@ -70,14 +70,14 @@ public class Mod_Waves : Module
     public IEnumerator SpawnEnemies(bool cooldown)
     {
         int index = 0;
-        _hasCompleteSpawning = _cheeseDead = false;
+        _hasCompleteSpawning = false;
         _maxEnemyNumber = IsBossWave() ? 1 : 10;
         if (cooldown) yield return new WaitForSeconds(.5f);
         while (_spawnedEnemyNumber < _maxEnemyNumber)
         {
             Mouse m = Instantiate(_mousePrefab, _SpawnPos, Quaternion.identity).GetComponent<Mouse>();
             m.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-            m.gameObject.name = $"{m.gameObject.name} #{index}";
+            m.WaveIndex = index + 1;
             _spawnedEnemyNumber++;
             index++;
             _enemyObjects.Add(m.gameObject);
@@ -88,14 +88,14 @@ public class Mod_Waves : Module
         yield return null;
     }
 
-    private void Entity_OnDeath(Entity obj, bool hasBeenKilledByPlayer)
+    private void Entity_OnDeath(Entity entity, bool hasBeenKilledByPlayer)
     {
-        if (obj is Cheese)
+        if (entity is Cheese)
         {
-            Reload();
             _cheeseDead = true;
+            GameOver();
         }
-        else if (obj is Mouse && !_cheeseDead)
+        else if (entity is Mouse && !_cheeseDead)
         {
             _killedEnemiesNumber++;
             _spawnedEnemyNumber--;
@@ -116,9 +116,15 @@ public class Mod_Waves : Module
 
     public void NextWave()
     {
-        _gm.Data.UpdateWaves();
+        _gm.Data.UpdateWaves(true);
         Debug.Log($"Next wave : {_gm.Data.WaveNumber}.");
 
+        Reload();
+    }
+
+    private void GameOver()
+    {
+        _gm.Data.UpdateWaves(false, IsBossWave());
         Reload();
     }
 
@@ -138,6 +144,7 @@ public class Mod_Waves : Module
 
         OnWaveReload?.Invoke();
         _spawnedEnemyNumber = _killedEnemiesNumber = 0;
+        _cheeseDead = false;
         _spawn = SpawnEnemies(true);
         StartCoroutine(_spawn);
     }

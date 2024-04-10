@@ -4,12 +4,13 @@ using UnityEngine;
 
 public enum RoomPattern
 {
-    CheeseRoom,     // Moved
-    CorridorRoom,   // MovedAndRemoved
-    CrossraodRoom,  // MovedAndRemoved
-    StartRoom,      // Protected
-    TurnRoom,       // MovedAndRemoved
-    VoidRoom        // Overwritten
+    CheeseRoom,         // Moved
+    CorridorRoom,       // MovedAndRemoved
+    IntersectionRoom,   // MovedAndRemoved
+    CrossraodRoom,      // MovedAndRemoved
+    StartRoom,          // Protected
+    TurnRoom,           // MovedAndRemoved
+    VoidRoom            // Overwritten
 }
 
 public enum RoomSecurity

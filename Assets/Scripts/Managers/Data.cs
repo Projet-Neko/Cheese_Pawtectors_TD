@@ -162,9 +162,9 @@ public class Data
         Update();
     }
 
-    public void UpdateClan(Clan clan)
+    public void UpdateClan(int clan)
     {
-        Clan = (int)clan;
+        Clan = clan;
         Update();
     }
 

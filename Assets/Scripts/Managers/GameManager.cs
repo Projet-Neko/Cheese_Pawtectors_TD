@@ -85,6 +85,9 @@ public class GameManager : MonoBehaviour
     public bool HasChangedUsername => Mod<Mod_Account>().HasChangedUsername;
 
     public void UpdateUsername(string username) => StartCoroutine(Mod<Mod_Account>().UpdateUsername(username));
+
+    // ClanMod
+    public Clan GetChoosenClan() => Mod<Mod_Clans>().GetChoosenClan();
     #endregion
 
     // PowerUpMod

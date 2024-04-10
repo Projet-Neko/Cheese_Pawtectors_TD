@@ -38,14 +38,14 @@ public class Mod_Economy : Module
     }
     private void Entity_OnDeath(Entity obj, bool hasBeenKilledByPlayer)
     {
-        int meatToAdd = obj.Level;
+        int currencyToAdd = obj.Level;
         //Debug.Log($"Cat current meatToAdd(Base) : {meatToAdd}");
         if (GameManager.Instance.IsPowerUpActive(PowerUpType.DoubleMeat))
         {
-            meatToAdd *= 2;
+            currencyToAdd *= 2;
             //Debug.Log($"Cat current meatToAdd(DoubleMeat) : {meatToAdd}");
         }
-        if (obj is Mouse && hasBeenKilledByPlayer) AddCurrency(Currency.Treats, meatToAdd);
+        if (obj is Mouse && hasBeenKilledByPlayer) DisplayWinCurrency(currencyToAdd);
     }
     #endregion
 
@@ -250,6 +250,15 @@ public class Mod_Economy : Module
         }, res => _gm.EndRequest($"Updated {currency} !"), _gm.OnRequestError);
     }
     #endregion
+
+    private IEnumerator DisplayWinCurrency(int currencyToAdd)
+    {
+        for (int i = 0; i < currencyToAdd; i++)
+        {
+            yield return new WaitForSeconds(.1f);
+            AddCurrency(Currency.Treats, 1);
+        }
+    }
 
     protected override void DebugOnly()
     {

@@ -105,6 +105,7 @@ public class Mod_Waves : Module
                 OnBossDefeated?.Invoke();
             }
             if (_hasCompleteSpawning && _killedEnemiesNumber == _maxEnemyNumber) NextWave();
+
         }
     }
 

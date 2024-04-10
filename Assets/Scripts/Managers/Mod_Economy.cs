@@ -258,7 +258,7 @@ public class Mod_Economy : Module
     {
         for (int i = 0; i < currencyToAdd; i++)
         {
-            Instantiate
+            //Instantiate(_currencyPrefab, transform du parent avec modif de position);
 
             yield return new WaitForSeconds(.1f);
             AddCurrency(Currency.Treats, 1);

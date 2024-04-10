@@ -23,6 +23,10 @@ public class Junction : MonoBehaviour
     private void OnTriggerExit(Collider collider)
     {
         _junctionConnected = null;
+
+        // Check if another junction is connected
+        gameObject.SetActive(false);
+        gameObject.SetActive(true);
     }
 
     public void SetIdRoom(int x, int z)

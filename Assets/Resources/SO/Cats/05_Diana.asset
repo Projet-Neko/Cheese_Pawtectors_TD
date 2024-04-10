@@ -15,3 +15,4 @@ MonoBehaviour:
   SpriteAbove: {fileID: 0}
   SpriteFront: {fileID: 0}
   Lore: Une plume lui procure des heures de divertissement.
+  State: 0

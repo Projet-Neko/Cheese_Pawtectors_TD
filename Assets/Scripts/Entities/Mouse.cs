@@ -11,6 +11,7 @@ public class Mouse : Entity
 
     public Cat Attacker { get; set; }
     public bool IsBoss => _isBoss;
+    public int WaveIndex { get; set; }
 
 
     private MouseSO _data;
@@ -31,19 +32,18 @@ public class Mouse : Entity
     {
         Attacker = null;
         _data = GameManager.Instance.Mouses[MouseType()];
-
-
         _level = GameManager.Instance.Data.MouseLevel;
 
         _baseHealth = _currentHealth = _data.Health + (_level * 1) - 1;
         _damage = _data.SatiationRate;
         _speed = _data.Speed;
 
+        gameObject.name = $"{_data.Name} LVL{_level} [{WaveIndex}/{GameManager.Instance.MaxEnemyNumber}]";
+        //Debug.Log($"Spawning {gameObject.name}");
+
         //_rb = GetComponent<Rigidbody2D>();
         //_nextPoint = 0;
         //_renderer.sprite = _data.Sprite;
-
-        //gameObject.name = _data.Name;
 
         /*_destination = (_checkPoint[_nextPoint] - transform.position);
         _destination.Normalize();

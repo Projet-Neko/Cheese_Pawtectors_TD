@@ -13,6 +13,7 @@ public class Mod_Account : Module
 {
     public static event Action<bool> OnLocalDataCheck;
     public static event Action OnCloudUpdate;
+    public static event Action OnLoginStart;
 
     // PlayFab datas
     public PlayFab.ClientModels.EntityKey Entity => _entity;
@@ -31,6 +32,7 @@ public class Mod_Account : Module
     // Login
     public DateTime? LastLogin => _lastLogin;
     public bool IsLoggedIn => _isLoggedIn;
+    public bool IsFirstLogin => _isFirstLogin;
 
     private bool _isFirstLogin;
     private bool _isLoggedIn = false;
@@ -99,6 +101,8 @@ public class Mod_Account : Module
     }
     public void Login()
     {
+        OnLoginStart?.Invoke();
+
         if (string.IsNullOrEmpty(_authData.Email))
         {
             _gm.StartRequest("Starting anonymous login...");
@@ -116,6 +120,7 @@ public class Mod_Account : Module
     }
     public void Login(string email, string password) // Called from login popup
     {
+        OnLoginStart?.Invoke();
         _gm.StartRequest($"Starting login to {email}...");
 
         _authData = new()
@@ -172,17 +177,17 @@ public class Mod_Account : Module
             yield break;
         }
 
+        yield return SetFirstLoginData();
+    }
+    private IEnumerator SetFirstLoginData()
+    {
         Debug.LogWarning("First login !");
 
         // --- Create Username ---
         yield return (UpdateUsername(_defaultUsername));
 
-        // --- Create Data ---
-        // TODO
-
         CompleteLogin();
         yield return null;
-        //yield return UpdateData();
     }
     private void UpdateLocalSave()
     {
@@ -236,6 +241,14 @@ public class Mod_Account : Module
         }, res =>
         {
             _gm.EndRequest($"Obtained {res.Metadata.Count} file(s) !");
+
+            if (res.Metadata.Count == 0)
+            {
+                _isFirstLogin = true;
+                StartCoroutine(SetFirstLoginData());
+                return;
+            }
+
             GetFilesDatas(res.Metadata[_gm.Data.GetType().Name]);
         }, _gm.OnRequestError);
     }

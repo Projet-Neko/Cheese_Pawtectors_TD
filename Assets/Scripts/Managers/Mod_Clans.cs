@@ -64,6 +64,7 @@ public class Mod_Clans : Module
             }, res =>
             {
                 _gm.EndRequest();
+                _gm.Data.UpdateClan(clan);
                 Debug.Log($"Joined {clan} !");
                 //StartCoroutine(GetGuildData(PlayerGuild));
             }, _gm.OnRequestError);

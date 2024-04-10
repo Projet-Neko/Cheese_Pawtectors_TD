@@ -12,6 +12,9 @@ public enum Currency
 
 public class Mod_Economy : Module
 {
+    [SerializeField] TMPro.TextMeshProUGUI _currenciesText;
+    [SerializeField] private GameObject _currencyPrefab;
+
     public static event Action<bool, int> OnAdoptCheck;
 
     public List<int> CatPrices => _catPrices;
@@ -45,7 +48,7 @@ public class Mod_Economy : Module
             currencyToAdd *= 2;
             //Debug.Log($"Cat current meatToAdd(DoubleMeat) : {meatToAdd}");
         }
-        if (obj is Mouse && hasBeenKilledByPlayer) DisplayWinCurrency(currencyToAdd);
+        if (obj is Mouse && hasBeenKilledByPlayer) StartCoroutine(DisplayWinCurrency(currencyToAdd));
     }
     #endregion
 
@@ -255,8 +258,11 @@ public class Mod_Economy : Module
     {
         for (int i = 0; i < currencyToAdd; i++)
         {
+            Instantiate
+
             yield return new WaitForSeconds(.1f);
             AddCurrency(Currency.Treats, 1);
+            _currenciesText.text = _gm.Data.Currencies[(int)Currency.Treats].Amount.ToString();
         }
     }
 

@@ -8,14 +8,13 @@ public class Mod_Audio : Module
 {
     AudioSource _audioSource;
 
-    List<string> _musics = new List<string>() {"TitleScreen", "MainScreen", "Build", "Shop", "Boss"};
+    List<string> _musics = new List<string>() {"TitleScreen", "MainScreen", "Build", "Shop"};
 
     [Header("Musics")]
     [SerializeField] private AudioSource _titleScreen;
     [SerializeField] private AudioSource _mainScreen;
     [SerializeField] private AudioSource _build;
     [SerializeField] private AudioSource _shop;
-    [SerializeField] private AudioSource _boss;
 
     /*[Header("SoundEffects")]
     public AudioClip _loading;
@@ -77,7 +76,7 @@ public class Mod_Audio : Module
 
         if (arg0.name == _musics[3])
         {
-            if (!_boss.isPlaying)
+            if (!_shop.isPlaying)
             {
                 _titleScreen.Stop();
                 _mainScreen.Stop();

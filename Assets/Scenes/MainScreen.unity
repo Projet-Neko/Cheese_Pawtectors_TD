@@ -5958,6 +5958,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2732286174534552492, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+      propertyPath: _currenciesText
+      value: 
+      objectReference: {fileID: 1463901449}
     - target: {fileID: 4136298536209485269, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -6011,6 +6015,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+--- !u!114 &1656288770 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2732286174534552492, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+  m_PrefabInstance: {fileID: 1656288769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 178b372a222e8a248aed6707e287aaa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1661776081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7142,7 +7157,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1656288770}
         m_TargetAssemblyTypeName: Mod_Economy, Assembly-CSharp
         m_MethodName: DebugTestDisplayWinCurrency
         m_Mode: 3

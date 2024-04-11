@@ -12,7 +12,6 @@ public enum Currency
 
 public class Mod_Economy : Module
 {
-    [SerializeField] TMPro.TextMeshProUGUI _currenciesText;
     [SerializeField] private GameObject _currencyPrefab;
 
     public static event Action<bool, int> OnAdoptCheck;
@@ -264,9 +263,9 @@ public class Mod_Economy : Module
         {
             //Instantiate(_currencyPrefab, transform du parent avec modif de position);
 
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.05f);
             AddCurrency(Currency.Treats, 1);
-            _currenciesText.text = _gm.Data.Currencies[(int)Currency.Treats].Amount.ToString();
+            //_currenciesText.text = _gm.Data.Currencies[(int)Currency.Treats].Amount.ToString();
         }
     }
 

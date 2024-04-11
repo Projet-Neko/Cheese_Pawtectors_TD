@@ -252,19 +252,25 @@ public class Mod_Economy : Module
             }
         }, res => _gm.EndRequest($"Updated {currency} !"), _gm.OnRequestError);
     }
-    #endregion
 
+    public void DebugTestDisplayWinCurrency(int test)
+    {
+        Debug.Log("oui");
+        StartCoroutine(DisplayWinCurrency(test));
+    }
     private IEnumerator DisplayWinCurrency(int currencyToAdd)
     {
         for (int i = 0; i < currencyToAdd; i++)
         {
             //Instantiate(_currencyPrefab, transform du parent avec modif de position);
 
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(.5f);
             AddCurrency(Currency.Treats, 1);
             _currenciesText.text = _gm.Data.Currencies[(int)Currency.Treats].Amount.ToString();
         }
     }
+
+    #endregion
 
     protected override void DebugOnly()
     {

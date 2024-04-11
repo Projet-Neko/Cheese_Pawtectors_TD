@@ -22,11 +22,8 @@ public class Mouse : Entity
     private Vector2 _destination;
     private Rigidbody2D _rb;*/
 
-    private bool _hasEaten = false;
     private Vector3 _target;
     private Vector3 _direction;
-
-    public bool HasEaten => _hasEaten;
 
     public override void Init()
     {
@@ -77,13 +74,14 @@ public class Mouse : Entity
         }
     }
 
+    // Define the next coord that the mouse will go to
     public void DefineTarget(IdRoom target)
     {
-        _speed = 1; // TO DO : change this
         _target = new Vector3(target.x, transform.position.y, target.z);
         _direction = (_target - transform.position).normalized;
     }
 
+    // Move the mouse to the target
     public void Move()
     {
         Vector3 movement = _direction * _speed * Time.deltaTime;
@@ -94,17 +92,11 @@ public class Mouse : Entity
             transform.position += movement;
     }
 
+    // Check if the mouse has reached the target
     public bool TargetReached()
     {
         return transform.position == _target;
     }
-
-    public void Eat()
-    {
-        _hasEaten = true;
-    }
-
-
 
     //public override void TakeDamage(Entity source)
     //{

@@ -1,13 +1,16 @@
 using AYellowpaper.SerializedCollections;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class House : MonoBehaviour
 {
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
     [SerializeField] private GameObject _mousePrefab;
+
+    [Header("Scene where player can use HUD")]
+    [SerializeField, Scene] private string _sceneHUD;
 
     private const int _maxRooms = 30;
     private const int _minRooms = 5;
@@ -24,6 +27,12 @@ public class House : MonoBehaviour
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */
+    void StartPath()
+    {
+        AddRoom(1, _currentRoomNumber / 2, RoomPattern.CorridorRoom);
+        AddRoom(2, _currentRoomNumber / 2, RoomPattern.CorridorRoom);
+    }
+
     void Start()
     {
         // Create the Void Rooms and one Start Room, visible in the beginning
@@ -41,7 +50,7 @@ public class House : MonoBehaviour
                 }
 
                 // Place the Cheese Room
-                else if (i == _currentRoomNumber - 1 && j == _currentRoomNumber / 2)
+                else if (i == _currentRoomNumber - 2 && j == _currentRoomNumber / 2)
                     CreateRoom(i, j, RoomPattern.CheeseRoom);
 
                 // Place Void Rooms
@@ -50,21 +59,11 @@ public class House : MonoBehaviour
             }
         }
 
+        StartPath();
+
         // Subscribe to events
         Room.ChangeTilePosition += CheckRoomPosition;
         Room.TileDestroyed += CreateRoom;
-
-        // TO DO : TO REMOVE (is a test)
-        AddRoom(1, 2, RoomPattern.CorridorRoom);
-        AddRoom(2, 2, RoomPattern.CrossraodRoom);
-        AddRoom(2, 3, RoomPattern.CrossraodRoom);
-        AddRoom(3, 2, RoomPattern.CorridorRoom);
-        AddRoom(1, 0, RoomPattern.TurnRoom);
-        AddRoom(3, 0, RoomPattern.TurnRoom);
-        AddRoom(4, 0, RoomPattern.TurnRoom);
-        AddRoom(2, 0, RoomPattern.CrossraodRoom);
-        AddRoom(0, 0, RoomPattern.CrossraodRoom);
-        //RemoveRoom(2, 1);
     }
 
     private void OnDestroy()
@@ -84,6 +83,7 @@ public class House : MonoBehaviour
         GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(x, 0, z), Quaternion.identity);
         roomObject.transform.parent = transform;
         _roomsGrid[x, z] = roomObject.GetComponentInChildren<Room>();
+        _roomsGrid[x, z].SceneForHUD(_sceneHUD);
     }
 
     /*private void CreateRandomRoom()
@@ -378,38 +378,14 @@ public class House : MonoBehaviour
                 Mouse mouse = _mouseList[i];
                 Room currentRoom = _roomsGrid[(int)mouse.transform.position.x, (int)mouse.transform.position.z];
 
-                if (mouse.HasEaten)                                                     // Mouse come back to the start room
+                if (mouse.TargetReached())
                 {
-                    if (mouse.TargetReached())
-                    {
-                        int numberPreviousRooms = currentRoom.PreviousRooms.Count;
-                        if (numberPreviousRooms == 0)
-                        {
-                            _mouseList.RemoveAt(i);
-                            Destroy(mouse.gameObject);
-                            continue;
-                        }
+                    int numberNextRooms = currentRoom.NextRooms.Count;
+                    if (numberNextRooms == 0)
+                        continue;
 
-                        int random = Random.Range(0, numberPreviousRooms);
-                        mouse.DefineTarget(currentRoom.PreviousRooms[random]);
-                    }
-                }
-                else                                                                    // Mouse go to the cheese room
-                {
-                    if (mouse.TargetReached())
-                    {
-                        int numberNextRooms = currentRoom.NextRooms.Count;
-                        if (numberNextRooms == 0)
-                        {
-                            mouse.Eat();
-                            Debug.Log("Mouse has eaten");
-                            mouse.DefineTarget(currentRoom.PreviousRooms[0]);
-                            continue;
-                        }
-
-                        int random = Random.Range(0, numberNextRooms);
-                        mouse.DefineTarget(currentRoom.NextRooms[random]);
-                    }
+                    int random = Random.Range(0, numberNextRooms);
+                    mouse.DefineTarget(currentRoom.NextRooms[random]);
                 }
                 
                 mouse.Move();

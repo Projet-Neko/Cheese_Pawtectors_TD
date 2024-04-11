@@ -8,13 +8,13 @@ public class Mod_Audio : Module
 {
     AudioSource _audioSource;
 
-    List<string> _musics = new List<string>() {"TitleScreen", "MainScreen", "Build", "Shop"};
+    List<string> _musics = new List<string>() {"TitleScreen", "MainScreen", "Build", "Currency Shop"};
 
     [Header("Musics")]
     [SerializeField] private AudioSource _titleScreen;
     [SerializeField] private AudioSource _mainScreen;
     [SerializeField] private AudioSource _build;
-    [SerializeField] private AudioSource _shop;
+    [SerializeField] private AudioSource _currencyShop;
 
     /*[Header("SoundEffects")]
     public AudioClip _loading;
@@ -48,7 +48,7 @@ public class Mod_Audio : Module
                 _titleScreen.Play();
                 _mainScreen.Stop();
                 _build.Stop();
-                _shop.Stop();
+                _currencyShop.Stop();
             }
         }
 
@@ -59,7 +59,7 @@ public class Mod_Audio : Module
                 _titleScreen.Stop();
                 _mainScreen.Play();
                 _build.Stop();
-                _shop.Stop();
+                _currencyShop.Stop();
             }
         }
 
@@ -70,18 +70,18 @@ public class Mod_Audio : Module
                 _titleScreen.Stop();
                 _mainScreen.Stop();
                 _build.Play();
-                _shop.Stop();
+                _currencyShop.Stop();
             }
         }
 
         if (arg0.name == _musics[3])
         {
-            if (!_shop.isPlaying)
+            if (!_currencyShop.isPlaying)
             {
                 _titleScreen.Stop();
                 _mainScreen.Stop();
                 _build.Stop();
-                _shop.Play();
+                _currencyShop.Play();
             }
         }
     }

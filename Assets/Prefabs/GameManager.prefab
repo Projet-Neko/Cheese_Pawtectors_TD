@@ -193,7 +193,7 @@ MonoBehaviour:
   _titleScreen: {fileID: 5202285765949947382}
   _mainScreen: {fileID: 1576929118232644029}
   _build: {fileID: 5932817695475289852}
-  _shop: {fileID: 8343597956210386040}
+  _currencyShop: {fileID: 8343597956210386040}
 --- !u!82 &8336248922547432090
 AudioSource:
   m_ObjectHideFlags: 0
@@ -569,7 +569,7 @@ GameObject:
   - component: {fileID: 6822118543550746198}
   - component: {fileID: 8343597956210386040}
   m_Layer: 0
-  m_Name: Shop
+  m_Name: Currency Shop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

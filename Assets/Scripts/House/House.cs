@@ -1,4 +1,5 @@
 using AYellowpaper.SerializedCollections;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,9 @@ public class House : MonoBehaviour
 {
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
     [SerializeField] private GameObject _mousePrefab;
+
+    [Header("Scene where player can use HUD")]
+    [SerializeField, Scene] private string _sceneHUD;
 
     private const int _maxRooms = 30;
     private const int _minRooms = 5;
@@ -79,6 +83,7 @@ public class House : MonoBehaviour
         GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(x, 0, z), Quaternion.identity);
         roomObject.transform.parent = transform;
         _roomsGrid[x, z] = roomObject.GetComponentInChildren<Room>();
+        _roomsGrid[x, z].SceneForHUD(_sceneHUD);
     }
 
     /*private void CreateRandomRoom()

@@ -36,7 +36,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Phone/Leaderboards.unity
     guid: ee2e32761b225c741832c5b85caac99e
   - enabled: 1
-    path: Assets/Scenes/Phone/Succes.unity
+    path: Assets/Scenes/Phone/Success.unity
     guid: 053158783d5dfa642a111244b83cae43
   - enabled: 1
     path: Assets/Scenes/Phone/Pull/Pull.unity

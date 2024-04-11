@@ -42,34 +42,42 @@ public class Mod_Audio : Module
     }
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        for (int i = 0;  i < _musics.Count; i++)
+        if (arg0.name == _musics[0])
         {
-           
-            if (_titleScreen.clip.name == "TitleScreen")
+            if (!_titleScreen.isPlaying)
             {
                 _titleScreen.Play();
                 _mainScreen.Stop();
                 _build.Stop();
                 _shop.Stop();
             }
+        }
 
-            if (_mainScreen.clip.name == "MainScreen")
+        if (arg0.name == _musics[1])
+        {
+            if (!_mainScreen.isPlaying)
             {
                 _titleScreen.Stop();
                 _mainScreen.Play();
                 _build.Stop();
                 _shop.Stop();
             }
+        }
 
-            if (_build.clip.name == "Build")
+        if (arg0.name == _musics[2])
+        {
+            if (!_build.isPlaying)
             {
                 _titleScreen.Stop();
                 _mainScreen.Stop();
                 _build.Play();
                 _shop.Stop();
             }
+        }
 
-            if (_shop.clip.name == "Shop")
+        if (arg0.name == _musics[3])
+        {
+            if (!_boss.isPlaying)
             {
                 _titleScreen.Stop();
                 _mainScreen.Stop();
@@ -83,65 +91,8 @@ public class Mod_Audio : Module
     {
         SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
     }
-    /*public void StartTitleMusic()
-    {
-        if (!_titleScreen.isPlaying)
-        {
-            _titleScreen.clip.name
-            _titleScreen.Play();
-            _mainScreen.Stop();
-            _build.Stop();
-            _shop.Stop();
-            _boss.Stop();
-        }
-    }
-
-
-    public void StartMainMusic()
-    {
-        if (!_mainScreen.isPlaying)
-        {
-            _titleScreen.Stop();
-            _mainScreen.Play();
-            _build.Stop();
-            _shop.Stop();
-            _boss.Stop();
-        }
-    }
-    public void StartBuildMusic()
-    {
-        if (!_build.isPlaying)
-        {
-            _titleScreen.Stop();
-            _mainScreen.Stop();
-            _build.Play();
-            _shop.Stop();
-            _boss.Stop();
-        }
-    }
-    public void StartShopMusic()
-    {
-        if (!_shop.isPlaying)
-        {
-            _titleScreen.Stop();
-            _mainScreen.Stop();
-            _build.Stop();
-            _shop.Play();
-            _boss.Stop();
-        }
-    }
-    public void StartBossMusic()
-    {
-        if (!_boss.isPlaying)
-        {
-            _titleScreen.Stop();
-            _mainScreen.Stop();
-            _build.Stop();
-            _shop.Stop();
-            _boss.Play();
-        }
-    }
-    public void LoadingSound()
+    
+    /*public void LoadingSound()
     {
         _audioSource.clip = _loading;
         _audioSource.Play();

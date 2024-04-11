@@ -338,6 +338,7 @@ public class House : MonoBehaviour
     *        Delete room
     * * * * * * * * * * * * * * * * * * * */
 
+    // Button to delete all the rooms
     public void DestroyAllRoom()
     {
         for (int i = 0; i < _currentRoomNumber; i++)
@@ -408,5 +409,37 @@ public class House : MonoBehaviour
         }
 
         yield return null;
+    }
+
+
+    /* * * * * * * * * * * * * * * * * * * *
+    *           ROOM POSITION AUTO
+    * * * * * * * * * * * * * * * * * * * */
+
+    private bool RoomPositionAuto(IdRoom previousRoom, IdRoom currentRoom)
+    {
+        if (!IsInGrid(currentRoom.x, currentRoom.z))
+            return false;
+
+        // Si on n'a plus de room à placer --> return true
+
+        // Choisir une room aléatoire
+        // tourner la room jusqu'à ce que la jointure soit dans la bonne direction
+        // selectionner une autre jointure
+        // rappeler la fonction avec la nouvelle room
+        // si la fonction retourne false, on recommence avec une autre jointure, sinon on retourne true
+        // si on a testé toutes les jointures et qu'aucune ne fonctionne, on retourne false
+
+        return true;
+    }
+
+    public void RoomPositionAuto()
+    {
+        DestroyAllRoom();
+
+        IdRoom idRoom = new IdRoom(_idStartRoom.x+1, _idStartRoom.z);
+
+        // Choisir une room aléatoire
+        // Orienter une jointure de la room vers la room précédente
     }
 }

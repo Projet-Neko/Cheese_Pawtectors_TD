@@ -1,10 +1,7 @@
-using System;
 using UnityEngine;
 
 public class StorageSlot : DragAndDropHandler
 {
-    public static event Action<int, int> OnSlotChanged; // Slot index, cat level
-
     [SerializeField] private Cat _currentCat;
     [SerializeField] private BoxCollider2D _collider;
 
@@ -41,8 +38,8 @@ public class StorageSlot : DragAndDropHandler
     {
         InitSlot(cat);
 
-        OnSlotChanged?.Invoke(_previousSlotIndex, -1);
-        OnSlotChanged?.Invoke(_slotIndex, _currentCat.Level - 1);
+        InvokeOnSlotChanged(_previousSlotIndex, -1);
+        InvokeOnSlotChanged(_slotIndex, _currentCat.Level - 1);
 
         _currentCat.transform.SetParent(transform);
         _currentCat.transform.position = transform.position;
@@ -55,8 +52,8 @@ public class StorageSlot : DragAndDropHandler
 
     private void MergeCat(Cat cat)
     {
-        OnSlotChanged?.Invoke(_previousSlotIndex, -1);
-        OnSlotChanged?.Invoke(_slotIndex, _currentCat.Level);
+        InvokeOnSlotChanged(_previousSlotIndex, -1);
+        InvokeOnSlotChanged(_slotIndex, _currentCat.Level);
 
         _currentCat.LevelUp();
         Destroy(cat.gameObject);

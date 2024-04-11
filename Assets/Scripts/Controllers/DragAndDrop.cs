@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
@@ -12,11 +13,6 @@ public class DragAndDrop : MonoBehaviour
     private bool _isBeingDragged = false;
     private Vector3 _initialPosition;
     private Vector3 _offset;
-
-    private void Awake()
-    {
-        _canvas = GetComponentInParent<Canvas>();
-    }
 
     private void OnMouseDrag()
     {
@@ -38,22 +34,22 @@ public class DragAndDrop : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit2D = Physics2D.GetRayIntersection(ray);
 
-        if (Physics.Raycast(ray, out RaycastHit hit3D)) // Raycast en 3D pour les pièces
-        {
-            Debug.Log("Objet touché : " + hit3D.collider.gameObject.name);
-        }
-        else if (hit2D.collider != null) // Raycast en 2D pour l'entrepôt
-        {
-            Debug.Log("Objet touché : " + hit2D.collider.gameObject.name);
-            if (hit2D.collider != null && hit2D.collider.gameObject.TryGetComponent(out DragAndDropHandler component))
-            {
-                if (_cat != null) component.HandleDragAndDrop(_cat, _initialPosition);
-                else if (_room != null) component.HandleDragAndDrop(_room, _initialPosition);
-            }
-        }
+        if (Physics.Raycast(ray, out RaycastHit hit3D)) HandleRaycast(hit3D.collider.gameObject); // Raycast en 3D pour les pièces
+        else if (hit2D.collider != null) HandleRaycast(hit2D.collider.gameObject); // Raycast en 2D pour l'entrepôt
         else transform.position = _initialPosition;
 
         Grab(false);
+    }
+
+    private void HandleRaycast(GameObject go)
+    {
+        //Debug.Log("Objet touché : " + go.name);
+
+        if (go.TryGetComponent(out DragAndDropHandler component))
+        {
+            if (_cat != null) component.HandleDragAndDrop(_cat, _initialPosition);
+            else if (_room != null) component.HandleDragAndDrop(_room, _initialPosition);
+        }
     }
 
     private void Grab(bool isGrabbed)

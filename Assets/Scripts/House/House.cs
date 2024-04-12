@@ -38,24 +38,26 @@ public class House : MonoBehaviour
         // Create the Void Rooms and one Start Room, visible in the beginning
         _currentRoomNumber = _minRooms;
 
-        for (int i = 0; i < _currentRoomNumber; i++)
+        int startZ = _maxRooms / 2 - _currentRoomNumber / 2;
+
+        for (int x = 0; x < _currentRoomNumber; x++)
         {
-            for (int j = 0; j < _currentRoomNumber; j++)
+            for (int z = startZ; z < startZ + _currentRoomNumber; z++)
             {
                 // Place the Start Room
-                if (i == 0 && j == _currentRoomNumber / 2)
+                if (x == 0 && z == _maxRooms / 2)
                 {
-                    CreateRoom(i, j, RoomPattern.StartRoom);
-                    _idStartRoom = new IdRoom(i, j);
+                    CreateRoom(x, z, RoomPattern.StartRoom);
+                    _idStartRoom = new IdRoom(x, z);
                 }
 
                 // Place the Cheese Room
-                else if (i == _currentRoomNumber - 2 && j == _currentRoomNumber / 2)
-                    CreateRoom(i, j, RoomPattern.CheeseRoom);
+                else if (x == _currentRoomNumber - 2 && z == _maxRooms / 2)
+                    CreateRoom(x, z, RoomPattern.CheeseRoom);
 
                 // Place Void Rooms
                 else
-                    CreateRoom(i, j, RoomPattern.VoidRoom);
+                    CreateRoom(x, z, RoomPattern.VoidRoom);
             }
         }
 
@@ -119,7 +121,8 @@ public class House : MonoBehaviour
 
     private bool IsInGrid(int x, int z)
     {
-        return x >= 0 && x < _currentRoomNumber && z >= 0 && z < _currentRoomNumber;
+        int startZ = _maxRooms / 2 - _currentRoomNumber / 2;
+        return x >= 0 && x < _currentRoomNumber && z >= startZ && z < startZ + _currentRoomNumber;
     }
 
     private void CheckRoomPosition(Vector3 oldPosition, Vector3 newPosition, bool validate)
@@ -187,13 +190,23 @@ public class House : MonoBehaviour
 
         ++_currentRoomNumber;
 
-        // Create the new rooms on the top
-        for (int i = 0; i < _currentRoomNumber; i++)
-            CreateRoom(i, _currentRoomNumber - 1, RoomPattern.VoidRoom);
+        // Create the new rooms on the top/bottom
+        if (_currentRoomNumber % 2 == 0)// Create the new rooms on the bottom
+        {
+            int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+            for (int x = 0; x < _currentRoomNumber; x++)
+                CreateRoom(x, zStart - 1, RoomPattern.VoidRoom);
+        }
+        else// Create the new rooms on the top
+        {
+            int zEnd = _maxRooms / 2 + _currentRoomNumber / 2;
+            for (int x = 0; x < _currentRoomNumber; x++)
+                CreateRoom(x, zEnd, RoomPattern.VoidRoom);
+        }
 
         // Create the new rooms on the right
-        for (int i = 0; i < _currentRoomNumber - 1; i++)
-            CreateRoom(_currentRoomNumber - 1, i, RoomPattern.VoidRoom);
+        for (int z = 0; z < _currentRoomNumber - 1; z++)
+            CreateRoom(_currentRoomNumber - 1, z, RoomPattern.VoidRoom);
     }
 
     /* * * * * * * * * * * * * * * * * * * *
@@ -202,9 +215,11 @@ public class House : MonoBehaviour
 
     private void InitBuildPath()
     {
+        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+
         for (int x = 0; x < _currentRoomNumber; x++)
         {
-            for (int z = 0; z < _currentRoomNumber; z++)
+            for (int z = zStart; z < zStart + _currentRoomNumber; z++)
             {
                 _roomsGrid[x, z].DefineIdRoom(x, z);
                 _roomsGrid[x, z].ResetPath();
@@ -214,9 +229,11 @@ public class House : MonoBehaviour
 
     public void ResetArrows()
     {
+        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+
         for (int x = 0; x < _currentRoomNumber; x++)
         {
-            for (int z = 0; z < _currentRoomNumber; z++)
+            for (int z = zStart; z < zStart + _currentRoomNumber; z++)
                 _roomsGrid[x, z].ResetArrows();
         }
     }
@@ -324,9 +341,11 @@ public class House : MonoBehaviour
 
     private void DestroyInvalidRoom()
     {
+        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+
         for (int i = 0; i < _currentRoomNumber; i++)
         {
-            for (int j = 0; j < _currentRoomNumber; j++)
+            for (int j = zStart; j < zStart + _currentRoomNumber; j++)
             {
                 if (!_roomsGrid[i, j].CorrectPath)
                     RemoveRoom(i, j);
@@ -341,9 +360,11 @@ public class House : MonoBehaviour
     // Button to delete all the rooms
     public void DestroyAllRoom()
     {
+        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+
         for (int i = 0; i < _currentRoomNumber; i++)
         {
-            for (int j = 0; j < _currentRoomNumber; j++)
+            for (int j = zStart; j < zStart + _currentRoomNumber; j++)
                 RemoveRoom(i, j);
         }
     }

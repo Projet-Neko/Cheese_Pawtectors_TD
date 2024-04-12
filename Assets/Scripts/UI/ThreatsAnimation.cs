@@ -4,41 +4,37 @@ using UnityEngine;
 
 public class Currencie : MonoBehaviour
 {
-    [SerializeField] private GameObject _threat;
+    [SerializeField] private GameObject _destinationGO;
+    [SerializeField] private float _speed;
+    private Vector3 _destination;
+
+    private Rigidbody rb;
 
     void Start()
     {
-        Entity.OnDeath += SpawnThreats;
+        _destination = _destinationGO.transform.position;
+        rb = GetComponent<Rigidbody>();
+        StartCoroutine(ThreatAnimation());
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
-    }
-
-    public void SpawnThreats(Entity mouse, bool isItAMouse)
-    {
-        if (isItAMouse)
+        float distance = Vector3.Distance(transform.position, _destination);
+        if (distance < 1f)
         {
-
-            Vector3 spawnPos = mouse.transform.position;
-            for (int i = 0; i < mouse.Level; i++)
-            {
-                spawnPos = new Vector3(spawnPos.x + Random.Range(-0.1f, 0.1f), spawnPos.y + Random.Range(-0.1f, 0.1f), spawnPos.z);
-                GameObject threat = _threat;
-                Instantiate(threat, spawnPos, Quaternion.identity);
-                StartCoroutine(ThreatAnimation(threat));
-            }
+            Destroy(gameObject);
         }
+    
     }
 
-    private IEnumerator ThreatAnimation(GameObject threat)
-    {
-        Rigidbody rb = threat.GetComponent<Rigidbody>();
-        yield return new WaitForSeconds(0.7f);
-        rb.velocity = transform.position - threat.transform.position;
 
+    private IEnumerator ThreatAnimation()
+    {
+        yield return new WaitForSeconds(0.2f);
+        rb.velocity = new Vector3(0, 0, 0);
+        yield return new WaitForSeconds(0.7f);
+        rb.velocity = (_destination - transform.position).normalized * _speed;
+        //Destroy(gameObject, 2f);
     }
 
 }

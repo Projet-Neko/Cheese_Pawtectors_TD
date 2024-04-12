@@ -1,7 +1,9 @@
 using System;
+using System.Threading;
 using TMPro;
 using TMPro.EditorUtilities;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum CatState
 {
@@ -104,4 +106,6 @@ public class Cat : Entity
     }
 
     public override bool IsAlive() => _currentHealth < _baseHealth;
+
+    
 }

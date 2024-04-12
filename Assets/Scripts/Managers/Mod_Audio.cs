@@ -7,11 +7,10 @@ using UnityEngine.UI;
 
 public class Mod_Audio : Module
 {
-    [SerializeField] AudioSource _audioSource;
     [SerializeField] AudioSource _music;
     [SerializeField] AudioSource _soundEffect;
 
-    List<string> _sceneMusic = new List<string>() {"TitleScreen", "MainScreen", "Build", "Currency Shop"};
+    //List<string> _sceneMusic = new List<string>() {"TitleScreen", "MainScreen", "Build", "Currency Shop"};
 
     Dictionary<string, AudioClip> _musicsClip = new Dictionary<string, AudioClip>();
 
@@ -47,12 +46,14 @@ public class Mod_Audio : Module
     {
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
         _musicsClip.Add("TitleScreen", _titleScreen);
-        //Ajouter pour les autres (element de la liste)
+        _musicsClip.Add("MainScreen", _mainScreen);
+        _musicsClip.Add("Build", _build);
+        _musicsClip.Add("Currency Shop", _currencyShop);
     }
-    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
         _music.Stop();
-        _music.clip = _musicsClip[arg0.name];
+        _music.clip = _musicsClip[scene.name];
         _music.Play();
 
         /*if (arg0.name == _sceneMusic[0])
@@ -126,7 +127,7 @@ public class Mod_Audio : Module
     }*/
     public void SoundEffect(AudioClip clip)
     {
-        _audioSource.PlayOneShot(clip);
+        _soundEffect.PlayOneShot(clip);
     }
     /*public void NewRoomOrCatSound()
     {

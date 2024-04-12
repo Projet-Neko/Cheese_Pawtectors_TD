@@ -1129,9 +1129,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+      propertyPath: _meat
+      value: 
+      objectReference: {fileID: 8300000, guid: 062af0f8d5c00314ba8b3ae8321da7e7, type: 3}
+    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+      propertyPath: _button
+      value: 
+      objectReference: {fileID: 8300000, guid: d098bb4cb82bef745834b16875fa47f5, type: 3}
+    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+      propertyPath: _loading
+      value: 
+      objectReference: {fileID: 8300000, guid: 85c8dcc8e9952b44dbe9f6658a08e9c6, type: 3}
+    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+      propertyPath: _audioSource
+      value: 
+      objectReference: {fileID: 1552784964}
+    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
       propertyPath: _currencyShop
       value: 
       objectReference: {fileID: 1882901394}
+    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+      propertyPath: _newRoomOrCat
+      value: 
+      objectReference: {fileID: 8300000, guid: fd692fc7efccbe14a8ba1c351dc6f450, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1501,6 +1521,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5500f57838385eb449a511213d06d38f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &1552784964 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8336248922547432090, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+  m_PrefabInstance: {fileID: 1318986572}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1762167955
 GameObject:
   m_ObjectHideFlags: 0

@@ -93,7 +93,11 @@ public class GameManager : MonoBehaviour
     // PowerUpMod
     public bool IsPowerUpActive(PowerUpType powerUpType) => Mod<Mod_PowerUp>().IsPowerUpActive(powerUpType);
 
+    //Audio
+    public void SoundEffect(AudioClip clip) => Mod<Mod_Audio>().SoundEffect(clip);
+
     private T Mod<T>() where T : Module => _modules.OfType<T>().First();
+
 
     private void Start()
     {
@@ -224,6 +228,7 @@ public class GameManager : MonoBehaviour
         OnInitComplete?.Invoke();
         _isInitCompleted = true;
         DebugOnly();
+        //Mod<Mod_Audio>().LoadingSound();
         yield return StartUpdates();
     }
 

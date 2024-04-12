@@ -1195,6 +1195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c882b7e712965148af9cf8d04f952be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: d098bb4cb82bef745834b16875fa47f5, type: 3}
   _cat: {fileID: 0}
   _renderer: {fileID: 0}
   _catPrice: {fileID: 679597389}
@@ -1796,6 +1797,18 @@ MonoBehaviour:
       - m_Target: {fileID: 496608040}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1656288770}
+        m_TargetAssemblyTypeName: Mod_Audio, Assembly-CSharp
+        m_MethodName: ButtonSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5514,6 +5527,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+--- !u!114 &1656288770 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+  m_PrefabInstance: {fileID: 1656288769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a52aa69403e214d48aecef1a2f56d83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1661776081
 PrefabInstance:
   m_ObjectHideFlags: 0

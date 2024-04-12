@@ -168,8 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: BO_TitleScreen
-  _headBand: 
-  _isPermanent: 0
+  _isAdditive: 1
 --- !u!1 &64492013
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,6 +1188,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+        m_TargetAssemblyTypeName: Mod_Audio, Assembly-CSharp
+        m_MethodName: ButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &373288358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1934,8 +1945,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: BO_BuildMode
-  _headBand: 
-  _isPermanent: 0
+  _isAdditive: 1
 --- !u!1 &520177992
 GameObject:
   m_ObjectHideFlags: 0
@@ -4184,10 +4194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35c643eaf71a8e845be37aaa0bf52823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _loading: {fileID: 8300000, guid: 85c8dcc8e9952b44dbe9f6658a08e9c6, type: 3}
-  _meat: {fileID: 8300000, guid: 062af0f8d5c00314ba8b3ae8321da7e7, type: 3}
-  _build: {fileID: 8300000, guid: 526c58329ffb0a741b21d052f3ee004d, type: 3}
-  _shop: {fileID: 8300000, guid: c3a61a0b2652c8a45913be25185549c5, type: 3}
 --- !u!82 &1344643972
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5000,8 +5006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: Catalog
-  _headBand: 
-  _isPermanent: 0
+  _isAdditive: 1
 --- !u!1 &1485826812
 GameObject:
   m_ObjectHideFlags: 0
@@ -5531,8 +5536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: LoginPopup
-  _headBand: 
-  _isPermanent: 0
+  _isAdditive: 1
 --- !u!114 &1594703521
 MonoBehaviour:
   m_ObjectHideFlags: 0

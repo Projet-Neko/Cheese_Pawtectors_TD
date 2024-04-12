@@ -1685,6 +1685,7 @@ GameObject:
   - component: {fileID: 496608037}
   - component: {fileID: 496608039}
   - component: {fileID: 496608040}
+  - component: {fileID: 496608041}
   m_Layer: 5
   m_Name: Build
   m_TagString: Untagged
@@ -1806,18 +1807,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-        m_TargetAssemblyTypeName: Mod_Audio, Assembly-CSharp
-        m_MethodName: SoundEffect
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: d098bb4cb82bef745834b16875fa47f5, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &496608040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1832,6 +1821,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scene: Build
   _isAdditive: 0
+--- !u!114 &496608041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496608035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19ae5d7aafa96d64bb35fa2546e137bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: d098bb4cb82bef745834b16875fa47f5, type: 3}
 --- !u!1 &520177992
 GameObject:
   m_ObjectHideFlags: 0
@@ -2455,6 +2457,7 @@ GameObject:
   - component: {fileID: 699914153}
   - component: {fileID: 699914152}
   - component: {fileID: 699914151}
+  - component: {fileID: 699914154}
   m_Layer: 0
   m_Name: AutoCat
   m_TagString: Untagged
@@ -2564,6 +2567,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 699914149}
   m_CullTransparentMesh: 1
+--- !u!114 &699914154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699914149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a040f6bbe4c86b64097dbd6639496723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: d098bb4cb82bef745834b16875fa47f5, type: 3}
 --- !u!1 &711174266
 GameObject:
   m_ObjectHideFlags: 0
@@ -4642,6 +4658,7 @@ GameObject:
   - component: {fileID: 1475787898}
   - component: {fileID: 1475787897}
   - component: {fileID: 1475787900}
+  - component: {fileID: 1475787901}
   m_Layer: 0
   m_Name: Catalog
   m_TagString: Untagged
@@ -4777,6 +4794,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scene: Catalog
   _isAdditive: 1
+--- !u!114 &1475787901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475787895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a19f8471634690a4ca6769111bf21f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: d098bb4cb82bef745834b16875fa47f5, type: 3}
 --- !u!1 &1485826812
 GameObject:
   m_ObjectHideFlags: 0
@@ -5247,6 +5277,7 @@ GameObject:
   - component: {fileID: 1594703522}
   - component: {fileID: 1594703521}
   - component: {fileID: 1594703520}
+  - component: {fileID: 1594703524}
   m_Layer: 0
   m_Name: Phone
   m_TagString: Untagged
@@ -5382,6 +5413,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594703518}
   m_CullTransparentMesh: 1
+--- !u!114 &1594703524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594703518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feba1dc194c24fb47b76bf295123c839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: d098bb4cb82bef745834b16875fa47f5, type: 3}
 --- !u!1 &1621906947
 GameObject:
   m_ObjectHideFlags: 0

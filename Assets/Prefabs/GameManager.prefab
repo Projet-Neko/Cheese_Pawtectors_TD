@@ -46,7 +46,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -320,7 +320,7 @@ MonoBehaviour:
   - {fileID: 7459078949945384106}
   - {fileID: 704567818242211448}
   _loadingPopup: LoadingPopup
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 85c8dcc8e9952b44dbe9f6658a08e9c6, type: 3}
   _loadingSlider: {fileID: 0}
   _loadingText: {fileID: 0}
 --- !u!114 &8386388096323966852

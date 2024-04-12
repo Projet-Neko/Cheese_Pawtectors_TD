@@ -3,11 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AdoptButton : MonoBehaviour
+public class AdoptButton : CustomButton
 {
     public static event Action<int> OnAdoptButtonClick;
-
-    [SerializeField] AudioClip clip;
 
     [SerializeField] private CatSO _cat;
 
@@ -25,12 +23,6 @@ public class AdoptButton : MonoBehaviour
         if (_catLevel != null) UpdateCheapestCat();
     }
 
-    private void Start()
-    {
-        Button button = GetComponent<Button>();
-
-        button.onClick.AddListener(()=>GameManager.Instance.SoundEffect(clip));
-    }
     private void OnDestroy()
     {
         Mod_Economy.OnAdoptCheck -= Mod_Economy_OnAdoptCheck;

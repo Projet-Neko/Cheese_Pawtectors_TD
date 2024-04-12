@@ -25,6 +25,7 @@ public class Mod_Audio : Module
     }
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (!_musicsClip.ContainsKey(scene.name)) return;
         _music.Stop();
         _music.clip = _musicsClip[scene.name];
         _music.Play();

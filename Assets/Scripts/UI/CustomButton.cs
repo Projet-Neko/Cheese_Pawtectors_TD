@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
-public class CatalogButton : MonoBehaviour
+
+public class CustomButton : MonoBehaviour
 {
     [SerializeField] AudioClip clip;
-
     private void Start()
     {
         Button button = GetComponent<Button>();

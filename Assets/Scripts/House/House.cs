@@ -29,8 +29,8 @@ public class House : MonoBehaviour
      * * * * * * * * * * * * * * * * * * * */
     void StartPath()
     {
-        AddRoom(1, _currentRoomNumber / 2, RoomPattern.CorridorRoom);
-        AddRoom(2, _currentRoomNumber / 2, RoomPattern.CorridorRoom);
+        AddRoom(1, _maxRooms / 2, RoomPattern.CorridorRoom);
+        AddRoom(2, _maxRooms / 2, RoomPattern.CorridorRoom);
     }
 
     void Start()
@@ -194,12 +194,14 @@ public class House : MonoBehaviour
         if (_currentRoomNumber % 2 == 0)// Create the new rooms on the bottom
         {
             int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+            Debug.Log("zStart = " + zStart);
             for (int x = 0; x < _currentRoomNumber; x++)
-                CreateRoom(x, zStart - 1, RoomPattern.VoidRoom);
+                CreateRoom(x, zStart, RoomPattern.VoidRoom);
         }
         else// Create the new rooms on the top
         {
             int zEnd = _maxRooms / 2 + _currentRoomNumber / 2;
+            Debug.Log("zEnd = " + zEnd);
             for (int x = 0; x < _currentRoomNumber; x++)
                 CreateRoom(x, zEnd, RoomPattern.VoidRoom);
         }

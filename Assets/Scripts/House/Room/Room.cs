@@ -63,6 +63,11 @@ public class Room : MonoBehaviour
     [Header("Junction")]
     [SerializeField] protected List<Junction> _opening;
 
+    //Audio
+    [Header("Audio")]
+    [SerializeField] AudioClip _selectRoom;
+    [SerializeField] AudioClip _moveRoomCheck;
+
     // Events
     public static event Action<Vector3, Vector3, bool> ChangeTilePosition;  // Old position, new position, Still in motion or not (false if the room is still moving)
     public static event Action<int, int, RoomPattern> TileDestroyed;        // Notify the house that a room is destroyed
@@ -167,6 +172,8 @@ public class Room : MonoBehaviour
             }
             else if (!_anotherTileSelected)
             {
+                //sound effect
+                GameManager.Instance.SoundEffect(_selectRoom);
                 _canMove = true;
 
                 if (!_moveModBool)
@@ -231,7 +238,7 @@ public class Room : MonoBehaviour
         ChangeTilePosition?.Invoke(_oldPosition, _room.transform.position, true);       //true because the room ask for position validation
         TileSelected?.Invoke(false); // Invoke the event to deselect the other rooms
         _isSelected = false;
-
+        GameManager.Instance.SoundEffect(_moveRoomCheck);
     }
 
     /*private void ChangePosition(bool validate)

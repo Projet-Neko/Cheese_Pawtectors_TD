@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Module> _modules;
     [SerializeField, Scene] private string _loadingPopup;
 
-    [SerializeField] AudioClip clip;
+    [SerializeField] AudioClip _clip;
 
     [Header("Loading Bar")]
     [SerializeField] private Slider _loadingSlider;
@@ -230,7 +230,7 @@ public class GameManager : MonoBehaviour
         OnInitComplete?.Invoke();
         _isInitCompleted = true;
         DebugOnly();
-        SoundEffect(clip);
+        SoundEffect(_clip);
         yield return StartUpdates();
     }
 

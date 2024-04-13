@@ -8,6 +8,7 @@ public class Mod_Waves : Module
     public static event Action OnWaveReload;
 
     [SerializeField] private GameObject _mousePrefab;
+    [SerializeField] AudioClip _clip
     [SerializeField] private int _spawnTime = 1;
 
     [Header("Options")]
@@ -103,6 +104,7 @@ public class Mod_Waves : Module
     public bool IsBossWave()
     {
         // Check if the wave number is a multiple of 10
+
         return _gm.Data.WaveNumber % 10 == 0;
     }
 

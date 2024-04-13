@@ -6,6 +6,7 @@ public class Merge : DragAndDropHandler
     public static event Action<int, int> OnCatMerge; // slot index, cat index
 
     [SerializeField] private Cat _cat;
+    [SerializeField] AudioClip _merge;
 
     private int _slotIndex;
     private int _previousSlotIndex;
@@ -23,6 +24,9 @@ public class Merge : DragAndDropHandler
     {
         OnCatMerge?.Invoke(_previousSlotIndex, -1);
         OnCatMerge?.Invoke(_slotIndex, _cat.Level);
+
+        //Add sound
+        GameManager.Instance.SoundEffect(_merge);
 
         _cat.LevelUp();
         Destroy(cat.gameObject);

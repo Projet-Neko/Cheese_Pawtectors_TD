@@ -16,6 +16,9 @@ public class Cat : Entity
     [Header("Debug Only")]
     [SerializeField] Sprite _sprite;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip _sleepMode;
+
     public Color CatColor => _catColor;
     public bool IsInStorageMode => _isInStorageMode;
 
@@ -94,6 +97,9 @@ public class Cat : Entity
     private void Sleep()
     {
         // TODO -> add animation
+
+        //Add sound
+        GameManager.Instance.SoundEffect(_sleepMode);
     }
 
     public void WakeUp()

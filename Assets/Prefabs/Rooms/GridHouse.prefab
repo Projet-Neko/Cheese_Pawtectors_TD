@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2474822462689520562}
   - component: {fileID: 7836826927468184716}
   - component: {fileID: 6476987006121461864}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 4887360354738087906}
   - component: {fileID: 543292873706726792}
   - component: {fileID: 2513913717346125373}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GridHouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6618524555710191469}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: VoidRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 7750413818396797898}
   - component: {fileID: 237496127294997417}
   - component: {fileID: 7003669912238090999}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}

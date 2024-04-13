@@ -5,6 +5,9 @@ public class Mouse : Entity
     [Header("Debug")]
     [SerializeField] private bool _forceAlbino = false;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip _spawnAlbinosMouse;
+
     //[SerializeField] private bool _forceBoss = false;
 
     //[SerializeField] private List<Vector3> _checkPoint;
@@ -53,6 +56,8 @@ public class Mouse : Entity
         if (_forceAlbino || (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1))
         {
             GameManager.Instance.AlbinoHasSpawned();
+            //Add Sound
+            GameManager.Instance.SoundEffect(_spawnAlbinosMouse);
             // 1 = albino mouse
             return 1;
         }

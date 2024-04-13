@@ -1129,9 +1129,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1346184816}
     - target: {fileID: 7030047405026936483, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+      propertyPath: _clip
+      value: 
+      objectReference: {fileID: 8300000, guid: cc733cceff0645041b6207517d11377c, type: 3}
+    - target: {fileID: 7030047405026936483, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
       propertyPath: _enableWaves
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+      propertyPath: _boss
+      value: 
+      objectReference: {fileID: 8300000, guid: cc733cceff0645041b6207517d11377c, type: 3}
     - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
       propertyPath: _meat
       value: 

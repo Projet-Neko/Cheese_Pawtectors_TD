@@ -105,7 +105,8 @@ public class Mod_Waves : Module
     {
         // Check if the wave number is a multiple of 10
 
-        //Add music
+        //Add sound
+        GameManager.Instance.SoundEffect(_clip);
         return _gm.Data.WaveNumber % 10 == 0;
     }
 

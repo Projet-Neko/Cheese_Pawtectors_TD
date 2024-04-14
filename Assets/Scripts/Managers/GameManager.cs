@@ -110,8 +110,6 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 
         StartCoroutine(CheckGameVersion());
-
-        Mod<Mod_Audio>().Init(this);
     }
 
     private IEnumerator CheckGameVersion()

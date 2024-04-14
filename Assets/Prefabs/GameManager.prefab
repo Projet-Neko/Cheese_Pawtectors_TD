@@ -320,7 +320,7 @@ MonoBehaviour:
   - {fileID: 7459078949945384106}
   - {fileID: 704567818242211448}
   _loadingPopup: LoadingPopup
-  _clip: {fileID: 0}
+  _clip: {fileID: 8300000, guid: 85c8dcc8e9952b44dbe9f6658a08e9c6, type: 3}
   _loadingSlider: {fileID: 0}
   _loadingText: {fileID: 0}
 --- !u!114 &8386388096323966852
@@ -386,7 +386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mousePrefab: {fileID: 732585812547385431, guid: 1c4d78e56a21db14eba23b39d26d78ab, type: 3}
-  _clip: {fileID: 8300000, guid: cc733cceff0645041b6207517d11377c, type: 3}
+  _boss: {fileID: 8300000, guid: cc733cceff0645041b6207517d11377c, type: 3}
   _spawnTime: 1
   _enableWaves: 0
 --- !u!114 &2843526968020932932
@@ -418,7 +418,7 @@ MonoBehaviour:
   _titleScreen: {fileID: 8300000, guid: e09c853b5db2eba4db5e6986fc8d4290, type: 3}
   _mainScreen: {fileID: 8300000, guid: 8862f7d4ba9a405479f3b0e940205186, type: 3}
   _build: {fileID: 8300000, guid: 526c58329ffb0a741b21d052f3ee004d, type: 3}
-  _boss: {fileID: 0}
+  _phone: {fileID: 8300000, guid: 68329f452845cd24eb3ebae66e6c1216, type: 3}
   _currencyShop: {fileID: 8300000, guid: c3a61a0b2652c8a45913be25185549c5, type: 3}
 --- !u!114 &704567818242211448
 MonoBehaviour:

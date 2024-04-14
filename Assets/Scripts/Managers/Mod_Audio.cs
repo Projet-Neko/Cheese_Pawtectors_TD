@@ -13,6 +13,7 @@ public class Mod_Audio : Module
     [SerializeField] private AudioClip _titleScreen;
     [SerializeField] private AudioClip _mainScreen;
     [SerializeField] private AudioClip _build;
+    [SerializeField] private AudioClip _phone;
     [SerializeField] private AudioClip _currencyShop;
 
     private void Awake()
@@ -21,6 +22,7 @@ public class Mod_Audio : Module
         _musicsClip.Add("TitleScreen", _titleScreen);
         _musicsClip.Add("MainScreen", _mainScreen);
         _musicsClip.Add("Build", _build);
+        _musicsClip.Add("Phone", _phone);
         _musicsClip.Add("Currency Shop", _currencyShop);
     }
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)

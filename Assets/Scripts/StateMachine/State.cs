@@ -24,6 +24,7 @@ public abstract class State
 
         foreach (Collider2D target in targets)
         {
+            // layer "Enemy" (Mouse)
             if (target.gameObject.layer == 8)
             {
                 Mouse m = target.GetComponentInParent<Mouse>();

@@ -27,6 +27,7 @@ public class Brain : MonoBehaviour
 
     protected virtual void Update()
     {
+        // currentState =! null
         _currentState?.OnUpdate();
     }
 

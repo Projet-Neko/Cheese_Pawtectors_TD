@@ -12,6 +12,8 @@ public enum Currency
 
 public class Mod_Economy : Module
 {
+    [SerializeField] private GameObject _currencyPrefab;
+
     public static event Action<bool, int> OnAdoptCheck;
 
     public List<int> CatPrices => _catPrices;
@@ -38,14 +40,14 @@ public class Mod_Economy : Module
     }
     private void Entity_OnDeath(Entity obj, bool hasBeenKilledByPlayer)
     {
-        int meatToAdd = obj.Level;
+        int currencyToAdd = obj.Level;
         //Debug.Log($"Cat current meatToAdd(Base) : {meatToAdd}");
         if (GameManager.Instance.IsPowerUpActive(PowerUpType.DoubleMeat))
         {
-            meatToAdd *= 2;
+            currencyToAdd *= 2;
             //Debug.Log($"Cat current meatToAdd(DoubleMeat) : {meatToAdd}");
         }
-        if (obj is Mouse && hasBeenKilledByPlayer) AddCurrency(Currency.Treats, meatToAdd);
+        if (obj is Mouse && hasBeenKilledByPlayer) StartCoroutine(DisplayWinCurrency(currencyToAdd));
     }
     #endregion
 
@@ -249,6 +251,24 @@ public class Mod_Economy : Module
             }
         }, res => _gm.EndRequest($"Updated {currency} !"), _gm.OnRequestError);
     }
+
+    public void DebugTestDisplayWinCurrency(int test)
+    {
+        Debug.Log("oui");
+        StartCoroutine(DisplayWinCurrency(test));
+    }
+    private IEnumerator DisplayWinCurrency(int currencyToAdd)
+    {
+        for (int i = 0; i < currencyToAdd; i++)
+        {
+            //Instantiate(_currencyPrefab, transform du parent avec modif de position);
+
+            yield return new WaitForSeconds(.05f);
+            AddCurrency(Currency.Treats, 1);
+            //_currenciesText.text = _gm.Data.Currencies[(int)Currency.Treats].Amount.ToString();
+        }
+    }
+
     #endregion
 
     protected override void DebugOnly()

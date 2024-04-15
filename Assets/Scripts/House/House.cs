@@ -2,12 +2,15 @@ using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class House : MonoBehaviour
 {
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
     [SerializeField] private GameObject _mousePrefab;
+    [SerializeField] private GameObject _linePrefab;
+    [SerializeField] private GameObject _lineObject;
 
     [Header("Scene where player can use HUD")]
     [SerializeField, Scene] private string _sceneHUD;
@@ -18,6 +21,7 @@ public class House : MonoBehaviour
     private int _currentRoomNumber;
 
     private Room[,] _roomsGrid = new Room[_maxRooms, _maxRooms];
+    private LineRenderer[,] _lineGrid = new LineRenderer[2, _maxRooms+1];
     private IdRoom _idStartRoom;
 
     private List<Mouse> _mouseList = new();
@@ -27,10 +31,33 @@ public class House : MonoBehaviour
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */
+    private void AddLine(float x, float z, float xEnd, float zEnd)
+    {
+        int indice1 = 1;
+        int indice2 = (int)z;
+        if (x == xEnd)
+        {
+            indice1 = 0;
+            indice2 = (int)x;
+        }
+
+        x -= 0.5f;
+        z -= 0.5f;
+        xEnd -= 0.5f;
+        zEnd -= 0.5f;
+
+        GameObject gameObject = Instantiate(_linePrefab, new Vector3(x, 0, z), Quaternion.identity);
+        gameObject.transform.parent = _lineObject.transform;
+
+        _lineGrid[indice1, indice2] = gameObject.GetComponent<LineRenderer>();
+        _lineGrid[indice1, indice2].SetPosition(0, new Vector3(x, 0, z));
+        _lineGrid[indice1, indice2].SetPosition(1, new Vector3(xEnd, 0, zEnd));
+    }
+
     void StartPath()
     {
-        AddRoom(1, _currentRoomNumber / 2, RoomPattern.CorridorRoom);
-        AddRoom(2, _currentRoomNumber / 2, RoomPattern.CorridorRoom);
+        AddRoom(1, _maxRooms / 2, RoomPattern.CorridorRoom);
+        AddRoom(2, _maxRooms / 2, RoomPattern.CorridorRoom);
     }
 
     void Start()
@@ -38,32 +65,40 @@ public class House : MonoBehaviour
         // Create the Void Rooms and one Start Room, visible in the beginning
         _currentRoomNumber = _minRooms;
 
-        for (int i = 0; i < _currentRoomNumber; i++)
+        int startZ = _maxRooms / 2 - _currentRoomNumber / 2;
+
+        for (int x = 0; x < _currentRoomNumber; x++)
         {
-            for (int j = 0; j < _currentRoomNumber; j++)
+            AddLine(x, startZ, x, startZ + _currentRoomNumber);
+            for (int z = startZ; z < startZ + _currentRoomNumber; z++)
             {
+                AddLine(0, z, _currentRoomNumber, z);
                 // Place the Start Room
-                if (i == 0 && j == _currentRoomNumber / 2)
+                if (x == 0 && z == _maxRooms / 2)
                 {
-                    CreateRoom(i, j, RoomPattern.StartRoom);
-                    _idStartRoom = new IdRoom(i, j);
+                    CreateRoom(x, z, RoomPattern.StartRoom);
+                    _idStartRoom = new IdRoom(x, z);
                 }
 
                 // Place the Cheese Room
-                else if (i == _currentRoomNumber - 2 && j == _currentRoomNumber / 2)
-                    CreateRoom(i, j, RoomPattern.CheeseRoom);
+                else if (x == _currentRoomNumber - 2 && z == _maxRooms / 2)
+                    CreateRoom(x, z, RoomPattern.CheeseRoom);
 
                 // Place Void Rooms
                 else
-                    CreateRoom(i, j, RoomPattern.VoidRoom);
+                    CreateRoom(x, z, RoomPattern.VoidRoom);
             }
         }
+
+        AddLine(_currentRoomNumber, startZ, _currentRoomNumber, startZ + _currentRoomNumber);
+        AddLine(0, startZ + _currentRoomNumber, _currentRoomNumber, startZ + _currentRoomNumber);
 
         StartPath();
 
         // Subscribe to events
         Room.ChangeTilePosition += CheckRoomPosition;
         Room.TileDestroyed += CreateRoom;
+        Room.LineActivated += ActiveLine;
     }
 
     private void OnDestroy()
@@ -71,6 +106,7 @@ public class House : MonoBehaviour
         // Unsubscribe to events
         Room.ChangeTilePosition -= CheckRoomPosition;
         Room.TileDestroyed -= CreateRoom;
+        Room.LineActivated -= ActiveLine;
     }
 
 
@@ -86,9 +122,9 @@ public class House : MonoBehaviour
         _roomsGrid[x, z].SceneForHUD(_sceneHUD);
     }
 
-    /*private void CreateRandomRoom()
+    private void CreateRandomRoom()
     {
-        int random = UnityEngine.Random.Range(0, 2);
+        /*int random = UnityEngine.Random.Range(0, 2);
         RoomPattern roomPattern;
         switch (random)
         {
@@ -108,18 +144,26 @@ public class House : MonoBehaviour
                 roomPattern = RoomPattern.CorridorRoom;
                 break;
         }
-        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity); // TO DO : Change the position to inventaire
         roomObject.transform.parent = transform;
-        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();
-    }*/
+        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();*/
+
+        // TO DO : Add the (image of the) room to the inventory 
+    }
 
     /* * * * * * * * * * * * * * * * * * * *
      *          HUD INTERACTIONS
      * * * * * * * * * * * * * * * * * * * */
 
+    private void ActiveLine(bool enable)
+    {
+        _lineObject.SetActive(enable);
+    }
+
     private bool IsInGrid(int x, int z)
     {
-        return x >= 0 && x < _currentRoomNumber && z >= 0 && z < _currentRoomNumber;
+        int startZ = _maxRooms / 2 - _currentRoomNumber / 2;
+        return x >= 0 && x < _currentRoomNumber && z >= startZ && z < startZ + _currentRoomNumber;
     }
 
     private void CheckRoomPosition(Vector3 oldPosition, Vector3 newPosition, bool validate)
@@ -180,6 +224,22 @@ public class House : MonoBehaviour
         else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, z].Security);
     }
 
+    private void UpdateLineRight()
+    {
+        int indice = _maxRooms / 2 - _currentRoomNumber / 2;
+
+        for (int i = 0; i <= _currentRoomNumber; i++)
+            _lineGrid[1,i + indice].SetPosition(1, new Vector3(_currentRoomNumber - 0.5f, 0, i - 0.5f + indice));
+    }
+
+    private void UpdateLineHight(int direction)
+    {
+        int point = direction == 1 ? 1 : 0;
+
+        for (int i = 0; i < _currentRoomNumber; i++)
+            _lineGrid[0, i].SetPosition(point, new Vector3(i - 0.5f, 0, _maxRooms / 2 + direction * (-_currentRoomNumber / 2 + _currentRoomNumber + 0.5f - point)));
+    }
+
     public void ExtendHouse()
     {
         // Security on the max index possible
@@ -187,13 +247,35 @@ public class House : MonoBehaviour
 
         ++_currentRoomNumber;
 
-        // Create the new rooms on the top
-        for (int i = 0; i < _currentRoomNumber; i++)
-            CreateRoom(i, _currentRoomNumber - 1, RoomPattern.VoidRoom);
+        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+
+        // Create the new rooms on the top/bottom
+        if (_currentRoomNumber % 2 == 0)// Create the new rooms on the bottom
+        {
+            Debug.Log("zStart = " + zStart);
+            for (int x = 0; x < _currentRoomNumber; x++)
+                CreateRoom(x, zStart, RoomPattern.VoidRoom);
+
+            UpdateLineHight(-1);
+            AddLine(0, zStart, _currentRoomNumber, zStart);
+        }
+        else// Create the new rooms on the top
+        {
+            int zEnd = _maxRooms / 2 + _currentRoomNumber / 2;
+            Debug.Log("zEnd = " + zEnd);
+            for (int x = 0; x < _currentRoomNumber; x++)
+                CreateRoom(x, zEnd, RoomPattern.VoidRoom);
+
+            UpdateLineHight(1);
+            AddLine(0, zEnd + 1, _currentRoomNumber, zEnd + 1);
+        }
 
         // Create the new rooms on the right
-        for (int i = 0; i < _currentRoomNumber - 1; i++)
-            CreateRoom(_currentRoomNumber - 1, i, RoomPattern.VoidRoom);
+        for (int z = 0; z < _currentRoomNumber - 1; z++)
+            CreateRoom(_currentRoomNumber - 1, z, RoomPattern.VoidRoom);
+
+        UpdateLineRight();
+        AddLine(_currentRoomNumber, zStart, _currentRoomNumber, zStart + _currentRoomNumber);
     }
 
     /* * * * * * * * * * * * * * * * * * * *
@@ -202,9 +284,11 @@ public class House : MonoBehaviour
 
     private void InitBuildPath()
     {
+        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+
         for (int x = 0; x < _currentRoomNumber; x++)
         {
-            for (int z = 0; z < _currentRoomNumber; z++)
+            for (int z = zStart; z < zStart + _currentRoomNumber; z++)
             {
                 _roomsGrid[x, z].DefineIdRoom(x, z);
                 _roomsGrid[x, z].ResetPath();
@@ -214,9 +298,11 @@ public class House : MonoBehaviour
 
     public void ResetArrows()
     {
+        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+
         for (int x = 0; x < _currentRoomNumber; x++)
         {
-            for (int z = 0; z < _currentRoomNumber; z++)
+            for (int z = zStart; z < zStart + _currentRoomNumber; z++)
                 _roomsGrid[x, z].ResetArrows();
         }
     }
@@ -324,9 +410,11 @@ public class House : MonoBehaviour
 
     private void DestroyInvalidRoom()
     {
+        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+
         for (int i = 0; i < _currentRoomNumber; i++)
         {
-            for (int j = 0; j < _currentRoomNumber; j++)
+            for (int j = zStart; j < zStart + _currentRoomNumber; j++)
             {
                 if (!_roomsGrid[i, j].CorrectPath)
                     RemoveRoom(i, j);
@@ -338,11 +426,14 @@ public class House : MonoBehaviour
     *        Delete room
     * * * * * * * * * * * * * * * * * * * */
 
+    // Button to delete all the rooms
     public void DestroyAllRoom()
     {
+        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+
         for (int i = 0; i < _currentRoomNumber; i++)
         {
-            for (int j = 0; j < _currentRoomNumber; j++)
+            for (int j = zStart; j < zStart + _currentRoomNumber; j++)
                 RemoveRoom(i, j);
         }
     }
@@ -408,5 +499,37 @@ public class House : MonoBehaviour
         }
 
         yield return null;
+    }
+
+
+    /* * * * * * * * * * * * * * * * * * * *
+    *           ROOM POSITION AUTO
+    * * * * * * * * * * * * * * * * * * * */
+
+    private bool RoomPositionAuto(IdRoom previousRoom, IdRoom currentRoom)
+    {
+        if (!IsInGrid(currentRoom.x, currentRoom.z))
+            return false;
+
+        // Si on n'a plus de room � placer --> return true
+
+        // Choisir une room al�atoire
+        // tourner la room jusqu'� ce que la jointure soit dans la bonne direction
+        // selectionner une autre jointure
+        // rappeler la fonction avec la nouvelle room
+        // si la fonction retourne false, on recommence avec une autre jointure, sinon on retourne true
+        // si on a test� toutes les jointures et qu'aucune ne fonctionne, on retourne false
+
+        return true;
+    }
+
+    public void RoomPositionAuto()
+    {
+        DestroyAllRoom();
+
+        IdRoom idRoom = new IdRoom(_idStartRoom.x+1, _idStartRoom.z);
+
+        // Choisir une room al�atoire
+        // Orienter une jointure de la room vers la room pr�c�dente
     }
 }

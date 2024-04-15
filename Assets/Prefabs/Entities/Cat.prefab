@@ -633,6 +633,7 @@ MonoBehaviour:
   _level: 1
   _slider: {fileID: 4350467533428996827}
   _catLevel: {fileID: 1465789133988890057}
+  _threat: {fileID: 1626346135606361170, guid: e3720e9abbffb244b9eec20cbc9ac455, type: 3}
   _sprite: {fileID: 21300000, guid: 7e7dcff4ed855f64a9d79b5fe60d0b75, type: 3}
 --- !u!114 &4401195426459466549
 MonoBehaviour:
@@ -651,9 +652,6 @@ MonoBehaviour:
   _cat: {fileID: 1033424655005935924}
   _room: {fileID: 0}
   _collider: {fileID: 2307053879567043015}
-  _catLayer: 7
-  _discardLayer: 6
-  _slotLayer: 9
 --- !u!114 &8914369612130805977
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -93,6 +93,8 @@ public class Room : MonoBehaviour
 
     private string _sceneHUD;
 
+    private Material[] _materials;
+
     // Constants
     private const int _maxLevel = 3;
     private Plane _plane = new Plane(Vector3.up, 0);
@@ -119,6 +121,8 @@ public class Room : MonoBehaviour
 
         _canMove = false;
         _moveModBool = false;
+
+        _materials = GetComponent<Renderer>().materials;
     }
 
     private void FixedUpdate()
@@ -160,7 +164,7 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-       if(_sceneHUD == SceneManager.GetActiveScene().name)
+       if(true || _sceneHUD == SceneManager.GetActiveScene().name)
         {
             if (_security == RoomSecurity.Protected)
             {
@@ -340,6 +344,12 @@ public class Room : MonoBehaviour
     {
         foreach (Junction junction in _opening)
             junction.ActivateArrow(false);
+    }
+
+    public void ColorRoom(Color color)
+    {
+        foreach (Material material in _materials)
+            material.color = color;
     }
 
 

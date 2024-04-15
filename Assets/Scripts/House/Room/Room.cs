@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum RoomPattern
 {
@@ -89,6 +90,8 @@ public class Room : MonoBehaviour
     private List<IdRoom> _previousRooms = new List<IdRoom>();
     private List<IdRoom> _nextRooms = new List<IdRoom>();
 
+    private string _sceneHUD;
+
     // Constants
     private const int _maxLevel = 3;
     private Plane _plane = new Plane(Vector3.up, 0);
@@ -149,18 +152,26 @@ public class Room : MonoBehaviour
      *          INPUT FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */
 
+    public void SceneForHUD(string scene)
+    {
+        _sceneHUD = scene;
+    }
+
     public void OnMouseDown()
     {
-        if (_security == RoomSecurity.Protected)
+       if(_sceneHUD == SceneManager.GetActiveScene().name)
         {
-            _cantMoveThisRoomCanvas.SetActive(!_cantMoveThisRoomCanvas.activeSelf);
-        }
-        else if (!_anotherTileSelected)
-        {
-            _canMove = true;
-           
-            if (!_moveModBool)
-                Selected();
+            if (_security == RoomSecurity.Protected)
+            {
+                _cantMoveThisRoomCanvas.SetActive(!_cantMoveThisRoomCanvas.activeSelf);
+            }
+            else if (!_anotherTileSelected)
+            {
+                _canMove = true;
+
+                if (!_moveModBool)
+                    Selected();
+            }
         }
     }
 

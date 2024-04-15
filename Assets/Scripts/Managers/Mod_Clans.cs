@@ -21,9 +21,12 @@ public class Mod_Clans : Module
         "8E0E9E265319D702" // Whiskerhood
     };
 
+    private int[] _quizAnswers;
+
     public override void Init(GameManager gm)
     {
         base.Init(gm);
+        _quizAnswers = new int[_clansId.Count];
         StartCoroutine(InitClanList());
     }
 
@@ -64,10 +67,29 @@ public class Mod_Clans : Module
             }, res =>
             {
                 _gm.EndRequest();
-                _gm.Data.UpdateClan(clan);
                 Debug.Log($"Joined {clan} !");
                 //StartCoroutine(GetGuildData(PlayerGuild));
             }, _gm.OnRequestError);
         }, _gm.OnRequestError);
+    }
+
+    private void Answer(int answerIndex)
+    {
+        _quizAnswers[answerIndex]++;
+    }
+
+    public Clan GetChoosenClan()
+    {
+        int clan = _quizAnswers[0];
+
+        for (int i = 1; i < _quizAnswers.Length; i++)
+        {
+            if (_quizAnswers[i] > clan) clan = _quizAnswers[i];
+        }
+
+        _gm.Data.UpdateClan(clan);
+        AddPlayerToClan((Clan)clan);
+
+        return (Clan)clan;
     }
 }

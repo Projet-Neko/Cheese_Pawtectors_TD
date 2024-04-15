@@ -10,6 +10,7 @@ public class House : MonoBehaviour
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
     [SerializeField] private GameObject _mousePrefab;
     [SerializeField] private GameObject _linePrefab;
+    [SerializeField] private GameObject _lineObject;
 
     [Header("Scene where player can use HUD")]
     [SerializeField, Scene] private string _sceneHUD;
@@ -46,7 +47,7 @@ public class House : MonoBehaviour
         zEnd -= 0.5f;
 
         GameObject gameObject = Instantiate(_linePrefab, new Vector3(x, 0, z), Quaternion.identity);
-        gameObject.transform.parent = transform;
+        gameObject.transform.parent = _lineObject.transform;
 
         _lineGrid[indice1, indice2] = gameObject.GetComponent<LineRenderer>();
         _lineGrid[indice1, indice2].SetPosition(0, new Vector3(x, 0, z));
@@ -97,6 +98,7 @@ public class House : MonoBehaviour
         // Subscribe to events
         Room.ChangeTilePosition += CheckRoomPosition;
         Room.TileDestroyed += CreateRoom;
+        Room.LineActivated += ActiveLine;
     }
 
     private void OnDestroy()
@@ -104,6 +106,7 @@ public class House : MonoBehaviour
         // Unsubscribe to events
         Room.ChangeTilePosition -= CheckRoomPosition;
         Room.TileDestroyed -= CreateRoom;
+        Room.LineActivated -= ActiveLine;
     }
 
 
@@ -149,6 +152,11 @@ public class House : MonoBehaviour
     /* * * * * * * * * * * * * * * * * * * *
      *          HUD INTERACTIONS
      * * * * * * * * * * * * * * * * * * * */
+
+    private void ActiveLine(bool enable)
+    {
+        _lineObject.SetActive(enable);
+    }
 
     private bool IsInGrid(int x, int z)
     {

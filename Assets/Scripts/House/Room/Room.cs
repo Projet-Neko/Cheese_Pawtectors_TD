@@ -66,6 +66,7 @@ public class Room : MonoBehaviour
     // Events
     public static event Action<Vector3, Vector3, bool> ChangeTilePosition;  // Old position, new position, Still in motion or not (false if the room is still moving)
     public static event Action<int, int, RoomPattern> TileDestroyed;        // Notify the house that a room is destroyed
+    public static event Action<bool> LineActivated;                         // Enable or disable the lines of the house
 
     // Getters
     public List<Junction> Opening => _opening;
@@ -206,6 +207,8 @@ public class Room : MonoBehaviour
     // When user click on Canvas/HUD/Move button
     public void Move()
     {
+        LineActivated?.Invoke(true); // Invoke the event to show the lines of the house
+
         _moveModBool = true;
         _HUDCanva.SetActive(false);                 // Hide the HUD
         _moveModCanva.SetActive(true);              // Show the Move Canvas
@@ -214,6 +217,8 @@ public class Room : MonoBehaviour
 
     public void CancelMove()
     {
+        LineActivated?.Invoke(false); // Invoke the event to hide the lines of the house
+
         _moveModBool = false;
         _moveModCanva.SetActive(false);                                                 // Hide the Move Canvas
         _isSelected = false;
@@ -225,6 +230,8 @@ public class Room : MonoBehaviour
     // When user click on Canvas/Move Arrow/Done button
     public void StopMove()
     {
+        LineActivated?.Invoke(false); // Invoke the event to hide the lines of the house
+
         _moveModBool = false;
 
         _moveModCanva.SetActive(false);                                                 // Hide the Move Canvas

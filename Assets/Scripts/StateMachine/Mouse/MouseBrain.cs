@@ -1,8 +1,8 @@
 public class MouseBrain : Brain
 {
-    private void Start()
+    protected virtual void Start()
     {
-        Target = GameManager.Instance.Cheese.gameObject;
+        //Target = GameManager.Instance.Cheese.gameObject;
         _attackRange = _collider.bounds.size.x / 2;
         _followRange = 0;
         ChangeState(Walk);

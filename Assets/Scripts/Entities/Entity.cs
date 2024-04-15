@@ -79,7 +79,7 @@ public abstract class Entity : MonoBehaviour
     {
         OnDeath?.Invoke(this, source != null);
         if (this is not Mouse) return;
-        if (source is Cat) source.TakeDamage(this); // When a mouse die add satiety to cat
+        if (source is Cat) source.TakeDamage(this); // When a mouse die from a cat add satiety to the cat 
         DeathAnimation();
         Destroy(gameObject);
     }

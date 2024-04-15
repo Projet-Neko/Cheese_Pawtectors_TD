@@ -385,7 +385,10 @@ public class House : MonoBehaviour
 
         if (BuildPath(idRoomNext, _idStartRoom))                                                                            // Build the path from the next room and check if it is valid
         {
+            startRoom.ValidatePath();                                                                                       // Validate the path of the start room
             startRoom.NextRooms.Add(idRoomNext);                                                                            // Add the next room to the list of next rooms of the start room
+            //ColorInvalidRoom(Color.red);                                                                                    // Color the rooms that are not connected to the path in red
+            //ColorInvalidRoom(Color.white);                                                                                  // Color the rooms that are not connected to the path in white
             DestroyInvalidRoom();                                                                                           // Destroy the rooms that are not connected to the path
             junctionStart.ActivateArrow(true);                                                                              // Activate the arrow of the junction of the start room
         }
@@ -406,6 +409,20 @@ public class House : MonoBehaviour
             CreateRoom(x, z, RoomPattern.VoidRoom);
         }
         else Debug.Log("Room not MovedAndRemoved, security = " + _roomsGrid[x, z].Security);
+    }
+
+    private void ColorInvalidRoom(Color color)
+    {
+        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+
+        for (int i = 0; i < _currentRoomNumber; i++)
+        {
+            for (int j = zStart; j < zStart + _currentRoomNumber; j++)
+            {
+                if (!_roomsGrid[i, j].CorrectPath)
+                    _roomsGrid[i, j].ColorRoom(color);
+            }
+        }
     }
 
     private void DestroyInvalidRoom()

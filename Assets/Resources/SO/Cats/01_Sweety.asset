@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 01_Sweety
   m_EditorClassIdentifier: 
   SpriteAbove: {fileID: 21300000, guid: 7e7dcff4ed855f64a9d79b5fe60d0b75, type: 3}
-  SpriteFront: {fileID: 0}
+  SpriteFront: {fileID: -1668541353, guid: aede497f9d4f964438fb34599cbc0b79, type: 3}
   Lore: Ne parlez surtout pas de croquettes devant lui.
   State: 1

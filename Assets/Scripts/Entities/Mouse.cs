@@ -1,9 +1,12 @@
+using System.Threading;
 using UnityEngine;
 
 public class Mouse : Entity
 {
     [Header("Debug")]
     [SerializeField] private bool _forceAlbino = false;
+
+    [SerializeField] GameObject _threat;
 
     //[SerializeField] private bool _forceBoss = false;
 
@@ -103,4 +106,17 @@ public class Mouse : Entity
     //    _targetedBy = source as Cat;
     //    base.TakeDamage(source);
     //}
+
+    protected override void DeathAnimation()
+    {
+        Debug.Log("Cat is dead");
+        Vector3 spawnPos = transform.position;
+        for (int i = 0; i < Level; i++)
+        {
+            GameObject threat = _threat;
+            Vector3 pos = new Vector3(spawnPos.x , spawnPos.y , spawnPos.z-5);
+            Instantiate(threat, pos , Quaternion.Euler(90, 0, 0));
+            threat.GetComponent<Rigidbody>().velocity = new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), 0).normalized;
+        }
+    }
 }

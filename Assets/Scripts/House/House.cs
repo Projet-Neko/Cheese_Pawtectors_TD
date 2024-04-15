@@ -122,9 +122,9 @@ public class House : MonoBehaviour
         _roomsGrid[x, z].SceneForHUD(_sceneHUD);
     }
 
-    /*private void CreateRandomRoom()
+    private void CreateRandomRoom()
     {
-        int random = UnityEngine.Random.Range(0, 2);
+        /*int random = UnityEngine.Random.Range(0, 2);
         RoomPattern roomPattern;
         switch (random)
         {
@@ -144,10 +144,12 @@ public class House : MonoBehaviour
                 roomPattern = RoomPattern.CorridorRoom;
                 break;
         }
-        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity); // TO DO : Change the position to inventaire
         roomObject.transform.parent = transform;
-        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();
-    }*/
+        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();*/
+
+        // TO DO : Add the (image of the) room to the inventory 
+    }
 
     /* * * * * * * * * * * * * * * * * * * *
      *          HUD INTERACTIONS
@@ -526,14 +528,14 @@ public class House : MonoBehaviour
         if (!IsInGrid(currentRoom.x, currentRoom.z))
             return false;
 
-        // Si on n'a plus de room à placer --> return true
+        // Si on n'a plus de room ï¿½ placer --> return true
 
-        // Choisir une room aléatoire
-        // tourner la room jusqu'à ce que la jointure soit dans la bonne direction
+        // Choisir une room alï¿½atoire
+        // tourner la room jusqu'ï¿½ ce que la jointure soit dans la bonne direction
         // selectionner une autre jointure
         // rappeler la fonction avec la nouvelle room
         // si la fonction retourne false, on recommence avec une autre jointure, sinon on retourne true
-        // si on a testé toutes les jointures et qu'aucune ne fonctionne, on retourne false
+        // si on a testï¿½ toutes les jointures et qu'aucune ne fonctionne, on retourne false
 
         return true;
     }
@@ -544,7 +546,7 @@ public class House : MonoBehaviour
 
         IdRoom idRoom = new IdRoom(_idStartRoom.x+1, _idStartRoom.z);
 
-        // Choisir une room aléatoire
-        // Orienter une jointure de la room vers la room précédente
+        // Choisir une room alï¿½atoire
+        // Orienter une jointure de la room vers la room prï¿½cï¿½dente
     }
 }

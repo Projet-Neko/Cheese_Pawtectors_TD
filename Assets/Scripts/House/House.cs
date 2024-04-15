@@ -2,12 +2,14 @@ using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class House : MonoBehaviour
 {
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
     [SerializeField] private GameObject _mousePrefab;
+    [SerializeField] private GameObject _linePrefab;
 
     [Header("Scene where player can use HUD")]
     [SerializeField, Scene] private string _sceneHUD;
@@ -18,6 +20,7 @@ public class House : MonoBehaviour
     private int _currentRoomNumber;
 
     private Room[,] _roomsGrid = new Room[_maxRooms, _maxRooms];
+    private LineRenderer[,] _lineGrid = new LineRenderer[2, _maxRooms+1];
     private IdRoom _idStartRoom;
 
     private List<Mouse> _mouseList = new();
@@ -27,6 +30,29 @@ public class House : MonoBehaviour
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */
+    private void AddLine(float x, float z, float xEnd, float zEnd)
+    {
+        int indice1 = 1;
+        int indice2 = (int)z;
+        if (x == xEnd)
+        {
+            indice1 = 0;
+            indice2 = (int)x;
+        }
+
+        x -= 0.5f;
+        z -= 0.5f;
+        xEnd -= 0.5f;
+        zEnd -= 0.5f;
+
+        GameObject gameObject = Instantiate(_linePrefab, new Vector3(x, 0, z), Quaternion.identity);
+        gameObject.transform.parent = transform;
+
+        _lineGrid[indice1, indice2] = gameObject.GetComponent<LineRenderer>();
+        _lineGrid[indice1, indice2].SetPosition(0, new Vector3(x, 0, z));
+        _lineGrid[indice1, indice2].SetPosition(1, new Vector3(xEnd, 0, zEnd));
+    }
+
     void StartPath()
     {
         AddRoom(1, _maxRooms / 2, RoomPattern.CorridorRoom);
@@ -42,8 +68,10 @@ public class House : MonoBehaviour
 
         for (int x = 0; x < _currentRoomNumber; x++)
         {
+            AddLine(x, startZ, x, startZ + _currentRoomNumber);
             for (int z = startZ; z < startZ + _currentRoomNumber; z++)
             {
+                AddLine(0, z, _currentRoomNumber, z);
                 // Place the Start Room
                 if (x == 0 && z == _maxRooms / 2)
                 {
@@ -60,6 +88,9 @@ public class House : MonoBehaviour
                     CreateRoom(x, z, RoomPattern.VoidRoom);
             }
         }
+
+        AddLine(_currentRoomNumber, startZ, _currentRoomNumber, startZ + _currentRoomNumber);
+        AddLine(0, startZ + _currentRoomNumber, _currentRoomNumber, startZ + _currentRoomNumber);
 
         StartPath();
 
@@ -183,6 +214,22 @@ public class House : MonoBehaviour
         else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, z].Security);
     }
 
+    private void UpdateLineRight()
+    {
+        int indice = _maxRooms / 2 - _currentRoomNumber / 2;
+
+        for (int i = 0; i <= _currentRoomNumber; i++)
+            _lineGrid[1,i + indice].SetPosition(1, new Vector3(_currentRoomNumber - 0.5f, 0, i - 0.5f + indice));
+    }
+
+    private void UpdateLineHight(int direction)
+    {
+        int point = direction == 1 ? 1 : 0;
+
+        for (int i = 0; i < _currentRoomNumber; i++)
+            _lineGrid[0, i].SetPosition(point, new Vector3(i - 0.5f, 0, _maxRooms / 2 + direction * (-_currentRoomNumber / 2 + _currentRoomNumber + 0.5f - point)));
+    }
+
     public void ExtendHouse()
     {
         // Security on the max index possible
@@ -190,13 +237,17 @@ public class House : MonoBehaviour
 
         ++_currentRoomNumber;
 
+        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
+
         // Create the new rooms on the top/bottom
         if (_currentRoomNumber % 2 == 0)// Create the new rooms on the bottom
         {
-            int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
             Debug.Log("zStart = " + zStart);
             for (int x = 0; x < _currentRoomNumber; x++)
                 CreateRoom(x, zStart, RoomPattern.VoidRoom);
+
+            UpdateLineHight(-1);
+            AddLine(0, zStart, _currentRoomNumber, zStart);
         }
         else// Create the new rooms on the top
         {
@@ -204,11 +255,17 @@ public class House : MonoBehaviour
             Debug.Log("zEnd = " + zEnd);
             for (int x = 0; x < _currentRoomNumber; x++)
                 CreateRoom(x, zEnd, RoomPattern.VoidRoom);
+
+            UpdateLineHight(1);
+            AddLine(0, zEnd + 1, _currentRoomNumber, zEnd + 1);
         }
 
         // Create the new rooms on the right
         for (int z = 0; z < _currentRoomNumber - 1; z++)
             CreateRoom(_currentRoomNumber - 1, z, RoomPattern.VoidRoom);
+
+        UpdateLineRight();
+        AddLine(_currentRoomNumber, zStart, _currentRoomNumber, zStart + _currentRoomNumber);
     }
 
     /* * * * * * * * * * * * * * * * * * * *

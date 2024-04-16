@@ -51,7 +51,7 @@ public class Cat : Entity
         _speed = _data.Speed();
 
         // Appearance
-        _renderer.sprite = _data.SpriteAbove; // TODO -> check sprite to use
+        _renderer.sprite = _data.Sprites[0]; // TODO -> check sprite to use
 
         gameObject.name = _data.Name;
     }

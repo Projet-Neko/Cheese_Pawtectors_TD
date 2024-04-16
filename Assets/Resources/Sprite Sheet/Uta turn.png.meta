@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d5f56cdda4f6e5c4e9241b1d9ae4bda5
+guid: cc4be262afa1ab24ab46d809164439e0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -97,169 +97,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Chi_S
+      name: Uta_S
       rect:
         serializedVersion: 2
-        x: 79
-        y: 94
-        width: 198
-        height: 269
+        x: 78
+        y: 93
+        width: 192
+        height: 271
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91453f0e1d182704f82c9de0b4dfe4d9
-      internalID: 354307780
+      spriteID: 66d0a7a3ce55ec54bb6fcb99686be991
+      internalID: -323043093
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi_E
-      rect:
-        serializedVersion: 2
-        x: 638
-        y: 113
-        width: 283
-        height: 250
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: efa80c7395597064289b4e03c1f20b8f
-      internalID: 104043105
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_NE
-      rect:
-        serializedVersion: 2
-        x: 953
-        y: 113
-        width: 194
-        height: 253
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8eca2819faca2254884764ff7f426c79
-      internalID: 924862944
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_N
-      rect:
-        serializedVersion: 2
-        x: 1185
-        y: 113
-        width: 195
-        height: 253
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3c114ea3e259b6e4b82786315ddf8993
-      internalID: 1544133235
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_NW
-      rect:
-        serializedVersion: 2
-        x: 1411
-        y: 118
-        width: 287
-        height: 248
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 60e4c04d4f0ea5a408b5e602d0ec089a
-      internalID: -1302892217
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_SW
-      rect:
-        serializedVersion: 2
-        x: 2051
-        y: 92
-        width: 200
-        height: 272
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c865dbbf13c69524784111b984cf29bd
-      internalID: -1826433858
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_SE
+      name: Uta_SE
       rect:
         serializedVersion: 2
         x: 308
         y: 114
         width: 291
-        height: 227
+        height: 228
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38ffbcf438c64224bb9a7aeb730d5a9b
-      internalID: -802639980
+      spriteID: 9caf7ce5a55c2c945b492091fb8593d0
+      internalID: 2051233
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi_W
+      name: Uta_E
       rect:
         serializedVersion: 2
-        x: 1734
-        y: 117
-        width: 295
-        height: 227
+        x: 637
+        y: 113
+        width: 284
+        height: 251
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e84fb115def9721458a774dd5684f9b0
-      internalID: -663053257
+      spriteID: 9b488ededb06d0d4786c4bef56e4f99f
+      internalID: 1896120598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Uta_NE
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 112
+        width: 187
+        height: 255
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 754935bbf616129429253454b21b3e58
+      internalID: 423968453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Uta_N
+      rect:
+        serializedVersion: 2
+        x: 1185
+        y: 112
+        width: 195
+        height: 255
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7243d3370b9a9b429bfe6265f019374
+      internalID: 190192946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Uta_NW
+      rect:
+        serializedVersion: 2
+        x: 1411
+        y: 117
+        width: 283
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91d00f73d7e8c7148ade1f1fb7ad22cb
+      internalID: -1008659125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Uta_W
+      rect:
+        serializedVersion: 2
+        x: 1734
+        y: 114
+        width: 293
+        height: 228
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab5c68e72daae8f44ab75cda1af166a5
+      internalID: -1173616875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Uta_SW
+      rect:
+        serializedVersion: 2
+        x: 2058
+        y: 93
+        width: 193
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43753e1b47c5ab44a88dde4070f6380e
+      internalID: -1865554347
       vertices: []
       indices: 
       edges: []
@@ -267,7 +267,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3583c2c5a056aa94a9159b30585d3ef5
+    spriteID: c62c95e90f442d641976008909e46910
     internalID: 0
     vertices: []
     indices: 
@@ -275,19 +275,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Chi turn_0: 850893141
-      Chi turn_11: -668595937
-      Chi turn_5: -2143894074
-      Chi turn_8: -875941459
-      Chi turn_9: -368901453
-      Chi_E: 104043105
-      Chi_N: 1544133235
-      Chi_NE: 924862944
-      Chi_NW: -1302892217
-      Chi_S: 354307780
-      Chi_SE: -802639980
-      Chi_SW: -1826433858
-      Chi_W: -663053257
+      Uta turn_10: 411161927
+      Uta turn_7: 1057558789
+      Uta turn_9: -564395224
+      Uta_E: 1896120598
+      Uta_N: 190192946
+      Uta_NE: 423968453
+      Uta_NW: -1008659125
+      Uta_S: -323043093
+      Uta_SE: 2051233
+      Uta_SW: -1865554347
+      Uta_W: -1173616875
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

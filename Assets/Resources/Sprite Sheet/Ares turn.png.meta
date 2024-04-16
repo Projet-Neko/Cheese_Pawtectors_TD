@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d5f56cdda4f6e5c4e9241b1d9ae4bda5
+guid: 78c84da7ff9a2f345bffb06efc7f778a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Chi_S
+      name: Ares_S
       rect:
         serializedVersion: 2
-        x: 79
-        y: 94
-        width: 198
-        height: 269
+        x: 78
+        y: 93
+        width: 192
+        height: 271
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,18 +111,102 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91453f0e1d182704f82c9de0b4dfe4d9
-      internalID: 354307780
+      spriteID: 54a643bca19300d418a0fdea79b20a46
+      internalID: 696960849
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi_E
+      name: Ares_SE
       rect:
         serializedVersion: 2
-        x: 638
+        x: 308
+        y: 114
+        width: 291
+        height: 228
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feb6f241fd42b3847ae9ee3ab6dca5ad
+      internalID: 1673032196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ares_E
+      rect:
+        serializedVersion: 2
+        x: 637
         y: 113
+        width: 284
+        height: 251
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3974b0c3dbf9b9646aa100b5d2f80644
+      internalID: 2043056953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ares_NE
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 112
+        width: 187
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07f5b5073060ece4cb0b528bba9df969
+      internalID: -1026908156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ares_N
+      rect:
+        serializedVersion: 2
+        x: 1185
+        y: 112
+        width: 195
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 201ad6ca3734aba49a41d1a0d3989cf8
+      internalID: -1026801551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ares_NW
+      rect:
+        serializedVersion: 2
+        x: 1411
+        y: 117
         width: 283
         height: 250
       alignment: 0
@@ -132,20 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: efa80c7395597064289b4e03c1f20b8f
-      internalID: 104043105
+      spriteID: 4ea1e9337d4bef24196e82dbef2da0e1
+      internalID: 1173739520
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi_NE
+      name: Ares_W
       rect:
         serializedVersion: 2
-        x: 953
-        y: 113
-        width: 194
-        height: 253
+        x: 1734
+        y: 114
+        width: 293
+        height: 228
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,61 +237,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8eca2819faca2254884764ff7f426c79
-      internalID: 924862944
+      spriteID: 83a307a677aaad04ca331215a8c4c830
+      internalID: 1495007113
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi_N
+      name: Ares_SW
       rect:
         serializedVersion: 2
-        x: 1185
-        y: 113
-        width: 195
-        height: 253
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3c114ea3e259b6e4b82786315ddf8993
-      internalID: 1544133235
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_NW
-      rect:
-        serializedVersion: 2
-        x: 1411
-        y: 118
-        width: 287
-        height: 248
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 60e4c04d4f0ea5a408b5e602d0ec089a
-      internalID: -1302892217
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_SW
-      rect:
-        serializedVersion: 2
-        x: 2051
-        y: 92
-        width: 200
+        x: 2058
+        y: 93
+        width: 193
         height: 272
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -216,50 +258,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c865dbbf13c69524784111b984cf29bd
-      internalID: -1826433858
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_SE
-      rect:
-        serializedVersion: 2
-        x: 308
-        y: 114
-        width: 291
-        height: 227
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 38ffbcf438c64224bb9a7aeb730d5a9b
-      internalID: -802639980
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_W
-      rect:
-        serializedVersion: 2
-        x: 1734
-        y: 117
-        width: 295
-        height: 227
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e84fb115def9721458a774dd5684f9b0
-      internalID: -663053257
+      spriteID: be96d0539ef58a047883b4db55d503de
+      internalID: -1137170592
       vertices: []
       indices: 
       edges: []
@@ -267,7 +267,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3583c2c5a056aa94a9159b30585d3ef5
+    spriteID: 298df4225335c0c40be6d609a843c01b
     internalID: 0
     vertices: []
     indices: 
@@ -275,19 +275,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Chi turn_0: 850893141
-      Chi turn_11: -668595937
-      Chi turn_5: -2143894074
-      Chi turn_8: -875941459
-      Chi turn_9: -368901453
-      Chi_E: 104043105
-      Chi_N: 1544133235
-      Chi_NE: 924862944
-      Chi_NW: -1302892217
-      Chi_S: 354307780
-      Chi_SE: -802639980
-      Chi_SW: -1826433858
-      Chi_W: -663053257
+      Ares turn_10: 685861455
+      Ares turn_7: -645132679
+      Ares turn_9: -1341566837
+      Ares_E: 2043056953
+      Ares_N: -1026801551
+      Ares_NE: -1026908156
+      Ares_NW: 1173739520
+      Ares_S: 696960849
+      Ares_SE: 1673032196
+      Ares_SW: -1137170592
+      Ares_W: 1495007113
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

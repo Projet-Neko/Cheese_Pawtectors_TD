@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d5f56cdda4f6e5c4e9241b1d9ae4bda5
+guid: f458d5e7f5eb1c44ea318f70228b623c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Chi_S
+      name: Oni_S
       rect:
         serializedVersion: 2
-        x: 79
-        y: 94
-        width: 198
-        height: 269
+        x: 78
+        y: 93
+        width: 192
+        height: 271
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,18 +111,102 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91453f0e1d182704f82c9de0b4dfe4d9
-      internalID: 354307780
+      spriteID: 0f2c96edccbd1604583606ac7dda7dd8
+      internalID: 1992521954
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi_E
+      name: Oni_SE
       rect:
         serializedVersion: 2
-        x: 638
+        x: 308
+        y: 114
+        width: 293
+        height: 228
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47c424183e7b7dc40adf7362d296be04
+      internalID: -2120894318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oni_E
+      rect:
+        serializedVersion: 2
+        x: 637
         y: 113
+        width: 284
+        height: 251
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88ffc592b3f8ed44c90acaad580582ce
+      internalID: 1033686698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oni_NE
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 112
+        width: 187
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e20158e4c6b162e45b4e88fe649ea737
+      internalID: 1736581725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oni_N
+      rect:
+        serializedVersion: 2
+        x: 1185
+        y: 112
+        width: 195
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e9f4ed9841bcca46a4da9a9cc9bf250
+      internalID: -1671467612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oni_NW
+      rect:
+        serializedVersion: 2
+        x: 1411
+        y: 117
         width: 283
         height: 250
       alignment: 0
@@ -132,104 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: efa80c7395597064289b4e03c1f20b8f
-      internalID: 104043105
+      spriteID: f60a3f2294428ae4ebec188d2c6d009a
+      internalID: -1623827986
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi_NE
+      name: Oni_W
       rect:
         serializedVersion: 2
-        x: 953
-        y: 113
-        width: 194
-        height: 253
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8eca2819faca2254884764ff7f426c79
-      internalID: 924862944
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_N
-      rect:
-        serializedVersion: 2
-        x: 1185
-        y: 113
-        width: 195
-        height: 253
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3c114ea3e259b6e4b82786315ddf8993
-      internalID: 1544133235
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_NW
-      rect:
-        serializedVersion: 2
-        x: 1411
-        y: 118
-        width: 287
-        height: 248
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 60e4c04d4f0ea5a408b5e602d0ec089a
-      internalID: -1302892217
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_SW
-      rect:
-        serializedVersion: 2
-        x: 2051
-        y: 92
-        width: 200
-        height: 272
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c865dbbf13c69524784111b984cf29bd
-      internalID: -1826433858
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_SE
-      rect:
-        serializedVersion: 2
-        x: 308
+        x: 1732
         y: 114
-        width: 291
-        height: 227
+        width: 295
+        height: 228
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,20 +237,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38ffbcf438c64224bb9a7aeb730d5a9b
-      internalID: -802639980
+      spriteID: 1a622c41a1eb4a6428c070bebb05b6c2
+      internalID: -1527972466
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi_W
+      name: Oni_SW
       rect:
         serializedVersion: 2
-        x: 1734
-        y: 117
-        width: 295
-        height: 227
+        x: 2058
+        y: 92
+        width: 193
+        height: 273
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,8 +258,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e84fb115def9721458a774dd5684f9b0
-      internalID: -663053257
+      spriteID: 70f9d440b9f88454bb1d750359be8ac8
+      internalID: 82549418
       vertices: []
       indices: 
       edges: []
@@ -267,7 +267,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3583c2c5a056aa94a9159b30585d3ef5
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -275,19 +275,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Chi turn_0: 850893141
-      Chi turn_11: -668595937
-      Chi turn_5: -2143894074
-      Chi turn_8: -875941459
-      Chi turn_9: -368901453
-      Chi_E: 104043105
-      Chi_N: 1544133235
-      Chi_NE: 924862944
-      Chi_NW: -1302892217
-      Chi_S: 354307780
-      Chi_SE: -802639980
-      Chi_SW: -1826433858
-      Chi_W: -663053257
+      Oni turn_10: -215408712
+      Oni turn_11: 1056508254
+      Oni turn_7: -65749593
+      Oni turn_9: -1794499190
+      Oni_E: 1033686698
+      Oni_N: -1671467612
+      Oni_NE: 1736581725
+      Oni_NW: -1623827986
+      Oni_S: 1992521954
+      Oni_SE: -2120894318
+      Oni_SW: 82549418
+      Oni_W: -1527972466
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

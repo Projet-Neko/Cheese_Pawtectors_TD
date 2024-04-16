@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 47985303130860530}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CorridorRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1045698017471996457}
   - component: {fileID: 1581850502567245764}
   - component: {fileID: 4312275549271753851}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Path1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 1636753901242815825}
   - component: {fileID: 1902207336236212373}
   - component: {fileID: 6111221751887238811}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rotate Clock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 720190027824992351}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Path
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 418719587217607257}
   - component: {fileID: 6827244442334090486}
   - component: {fileID: 2133106591955081356}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Move
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 7616268602110248112}
   - component: {fileID: 9165766705670764723}
   - component: {fileID: 6020375486196727518}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arrow (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 5490354120454666452}
   - component: {fileID: 3706862932171758136}
   - component: {fileID: 3379501102914773129}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cancel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +632,8 @@ GameObject:
   - component: {fileID: 6797808087423751622}
   - component: {fileID: 1636404361455639622}
   - component: {fileID: 5475997550642294856}
-  m_Layer: 0
+  - component: {fileID: 8049366551030829403}
+  m_Layer: 10
   m_Name: Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -748,6 +749,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.04, y: 0.12, z: 1.04}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8049366551030829403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5039958515398650431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1ce4ecf3791a44fb6173cb620ede76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentCat: {fileID: 0}
 --- !u!1 &5065539798769827325
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,7 +774,7 @@ GameObject:
   - component: {fileID: 1153591085283172242}
   - component: {fileID: 7678588057932047861}
   - component: {fileID: 7106131061334769538}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Done
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -889,7 +903,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6786430107307925219}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Junction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -922,7 +936,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1103587921182154054}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -962,7 +976,7 @@ GameObject:
   - component: {fileID: 7113863578637937637}
   - component: {fileID: 3106800281042883747}
   - component: {fileID: 980621096179293540}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1038,7 +1052,7 @@ GameObject:
   - component: {fileID: 6253848923761491926}
   - component: {fileID: 6353795518768760020}
   - component: {fileID: 4643219760160423314}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 'Canvas '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1141,7 +1155,7 @@ GameObject:
   - component: {fileID: 2506151755108634864}
   - component: {fileID: 1046243519970888445}
   - component: {fileID: 3724132322877599560}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Suppr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1270,7 +1284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6672733931954615772}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Move Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1313,7 +1327,7 @@ GameObject:
   - component: {fileID: 4918975346074716006}
   - component: {fileID: 5136921689149401946}
   - component: {fileID: 1267129842733617539}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arrow (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1388,7 +1402,7 @@ GameObject:
   - component: {fileID: 8984181178073730097}
   - component: {fileID: 4791471173049413120}
   - component: {fileID: 5244521768474288559}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arrow (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1500,9 +1514,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 892868531278409566, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6914312609097986264, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
       propertyPath: m_Name
       value: Junction (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914312609097986264, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7058927037715122122, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1573,9 +1599,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 892868531278409566, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6914312609097986264, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
       propertyPath: m_Name
       value: Junction
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914312609097986264, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7058927037715122122, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

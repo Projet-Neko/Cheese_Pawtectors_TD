@@ -20,6 +20,7 @@ public class Cat : Entity
 
     public Color CatColor => _catColor;
     public bool IsInStorageMode => _isInStorageMode;
+    public Sprite[] Sprites => _data.Sprites;
 
     private CatSO _data;
     private Color _catColor;
@@ -51,7 +52,7 @@ public class Cat : Entity
         _speed = _data.Speed();
 
         // Appearance
-        _renderer.sprite = _data.SpriteAbove; // TODO -> check sprite to use
+        _renderer.sprite = _data.Sprites[0]; // TODO -> check sprite to use
 
         gameObject.name = _data.Name;
     }

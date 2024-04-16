@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d5f56cdda4f6e5c4e9241b1d9ae4bda5
+guid: b1c20dd5e45cbb244b904198158c3575
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Chi_S
+      name: Peanut_S
       rect:
         serializedVersion: 2
-        x: 79
-        y: 94
-        width: 198
-        height: 269
+        x: 46
+        y: 0
+        width: 205
+        height: 274
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91453f0e1d182704f82c9de0b4dfe4d9
-      internalID: 354307780
+      spriteID: 8e21c9d2752e07e46920a1608cf1d2d2
+      internalID: 78107913
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi_E
+      name: Peanut_SE
       rect:
         serializedVersion: 2
-        x: 638
-        y: 113
-        width: 283
-        height: 250
+        x: 294
+        y: 17
+        width: 300
+        height: 240
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,125 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: efa80c7395597064289b4e03c1f20b8f
-      internalID: 104043105
+      spriteID: 847fe0ef065d2264a801316658111706
+      internalID: 1714184639
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi_NE
+      name: Peanut_E
       rect:
         serializedVersion: 2
-        x: 953
-        y: 113
-        width: 194
-        height: 253
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8eca2819faca2254884764ff7f426c79
-      internalID: 924862944
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_N
-      rect:
-        serializedVersion: 2
-        x: 1185
-        y: 113
-        width: 195
-        height: 253
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3c114ea3e259b6e4b82786315ddf8993
-      internalID: 1544133235
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_NW
-      rect:
-        serializedVersion: 2
-        x: 1411
-        y: 118
-        width: 287
-        height: 248
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 60e4c04d4f0ea5a408b5e602d0ec089a
-      internalID: -1302892217
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi turn_5
-      rect:
-        serializedVersion: 2
-        x: 2012
-        y: 342
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6d78bd32f1417c74c9d25e4dbd9b2519
-      internalID: -2143894074
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_SW
-      rect:
-        serializedVersion: 2
-        x: 2051
-        y: 92
-        width: 200
-        height: 272
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c865dbbf13c69524784111b984cf29bd
-      internalID: -1826433858
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chi_SE
-      rect:
-        serializedVersion: 2
-        x: 308
-        y: 114
+        x: 595
+        y: 11
         width: 291
-        height: 227
+        height: 251
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38ffbcf438c64224bb9a7aeb730d5a9b
-      internalID: -802639980
+      spriteID: 141f5a0319797cd4d9beb1ae7c70ab7c
+      internalID: 985907514
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi turn_8
+      name: Peanut_NE
       rect:
         serializedVersion: 2
-        x: 1387
-        y: 215
-        width: 9
-        height: 28
+        x: 935
+        y: 6
+        width: 200
+        height: 260
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e67113653f818d141b8da404d70eb000
-      internalID: -875941459
+      spriteID: c4401eeebb9e42149a5886cf88bfda45
+      internalID: -313239966
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi turn_9
+      name: Peanut_N
       rect:
         serializedVersion: 2
-        x: 1400
-        y: 225
-        width: 4
-        height: 7
+        x: 1231
+        y: 6
+        width: 202
+        height: 260
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -300,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10062c3e2ecbb6f4fb9e42cff5f878ed
-      internalID: -368901453
+      spriteID: f485aea2dcdda8643afc3f84d9d22fc5
+      internalID: -628479412
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi_W
+      name: Peanut_NW
       rect:
         serializedVersion: 2
-        x: 1734
-        y: 117
-        width: 295
-        height: 227
+        x: 1483
+        y: 11
+        width: 291
+        height: 251
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -321,20 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e84fb115def9721458a774dd5684f9b0
-      internalID: -663053257
+      spriteID: 2e7e8404d6b80344fbc9bf992be718a6
+      internalID: 1241875126
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chi turn_11
+      name: Peanut_W
       rect:
         serializedVersion: 2
-        x: 1386
-        y: 210
-        width: 5
-        height: 10
+        x: 1775
+        y: 17
+        width: 298
+        height: 239
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -342,8 +237,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0550df9b2695381478d16a74675f1ca9
-      internalID: -668595937
+      spriteID: 93e2ed68c49a25b4b8662d4519f264bf
+      internalID: 706368791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Peanut_SW
+      rect:
+        serializedVersion: 2
+        x: 2118
+        y: 0
+        width: 205
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34f597111781f384e9ed2bdeb2212be0
+      internalID: -1852449237
       vertices: []
       indices: 
       edges: []
@@ -351,7 +267,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3583c2c5a056aa94a9159b30585d3ef5
+    spriteID: 5a8cb5c5c569f4348a802d36d8fa42de
     internalID: 0
     vertices: []
     indices: 
@@ -359,18 +275,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Chi turn_11: -668595937
-      Chi turn_5: -2143894074
-      Chi turn_8: -875941459
-      Chi turn_9: -368901453
-      Chi_E: 104043105
-      Chi_N: 1544133235
-      Chi_NE: 924862944
-      Chi_NW: -1302892217
-      Chi_S: 354307780
-      Chi_SE: -802639980
-      Chi_SW: -1826433858
-      Chi_W: -663053257
+      Peanut_E: 985907514
+      Peanut_N: -628479412
+      Peanut_NE: -313239966
+      Peanut_NW: 1241875126
+      Peanut_S: 78107913
+      Peanut_SE: 1714184639
+      Peanut_SW: -1852449237
+      Peanut_W: 706368791
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

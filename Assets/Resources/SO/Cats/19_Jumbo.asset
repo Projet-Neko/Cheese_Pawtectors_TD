@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 19_Jumbo
   m_EditorClassIdentifier: 
-  SpriteAbove: {fileID: 0}
-  SpriteFront: {fileID: 0}
+  Sprites:
+  - {fileID: 1166922223, guid: b6e803bc706c88342b7d65ca2e6a48c6, type: 3}
+  - {fileID: -1336470675, guid: b6e803bc706c88342b7d65ca2e6a48c6, type: 3}
+  - {fileID: 444833015, guid: b6e803bc706c88342b7d65ca2e6a48c6, type: 3}
+  - {fileID: 1678379871, guid: b6e803bc706c88342b7d65ca2e6a48c6, type: 3}
+  - {fileID: -408311031, guid: b6e803bc706c88342b7d65ca2e6a48c6, type: 3}
+  - {fileID: 387716429, guid: b6e803bc706c88342b7d65ca2e6a48c6, type: 3}
+  - {fileID: 1748667721, guid: b6e803bc706c88342b7d65ca2e6a48c6, type: 3}
+  - {fileID: 956688450, guid: b6e803bc706c88342b7d65ca2e6a48c6, type: 3}
   Lore: "M\xE9dite sur le sens de la vie sur le rebors de la fen\xEAtre."
+  State: 0

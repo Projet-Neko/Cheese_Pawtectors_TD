@@ -24,44 +24,50 @@ public class Mod_Waves : Module
     private int _maxEnemyNumber;
     private int _killedEnemiesNumber;
     private List<GameObject> _enemyObjects = new();
-    private Vector3 _SpawnPos;
     private bool _hasCompleteSpawning;
     private IEnumerator _spawn;
     private bool _cheeseDead = false;
+    private Vector3 _spawningRoomPosition = new(-1, -1, -1);
+    private bool _wavesStarted = false;
+    private bool _cheeseInitialized = false;
 
     private void Awake()
     {
         Cheese.OnInit += Cheese_OnInit;
+        StartRoom.OnInit += StartRoom_OnInit;
         Entity.OnDeath += Entity_OnDeath;
+    }
+
+    private void StartRoom_OnInit(Room obj)
+    {
+        _spawningRoomPosition = obj.transform.position;
+        //_spawningRoomPosition.z = -4; // Necessary ?
+        if (!_wavesStarted && _cheeseInitialized) StartWaves();
     }
 
     private void Cheese_OnInit(Cheese obj)
     {
-        StartWaves();
+        _cheeseInitialized = true;
+        if (!_wavesStarted && _spawningRoomPosition != new Vector3(-1, -1, -1)) StartWaves();
     }
 
     private void OnDestroy()
     {
         Cheese.OnInit -= Cheese_OnInit;
+        StartRoom.OnInit -= StartRoom_OnInit;
         Entity.OnDeath -= Entity_OnDeath;
-    }
-
-    private void Update()
-    {
-        
     }
 
     public override void Init(GameManager gm)
     {
         base.Init(gm);
-        _SpawnPos = transform.position;
-        _SpawnPos.z = -4;
         _hasCompleteSpawning = false;
         InitComplete();
     }
 
     public void StartWaves()
     {
+        _wavesStarted = true;
         _maxEnemyNumber = _killedEnemiesNumber = 0;
         _spawn = SpawnEnemies(false);
         if (_enableWaves) StartCoroutine(_spawn);
@@ -75,8 +81,7 @@ public class Mod_Waves : Module
         if (cooldown) yield return new WaitForSeconds(.5f);
         while (_spawnedEnemyNumber < _maxEnemyNumber)
         {
-            Mouse m = Instantiate(_mousePrefab, _SpawnPos, Quaternion.identity).GetComponent<Mouse>();
-            m.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            Mouse m = Instantiate(_mousePrefab, _spawningRoomPosition, Quaternion.identity).GetComponent<Mouse>();
             m.WaveIndex = index + 1;
             _spawnedEnemyNumber++;
             index++;

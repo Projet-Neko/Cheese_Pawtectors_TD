@@ -215,6 +215,7 @@ public class GameManager : MonoBehaviour
     public bool HasLoginPopupLoad()
     {
         if (_hasLoginPopupLoad) return true;
+        Debug.Log("<color=yellow>First time loading Login Popup</color>");
         _hasLoginPopupLoad = true;
         return false;
     }
@@ -237,8 +238,8 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(60);
             Debug.Log("Starting auto save...");
-            foreach (var currency in _data.Currencies) yield return Mod<Mod_Economy>().UpdateCurrency((Currency)currency.Index);
-            yield return Mod<Mod_Account>().UpdateData();
+            //foreach (var currency in _data.Currencies) yield return Mod<Mod_Economy>().UpdateCurrency((Currency)currency.Index);
+            //yield return Mod<Mod_Account>().UpdateData();
         }
     }
 

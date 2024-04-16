@@ -7,6 +7,7 @@ public abstract class State
     public virtual void OnEnter(Brain brain)
     {
         _brain = brain;
+
         if (_brain.Entity is Cat) Mod_Waves.OnWaveReload += M_Wave_OnWaveReload;
     }
 
@@ -24,6 +25,8 @@ public abstract class State
 
         foreach (Collider2D target in targets)
         {
+            if (!_brain.Room.bounds.Contains(target.transform.position)) continue;
+
             if (target.gameObject.layer == 8)
             {
                 Mouse m = target.GetComponentInParent<Mouse>();
@@ -49,6 +52,7 @@ public abstract class State
 
         foreach (Collider2D target in targets)
         {
+            if (_brain.Entity is Cat && !_brain.Room.bounds.Contains(target.transform.position)) continue;
             if (target.gameObject == _brain.Target) return true;
         }
 

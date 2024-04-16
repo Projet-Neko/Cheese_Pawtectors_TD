@@ -1116,6 +1116,10 @@ PrefabInstance:
       propertyPath: _enableWaves
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7405251898123990541, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+      propertyPath: _successBanner
+      value: 
+      objectReference: {fileID: 512024753923745885, guid: 38511fc0de1e7494eabc7428c9e7ba8f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -1,13 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Success_Manager : MonoBehaviour
 {
+    [SerializeField] private GameObject _successBanner;
+
+    private string successFolderPath = "SO/Success/"; // Le chemin du dossier où se trouvent les ScriptableObject des succès
+    private List<SuccessSO> allSuccesses; // La liste qui contiendra tous les succès
+
     private Dictionary<string, int> _success = new Dictionary<string, int>();
 
     static public event Action SuccessEvent;
+
+    private GameObject _successContainer;
 
     private int _successCount = 0;
     private int _mouseKilled = 0;
@@ -18,6 +28,7 @@ public class Success_Manager : MonoBehaviour
 
     private void Awake()
     {
+        SceneManager.sceneLoaded += GetSuccessContainer;
         Entity.OnDeath += CheckDeathEvent;
         Mod_Waves.OnBossDefeated += BossKilled;
         Mod_Waves.WaveCompleted += CompleteWaves;
@@ -27,31 +38,73 @@ public class Success_Manager : MonoBehaviour
 
     void Start()
     {
-
+        InitSuccessList();
     }
 
-    private void InitDictionary()
+    private void InitSuccessList()
     {
-        _success.Add("Succès", 0);
-        _success.Add("Souris battu", 0);
-        _success.Add("Boss battu", 0);
-        _success.Add("Vagues terminés", 0);
-        _success.Add("Rejoindre un clan", 0);
-        _success.Add("Chat débloqué", 1);
-        _success.Add("Changer de photo de profil", 0);
-        _success.Add("Changer de pseudo", 0);
-        _success.Add("Chat adopté", 0);
-        _success.Add("Vaincre *nom du premier boss*", 0);
-        _success.Add("Vaincre *nom du deuxieme boss*", 0);
-        _success.Add("Vaincre *nom du troisieme boss*", 0);
-        _success.Add("Vaincre *nom du quatrième boss*", 0);
-        _success.Add("Modifier sa maison", 0);
-        _success.Add("Nombre de pièces dans la maison", 0);
-        _success.Add("Nombre de chats dans la maison", 0);
-        _success.Add("Donner des chats", 0);
-        _success.Add("Activer les notifications", 0);
-        _success.Add("Lier son compte", 0);
-        _success.Add("Nous suivre sur les réseaux", 0);
+        //_success.Add("Succès", 0);
+        //_success.Add("Souris vaincus", 0);
+        //_success.Add("Boss battu", 0);
+        //_success.Add("Vagues terminés", 0);
+        //_success.Add("Rejoindre un clan", 0);
+        //_success.Add("Chat débloqué", 1);
+        //_success.Add("Changer de photo de profil", 0);
+        //_success.Add("Changer de pseudo", 0);
+        //_success.Add("Chat adopté", 0);
+        //_success.Add("Vaincre *nom du premier boss*", 0);
+        //_success.Add("Vaincre *nom du deuxieme boss*", 0);
+        //_success.Add("Vaincre *nom du troisieme boss*", 0);
+        //_success.Add("Vaincre *nom du quatrième boss*", 0);
+        //_success.Add("Modifier sa maison", 0);
+        //_success.Add("Nombre de pièces dans la maison", 0);
+        //_success.Add("Nombre de chats dans la maison", 0);
+        //_success.Add("Donner des chats", 0);
+        //_success.Add("Activer les notifications", 0);
+        //_success.Add("Lier son compte", 0);
+        //_success.Add("Nous suivre sur les réseaux", 0);
+
+        allSuccesses.AddRange(Resources.LoadAll<SuccessSO>(successFolderPath));
+        if (allSuccesses == null) Debug.Log("Load SucessList Echec");
+        Debug.Log("Load SucessList Okay");
+    }
+
+
+    private void GetSuccessContainer(Scene arg0, LoadSceneMode arg1)
+    {
+        if (arg0.name == "Success")
+        {
+
+            Debug.Log("Get Success Container");
+            GameObject[] sceneObjects = arg0.GetRootGameObjects();
+
+            // Chercher l'objet dans la liste des GameObjects de la scène
+            foreach (GameObject obj in sceneObjects)
+            {
+                if (obj.CompareTag("SuccessContainer"))
+                {
+                    _successContainer = obj;
+                    if (_successContainer == null) Debug.Log("Load SucessContainer ERROr");
+                    else
+                    {
+                        DisplaySuccess();
+                        Debug.Log("Load SucessContainer Okay");
+                    }
+                }
+            }
+        }
+    }
+
+    private void DisplaySuccess()
+    {
+        foreach (var success in allSuccesses)
+        {
+            GameObject newSuccess = Instantiate(_successBanner, _successContainer.transform);
+            TextMeshProUGUI text = newSuccess.GetComponentInChildren<TextMeshProUGUI>();
+            newSuccess.name = success.name;
+            text.text = success._successame;
+            Debug.Log("display success");
+        }
     }
 
     private void CheckDeathEvent(Entity entity, bool arg2)
@@ -113,7 +166,7 @@ public class Success_Manager : MonoBehaviour
 
     private void UnlockCat(int lvl)
     {
-        Debug.Log($"Vous avez débloqué le chat de niveau {lvl+1}");
+        Debug.Log($"Vous avez débloqué le chat de niveau {lvl + 1}");
         _success["Chat débloqué"]++;
         CheckSuccess();
     }

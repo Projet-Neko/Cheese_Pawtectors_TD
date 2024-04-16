@@ -1,8 +1,11 @@
+using UnityEngine;
+
 public class MouseBrain : Brain
 {
     private void Start()
     {
-        Target = GameManager.Instance.Cheese.gameObject;
+        Target = ((Mouse)Entity).DefineTarget(null);
+        Debug.Log($"Mouse target : {Target.transform.position}");
         _attackRange = _collider.bounds.size.x / 2;
         _followRange = 0;
         ChangeState(Walk);

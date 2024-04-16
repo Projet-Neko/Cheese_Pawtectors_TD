@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class House : MonoBehaviour
 {
@@ -24,9 +25,13 @@ public class House : MonoBehaviour
     private LineRenderer[,] _lineGrid = new LineRenderer[2, _maxRooms+1];
     private IdRoom _idStartRoom;
 
-    private List<Mouse> _mouseList = new();
+    //private List<Mouse> _mouseList = new();
 
-    private bool _isWave = false;
+    //private bool _isWave = false;
+
+    public IdRoom IdStartRoom => _idStartRoom;
+
+    //public IdRoom IdCheeseRoom => new IdRoom((int)_cheeseRoom.transform.position.x, (int)_cheeseRoom.transform.position.z);
 
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
@@ -82,7 +87,10 @@ public class House : MonoBehaviour
 
                 // Place the Cheese Room
                 else if (x == _currentRoomNumber - 2 && z == _maxRooms / 2)
+                {
                     CreateRoom(x, z, RoomPattern.CheeseRoom);
+                    //_cheeseRoom = _roomsGrid[x, z];
+                }
 
                 // Place Void Rooms
                 else
@@ -99,6 +107,10 @@ public class House : MonoBehaviour
         Room.ChangeTilePosition += CheckRoomPosition;
         Room.TileDestroyed += CreateRoom;
         Room.LineActivated += ActiveLine;
+        Mouse.GetNextRoom += GetNextRoom;
+
+        // TO DO : TO REMOVE
+        BuildPath();
     }
 
     private void OnDestroy()
@@ -107,6 +119,7 @@ public class House : MonoBehaviour
         Room.ChangeTilePosition -= CheckRoomPosition;
         Room.TileDestroyed -= CreateRoom;
         Room.LineActivated -= ActiveLine;
+        Mouse.GetNextRoom -= GetNextRoom;
     }
 
 
@@ -460,7 +473,7 @@ public class House : MonoBehaviour
     *               MOUSE
     * * * * * * * * * * * * * * * * * * * */
 
-    public void StartWave()
+    /*public void StartWave()
     {
         _isWave = true;
 
@@ -501,9 +514,25 @@ public class House : MonoBehaviour
 
             yield return null;
         }
+    }*/
+
+    private GameObject GetNextRoom(GameObject currentTarget)
+    {
+        if (currentTarget == null)
+            return _roomsGrid[_idStartRoom.x, _idStartRoom.z].gameObject;
+
+        Room currentRoom = _roomsGrid[(int)currentTarget.transform.position.x, (int)currentTarget.transform.position.z];
+        int numberNextRooms = currentRoom.NextRooms.Count;
+
+        if (numberNextRooms == 0)
+            return currentTarget;
+
+        int random = Random.Range(0, numberNextRooms);
+        IdRoom idNextRoom = currentRoom.NextRooms[random];
+        return _roomsGrid[idNextRoom.x, idNextRoom.z].gameObject;
     }
 
-    private IEnumerator SpawnMouse(int nbMouse)
+    /*private IEnumerator SpawnMouse(int nbMouse)
     {
         while (nbMouse > 0)
         {
@@ -516,7 +545,7 @@ public class House : MonoBehaviour
         }
 
         yield return null;
-    }
+    }*/
 
 
     /* * * * * * * * * * * * * * * * * * * *

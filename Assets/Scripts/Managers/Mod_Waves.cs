@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Mod_Waves : Module
 {
@@ -10,6 +11,9 @@ public class Mod_Waves : Module
 
     [SerializeField] private GameObject _mousePrefab;
     [SerializeField] private int _spawnTime = 1;
+
+    //[SerializeField] private GameObject _housePrefab;
+    private House _house;
 
     [Header("Options")]
     [SerializeField] private bool _enableWaves = false;
@@ -54,14 +58,14 @@ public class Mod_Waves : Module
     public override void Init(GameManager gm)
     {
         base.Init(gm);
-        _SpawnPos = transform.position;
-        _SpawnPos.z = -4;
         _hasCompleteSpawning = false;
         InitComplete();
     }
 
     public void StartWaves()
     {
+        _house = FindObjectOfType<House>();// TO DO : MUST BE OPTIMIZED
+        _SpawnPos = new Vector3(_house.IdStartRoom.x, 0, _house.IdStartRoom.z);
         _maxEnemyNumber = _killedEnemiesNumber = 0;
         _spawn = SpawnEnemies(false);
         if (_enableWaves) StartCoroutine(_spawn);
@@ -76,6 +80,7 @@ public class Mod_Waves : Module
         while (_spawnedEnemyNumber < _maxEnemyNumber)
         {
             Mouse m = Instantiate(_mousePrefab, _SpawnPos, Quaternion.identity).GetComponent<Mouse>();
+            Debug.Log("Mouse spawned at " + m.transform.position);
             m.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             m.WaveIndex = index + 1;
             _spawnedEnemyNumber++;

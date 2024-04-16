@@ -4,6 +4,16 @@ public abstract class State
 {
     protected Brain _brain;
 
+    void Start() 
+    {
+        //_brain.Entity.Renderer = 
+    }
+
+    void Update() 
+    {
+
+    }
+
     public virtual void OnEnter(Brain brain)
     {
         _brain = brain;
@@ -63,6 +73,33 @@ public abstract class State
     {
         //(_brain.Entity as Cat).Sprites;
         _brain.transform.position = Vector3.MoveTowards(_brain.transform.position, _brain.Target.transform.position, _brain.Entity.Speed * Time.deltaTime);
+
+
+    }
+
+    string GetSpriteName(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                return "E";
+            case 1:
+                return "N";
+            case 2:
+                return "NE";
+            case 3:
+                return "NW";
+            case 4:
+                return "S";
+            case 5:
+                return "SE";
+            case 6:
+                return "SW";
+            case 7:
+                return "W";
+            default:
+                return "S";
+        }
     }
 
     protected void M_Wave_OnWaveReload()

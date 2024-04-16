@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 72bac4be779691f47bf739748c571f18
+guid: 68d102e6bd5632d4599ecd9e79636513
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Isis_S
+      name: Sherlock_S
       rect:
         serializedVersion: 2
-        x: 79
-        y: 94
-        width: 191
-        height: 269
+        x: 46
+        y: 0
+        width: 205
+        height: 274
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67dff7d451263984eb7e65ca2990c756
-      internalID: -1581340785
+      spriteID: 4a1cc7698bd770e4ea1e52102b565ca9
+      internalID: 1804051608
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Isis_SE
+      name: Sherlock_SE
       rect:
         serializedVersion: 2
-        x: 308
-        y: 114
+        x: 294
+        y: 17
+        width: 300
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1e2c11ca04485d4bb46f2971cc1731f
+      internalID: 166373542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sherlock_E
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 11
         width: 291
-        height: 227
+        height: 251
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,146 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b7fcf9ad4248aa4b90553ec4db7ada1
-      internalID: -692175967
+      spriteID: 1f046bc09c6bcc046be664b21d2433e7
+      internalID: -2143723013
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Isis_E
+      name: Sherlock_NE
       rect:
         serializedVersion: 2
-        x: 638
-        y: 113
-        width: 283
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 464b05f498e9bc448abc23eefd2e6f78
-      internalID: 661737922
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Isis_NE
-      rect:
-        serializedVersion: 2
-        x: 960
-        y: 113
-        width: 187
-        height: 253
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e3b6966639b5a9e49b79f57816bb98fe
-      internalID: -460840951
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Isis_N
-      rect:
-        serializedVersion: 2
-        x: 1185
-        y: 113
-        width: 195
-        height: 253
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 487099ba4d4bcdf44831f4d8a8ee1b4d
-      internalID: 2049392030
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Isis turn_5
-      rect:
-        serializedVersion: 2
-        x: 1386
-        y: 210
-        width: 5
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b80f7c671ce0b0f41a86afb72da71054
-      internalID: 1605516601
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Isis_NW
-      rect:
-        serializedVersion: 2
-        x: 1411
-        y: 118
-        width: 283
-        height: 248
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 48e5f52f5f470c24b892ddab92741266
-      internalID: -753161049
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Isis_W
-      rect:
-        serializedVersion: 2
-        x: 1734
-        y: 114
-        width: 294
-        height: 227
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 910b5316036537f47be184202b0c5062
-      internalID: 1334873404
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Isis_SW
-      rect:
-        serializedVersion: 2
-        x: 2051
-        y: 92
+        x: 935
+        y: 6
         width: 200
-        height: 272
+        height: 260
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,8 +174,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0cfe06c585464bb4a95de152968cb1d7
-      internalID: 1255959251
+      spriteID: 62dc8d7c515632c499ffaec13a4f6d5c
+      internalID: 958990797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sherlock_N
+      rect:
+        serializedVersion: 2
+        x: 1231
+        y: 6
+        width: 202
+        height: 260
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a0a26d53989d954eba685734f71a2e2
+      internalID: -1171965882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sherlock_NW
+      rect:
+        serializedVersion: 2
+        x: 1483
+        y: 11
+        width: 291
+        height: 251
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 140512a1778599349a53927ca3f4be58
+      internalID: 8087461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sherlock_W
+      rect:
+        serializedVersion: 2
+        x: 1775
+        y: 17
+        width: 298
+        height: 239
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1502519c99c83bd4f81c54a7c9e05926
+      internalID: -736897693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sherlock_SW
+      rect:
+        serializedVersion: 2
+        x: 2118
+        y: 0
+        width: 205
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75efa177e08351f46990425dfaa78637
+      internalID: 353536868
       vertices: []
       indices: 
       edges: []
@@ -288,7 +267,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: c9e009dc7ca244744872ac0d3126ebad
+    spriteID: 79512060c3d00834cb2c70474dd45ed4
     internalID: 0
     vertices: []
     indices: 
@@ -296,15 +275,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Isis turn_5: 1605516601
-      Isis_E: 661737922
-      Isis_N: 2049392030
-      Isis_NE: -460840951
-      Isis_NW: -753161049
-      Isis_S: -1581340785
-      Isis_SE: -692175967
-      Isis_SW: 1255959251
-      Isis_W: 1334873404
+      Sherlock_E: -2143723013
+      Sherlock_N: -1171965882
+      Sherlock_NE: 958990797
+      Sherlock_NW: 8087461
+      Sherlock_S: 1804051608
+      Sherlock_SE: 166373542
+      Sherlock_SW: 353536868
+      Sherlock_W: -736897693
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: abe46fd1a601a204a8ea759728519a8c
+guid: ee3f90383d1ee334fa8aca8a3f300bf9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Momo_S
+      name: Minnie_S
       rect:
         serializedVersion: 2
-        x: 79
-        y: 94
-        width: 191
-        height: 269
+        x: 46
+        y: 0
+        width: 205
+        height: 274
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 393c51533ac001347bda726606454701
-      internalID: 1749861815
+      spriteID: 0bd15d8460b000f44b7372b352816705
+      internalID: -1577107097
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Momo_SE
+      name: Minnie_SE
       rect:
         serializedVersion: 2
-        x: 308
-        y: 114
+        x: 294
+        y: 17
+        width: 300
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c3c7ca6d4acf0941a8097d702156dab
+      internalID: -907591646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Minnie_E
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 11
         width: 291
-        height: 227
+        height: 251
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d06b6dcb8cd549c4d80575afb64e36ff
-      internalID: -1278512245
+      spriteID: 235a835d251e1894faeb0bc1b0bc711a
+      internalID: 896131808
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Momo_E
+      name: Minnie_NE
       rect:
         serializedVersion: 2
-        x: 638
-        y: 113
-        width: 283
-        height: 250
+        x: 935
+        y: 6
+        width: 202
+        height: 261
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2db33e6b6ce39248a7f5a84ee229421
-      internalID: -1762072311
+      spriteID: a01e9f457da000d4b877dfda6225c5f4
+      internalID: -1427514444
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Momo_NE
+      name: Minnie_N
       rect:
         serializedVersion: 2
-        x: 960
-        y: 113
-        width: 187
-        height: 253
+        x: 1231
+        y: 6
+        width: 202
+        height: 261
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0fc0adb870d5c0c498b6075e475d7c5b
-      internalID: 946317486
+      spriteID: a1416ac6dcb0e2b4a963560df58984da
+      internalID: 680767658
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Momo_
+      name: Minnie_NW
       rect:
         serializedVersion: 2
-        x: 1185
-        y: 113
-        width: 195
-        height: 253
+        x: 1483
+        y: 11
+        width: 291
+        height: 251
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,20 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5dec61b10d4fb841bb8537423ee6b13
-      internalID: -925816048
+      spriteID: 034a305d509e12f44b93094424cdd764
+      internalID: 560466627
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Momo turn_5
+      name: Minnie_W
       rect:
         serializedVersion: 2
-        x: 1386
-        y: 210
-        width: 5
-        height: 10
+        x: 1775
+        y: 17
+        width: 299
+        height: 239
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,20 +237,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d6af1776da9661d45809dd90d62aeba1
-      internalID: 1065672304
+      spriteID: 7ac60f82ab7593b449861e42c001e0c9
+      internalID: -960202999
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Momo_NW
+      name: Minnie_SW
       rect:
         serializedVersion: 2
-        x: 1411
-        y: 118
-        width: 283
-        height: 248
+        x: 2118
+        y: 0
+        width: 205
+        height: 274
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,50 +258,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 958255c59ebf705429601a2f52c49de8
-      internalID: -1502981453
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Momo_W
-      rect:
-        serializedVersion: 2
-        x: 1734
-        y: 114
-        width: 294
-        height: 227
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e03117e06b19a6a44a5050d689e2951d
-      internalID: -6953780
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Momo_SW
-      rect:
-        serializedVersion: 2
-        x: 2051
-        y: 92
-        width: 200
-        height: 272
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 43ed969367cdd314d87111f2c1f2e17c
-      internalID: 1593058151
+      spriteID: 572b4d96c4bbe9d43bce34259b714df1
+      internalID: -1795510117
       vertices: []
       indices: 
       edges: []
@@ -288,7 +267,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: acccbf4fc77edc2419395e9ea57ab379
+    spriteID: 0bba8b49e3da7aa4c91b4d0cbd4d49bd
     internalID: 0
     vertices: []
     indices: 
@@ -296,15 +275,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Momo turn_5: 1065672304
-      Momo_: -925816048
-      Momo_E: -1762072311
-      Momo_NE: 946317486
-      Momo_NW: -1502981453
-      Momo_S: 1749861815
-      Momo_SE: -1278512245
-      Momo_SW: 1593058151
-      Momo_W: -6953780
+      Minnie_E: 896131808
+      Minnie_N: 680767658
+      Minnie_NE: -1427514444
+      Minnie_NW: 560466627
+      Minnie_S: -1577107097
+      Minnie_SE: -907591646
+      Minnie_SW: -1795510117
+      Minnie_W: -960202999
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

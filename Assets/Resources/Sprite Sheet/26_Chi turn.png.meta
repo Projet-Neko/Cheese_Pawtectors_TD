@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 71d36819415633947b5d46d6e529a1c1
+guid: d5f56cdda4f6e5c4e9241b1d9ae4bda5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,49 +97,28 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Lucky_S
+      name: Chi_S
       rect:
         serializedVersion: 2
         x: 79
         y: 94
-        width: 191
+        width: 198
         height: 269
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dab4ae9947e39c149b758ab950fa85d4
-      internalID: -388098395
+      spriteID: 91453f0e1d182704f82c9de0b4dfe4d9
+      internalID: 354307780
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lucky_SE
-      rect:
-        serializedVersion: 2
-        x: 308
-        y: 114
-        width: 291
-        height: 227
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 198612332bee4974d9450329e0101f32
-      internalID: -644006488
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lucky_E
+      name: Chi_E
       rect:
         serializedVersion: 2
         x: 638
@@ -147,41 +126,41 @@ TextureImporter:
         width: 283
         height: 250
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 673acd962b3e7674486ced16d5f3e322
-      internalID: -177693147
+      spriteID: efa80c7395597064289b4e03c1f20b8f
+      internalID: 104043105
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lucky_NE
+      name: Chi_NE
       rect:
         serializedVersion: 2
-        x: 960
+        x: 953
         y: 113
-        width: 187
+        width: 194
         height: 253
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c293a163b2558cf4aa1e714284541113
-      internalID: -581831995
+      spriteID: 8eca2819faca2254884764ff7f426c79
+      internalID: 924862944
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lucky_N
+      name: Chi_N
       rect:
         serializedVersion: 2
         x: 1185
@@ -189,83 +168,41 @@ TextureImporter:
         width: 195
         height: 253
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da7cd74f6ad4e7c408b8ced116ae8b20
-      internalID: -1640832218
+      spriteID: 3c114ea3e259b6e4b82786315ddf8993
+      internalID: 1544133235
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lucky turn_5
-      rect:
-        serializedVersion: 2
-        x: 1386
-        y: 210
-        width: 5
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8575e1e83b86d324f975a686bb3f657a
-      internalID: 408977835
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lucky_NW
+      name: Chi_NW
       rect:
         serializedVersion: 2
         x: 1411
         y: 118
-        width: 283
+        width: 287
         height: 248
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a56ad914b3cd5024480d55450148909c
-      internalID: -633524275
+      spriteID: 60e4c04d4f0ea5a408b5e602d0ec089a
+      internalID: -1302892217
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lucky_W
-      rect:
-        serializedVersion: 2
-        x: 1734
-        y: 114
-        width: 294
-        height: 227
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d2649e2acacc1424d94a4b4bdf9d334b
-      internalID: 1433843185
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lucky_SW
+      name: Chi_SW
       rect:
         serializedVersion: 2
         x: 2051
@@ -273,14 +210,56 @@ TextureImporter:
         width: 200
         height: 272
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2e9c46219f62dc42be2794d19fc8975
-      internalID: -117464146
+      spriteID: c865dbbf13c69524784111b984cf29bd
+      internalID: -1826433858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chi_SE
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 114
+        width: 291
+        height: 227
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38ffbcf438c64224bb9a7aeb730d5a9b
+      internalID: -802639980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chi_W
+      rect:
+        serializedVersion: 2
+        x: 1734
+        y: 117
+        width: 295
+        height: 227
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e84fb115def9721458a774dd5684f9b0
+      internalID: -663053257
       vertices: []
       indices: 
       edges: []
@@ -288,7 +267,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f12224442c9c9264ba99fde5895dbbe1
+    spriteID: 3583c2c5a056aa94a9159b30585d3ef5
     internalID: 0
     vertices: []
     indices: 
@@ -296,15 +275,19 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Lucky turn_5: 408977835
-      Lucky_E: -177693147
-      Lucky_N: -1640832218
-      Lucky_NE: -581831995
-      Lucky_NW: -633524275
-      Lucky_S: -388098395
-      Lucky_SE: -644006488
-      Lucky_SW: -117464146
-      Lucky_W: 1433843185
+      Chi turn_0: 850893141
+      Chi turn_11: -668595937
+      Chi turn_5: -2143894074
+      Chi turn_8: -875941459
+      Chi turn_9: -368901453
+      Chi_E: 104043105
+      Chi_N: 1544133235
+      Chi_NE: 924862944
+      Chi_NW: -1302892217
+      Chi_S: 354307780
+      Chi_SE: -802639980
+      Chi_SW: -1826433858
+      Chi_W: -663053257
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

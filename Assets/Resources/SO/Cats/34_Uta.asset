@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 34_Uta
   m_EditorClassIdentifier: 
-  SpriteAbove: {fileID: 0}
-  SpriteFront: {fileID: 0}
+  Sprites:
+  - {fileID: 1896120598, guid: cc4be262afa1ab24ab46d809164439e0, type: 3}
+  - {fileID: 190192946, guid: cc4be262afa1ab24ab46d809164439e0, type: 3}
+  - {fileID: 423968453, guid: cc4be262afa1ab24ab46d809164439e0, type: 3}
+  - {fileID: -1008659125, guid: cc4be262afa1ab24ab46d809164439e0, type: 3}
+  - {fileID: -323043093, guid: cc4be262afa1ab24ab46d809164439e0, type: 3}
+  - {fileID: 2051233, guid: cc4be262afa1ab24ab46d809164439e0, type: 3}
+  - {fileID: -1865554347, guid: cc4be262afa1ab24ab46d809164439e0, type: 3}
+  - {fileID: -1173616875, guid: cc4be262afa1ab24ab46d809164439e0, type: 3}
   Lore: "Elle te suivra partout o\xF9 tu iras. Pour toujours."
+  State: 0

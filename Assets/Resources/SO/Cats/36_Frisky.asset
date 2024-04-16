@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 36_Frisky
   m_EditorClassIdentifier: 
-  SpriteAbove: {fileID: 0}
-  SpriteFront: {fileID: 0}
+  Sprites:
+  - {fileID: -1308270119, guid: fb553771f5fc89545b4548e373235846, type: 3}
+  - {fileID: 529545950, guid: fb553771f5fc89545b4548e373235846, type: 3}
+  - {fileID: 109129273, guid: fb553771f5fc89545b4548e373235846, type: 3}
+  - {fileID: 546718723, guid: fb553771f5fc89545b4548e373235846, type: 3}
+  - {fileID: -2106161135, guid: fb553771f5fc89545b4548e373235846, type: 3}
+  - {fileID: 1209949772, guid: fb553771f5fc89545b4548e373235846, type: 3}
+  - {fileID: 1335879519, guid: fb553771f5fc89545b4548e373235846, type: 3}
+  - {fileID: 1762571825, guid: fb553771f5fc89545b4548e373235846, type: 3}
   Lore: "Il ma\xEEtrise l'art de l'embuscade sur son rival canin."
+  State: 0

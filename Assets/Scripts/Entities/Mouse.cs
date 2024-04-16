@@ -107,6 +107,22 @@ public class Mouse : Entity
     //    base.TakeDamage(source);
     //}
 
+    public virtual void Split()
+    {
+        // Créez deux nouvelles instances de la souris avec 50% de points de vie en moins
+        float newHealth = _baseHealth / 2;
+        Mouse newMouse1 = Instantiate(this, transform.position, transform.rotation);
+        Mouse newMouse2 = Instantiate(this, transform.position, transform.rotation);
+
+        // Mettre à jour les points de vie des nouvelles souris
+        newMouse1._baseHealth = newHealth;
+        newMouse2._baseHealth = newHealth;
+
+        // Détruisez la souris originale
+        Destroy(gameObject);
+    }
+
+
     protected override void DeathAnimation()
     {
         Debug.Log("Cat is dead");

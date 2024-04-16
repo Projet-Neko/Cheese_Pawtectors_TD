@@ -3,6 +3,18 @@ using UnityEngine;
 public class DropCat : DragAndDropHandler
 {
     [SerializeField] private Cat _currentCat;
+    
+    private BoxCollider _collider;
+
+    private void Awake()
+    {
+        _collider = GetComponent<BoxCollider>();
+    }
+
+    private void Update()
+    {
+        _collider.enabled = _currentCat == null ? true : false;
+    }
 
     public override void HandleDragAndDrop(Cat cat, Vector3 initialPosition)
     {

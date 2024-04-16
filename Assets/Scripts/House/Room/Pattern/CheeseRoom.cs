@@ -1,10 +1,12 @@
-
-using UnityEngine;
-
 public class CheeseRoom : Room
 {
-    void Awake()
+    private void Awake()
     {
         _security = RoomSecurity.Moved;
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.Cheese.transform.position = transform.position;
     }
 }

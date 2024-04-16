@@ -7,6 +7,7 @@ public abstract class State
     public virtual void OnEnter(Brain brain)
     {
         _brain = brain;
+
         if (_brain.Entity is Cat) Mod_Waves.OnWaveReload += M_Wave_OnWaveReload;
     }
 
@@ -20,14 +21,12 @@ public abstract class State
     {
         if (_brain.Entity is not Cat) return false;
 
-        //Collider2D[] targets = Physics2D.OverlapCircleAll(_brain.transform.position, _brain.FollowRange);
-
-        BoxCollider room = _brain.Entity.transform.parent.gameObject.GetComponent<BoxCollider>();
-        Bounds bounds2D = new(room.bounds.center, new Vector3(room.bounds.size.x, room.bounds.size.y, 0));
-        Collider2D[] targets = Physics2D.OverlapBoxAll(bounds2D.center, bounds2D.size, 0f);
+        Collider2D[] targets = Physics2D.OverlapCircleAll(_brain.transform.position, _brain.FollowRange);
 
         foreach (Collider2D target in targets)
         {
+            if (!_brain.Room.bounds.Contains(target.transform.position)) continue;
+
             if (target.gameObject.layer == 8)
             {
                 Mouse m = target.GetComponentInParent<Mouse>();
@@ -53,6 +52,7 @@ public abstract class State
 
         foreach (Collider2D target in targets)
         {
+            if (_brain.Entity is Cat && !_brain.Room.bounds.Contains(target.transform.position)) continue;
             if (target.gameObject == _brain.Target) return true;
         }
 

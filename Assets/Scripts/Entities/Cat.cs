@@ -20,6 +20,7 @@ public class Cat : Entity
 
     public Color CatColor => _catColor;
     public bool IsInStorageMode => _isInStorageMode;
+    public Sprite[] Sprites => _data.Sprites;
 
     private CatSO _data;
     private Color _catColor;

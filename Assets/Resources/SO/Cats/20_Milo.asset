@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 20_Milo
   m_EditorClassIdentifier: 
-  SpriteAbove: {fileID: 0}
-  SpriteFront: {fileID: 0}
+  Sprites:
+  - {fileID: 70541234, guid: 1b015c54f6fe424459c886a54b2ebd78, type: 3}
+  - {fileID: 431177386, guid: 1b015c54f6fe424459c886a54b2ebd78, type: 3}
+  - {fileID: -1186743806, guid: 1b015c54f6fe424459c886a54b2ebd78, type: 3}
+  - {fileID: 1394139252, guid: 1b015c54f6fe424459c886a54b2ebd78, type: 3}
+  - {fileID: -938630196, guid: 1b015c54f6fe424459c886a54b2ebd78, type: 3}
+  - {fileID: 1979512997, guid: 1b015c54f6fe424459c886a54b2ebd78, type: 3}
+  - {fileID: -524214664, guid: 1b015c54f6fe424459c886a54b2ebd78, type: 3}
+  - {fileID: -1654945246, guid: 1b015c54f6fe424459c886a54b2ebd78, type: 3}
   Lore: "Ami des oiseaux, mais seulement en th\xE9orie."
+  State: 0

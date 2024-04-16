@@ -20,7 +20,11 @@ public abstract class State
     {
         if (_brain.Entity is not Cat) return false;
 
-        Collider2D[] targets = Physics2D.OverlapCircleAll(_brain.transform.position, _brain.FollowRange);
+        //Collider2D[] targets = Physics2D.OverlapCircleAll(_brain.transform.position, _brain.FollowRange);
+
+        BoxCollider room = _brain.Entity.transform.parent.gameObject.GetComponent<BoxCollider>();
+        Bounds bounds2D = new(room.bounds.center, new Vector3(room.bounds.size.x, room.bounds.size.y, 0));
+        Collider2D[] targets = Physics2D.OverlapBoxAll(bounds2D.center, bounds2D.size, 0f);
 
         foreach (Collider2D target in targets)
         {

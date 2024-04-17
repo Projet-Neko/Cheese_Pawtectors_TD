@@ -7,7 +7,7 @@ public class SuccessSO : ScriptableObject
 {
     public string _successame;
     public int _step;
-    public string _progression;
+    public int _progression;
     public List<int> _steps;
     public bool _complete;
     

@@ -22,6 +22,10 @@ public class CatalogPopup : MonoBehaviour
     {
         OnToggle?.Invoke(false);
         AdoptButton.OnAdoptButtonClick -= AdoptButton_OnAdoptButtonClick;
+        // Save the current position of the ScrollRect when the popup is deactivated
+        PlayerPrefs.SetFloat(scrollPositionKey + "X", scrollRect.normalizedPosition.x);
+        PlayerPrefs.SetFloat(scrollPositionKey + "Y", scrollRect.normalizedPosition.y);
+        PlayerPrefs.Save(); // Save changes in PlayerPrefs
     }
 
     private void AdoptButton_OnAdoptButtonClick(int obj)

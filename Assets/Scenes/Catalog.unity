@@ -354,6 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173a44ec829300240b5fdb2fd46d307d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrollRect: {fileID: 1495176542}
 --- !u!114 &628388443
 MonoBehaviour:
   m_ObjectHideFlags: 0

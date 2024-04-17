@@ -106,20 +106,30 @@ public class Mouse : Entity
     //    _targetedBy = source as Cat;
     //    base.TakeDamage(source);
     //}
-
-    public virtual void Split()
+    public override void Die(Entity source)
     {
-        // Créez deux nouvelles instances de la souris avec 50% de points de vie en moins
-        float newHealth = _baseHealth / 2;
-        Mouse newMouse1 = Instantiate(this, transform.position, transform.rotation);
-        Mouse newMouse2 = Instantiate(this, transform.position, transform.rotation);
+        if(Split())return;
+        base.Die(source);
+    }
 
-        // Mettre à jour les points de vie des nouvelles souris
-        newMouse1._baseHealth = newHealth;
-        newMouse2._baseHealth = newHealth;
+    public bool Split()
+    {
+        if (_currentHealth < _baseHealth / 2)
+        {
+            // Create two new instances of the mouse with 50% fewer hit points
+            float newHealth = _baseHealth / 2;
+            Mouse newMouse1 = Instantiate(this, transform.position, transform.rotation);
+            Mouse newMouse2 = Instantiate(this, transform.position, transform.rotation);
 
-        // Détruisez la souris originale
-        Destroy(gameObject);
+            // Update life points on new mice
+            newMouse1._baseHealth = newHealth;
+            newMouse2._baseHealth = newHealth;
+
+            // Destroy the original mouse
+            Destroy(gameObject);
+            return true;
+        }
+        return false;
     }
 
 

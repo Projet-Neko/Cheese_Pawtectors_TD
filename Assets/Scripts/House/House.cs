@@ -22,10 +22,6 @@ public class House : MonoBehaviour
     private LineRenderer[,] _lineGrid = new LineRenderer[2, _maxRooms+1];
     private IdRoom _idStartRoom;
 
-    private List<Mouse> _mouseList = new();
-
-    private bool _isWave = false;
-
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */

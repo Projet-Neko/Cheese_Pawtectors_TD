@@ -1,7 +1,9 @@
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Mod_Waves : Module
 {
@@ -13,6 +15,11 @@ public class Mod_Waves : Module
 
     [Header("Options")]
     [SerializeField] private bool _enableWaves = false;
+
+    [Header("Scenes")]
+    [SerializeField, Scene] private string _sceneBuild;
+    [SerializeField, Scene] private string _sceneMain;
+
 
     //public int EnemyNumber => _enemyNumber;
     public int MaxEnemyNumber => _maxEnemyNumber;
@@ -36,19 +43,20 @@ public class Mod_Waves : Module
         Cheese.OnInit += Cheese_OnInit;
         StartRoom.OnInit += StartRoom_OnInit;
         Entity.OnDeath += Entity_OnDeath;
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
 
     private void StartRoom_OnInit(Room obj)
     {
         _spawningRoomPosition = obj.transform.position;
         //_spawningRoomPosition.z = -4; // Necessary ?
-        if (!_wavesStarted && _cheeseInitialized) StartWaves();
+        PrepareWaves();
     }
 
     private void Cheese_OnInit(Cheese obj)
     {
         _cheeseInitialized = true;
-        if (!_wavesStarted && _spawningRoomPosition != new Vector3(-1, -1, -1)) StartWaves();
+        PrepareWaves();
     }
 
     private void OnDestroy()
@@ -56,6 +64,7 @@ public class Mod_Waves : Module
         Cheese.OnInit -= Cheese_OnInit;
         StartRoom.OnInit -= StartRoom_OnInit;
         Entity.OnDeath -= Entity_OnDeath;
+        SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
     }
 
     public override void Init(GameManager gm)
@@ -63,6 +72,34 @@ public class Mod_Waves : Module
         base.Init(gm);
         _hasCompleteSpawning = false;
         InitComplete();
+    }
+
+    // Check if all conditions are met to start the waves
+    private void PrepareWaves()
+    {
+        if (_enableWaves && !_wavesStarted && _cheeseInitialized && _spawningRoomPosition != new Vector3(-1, -1, -1))
+            StartWaves();
+    }
+
+    private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == _sceneBuild)
+            DisableWaves();
+        else if (scene.name == _sceneMain)
+            EnableWaves();
+    }
+
+    private void DisableWaves()
+    {
+        _enableWaves = false;
+        _wavesStarted = false;
+        Reload();
+    }
+
+    private void EnableWaves()
+    {
+        _enableWaves = true;
+        PrepareWaves();
     }
 
     public void StartWaves()

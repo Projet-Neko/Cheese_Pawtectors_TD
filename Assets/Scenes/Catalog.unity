@@ -398,6 +398,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -50
       objectReference: {fileID: 0}
+    - target: {fileID: 20387060643645383, guid: 7b87e4ead4d895949accb1301487bbb1, type: 3}
+      propertyPath: scrollRect
+      value: 
+      objectReference: {fileID: 1495176542}
     - target: {fileID: 1261793506678948045, guid: 7b87e4ead4d895949accb1301487bbb1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

@@ -1,8 +1,6 @@
 using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class House : MonoBehaviour
@@ -58,6 +56,14 @@ public class House : MonoBehaviour
     {
         AddRoom(1, _maxRooms / 2, RoomPattern.CorridorRoom);
         AddRoom(2, _maxRooms / 2, RoomPattern.CorridorRoom);
+
+        /** TEST WITH PATH MORE COMPLEXE **/
+        /*AddRoom(1, _maxRooms / 2, RoomPattern.CrossraodRoom);
+        AddRoom(2, _maxRooms / 2, RoomPattern.CrossraodRoom);
+        AddRoom(1, _maxRooms / 2 - 1, RoomPattern.CrossraodRoom);
+        AddRoom(2, _maxRooms / 2 - 1, RoomPattern.CrossraodRoom);
+        AddRoom(1, _maxRooms / 2 + 1, RoomPattern.CrossraodRoom);
+        AddRoom(2, _maxRooms / 2 + 1, RoomPattern.CrossraodRoom);*/
     }
 
     void Start()
@@ -99,6 +105,7 @@ public class House : MonoBehaviour
         Room.ChangeTilePosition += CheckRoomPosition;
         Room.TileDestroyed += CreateRoom;
         Room.LineActivated += ActiveLine;
+        MouseBrain.VisitedNextRoom += GetNextTarget;
     }
 
     private void OnDestroy()
@@ -107,6 +114,7 @@ public class House : MonoBehaviour
         Room.ChangeTilePosition -= CheckRoomPosition;
         Room.TileDestroyed -= CreateRoom;
         Room.LineActivated -= ActiveLine;
+        MouseBrain.VisitedNextRoom -= GetNextTarget;
     }
 
 
@@ -460,62 +468,18 @@ public class House : MonoBehaviour
     *               MOUSE
     * * * * * * * * * * * * * * * * * * * */
 
-    public void StartWave()
+    private GameObject GetNextTarget (Vector3 position)
     {
-        _isWave = true;
+        BuildPath();// TO DO : Remove this line
+        Room currentRoom = _roomsGrid[(int)position.x, (int)position.z];
+        int numberNextRooms = currentRoom.NextRooms.Count;
 
-        StartCoroutine(SpawnMouse(5));
+        if (numberNextRooms == 0)
+            return GameManager.Instance.Cheese.gameObject;
 
-        StartCoroutine(Wave());
-    }
-
-    private IEnumerator Wave()
-    {
-        Debug.Log("Wave started");
-        while (_isWave)
-        {
-            if (_mouseList.Count == 0)
-            {
-                Debug.Log("Wave finished");
-                _isWave = false;
-                yield break;
-            }
-
-            for (int i = 0; i < _mouseList.Count; i++)
-            {
-                Mouse mouse = _mouseList[i];
-                Room currentRoom = _roomsGrid[(int)mouse.transform.position.x, (int)mouse.transform.position.z];
-
-                if (mouse.TargetReached())
-                {
-                    int numberNextRooms = currentRoom.NextRooms.Count;
-                    if (numberNextRooms == 0)
-                        continue;
-
-                    int random = Random.Range(0, numberNextRooms);
-                    mouse.DefineTarget(currentRoom.NextRooms[random]);
-                }
-                
-                mouse.Move();
-            }
-
-            yield return null;
-        }
-    }
-
-    private IEnumerator SpawnMouse(int nbMouse)
-    {
-        while (nbMouse > 0)
-        {
-            Mouse mouse = Instantiate(_mousePrefab, new Vector3(_idStartRoom.x, 0.1f, _idStartRoom.z), Quaternion.identity).GetComponent<Mouse>();
-            mouse.DefineTarget(_roomsGrid[_idStartRoom.x, _idStartRoom.z].NextRooms[0]);
-            _mouseList.Add(mouse);
-
-            --nbMouse;
-            yield return new WaitForSeconds(1f);
-        }
-
-        yield return null;
+        int random = Random.Range(0, numberNextRooms);
+        IdRoom idRoom = currentRoom.NextRooms[random];
+        return _roomsGrid[idRoom.x, idRoom.z].gameObject;
     }
 
 

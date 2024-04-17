@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 178b372a222e8a248aed6707e287aaa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currencyPrefab: {fileID: 0}
 --- !u!114 &4534125006970263443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +296,8 @@ MonoBehaviour:
   _mousePrefab: {fileID: 732585812547385431, guid: 1c4d78e56a21db14eba23b39d26d78ab, type: 3}
   _spawnTime: 1
   _enableWaves: 0
+  _sceneBuild: Build
+  _sceneMain: MainScreen
 --- !u!114 &2843526968020932932
 MonoBehaviour:
   m_ObjectHideFlags: 0

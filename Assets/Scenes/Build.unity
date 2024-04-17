@@ -1152,39 +1152,39 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1609134327833247324, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1609134327833247324, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 1609134327833247324, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1609134327833247324, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.88650286
       objectReference: {fileID: 0}
     - target: {fileID: 1609134327833247324, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.41338304
       objectReference: {fileID: 0}
     - target: {fileID: 1609134327833247324, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.18843198
       objectReference: {fileID: 0}
     - target: {fileID: 1609134327833247324, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.08786727
       objectReference: {fileID: 0}
     - target: {fileID: 1609134327833247324, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1609134327833247324, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 1609134327833247324, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -3208,6 +3208,7 @@ GameObject:
   - component: {fileID: 1893059033}
   - component: {fileID: 1893059032}
   - component: {fileID: 1893059035}
+  - component: {fileID: 1893059036}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -3279,10 +3280,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1695244891}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1893059036}
+        m_TargetAssemblyTypeName: QuitButton, Assembly-CSharp
+        m_MethodName: CheckPathHouse
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3343,6 +3344,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scene: QuitBuildScene
   _isAdditive: 1
+--- !u!114 &1893059036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893059030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191ce92747aac5f4db7af6642a493698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _closePopupBackground: {fileID: 1695244891}
 --- !u!1 &1938338965
 GameObject:
   m_ObjectHideFlags: 0

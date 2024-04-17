@@ -23,6 +23,11 @@ public class MouseBrain : Brain
     {
         base.Update();
 
+        if (!(Entity as Mouse).IsBoss)
+        {
+            if (_currentState is not State_Freeze && Entity.IsAttacked) ChangeState(Freeze);
+        }
+
         if (TargetReached())
         {
             if (Target != GameManager.Instance.Cheese.gameObject)
@@ -30,9 +35,6 @@ public class MouseBrain : Brain
                 Target = VisitedNextRoom?.Invoke(transform.position);
             }
         }
-
-        if ((Entity as Mouse).IsBoss) return;
-        if (_currentState is not State_Freeze && Entity.IsAttacked) ChangeState(Freeze);
     }
 
     protected override void OnDrawGizmos()

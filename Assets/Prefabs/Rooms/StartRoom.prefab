@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2430439305045054425}
   - component: {fileID: 4602865559846345499}
   - component: {fileID: 3299811949725779178}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 5699035288788141698}
   - component: {fileID: 9123424521508802521}
   - component: {fileID: 6642146402763091943}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Path1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5031148661404859147}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: StartRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,13 +251,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7606626188291258759}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Path
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7606626188291258759
 Transform:
   m_ObjectHideFlags: 0
@@ -283,7 +283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1755011848903206513}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Junction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 2962904820693978432}
   - component: {fileID: 3110359404556355479}
   - component: {fileID: 8319546117761896446}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -419,7 +419,7 @@ GameObject:
   - component: {fileID: 265356747987812730}
   - component: {fileID: 2689034200701006526}
   - component: {fileID: 3968916785677738368}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -590,9 +590,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 892868531278409566, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6914312609097986264, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
       propertyPath: m_Name
       value: Junction
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914312609097986264, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7058927037715122122, guid: d1c3a0363270ef2438da9c773caaf54b, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

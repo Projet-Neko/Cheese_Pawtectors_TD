@@ -7,7 +7,7 @@ public abstract class Entity : MonoBehaviour
     public static event Action<Entity, bool> OnDeath;
 
     [Header("Data")]
-    [SerializeField] protected SpriteRenderer _renderer;
+    [SerializeField] public SpriteRenderer _renderer;
     [SerializeField] protected int _level = 1;
 
     [Header("HUD")]
@@ -20,6 +20,7 @@ public abstract class Entity : MonoBehaviour
     public int Level => _level;
     public float Speed => _speed;
     public bool IsAttacked => _isAttacked;
+    public SpriteRenderer Renderer => _renderer;
 
     protected float _speed;
     protected float _baseHealth;

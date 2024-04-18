@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b223172acef4cbe41970e05318e7e73b
+guid: 3d3fc3387944b454cb5fac653f60595c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mews_S
+      name: Fluffy_S
       rect:
         serializedVersion: 2
-        x: 79
-        y: 94
-        width: 191
-        height: 269
+        x: 46
+        y: 0
+        width: 205
+        height: 274
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4acf97d31d19aa14d982e4d7a9c1af24
-      internalID: 758762166
+      spriteID: 1d25ec80fc3a8304fab6d1f1d3093110
+      internalID: 434149628
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mews_SE
+      name: Fluffy_SE
       rect:
         serializedVersion: 2
-        x: 308
-        y: 114
+        x: 294
+        y: 17
+        width: 300
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ae7061f698feaa48a64ada7c8dfa0bd
+      internalID: 1504634620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fluffy_E
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 11
         width: 291
-        height: 227
+        height: 251
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59d944b32b00ec045b2f8d2b975e7815
-      internalID: 1700848563
+      spriteID: 77a530bc34aaec9468fb616a0f8f08fa
+      internalID: -24683994
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mews_E
+      name: Fluffy_NE
       rect:
         serializedVersion: 2
-        x: 638
-        y: 113
-        width: 283
-        height: 250
+        x: 935
+        y: 6
+        width: 202
+        height: 261
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c76f997ad276364289c6f1016c567d1
-      internalID: 1087855988
+      spriteID: f2cd7a206cebe714c87208cb52bdc49f
+      internalID: 1805631660
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mews_NE
+      name: Fluffy_N
       rect:
         serializedVersion: 2
-        x: 960
-        y: 113
-        width: 187
-        height: 253
+        x: 1231
+        y: 6
+        width: 202
+        height: 261
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35fa82b80d6c0b94ca3e65d673da8044
-      internalID: -168851556
+      spriteID: 9378e55f64833634a8cfe74878d2379a
+      internalID: 925470574
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mews_N
+      name: Fluffy_NW
       rect:
         serializedVersion: 2
-        x: 1185
-        y: 113
-        width: 195
-        height: 253
+        x: 1483
+        y: 11
+        width: 291
+        height: 251
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,20 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 30ef5dc8ebf1aae4cafe15b064d6b842
-      internalID: 1657886611
+      spriteID: 2f06d8a65a31df549bfdbf615fd66267
+      internalID: -1448222553
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mews turn_5
+      name: Fluffy_W
       rect:
         serializedVersion: 2
-        x: 1386
-        y: 210
-        width: 5
-        height: 10
+        x: 1775
+        y: 17
+        width: 299
+        height: 239
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,20 +237,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bbe373d7d4f201048b9a69b31fbb70b3
-      internalID: 282246907
+      spriteID: c79cf4dc29c53f246bbce622cf63c77f
+      internalID: 880170188
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mews_NW
+      name: Fluffy_SW
       rect:
         serializedVersion: 2
-        x: 1411
-        y: 118
-        width: 283
-        height: 248
+        x: 2118
+        y: 0
+        width: 205
+        height: 274
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,50 +258,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 488792f441fa5864d8714a08f1822a58
-      internalID: 1247163478
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mews_W
-      rect:
-        serializedVersion: 2
-        x: 1734
-        y: 114
-        width: 294
-        height: 227
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ea0b6f741dfde164785eb728f72a0b49
-      internalID: -165340717
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mews_SW
-      rect:
-        serializedVersion: 2
-        x: 2051
-        y: 92
-        width: 200
-        height: 272
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 32ddaf99383759a41b5f678cbf37c294
-      internalID: -51383558
+      spriteID: 339f35e3ca569fc42925025f21ad1259
+      internalID: -1197326565
       vertices: []
       indices: 
       edges: []
@@ -288,7 +267,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 629c1644445d55e44aab8c71052ef645
+    spriteID: df66c71d9ad9d74439ed14a97bce31fa
     internalID: 0
     vertices: []
     indices: 
@@ -296,15 +275,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Mews turn_5: 282246907
-      Mews_E: 1087855988
-      Mews_N: 1657886611
-      Mews_NE: -168851556
-      Mews_NW: 1247163478
-      Mews_S: 758762166
-      Mews_SE: 1700848563
-      Mews_SW: -51383558
-      Mews_W: -165340717
+      Fluffy_E: -24683994
+      Fluffy_N: 925470574
+      Fluffy_NE: 1805631660
+      Fluffy_NW: -1448222553
+      Fluffy_S: 434149628
+      Fluffy_SE: 1504634620
+      Fluffy_SW: -1197326565
+      Fluffy_W: 880170188
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

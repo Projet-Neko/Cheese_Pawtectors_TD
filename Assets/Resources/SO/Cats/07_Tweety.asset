@@ -12,7 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 07_Tweety
   m_EditorClassIdentifier: 
-  SpriteAbove: {fileID: 0}
-  SpriteFront: {fileID: 0}
+  Sprites:
+  - {fileID: -262670356, guid: 70146fe723f12b9479f8f7d9a217d037, type: 3}
+  - {fileID: -217995277, guid: 70146fe723f12b9479f8f7d9a217d037, type: 3}
+  - {fileID: 1538726441, guid: 70146fe723f12b9479f8f7d9a217d037, type: 3}
+  - {fileID: 1084962728, guid: 70146fe723f12b9479f8f7d9a217d037, type: 3}
+  - {fileID: -9900103, guid: 70146fe723f12b9479f8f7d9a217d037, type: 3}
+  - {fileID: -1454970688, guid: 70146fe723f12b9479f8f7d9a217d037, type: 3}
+  - {fileID: -943997160, guid: 70146fe723f12b9479f8f7d9a217d037, type: 3}
+  - {fileID: -1573009430, guid: 70146fe723f12b9479f8f7d9a217d037, type: 3}
   Lore: Cambrioleur de frigo professionnel.
   State: 0

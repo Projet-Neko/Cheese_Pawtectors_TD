@@ -12,7 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 08_Cocoa
   m_EditorClassIdentifier: 
-  SpriteAbove: {fileID: 0}
-  SpriteFront: {fileID: 0}
+  Sprites:
+  - {fileID: -1597339575, guid: 00c101949aba3f14c8a24105bf7d8e14, type: 3}
+  - {fileID: -1017157346, guid: 00c101949aba3f14c8a24105bf7d8e14, type: 3}
+  - {fileID: -1570821295, guid: 00c101949aba3f14c8a24105bf7d8e14, type: 3}
+  - {fileID: -1817332488, guid: 00c101949aba3f14c8a24105bf7d8e14, type: 3}
+  - {fileID: -1494408025, guid: 00c101949aba3f14c8a24105bf7d8e14, type: 3}
+  - {fileID: 937371646, guid: 00c101949aba3f14c8a24105bf7d8e14, type: 3}
+  - {fileID: 1544878808, guid: 00c101949aba3f14c8a24105bf7d8e14, type: 3}
+  - {fileID: -425265407, guid: 00c101949aba3f14c8a24105bf7d8e14, type: 3}
   Lore: "Attir\xE9 par le moindre mouvement."
   State: 0

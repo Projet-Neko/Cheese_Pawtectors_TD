@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class House : MonoBehaviour
 {
-    public static House Instance { get; private set; }
-
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
     [SerializeField] private GameObject _mousePrefab;
     [SerializeField] private GameObject _linePrefab;
@@ -23,6 +21,10 @@ public class House : MonoBehaviour
     private Room[,] _roomsGrid = new Room[_maxRooms, _maxRooms];
     private LineRenderer[,] _lineGrid = new LineRenderer[2, _maxRooms+1];
     private IdRoom _idStartRoom;
+
+    private List<Mouse> _mouseList = new();
+
+    private bool _isWave = false;
 
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
@@ -64,23 +66,8 @@ public class House : MonoBehaviour
         AddRoom(2, _maxRooms / 2 + 1, RoomPattern.CrossraodRoom);*/
     }
 
-    private bool CreateInstance()
-    {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return false;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(this);
-        return true;
-    }
-
     void Start()
     {
-        if (!CreateInstance()) return;
-
         // Create the Void Rooms and one Start Room, visible in the beginning
         _currentRoomNumber = _minRooms;
 
@@ -273,6 +260,7 @@ public class House : MonoBehaviour
         // Create the new rooms on the top/bottom
         if (_currentRoomNumber % 2 == 0)// Create the new rooms on the bottom
         {
+            Debug.Log("zStart = " + zStart);
             for (int x = 0; x < _currentRoomNumber; x++)
                 CreateRoom(x, zStart, RoomPattern.VoidRoom);
 
@@ -282,6 +270,7 @@ public class House : MonoBehaviour
         else// Create the new rooms on the top
         {
             int zEnd = _maxRooms / 2 + _currentRoomNumber / 2;
+            Debug.Log("zEnd = " + zEnd);
             for (int x = 0; x < _currentRoomNumber; x++)
                 CreateRoom(x, zEnd, RoomPattern.VoidRoom);
 
@@ -388,7 +377,7 @@ public class House : MonoBehaviour
         }
     }
 
-    public bool BuildPath()
+    public void BuildPath()
     {
         InitBuildPath();                                                                                                    // Define the ID of each room in its junctions
 
@@ -399,7 +388,7 @@ public class House : MonoBehaviour
         if (idRoomNext.IsNull())                                                                                            // If the start room is not connected to another room
         {
             Debug.Log("Start room not connected");
-            return false;
+            return;
         }
 
         if (BuildPath(idRoomNext, _idStartRoom))                                                                            // Build the path from the next room and check if it is valid
@@ -410,13 +399,9 @@ public class House : MonoBehaviour
             //ColorInvalidRoom(Color.white);                                                                                  // Color the rooms that are not connected to the path in white
             DestroyInvalidRoom();                                                                                           // Destroy the rooms that are not connected to the path
             junctionStart.ActivateArrow(true);                                                                              // Activate the arrow of the junction of the start room
-            return true;
         }
         else
-        {
             Debug.Log("Path not valid");
-            return false;
-        }
     }
 
     private void RemoveRoom(int x, int z)

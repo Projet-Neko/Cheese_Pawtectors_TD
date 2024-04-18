@@ -136,7 +136,7 @@ public class Mod_Economy : Module
     #region Currency Offline
     private void CheckOfflineCurrency()
     {
-        int meatGained = MeatGainedOffline(_gm.LastLogin);
+        int meatGained = MeatGainedOffline();
         Debug.Log($"<color=lime>Gained {meatGained} meat offline !</color>");
         AddCurrency(Currency.Treats, meatGained);
     }
@@ -153,9 +153,9 @@ public class Mod_Economy : Module
 
         return (int)(meatGained / shootRate);
     }
-    private int MeatGainedOffline(DateTime? timeOffline)
+    public int MeatGainedOffline()
     {
-        TimeSpan ts = DateTime.UtcNow.Subtract(timeOffline.Value);
+        TimeSpan ts = DateTime.UtcNow.Subtract(_gm.LastLogin.Value);
         int seconds = (int)ts.TotalSeconds;
         Debug.Log($"{seconds}s since last login.");
 

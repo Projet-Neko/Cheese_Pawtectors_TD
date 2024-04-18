@@ -10,6 +10,6 @@ public class SceneUI_MainScreen : MonoBehaviour
     void Start()
     {
         SceneManager.LoadScene(_sceneHeadBand, LoadSceneMode.Additive);
-        if (!GameManager.Instance.HasLoginPopupLoad()) SceneManager.LoadScene(_sceneLoginPopup, LoadSceneMode.Additive);
+        if (!GameManager.Instance.HasLoginPopupLoad() && GameManager.Instance.LastLogin != null) SceneManager.LoadScene(_sceneLoginPopup, LoadSceneMode.Additive);
     }
 }

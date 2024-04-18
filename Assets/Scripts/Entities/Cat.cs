@@ -59,7 +59,9 @@ public class Cat : Entity
 
     public void SetStorageMode(bool mode)
     {
+        int size = mode ? 55 : 30;
         _isInStorageMode = mode;
+        transform.localScale = new Vector3(size, size, size);
         if (!_isInStorageMode) return;
         _slider.gameObject.SetActive(false);
     }

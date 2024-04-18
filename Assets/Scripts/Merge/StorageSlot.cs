@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
 
 public class StorageSlot : DragAndDropHandler
 {
     [SerializeField] private Cat _currentCat;
     [SerializeField] private BoxCollider2D _collider;
+
+    public static event Action RemoveCat; //Event for the Cat in house Success
+
 
     private int _slotIndex;
 

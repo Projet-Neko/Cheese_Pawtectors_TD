@@ -431,7 +431,10 @@ public class House : MonoBehaviour
             // Create the new room
             CreateRoom(x, z, RoomPattern.VoidRoom);
         }
-        else Debug.Log("Room not MovedAndRemoved, security = " + _roomsGrid[x, z].Security);
+        else
+        {
+            //Debug.Log("Room not MovedAndRemoved, security = " + _roomsGrid[x, z].Security);
+        }
     }
 
     private void ColorInvalidRoom(Color color)

@@ -85,7 +85,7 @@ public class Mouse : Entity
 
     protected override void DeathAnimation()
     {
-        //Debug.Log("Cat is dead");
+        //Debug.Log("Mouse is dead");
         Vector3 spawnPos = transform.position;
         for (int i = 0; i < Level; i++)
         {

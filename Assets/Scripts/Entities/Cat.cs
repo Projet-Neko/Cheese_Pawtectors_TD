@@ -20,6 +20,7 @@ public class Cat : Entity
 
     public Color CatColor => _catColor;
     public bool IsInStorageMode => _isInStorageMode;
+    public Sprite[] Sprites => _data.Sprites;
 
     private CatSO _data;
     private Color _catColor;
@@ -50,15 +51,17 @@ public class Cat : Entity
         _currentHealth = 0;
         _speed = _data.Speed();
 
-        // Appearance
-        _renderer.sprite = _data.SpriteAbove; // TODO -> check sprite to use
+        // Default Appearance
+        _renderer.sprite = _data.Sprites[4];
 
         gameObject.name = _data.Name;
     }
 
     public void SetStorageMode(bool mode)
     {
+        int size = mode ? 55 : 30;
         _isInStorageMode = mode;
+        transform.localScale = new Vector3(size, size, size);
         if (!_isInStorageMode) return;
         _slider.gameObject.SetActive(false);
     }

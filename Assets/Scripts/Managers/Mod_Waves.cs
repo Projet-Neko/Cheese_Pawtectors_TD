@@ -1,7 +1,9 @@
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Mod_Waves : Module
 {
@@ -9,10 +11,11 @@ public class Mod_Waves : Module
     public static event Action OnBossDefeated;
     public static event Action WaveCompleted;
 
-    [SerializeField] private GameObject _mousePrefab;
-    [SerializeField] private int _spawnTime = 1;
+    [SerializeField, Scene] private string _buildScene;
+    [SerializeField, Scene] private string _mainScreenScene;
 
     [Header("Options")]
+    [SerializeField] private int _spawnTime = 1;
     [SerializeField] private bool _enableWaves = false;
 
     //public int EnemyNumber => _enemyNumber;
@@ -25,44 +28,60 @@ public class Mod_Waves : Module
     private int _maxEnemyNumber;
     private int _killedEnemiesNumber;
     private List<GameObject> _enemyObjects = new();
-    private Vector3 _SpawnPos;
-    private bool _hasCompleteSpawning;
+    private bool _hasCompleteSpawning = false;
     private IEnumerator _spawn;
     private bool _cheeseDead = false;
+    private Vector3 _spawningRoomPosition = new(-1, -1, -1);
+    private bool _wavesStarted = false;
+    private bool _cheeseInitialized = false;
 
     private void Awake()
     {
         Cheese.OnInit += Cheese_OnInit;
+        StartRoom.OnInit += StartRoom_OnInit;
         Entity.OnDeath += Entity_OnDeath;
-    }
-
-    private void Cheese_OnInit(Cheese obj)
-    {
-        StartWaves();
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
 
     private void OnDestroy()
     {
         Cheese.OnInit -= Cheese_OnInit;
+        StartRoom.OnInit -= StartRoom_OnInit;
         Entity.OnDeath -= Entity_OnDeath;
+        SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
     }
 
-    private void Update()
+    private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        
+        if (mode == LoadSceneMode.Additive) return;
+        _wavesStarted = false;
+
+        if (scene.name == _buildScene) _enableWaves = false;
+        else if (scene.name == _mainScreenScene) _enableWaves = true;
+    }
+
+    private void StartRoom_OnInit(Room obj)
+    {
+        _spawningRoomPosition = obj.transform.position;
+        //_spawningRoomPosition.z = -4; // Necessary ?
+        if (!_wavesStarted && _cheeseInitialized) StartWaves();
+    }
+
+    private void Cheese_OnInit(Cheese obj)
+    {
+        _cheeseInitialized = true;
+        if (!_wavesStarted && _spawningRoomPosition != new Vector3(-1, -1, -1)) StartWaves();
     }
 
     public override void Init(GameManager gm)
     {
         base.Init(gm);
-        _SpawnPos = transform.position;
-        _SpawnPos.z = -4;
-        _hasCompleteSpawning = false;
         InitComplete();
     }
 
     public void StartWaves()
     {
+        _wavesStarted = true;
         _maxEnemyNumber = _killedEnemiesNumber = 0;
         _spawn = SpawnEnemies(false);
         if (_enableWaves) StartCoroutine(_spawn);
@@ -76,8 +95,7 @@ public class Mod_Waves : Module
         if (cooldown) yield return new WaitForSeconds(.5f);
         while (_spawnedEnemyNumber < _maxEnemyNumber)
         {
-            Mouse m = Instantiate(_mousePrefab, _SpawnPos, Quaternion.identity).GetComponent<Mouse>();
-            m.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            Mouse m = Instantiate(_gm.MousePrefab, _spawningRoomPosition, Quaternion.identity).GetComponent<Mouse>();
             m.WaveIndex = index + 1;
             _spawnedEnemyNumber++;
             index++;

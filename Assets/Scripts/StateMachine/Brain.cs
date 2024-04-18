@@ -8,6 +8,7 @@ public class Brain : MonoBehaviour
     [SerializeField] protected Entity _entity;
 
     public GameObject Target { get; set; }
+    public BoxCollider Room { get; set; }
     public Entity Entity => _entity;
 
     public float AttackRange => _attackRange;

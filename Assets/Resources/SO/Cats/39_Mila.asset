@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 39_Mila
   m_EditorClassIdentifier: 
-  SpriteAbove: {fileID: 0}
-  SpriteFront: {fileID: 0}
+  Sprites:
+  - {fileID: 1791985948, guid: 1943369693ec055438173de5e938a314, type: 3}
+  - {fileID: 1726210571, guid: 1943369693ec055438173de5e938a314, type: 3}
+  - {fileID: 723397903, guid: 1943369693ec055438173de5e938a314, type: 3}
+  - {fileID: -1460746627, guid: 1943369693ec055438173de5e938a314, type: 3}
+  - {fileID: -1279507798, guid: 1943369693ec055438173de5e938a314, type: 3}
+  - {fileID: 544209160, guid: 1943369693ec055438173de5e938a314, type: 3}
+  - {fileID: 890872120, guid: 1943369693ec055438173de5e938a314, type: 3}
+  - {fileID: -2003918473, guid: 1943369693ec055438173de5e938a314, type: 3}
   Lore: D'un naturel tellement heureux qu'elle en bave.
+  State: 0

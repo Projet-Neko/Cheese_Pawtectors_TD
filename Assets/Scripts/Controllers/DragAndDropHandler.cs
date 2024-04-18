@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract class DragAndDropHandler : MonoBehaviour
 {
     public static event Action<int, int> OnSlotChanged; // Slot index, cat level
+    public static event Action<int, int, int> OnRoomChanged; // Room x, Room y, cat level
 
     public virtual void HandleDragAndDrop(Cat cat, Vector3 initialPosition)
     {
@@ -16,4 +17,5 @@ public abstract class DragAndDropHandler : MonoBehaviour
     }
 
     protected void InvokeOnSlotChanged(int slotIndex, int catLevel) => OnSlotChanged?.Invoke(slotIndex, catLevel);
+    protected void InvokeOnRoomChanged(int roomX, int roomY, int catLevel) => OnRoomChanged?.Invoke(roomX, roomY, catLevel);
 }

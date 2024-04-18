@@ -75,4 +75,4 @@ EditorBuildSettings:
     path: Assets/Scenes/PopUp/LoadingPopup.unity
     guid: 3219a4dc5a4f98e4093348043aca6b81
   m_configObjects:
-    com.unity.addressableassets: {fileID: 11400000, guid: 3afdfc6cdb377694baa248452ddf0abb, type: 2}
+    com.unity.addressableassets: {fileID: 11400000, guid: 0380f4a0585d14a4da582eeab6df6ff1, type: 2}

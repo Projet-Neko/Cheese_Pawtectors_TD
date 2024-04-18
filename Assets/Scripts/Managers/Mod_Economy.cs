@@ -15,6 +15,8 @@ public class Mod_Economy : Module
     [SerializeField] private GameObject _currencyPrefab;
 
     public static event Action<bool, int> OnAdoptCheck;
+    public static event Action<int> ThreatWin; //Evet for the ThreatSuccess 
+
 
     public List<int> CatPrices => _catPrices;
     private List<int> _catPrices;
@@ -181,7 +183,7 @@ public class Mod_Economy : Module
             _catPrices.Add(catPrice);
 
             for (int j = 0; j < _gm.Data.AmountOfPurchases[i]; j++) IncreasePrice(i);
-            Debug.Log($"{_gm.Cats[i].Name} price is {catPrice}. (bought {_gm.Data.AmountOfPurchases[i]} time)");
+            //Debug.Log($"{_gm.Cats[i].Name} price is {catPrice}. (bought {_gm.Data.AmountOfPurchases[i]} time)");
         }
     }
 
@@ -230,6 +232,7 @@ public class Mod_Economy : Module
         _gm.Data.Currencies[(int)currency].Amount += amount;
         Debug.Log($"<color=lime>Added {amount} {currency} ! Current {currency} = {_gm.Data.Currencies[(int)currency].Amount}</color>");
         _gm.Data.Update();
+        if (currency == Currency.Treats) ThreatWin?.Invoke(amount);
     }
     public void RemoveCurrency(Currency currency, int amount)
     {
@@ -252,11 +255,6 @@ public class Mod_Economy : Module
         }, res => _gm.EndRequest($"Updated {currency} !"), _gm.OnRequestError);
     }
 
-    public void DebugTestDisplayWinCurrency(int test)
-    {
-        Debug.Log("oui");
-        StartCoroutine(DisplayWinCurrency(test));
-    }
     private IEnumerator DisplayWinCurrency(int currencyToAdd)
     {
         for (int i = 0; i < currencyToAdd; i++)
@@ -265,6 +263,7 @@ public class Mod_Economy : Module
 
             yield return new WaitForSeconds(.05f);
             AddCurrency(Currency.Treats, 1);
+
             //_currenciesText.text = _gm.Data.Currencies[(int)Currency.Treats].Amount.ToString();
         }
     }

@@ -1,19 +1,22 @@
+using System;
 using UnityEngine;
 
 public class DropCat : DragAndDropHandler
 {
     [SerializeField] private Cat _currentCat;
+
+    public static event Action CatDroped; //Event for the Cat in house Success
     
     private BoxCollider _collider;
 
     private void Awake()
     {
-        _collider = GetComponent<BoxCollider>();
+        //_collider = GetComponent<BoxCollider>();
     }
 
     private void Update()
     {
-        _collider.enabled = _currentCat == null ? true : false;
+        //_collider.enabled = _currentCat == null ? true : false;
     }
 
     public override void HandleDragAndDrop(Cat cat, Vector3 initialPosition)
@@ -22,7 +25,8 @@ public class DropCat : DragAndDropHandler
 
         if (_currentCat != null)
         {
-            base.HandleDragAndDrop(cat, initialPosition);
+            if (_currentCat.Level == cat.Level) _currentCat.GetComponent<DragAndDropHandler>().HandleDragAndDrop(cat, initialPosition);
+            else base.HandleDragAndDrop(cat, initialPosition);
             return;
         }
 

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: 01_Sweety
   m_EditorClassIdentifier: 
   Sprites:
-  - {fileID: -915369784, guid: 6aadb00bb76490c43ade6fd73f56427e, type: 3}
-  - {fileID: 2001628426, guid: 6aadb00bb76490c43ade6fd73f56427e, type: 3}
-  - {fileID: -952663625, guid: 6aadb00bb76490c43ade6fd73f56427e, type: 3}
-  - {fileID: 787757352, guid: 6aadb00bb76490c43ade6fd73f56427e, type: 3}
-  - {fileID: -39942804, guid: 6aadb00bb76490c43ade6fd73f56427e, type: 3}
-  - {fileID: -2027727383, guid: 6aadb00bb76490c43ade6fd73f56427e, type: 3}
-  - {fileID: -542395934, guid: 6aadb00bb76490c43ade6fd73f56427e, type: 3}
-  - {fileID: 242233285, guid: 6aadb00bb76490c43ade6fd73f56427e, type: 3}
+  - {fileID: -1846631699, guid: aede497f9d4f964438fb34599cbc0b79, type: 3}
+  - {fileID: -814974979, guid: aede497f9d4f964438fb34599cbc0b79, type: 3}
+  - {fileID: 807899676, guid: aede497f9d4f964438fb34599cbc0b79, type: 3}
+  - {fileID: -2009196667, guid: aede497f9d4f964438fb34599cbc0b79, type: 3}
+  - {fileID: -1668541353, guid: aede497f9d4f964438fb34599cbc0b79, type: 3}
+  - {fileID: 1393290306, guid: aede497f9d4f964438fb34599cbc0b79, type: 3}
+  - {fileID: -225931957, guid: aede497f9d4f964438fb34599cbc0b79, type: 3}
+  - {fileID: 2070622101, guid: aede497f9d4f964438fb34599cbc0b79, type: 3}
   Lore: Ne parlez surtout pas de croquettes devant lui.
   State: 1

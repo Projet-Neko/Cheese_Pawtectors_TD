@@ -8,12 +8,12 @@ public class DropCat : DragAndDropHandler
 
     private void Awake()
     {
-        _collider = GetComponent<BoxCollider>();
+        //_collider = GetComponent<BoxCollider>();
     }
 
     private void Update()
     {
-        _collider.enabled = _currentCat == null ? true : false;
+        //_collider.enabled = _currentCat == null ? true : false;
     }
 
     public override void HandleDragAndDrop(Cat cat, Vector3 initialPosition)

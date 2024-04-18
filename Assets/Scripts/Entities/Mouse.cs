@@ -84,28 +84,31 @@ public class Mouse : Entity
     //}
     public override void Die(Entity source)
     {
-        if(Split())return;
+        if(CanSplit())
+        {
+            Split();
+        }
         base.Die(source);
     }
 
-    public bool Split()
+    public bool CanSplit()
     {
-        if (_currentHealth < _baseHealth / 2)
-        {
-            // Create two new instances of the mouse with 50% fewer hit points
-            float newHealth = _baseHealth / 2;
-            Mouse newMouse1 = Instantiate(this, transform.position, transform.rotation);
-            Mouse newMouse2 = Instantiate(this, transform.position, transform.rotation);
+        return _baseHealth == _data.Health + (_level * 1) - 1;
+    }
 
-            // Update life points on new mice
-            newMouse1._baseHealth = newHealth;
-            newMouse2._baseHealth = newHealth;
+    public void Split()
+    {
+        // Create two new instances of the mouse with 50% fewer hit points
+        float newHealth = _baseHealth / 2;
+        Mouse newMouse1 = Instantiate(this, transform.position, transform.rotation);
+        Mouse newMouse2 = Instantiate(this, transform.position, transform.rotation);
 
-            // Destroy the original mouse
-            Destroy(gameObject);
-            return true;
-        }
-        return false;
+        // Update life points on new mice
+        newMouse1._baseHealth = newHealth;
+        newMouse1._currentHealth = newHealth;
+
+        newMouse2._baseHealth = newHealth;
+        newMouse2._currentHealth = newHealth;
     }
 
 

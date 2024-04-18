@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossBrain : MouseBrain
+public class MouseBallBrain : MouseBrain
 {
     protected override void Start()
     {

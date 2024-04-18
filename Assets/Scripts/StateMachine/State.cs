@@ -76,7 +76,7 @@ public abstract class State
     protected void FollowTarget()
     {
        
-        _brain.transform.position = Vector3.MoveTowards(_brain.transform.position, _brain.Target.transform.position, _brain.Entity.Speed * Time.deltaTime);
+        /*_brain.transform.position = Vector3.MoveTowards(_brain.transform.position, _brain.Target.transform.position, _brain.Entity.Speed * Time.deltaTime);
 
         if (_brain.Entity is not Cat) return;
 
@@ -91,7 +91,7 @@ public abstract class State
         int sector = GetMovementSector(moveDirection);
 
         // Choisir le sprite en fonction du secteur
-        _brain.Entity.Renderer.sprite = catSprites[sector];
+        _brain.Entity.Renderer.sprite = catSprites[sector];*/
     }
 
     // M�thode pour d�terminer le secteur du mouvement

@@ -227,7 +227,7 @@ MonoBehaviour:
   - {fileID: 2843526968020932932}
   - {fileID: 7459078949945384106}
   - {fileID: 704567818242211448}
-  _loadingPopup: LoadingPopup
+  _loadingPopup: LoginPopup
   _loadingSlider: {fileID: 0}
   _loadingText: {fileID: 0}
 --- !u!114 &8386388096323966852
@@ -244,6 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _catPrefab: {fileID: 6983453442427492931, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
   _mousePrefab: {fileID: 732585812547385431, guid: 1c4d78e56a21db14eba23b39d26d78ab, type: 3}
+  _cheesePrefab: {fileID: 9112299513364551935, guid: 9d79b2703c23b1c4cbe0cfa987ade26c, type: 3}
 --- !u!114 &2732286174534552492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 178b372a222e8a248aed6707e287aaa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currencyPrefab: {fileID: 1626346135606361170, guid: e3720e9abbffb244b9eec20cbc9ac455, type: 3}
 --- !u!114 &4534125006970263443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +294,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20b308acf28365b49a8e0480832e7e0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mousePrefab: {fileID: 732585812547385431, guid: 1c4d78e56a21db14eba23b39d26d78ab, type: 3}
+  _buildScene: Build
+  _mainScreenScene: MainScreen
   _spawnTime: 1
   _enableWaves: 0
 --- !u!114 &2843526968020932932

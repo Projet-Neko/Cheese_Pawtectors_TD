@@ -3,8 +3,13 @@ using UnityEngine;
 
 public class Mod_Entities : Module
 {
-    [SerializeField] private GameObject _catPrefab, _mousePrefab;
+    [Header("Prefabs")]
+    [SerializeField] private GameObject _catPrefab;
+    [SerializeField] private GameObject _mousePrefab;
+    [SerializeField] private GameObject _cheesePrefab;
 
+    public GameObject MousePrefab => _mousePrefab;
+    public GameObject CheesePrefab => _cheesePrefab;
     public CatSO[] Cats => _cats;
     public MouseSO[] Mouses => _mouses;
     public Cheese Cheese => _cheese;
@@ -17,14 +22,12 @@ public class Mod_Entities : Module
 
     private void Awake()
     {
-        Cheese.OnInit += Cheese_OnInit;
         //Cat.OnUnlock += Cat_OnUnlock;
         Mod_Waves.OnWaveReload += M_Wave_OnWaveReload;
     }
 
     private void OnDestroy()
     {
-        Cheese.OnInit -= Cheese_OnInit;
         //Cat.OnUnlock -= Cat_OnUnlock;
         Mod_Waves.OnWaveReload -= M_Wave_OnWaveReload;
     }
@@ -43,11 +46,6 @@ public class Mod_Entities : Module
         InitComplete();
     }
 
-    private void Cheese_OnInit(Cheese cheese)
-    {
-        _cheese = cheese;
-    }
-
     //private void Cat_OnUnlock(int catIndex)
     //{
     //    Debug.Log($"<color=lime>{_cats[catIndex].Name} is unlocked !</color>");
@@ -62,5 +60,11 @@ public class Mod_Entities : Module
     public void AlbinoHasSpawned()
     {
         _canSpawnAlbino = false;
+    }
+
+    public void SpawnCheese(Transform room)
+    {
+        GameObject cheese = Instantiate(CheesePrefab, room.position, Quaternion.identity, room);
+        _cheese = cheese.GetComponent<Cheese>();
     }
 }

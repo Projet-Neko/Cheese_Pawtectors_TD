@@ -1052,10 +1052,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2732286174534552492, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: _currencyPrefab
-      value: 
-      objectReference: {fileID: 1626346135606361170, guid: e3720e9abbffb244b9eec20cbc9ac455, type: 3}
     - target: {fileID: 4136298536209485269, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1104,10 +1100,6 @@ PrefabInstance:
       propertyPath: _loadingText
       value: 
       objectReference: {fileID: 1997275816}
-    - target: {fileID: 7026789102367359029, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: _loadingPopup
-      value: LoginPopup
-      objectReference: {fileID: 0}
     - target: {fileID: 7026789102367359029, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
       propertyPath: _loadingSlider
       value: 

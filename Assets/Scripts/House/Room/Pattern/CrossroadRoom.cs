@@ -1,7 +1,8 @@
 public class CrossroadRoom : Room
 {
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _security = RoomSecurity.MovedAndRemoved;
     }
 }

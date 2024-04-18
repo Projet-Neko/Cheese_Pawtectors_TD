@@ -31,6 +31,13 @@ public class Success_Manager : MonoBehaviour
         Mod_Waves.OnBossDefeated += BossKilledSuccess;
         Mod_Waves.WaveCompleted += WavesSuccess;
         Cat.OnUnlock += CatLevelSuccess;
+        Mod_Economy.ThreatWin += ThreatSuccess;
+        Room.TileMoved += ModifyHouseSuccess;
+        Storage.OnCatSpawn += CatAdoptedSuccess;
+        DropCat.CatDroped += AddCatInHouse;
+        StorageSlot.RemoveCat += RemoveCatInHouse;
+        Discard.OnCatDiscard += CatGivenSuccess;
+
         InitSuccessList();
     }
 
@@ -41,6 +48,13 @@ public class Success_Manager : MonoBehaviour
         Mod_Waves.OnBossDefeated -= BossKilledSuccess;
         Mod_Waves.WaveCompleted -= WavesSuccess;
         Cat.OnUnlock -= CatLevelSuccess;
+        Mod_Economy.ThreatWin -= ThreatSuccess;
+        Room.TileMoved -= ModifyHouseSuccess;
+        Storage.OnCatSpawn -= CatAdoptedSuccess;
+        DropCat.CatDroped -= AddCatInHouse;
+        StorageSlot.RemoveCat -= RemoveCatInHouse;
+        Discard.OnCatDiscard -= CatGivenSuccess;
+
     }
 
     private void InitSuccessList()
@@ -124,25 +138,25 @@ public class Success_Manager : MonoBehaviour
             Success();
         }
     } //Done
-    private void CatAdoptedSuccess()// A Faire
+    private void CatAdoptedSuccess(int arg1, int arg2, bool free)// Done
     {
-        SuccessSO success = FindSuccess("Chat adopté");
-        if (success._complete == true) return;
-        success._progression++;
-        if (success._progression == 10 || success._progression == 50 || success._progression == 100 || success._progression == 200 || success._progression == 1000)
+        if (!free) // Si le chat est free c'est qu'il a pas été adopté (Les autres arg ne servent pas ici)
         {
-            Debug.Log($"Vous avez adopté {success._progression} chats");
-            if (NextStep(success) == 0) success._complete = true;
-            else success._step = NextStep(success);
-            Success();
+            SuccessSO success = FindSuccess("Chat adopté");
+            if (success._complete == true) return;
+            success._progression++;
+            if (success._progression == 10 || success._progression == 50 || success._progression == 100 || success._progression == 200 || success._progression == 1000)
+            {
+                Debug.Log($"Vous avez adopté {success._progression} chats");
+                if (NextStep(success) == 0) success._complete = true;
+                else success._step = NextStep(success);
+                Success();
+            }
         }
     }
 
-    private void CatInHouseSuccess()// A Faire 
+    private void CatInHouseSuccess(SuccessSO success)//Done 
     {
-        SuccessSO success = FindSuccess("Chat dans la maison");
-        if (success._complete == true) return;
-        success._progression++;
         if (success._progression == 10 || success._progression == 20 || success._progression == 40)
         {
             Debug.Log($"Vous avez {success._progression} chats dans votre maison");
@@ -152,8 +166,25 @@ public class Success_Manager : MonoBehaviour
         }
     }
 
-    private void CatGivenSuccess()// A Faire
+    private void AddCatInHouse()
     {
+        SuccessSO success = FindSuccess("Chat dans la maison");
+        if (success._complete == true) return;
+        success._progression++;
+        CatInHouseSuccess(success);
+    }
+
+    private void RemoveCatInHouse()
+    {
+        SuccessSO success = FindSuccess("Chat dans la maison");
+        if (success._complete == true) return;
+        success._progression--;
+        CatInHouseSuccess(success);
+    }
+
+    private void CatGivenSuccess(int arg0, int arg1)//Done
+    { 
+        // Argument pas utile ici
         SuccessSO success = FindSuccess("Chat donné");
         if (success._complete == true) return;
         success._progression++;
@@ -166,12 +197,12 @@ public class Success_Manager : MonoBehaviour
         }
     }
 
-    private void RoomInHouseSuccess()// A Faire
+    private void RoomInHouseSuccess()//Non Implémenté
     {
         SuccessSO success = FindSuccess("Pièces dans la maison");
         if (success._complete == true) return;
         success._progression++;
-        
+
         if (success._progression >= 30)
         {
             Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
@@ -209,16 +240,44 @@ public class Success_Manager : MonoBehaviour
 
     }
 
-    private void ThreatSuccess()// A Faire
+    private void ThreatSuccess(int amount)// Done 
     {
         SuccessSO success = FindSuccess("Threat gagner");
         if (success._complete == true) return;
-        success._progression++;
-        if (success._progression == 100 || success._progression == 1000 || success._progression == 100000 || success._progression == 1000000 || success._progression == 100000000)
+        success._progression += amount;
+
+        if (success._progression >= 100000000)
         {
             Debug.Log($"Vous avez gagné {success._progression} Threats au total");
+            success._complete = true;
+            Success();
+        }
+        else if (success._progression >= 1000000)
+        {
+            Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
             if (NextStep(success) == 0) success._complete = true;
-            else success._step = NextStep(success);
+            else success._step = success._steps[4];
+            Success();
+        }
+        else if (success._progression >= 100000)
+        {
+            Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
+            if (NextStep(success) == 0) success._complete = true;
+            else success._step = success._steps[3];
+            Success();
+        }
+        else if (success._progression >= 1000)
+        {
+            Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
+            if (NextStep(success) == 0) success._complete = true;
+            else success._step = success._steps[2];
+            Success();
+        }
+        else if (success._progression >= 100)
+        {
+            Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
+            if (NextStep(success) == 0) success._complete = true;
+            else success._step = success._steps[1];
             Success();
         }
     }
@@ -294,7 +353,7 @@ public class Success_Manager : MonoBehaviour
         Success();
     }
 
-    private void ModifyHouseSuccess()// A Faire
+    private void ModifyHouseSuccess()// Done
     {
         SuccessSO success = FindSuccess("Modifier sa maison");
         if (success._complete == true) return;

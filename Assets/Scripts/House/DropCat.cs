@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public class DropCat : DragAndDropHandler
 {
     [SerializeField] private Cat _currentCat;
+
+    public static event Action CatDroped; //Event for the Cat in house Success
     
     private BoxCollider _collider;
 

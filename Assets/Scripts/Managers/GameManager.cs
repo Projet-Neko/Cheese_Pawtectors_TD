@@ -247,6 +247,17 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("debug of game manager");
         //DeleteLocalDatas(); // Reset local datas
+        GameObject mouseBallBoss = GameObject.Find("MouseBallBoss");
+        Mouse mouseComponent = mouseBallBoss.GetComponent<Mouse>();
+        if (mouseBallBoss != null)
+        {
+            mouseComponent.Die(null);
+        }
+        else
+        {
+            Debug.LogError("Le prefab n'a pas été trouvé.");
+        }
+
     }
 
     private void OnApplicationPause(bool pause)

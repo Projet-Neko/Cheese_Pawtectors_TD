@@ -51,8 +51,8 @@ public class Cat : Entity
         _currentHealth = 0;
         _speed = _data.Speed();
 
-        // Appearance
-        _renderer.sprite = _data.Sprites[0]; // TODO -> check sprite to use
+        // Default Appearance
+        _renderer.sprite = _data.Sprites[4];
 
         gameObject.name = _data.Name;
     }

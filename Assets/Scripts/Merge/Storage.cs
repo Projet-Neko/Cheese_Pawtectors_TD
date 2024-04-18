@@ -65,7 +65,7 @@ public class Storage : MonoBehaviour
     private Cat SpawnCat(int catLevel, Transform slot, bool free = false)
     {
         GameObject go = Instantiate(_catPrefab, slot);
-        go.transform.localScale = new Vector3(10, 10, 10);
+        go.transform.localScale = new Vector3(55, 55, 55);
 
         Cat cat = go.GetComponent<Cat>();
         cat.Init(catLevel);

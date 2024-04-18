@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d341664ca1203e94c9afba7c1c3cf046, type: 3}
   m_Name: "Pi\xE8ces dans la maison"
   m_EditorClassIdentifier: 
-  _successame: "Pi\xE8ces dans la maison"
+  _successame: Rooms in the house
   _step: 0
-  _stepMax: 5
-  _progression: 
+  _progression: 0
   _steps: 0a0000000f00000014000000190000001e000000
+  _complete: 0

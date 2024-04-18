@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d341664ca1203e94c9afba7c1c3cf046, type: 3}
   m_Name: Threat gagner
   m_EditorClassIdentifier: 
-  _successame: Threat gagner
-  _step: 0
-  _stepMax: 5
-  _progression: 
+  _successame: Threat earn
+  _step: 100000
+  _progression: 6407
   _steps: 64000000e8030000a086010040420f0000e1f505
+  _complete: 0

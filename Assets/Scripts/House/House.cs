@@ -424,8 +424,7 @@ public class House : MonoBehaviour
             Junction junctionStart = startRoom.Opening[0];                                                                  // Get the junction of the start room
             IdRoom idRoomNext = junctionStart.GetIdRoomConnected();                                                         // Get the ID of the room connected to the junction of the start room
 
-            startRoom.NextRooms.Add(idRoomNext);                                                                            // Add the next room to the list of next rooms of the start room
-            DestroyInvalidRoom();                                                                                           // Destroy the rooms that are not connected to the path
+            startRoom.NextRooms.Add(idRoomNext);                                                                            // Add the next room to the list of next rooms of the start room                                                                                         
             junctionStart.ActivateArrow(true);                                                                              // Activate the arrow of the junction of the start room
             return true;
         }
@@ -473,7 +472,8 @@ public class House : MonoBehaviour
         }
     }
 
-    private void DestroyInvalidRoom()
+    // Destroy the rooms that are not connected to the path
+    public void DestroyInvalidRoom()
     {
         int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
 

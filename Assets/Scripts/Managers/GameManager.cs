@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
     public int GetCheapestCatIndex() => Mod<Mod_Economy>().GetCheapestCatIndex();
     public void AddCurrency(Currency currency, int amount) => Mod<Mod_Economy>().AddCurrency(currency, amount);
     public void RemoveCurrency(Currency currency, int amount) => Mod<Mod_Economy>().RemoveCurrency(currency, amount);
+    public int MeatGainedOffline() => Mod<Mod_Economy>().MeatGainedOffline();
 
     // AccountMod
     public bool IsLoggedIn => Mod<Mod_Account>().IsLoggedIn;

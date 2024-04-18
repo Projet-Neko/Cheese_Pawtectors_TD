@@ -335,7 +335,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 236619134}
   m_OnClick:
     m_PersistentCalls:
@@ -1126,6 +1126,7 @@ GameObject:
   - component: {fileID: 1055147124}
   - component: {fileID: 1055147128}
   - component: {fileID: 1055147129}
+  - component: {fileID: 1055147130}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1241,6 +1242,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c5628f35c948e04a98f810e41ce8bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1055147130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055147123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b461d540ca4d8a4e8177b936a29cab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _offlineTime: {fileID: 1981119128}
+  _treatsNumber: {fileID: 449212544}
 --- !u!1 &1094769758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1917,8 +1932,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 2516582400
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0.5882353}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

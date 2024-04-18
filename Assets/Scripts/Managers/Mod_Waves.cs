@@ -9,6 +9,7 @@ public class Mod_Waves : Module
 {
     public static event Action OnWaveReload;
     public static event Action OnBossDefeated;
+    public static event Action WaveCompleted;
 
     [SerializeField, Scene] private string _buildScene;
     [SerializeField, Scene] private string _mainScreenScene;
@@ -137,7 +138,7 @@ public class Mod_Waves : Module
     {
         _gm.Data.UpdateWaves(true);
         Debug.Log($"Next wave : {_gm.Data.WaveNumber}.");
-
+        WaveCompleted?.Invoke();
         Reload();
     }
 

@@ -10,7 +10,7 @@ public abstract class State
 
         if (_brain.Entity is Cat) Mod_Waves.OnWaveReload += M_Wave_OnWaveReload;
 
-        if (_brain.Entity is Cat && !(_brain.Entity as Cat).IsInStorageMode) Debug.Log($"New state for {_brain.Entity.name} : {this}");
+        //if (_brain.Entity is Cat && !(_brain.Entity as Cat).IsInStorageMode) Debug.Log($"New state for {_brain.Entity.name} : {this}");
     }
 
     public virtual void OnUpdate() { }

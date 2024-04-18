@@ -22,7 +22,8 @@ public class DropCat : DragAndDropHandler
 
         if (_currentCat != null)
         {
-            base.HandleDragAndDrop(cat, initialPosition);
+            if (_currentCat.Level == cat.Level) _currentCat.GetComponent<DragAndDropHandler>().HandleDragAndDrop(cat, initialPosition);
+            else base.HandleDragAndDrop(cat, initialPosition);
             return;
         }
 

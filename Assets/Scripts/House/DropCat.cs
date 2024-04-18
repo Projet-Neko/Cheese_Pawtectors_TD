@@ -11,12 +11,12 @@ public class DropCat : DragAndDropHandler
 
     private void Awake()
     {
-        _collider = GetComponent<BoxCollider>();
+        //_collider = GetComponent<BoxCollider>();
     }
 
     private void Update()
     {
-        _collider.enabled = _currentCat == null ? true : false;
+        //_collider.enabled = _currentCat == null ? true : false;
     }
 
     public override void HandleDragAndDrop(Cat cat, Vector3 initialPosition)
@@ -25,7 +25,8 @@ public class DropCat : DragAndDropHandler
 
         if (_currentCat != null)
         {
-            base.HandleDragAndDrop(cat, initialPosition);
+            if (_currentCat.Level == cat.Level) _currentCat.GetComponent<DragAndDropHandler>().HandleDragAndDrop(cat, initialPosition);
+            else base.HandleDragAndDrop(cat, initialPosition);
             return;
         }
 

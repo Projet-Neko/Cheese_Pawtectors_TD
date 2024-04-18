@@ -24,12 +24,7 @@ public class Cat : Entity
 
     private CatSO _data;
     private Color _catColor;
-    private bool _isInStorageMode;
-
-    private void Awake()
-    {
-        _isInStorageMode = false;
-    }
+    private bool _isInStorageMode = true;
 
     public override void Init()
     {

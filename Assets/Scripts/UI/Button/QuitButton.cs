@@ -7,7 +7,7 @@ public class QuitButton : MonoBehaviour
     // Called when the player clicks the "Quit" button in Build scene
     public void CheckPathHouse()
     {
-        bool validPath = House.Instance.BuildPath();
+        bool validPath = House.Instance.ValidatePath();
 
         if (validPath)
             _closePopupBackground.SetActive(true);

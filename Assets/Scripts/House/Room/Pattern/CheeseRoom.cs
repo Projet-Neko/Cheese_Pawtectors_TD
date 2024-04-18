@@ -5,8 +5,9 @@ public class CheeseRoom : Room
         _security = RoomSecurity.Moved;
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         GameManager.Instance.Cheese.transform.position = transform.position;
     }
 }

@@ -114,7 +114,7 @@ public class Room : MonoBehaviour
         TileSelected -= DeselectTile;
     }
     
-    void Start()
+    protected virtual void Start()
     {
         // Subscribe to events
         TileSelected += DeselectTile;
@@ -122,7 +122,10 @@ public class Room : MonoBehaviour
         _canMove = false;
         _moveModBool = false;
 
-        _materials = GetComponent<Renderer>().materials;
+        if (_security != RoomSecurity.Overwritten)
+        {
+            _materials = GetComponent<Renderer>().materials;
+        }
     }
 
     private void FixedUpdate()

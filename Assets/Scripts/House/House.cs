@@ -23,6 +23,7 @@ public class House : MonoBehaviour
     private Room[,] _roomsGrid = new Room[_maxRooms, _maxRooms];
     private LineRenderer[,] _lineGrid = new LineRenderer[2, _maxRooms+1];
     private IdRoom _idStartRoom;
+    private bool _pathBuilt = false;
 
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
@@ -117,6 +118,7 @@ public class House : MonoBehaviour
         // Subscribe to events
         Room.ChangeTilePosition += CheckRoomPosition;
         Room.TileDestroyed += CreateRoom;
+        Junction.TileChanged += BuildPath;
         Room.LineActivated += ActiveLine;
         MouseBrain.VisitedNextRoom += GetNextTarget;
     }
@@ -126,6 +128,7 @@ public class House : MonoBehaviour
         // Unsubscribe to events
         Room.ChangeTilePosition -= CheckRoomPosition;
         Room.TileDestroyed -= CreateRoom;
+        Junction.TileChanged -= BuildPath;
         Room.LineActivated -= ActiveLine;
         MouseBrain.VisitedNextRoom -= GetNextTarget;
     }
@@ -234,6 +237,8 @@ public class House : MonoBehaviour
 
             // Create the new room
             CreateRoom(x, z, pattern);
+
+            BuildPath();
         }
         else if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
@@ -241,8 +246,9 @@ public class House : MonoBehaviour
 
             CreateRoom(x, z, pattern);
 
+            BuildPath();
         }
-        else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, z].Security);
+        //else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, z].Security);
     }
 
     private void UpdateLineRight()
@@ -388,26 +394,37 @@ public class House : MonoBehaviour
         }
     }
 
-    public bool BuildPath()
+    private void BuildPath()
     {
         InitBuildPath();                                                                                                    // Define the ID of each room in its junctions
 
         Room startRoom = _roomsGrid[_idStartRoom.x, _idStartRoom.z];                                                        // Get the start room
+        startRoom.ValidatePath();                                                                                           // Validate the path of the start room
         Junction junctionStart = startRoom.Opening[0];                                                                      // Get the junction of the start room
         IdRoom idRoomNext = junctionStart.GetIdRoomConnected();                                                             // Get the ID of the room connected to the junction of the start room
 
         if (idRoomNext.IsNull())                                                                                            // If the start room is not connected to another room
         {
             Debug.Log("Start room not connected");
-            return false;
+            return;
         }
 
-        if (BuildPath(idRoomNext, _idStartRoom))                                                                            // Build the path from the next room and check if it is valid
+        _pathBuilt = BuildPath(idRoomNext, _idStartRoom);                                                                   // Build the path from the next room and check if it is valid
+        ColorInvalidRoom(Color.red);                                                                                        // Color the rooms that are not connected to the path in red
+
+        return;
+    }
+
+    public bool ValidatePath()
+    {
+        if (_pathBuilt)
         {
+            Room startRoom = _roomsGrid[_idStartRoom.x, _idStartRoom.z];                                                    // Get the start room
             startRoom.ValidatePath();                                                                                       // Validate the path of the start room
+            Junction junctionStart = startRoom.Opening[0];                                                                  // Get the junction of the start room
+            IdRoom idRoomNext = junctionStart.GetIdRoomConnected();                                                         // Get the ID of the room connected to the junction of the start room
+
             startRoom.NextRooms.Add(idRoomNext);                                                                            // Add the next room to the list of next rooms of the start room
-            //ColorInvalidRoom(Color.red);                                                                                    // Color the rooms that are not connected to the path in red
-            //ColorInvalidRoom(Color.white);                                                                                  // Color the rooms that are not connected to the path in white
             DestroyInvalidRoom();                                                                                           // Destroy the rooms that are not connected to the path
             junctionStart.ActivateArrow(true);                                                                              // Activate the arrow of the junction of the start room
             return true;
@@ -445,8 +462,13 @@ public class House : MonoBehaviour
         {
             for (int j = zStart; j < zStart + _currentRoomNumber; j++)
             {
+                if (_roomsGrid[i, j].Security == RoomSecurity.Overwritten)
+                    continue;
+
                 if (!_roomsGrid[i, j].CorrectPath)
                     _roomsGrid[i, j].ColorRoom(color);
+                else
+                    _roomsGrid[i, j].ColorRoom(Color.white);
             }
         }
     }
@@ -488,7 +510,6 @@ public class House : MonoBehaviour
 
     private GameObject GetNextTarget (Vector3 position)
     {
-        BuildPath();// TO DO : Remove this line
         Room currentRoom = _roomsGrid[(int)position.x, (int)position.z];
         int numberNextRooms = currentRoom.NextRooms.Count;
 

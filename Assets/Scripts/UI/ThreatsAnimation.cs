@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Currencie : MonoBehaviour
+public class ThreatsAnimation : MonoBehaviour
 {
     [SerializeField] private GameObject _destinationGO;
     [SerializeField] private float _speed;

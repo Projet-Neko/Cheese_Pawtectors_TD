@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 7459078949945384106}
   - component: {fileID: 8336248922547432090}
   - component: {fileID: 704567818242211448}
+  - component: {fileID: 7929237373180867438}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -297,7 +298,7 @@ MonoBehaviour:
   _buildScene: Build
   _mainScreenScene: MainScreen
   _spawnTime: 1
-  _enableWaves: 0
+  _enableWaves: 1
 --- !u!114 &2843526968020932932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,6 +449,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3199371ed200054cbab48b2732b0cf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7929237373180867438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4136298536209485269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0350d8837303f274f81bc1ae6c26d269, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4200296723891686148

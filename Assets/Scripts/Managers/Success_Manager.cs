@@ -109,7 +109,7 @@ public class Success_Manager : MonoBehaviour
             else success._step = NextStep(success);
             Success();
         }
-    }
+    }//Done
 
     private void BossKilledSuccess()
     {
@@ -123,8 +123,8 @@ public class Success_Manager : MonoBehaviour
             else success._step = NextStep(success);
             Success();
         }
-    }
-    private void CatAdoptedSuccess()
+    } //Done
+    private void CatAdoptedSuccess()// A Faire
     {
         SuccessSO success = FindSuccess("Chat adopté");
         if (success._complete == true) return;
@@ -138,7 +138,7 @@ public class Success_Manager : MonoBehaviour
         }
     }
 
-    private void CatInHouseSuccess()
+    private void CatInHouseSuccess()// A Faire 
     {
         SuccessSO success = FindSuccess("Chat dans la maison");
         if (success._complete == true) return;
@@ -152,7 +152,7 @@ public class Success_Manager : MonoBehaviour
         }
     }
 
-    private void CatGivenSuccess()
+    private void CatGivenSuccess()// A Faire
     {
         SuccessSO success = FindSuccess("Chat donné");
         if (success._complete == true) return;
@@ -166,21 +166,50 @@ public class Success_Manager : MonoBehaviour
         }
     }
 
-    private void RoomInHouseSuccess()
+    private void RoomInHouseSuccess()// A Faire
     {
         SuccessSO success = FindSuccess("Pièces dans la maison");
         if (success._complete == true) return;
         success._progression++;
-        if (success._progression == 10 || success._progression == 15 || success._progression == 20 || success._progression == 25 || success._progression == 30)
+        
+        if (success._progression >= 30)
+        {
+            Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
+            success._complete = true;
+            Success();
+        }
+        else if (success._progression >= 25)
         {
             Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
             if (NextStep(success) == 0) success._complete = true;
-            else success._step = NextStep(success);
+            else success._step = success._steps[4];
             Success();
         }
+        else if (success._progression >= 20)
+        {
+            Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
+            if (NextStep(success) == 0) success._complete = true;
+            else success._step = success._steps[3];
+            Success();
+        }
+        else if (success._progression >= 15)
+        {
+            Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
+            if (NextStep(success) == 0) success._complete = true;
+            else success._step = success._steps[2];
+            Success();
+        }
+        else if (success._progression >= 10)
+        {
+            Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
+            if (NextStep(success) == 0) success._complete = true;
+            else success._step = success._steps[1];
+            Success();
+        }
+
     }
 
-    private void ThreatSuccess()
+    private void ThreatSuccess()// A Faire
     {
         SuccessSO success = FindSuccess("Threat gagner");
         if (success._complete == true) return;
@@ -194,7 +223,7 @@ public class Success_Manager : MonoBehaviour
         }
     }
 
-    private void WavesSuccess()
+    private void WavesSuccess()// Done 
     {
         SuccessSO success = FindSuccess("Waves terminés");
         if (success._complete == true) return;
@@ -208,7 +237,7 @@ public class Success_Manager : MonoBehaviour
         }
     }
 
-    private void CatLevelSuccess(int lvl)
+    private void CatLevelSuccess(int lvl)//Done 
     {
         SuccessSO success = FindSuccess("Chat débloqué");
         if (success._complete == true) return;
@@ -220,7 +249,7 @@ public class Success_Manager : MonoBehaviour
         Success();
     }
 
-    private void NotificationSucces()
+    private void NotificationSucces()// Non implémenté 
     {
         SuccessSO success = FindSuccess("Activiter notification");
         if (success._complete == true) return;
@@ -231,7 +260,7 @@ public class Success_Manager : MonoBehaviour
         Success();
     }
 
-    private void ChangePPSuccess()
+    private void ChangePPSuccess()// Non implémenté 
     {
         SuccessSO success = FindSuccess("Changer de pp");
         if (success._complete == true) return;
@@ -242,7 +271,7 @@ public class Success_Manager : MonoBehaviour
         Success();
     }
 
-    private void ChangePseudoSuccess()
+    private void ChangePseudoSuccess()// Non implémenté 
     {
         SuccessSO success = FindSuccess("Changer de pseudo");
         if (success._complete == true) return;
@@ -254,7 +283,7 @@ public class Success_Manager : MonoBehaviour
     }
 
 
-    private void LinkAccountSuccess()
+    private void LinkAccountSuccess()//Non implémenté 
     {
         SuccessSO success = FindSuccess("Lier son compte");
         if (success._complete == true) return;
@@ -265,7 +294,7 @@ public class Success_Manager : MonoBehaviour
         Success();
     }
 
-    private void ModifyHouseSuccess()
+    private void ModifyHouseSuccess()// A Faire
     {
         SuccessSO success = FindSuccess("Modifier sa maison");
         if (success._complete == true) return;
@@ -276,7 +305,7 @@ public class Success_Manager : MonoBehaviour
         Success();
     }
 
-    private void ClanJoinedSuccess()
+    private void ClanJoinedSuccess()// Non implémenté
     {
         SuccessSO success = FindSuccess("Rejoindre un clan");
         if (success._complete == true) return;
@@ -287,7 +316,7 @@ public class Success_Manager : MonoBehaviour
         Success();
     }
 
-    private void RoomSetSuccess()
+    private void RoomSetSuccess() //Non implémenté
     {
         SuccessSO success = FindSuccess("Set de pièce");
         if (success._complete == true) return;

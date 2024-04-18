@@ -16,6 +16,6 @@ public class CatSO : ScriptableObject
 
     public int Damage() => Level; //Change formula
     public float DPS() => 3.6f - (Level * 0.1f);
-    public float Speed() => 2.5f; // Change formula
+    public float Speed() => 1f; // Change formula
     public int Satiety() => 50 + (Level * 2) - 2;
 }

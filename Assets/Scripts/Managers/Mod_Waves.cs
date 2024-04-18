@@ -13,7 +13,7 @@ public class Mod_Waves : Module
 
     [SerializeField, Scene] private string _buildScene;
     [SerializeField, Scene] private string _mainScreenScene;
-    [SerializeField] private GameObject BossPrefab;
+    //[SerializeField] private GameObject BossPrefab;
 
     [Header("Options")]
     [SerializeField] private int _spawnTime = 1;
@@ -92,8 +92,8 @@ public class Mod_Waves : Module
     {
         int index = 0;
         _hasCompleteSpawning = false;
-        //_maxEnemyNumber = IsBossWave() ? 1 : 10;
-        _maxEnemyNumber = 1; //debug
+        _maxEnemyNumber = IsBossWave() ? 1 : 10;
+        /*_maxEnemyNumber = 1; //debug*/
         if (cooldown) yield return new WaitForSeconds(.5f);
         while (_spawnedEnemyNumber < _maxEnemyNumber)
         {

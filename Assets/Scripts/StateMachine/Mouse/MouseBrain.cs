@@ -5,7 +5,7 @@ public class MouseBrain : Brain
 {
     public static event Func<Vector3, GameObject> VisitedNextRoom;// Get the next room visited by the mouse
 
-    private void Start()
+    protected virtual void Start()
     {
         Target = VisitedNextRoom?.Invoke(transform.position);
         _attackRange = _collider.bounds.size.x / 2;

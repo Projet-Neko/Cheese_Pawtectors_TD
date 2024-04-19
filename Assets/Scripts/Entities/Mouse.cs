@@ -82,6 +82,34 @@ public class Mouse : Entity
     //    _targetedBy = source as Cat;
     //    base.TakeDamage(source);
     //}
+    public override void Die(Entity source)
+    {
+        if (CanSplit())
+        {
+            Split();
+        }
+        base.Die(source);
+    }
+
+    public bool CanSplit()
+    {
+        return _baseHealth == _data.Health + (_level * 1) - 1;
+    }
+
+    public void Split()
+    {
+        // Create two new instances of the mouse with 50% fewer hit points
+        float newHealth = _baseHealth / 2;
+        Mouse newMouse1 = Instantiate(this, transform.position, transform.rotation);
+        Mouse newMouse2 = Instantiate(this, transform.position, transform.rotation);
+
+        // Update life points on new mice
+        newMouse1._baseHealth = newHealth;
+        newMouse1._currentHealth = newHealth;
+
+        newMouse2._baseHealth = newHealth;
+        newMouse2._currentHealth = newHealth;
+    }
 
     protected override void DeathAnimation()
     {

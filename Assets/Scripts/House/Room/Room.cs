@@ -349,12 +349,6 @@ public class Room : MonoBehaviour
             junction.SetIdRoom(x, z);
     }
 
-    public void ResetArrows()
-    {
-        foreach (Junction junction in _opening)
-            junction.ActivateArrow(false);
-    }
-
     public void ColorRoom(Color color)
     {
         foreach (Material material in _materials)

@@ -323,17 +323,6 @@ public class House : MonoBehaviour
         }
     }
 
-    public void ResetArrows()
-    {
-        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
-
-        for (int x = 0; x < _currentRoomNumber; x++)
-        {
-            for (int z = zStart; z < zStart + _currentRoomNumber; z++)
-                _roomsGrid[x, z].ResetArrows();
-        }
-    }
-
     private bool IsPreviousRoom(IdRoom idRoom, IdRoom idRoomSearch)
     {
         foreach (IdRoom idRoomPrevious in _roomsGrid[idRoom.x, idRoom.z].PreviousRooms)
@@ -373,15 +362,11 @@ public class House : MonoBehaviour
                 continue;
 
             room.NextRooms.Add(idRoomNext);                                                                                 // Add the next room to the list of next rooms
-            junction.ActivateArrow(true);                                                                                   // Activate the arrow of the junction
 
             bool validPath = BuildPath(idRoomNext, idRoom);                                                                 // Build the path from the next room and check if it is valid
 
             if (!validPath)                                                                                                 // If the path is not valid...
-            {
-                room.NextRooms.RemoveAt(room.NextRooms.Count - 1);                                                          // ... remove the next room from the list of next rooms and ...
-                junction.ActivateArrow(false);                                                                              // ... deactivate the arrow of the junction
-            }
+                room.NextRooms.RemoveAt(room.NextRooms.Count - 1);                                                          // ... remove the next room from the list of next rooms
         }
 
         if (room.NextRooms.Count == 0)                                                                                      // If the room is not connected to any room
@@ -418,11 +403,8 @@ public class House : MonoBehaviour
         if (_pathBuilt)
         {
             Room startRoom = _roomsGrid[_idStartRoom.x, _idStartRoom.z];                                                    // Get the start room
-            Junction junctionStart = startRoom.Opening[0];                                                                  // Get the junction of the start room
-            IdRoom idRoomNext = junctionStart.GetIdRoomConnected();                                                         // Get the ID of the room connected to the junction of the start room
-
-            startRoom.NextRooms.Add(idRoomNext);                                                                            // Add the next room to the list of next rooms of the start room                                                                                         
-            junctionStart.ActivateArrow(true);                                                                              // Activate the arrow of the junction of the start room
+            IdRoom idRoomNext = startRoom.Opening[0].GetIdRoomConnected();                                                  // Get the ID of the room connected to the junction of the start room
+            startRoom.NextRooms.Add(idRoomNext);                                                                            // Add the next room to the list of next rooms of the start room
             return true;
         }
         else

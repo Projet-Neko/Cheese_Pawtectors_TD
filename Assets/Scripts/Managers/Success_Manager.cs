@@ -248,34 +248,34 @@ public class Success_Manager : MonoBehaviour
 
         if (success._progression >= 100000000)
         {
-            Debug.Log($"Vous avez gagné {success._progression} Threats au total");
+            //Debug.Log($"Vous avez gagné {success._progression} Threats au total");
             success._complete = true;
             Success();
         }
         else if (success._progression >= 1000000)
         {
-            Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
+            //Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
             if (NextStep(success) == 0) success._complete = true;
             else success._step = success._steps[4];
             Success();
         }
         else if (success._progression >= 100000)
         {
-            Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
+            //Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
             if (NextStep(success) == 0) success._complete = true;
             else success._step = success._steps[3];
             Success();
         }
         else if (success._progression >= 1000)
         {
-            Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
+            //Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
             if (NextStep(success) == 0) success._complete = true;
             else success._step = success._steps[2];
             Success();
         }
         else if (success._progression >= 100)
         {
-            Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
+            //Debug.Log($"Vous avez {success._progression} pièces dans votre maison");
             if (NextStep(success) == 0) success._complete = true;
             else success._step = success._steps[1];
             Success();

@@ -19,6 +19,11 @@ public class CatBrain : Brain
         else if (_currentState is State_Sleep && !(_entity as Cat).IsInStorageMode && _entity.IsAlive()) ChangeState(Idle);
     }
 
+    private void OnDestroy()
+    {
+        if (_idleMovement != null) StopCoroutine(_idleMovement);
+    }
+
     public void StartIdleMovement()
     {
         _idleMovement = StartCoroutine(IdleMovement());
@@ -38,8 +43,8 @@ public class CatBrain : Brain
             Vector3 center = Room.bounds.center;
             Vector3 size = Room.bounds.size;
 
-            Debug.Log(center);
-            Debug.Log(size);
+            //Debug.Log(center);
+            //Debug.Log(size);
 
             Vector3 randomPointInBox = new (
             Random.Range(center.x - size.x / 2f, center.x + size.x / 2f),
@@ -47,7 +52,7 @@ public class CatBrain : Brain
             Random.Range(center.z - size.z / 2f, center.z + size.z / 2f)
         );
 
-            Debug.Log(randomPointInBox);
+            //Debug.Log(randomPointInBox);
 
             while (Vector3.Distance(transform.position, randomPointInBox) > 0.01f)
             {

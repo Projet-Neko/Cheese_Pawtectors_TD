@@ -166,7 +166,7 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (true || _sceneHUD == SceneManager.GetActiveScene().name)// TO DO : enlever le true
+        if (_sceneHUD == SceneManager.GetActiveScene().name)
         {
             if (_security == RoomSecurity.Protected)
             {

@@ -230,7 +230,7 @@ public class Mod_Economy : Module
     public void AddCurrency(Currency currency, int amount)
     {
         _gm.Data.Currencies[(int)currency].Amount += amount;
-        Debug.Log($"<color=lime>Added {amount} {currency} ! Current {currency} = {_gm.Data.Currencies[(int)currency].Amount}</color>");
+        //Debug.Log($"<color=lime>Added {amount} {currency} ! Current {currency} = {_gm.Data.Currencies[(int)currency].Amount}</color>");
         _gm.Data.Update();
         if (currency == Currency.Treats) ThreatWin?.Invoke(amount);
     }

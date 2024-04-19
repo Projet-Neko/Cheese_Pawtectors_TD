@@ -113,6 +113,11 @@ public class Room : MonoBehaviour
         TileSelected -= DeselectTile;
     }
 
+    protected virtual void Awake()
+    {
+        _materials = GetComponent<Renderer>().materials;
+    }
+
     void Start()
     {
         // Subscribe to events
@@ -120,8 +125,6 @@ public class Room : MonoBehaviour
 
         _canMove = false;
         _moveModBool = false;
-
-        _materials = GetComponent<Renderer>().materials;
     }
 
     private void FixedUpdate()
@@ -163,7 +166,7 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (true || _sceneHUD == SceneManager.GetActiveScene().name)
+        if (_sceneHUD == SceneManager.GetActiveScene().name)
         {
             if (_security == RoomSecurity.Protected)
             {

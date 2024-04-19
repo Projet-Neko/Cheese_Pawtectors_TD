@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 06_Buttercup
   m_EditorClassIdentifier: 
-  Name: 
-  Fur: 0
-  Color: 5
+  Sprites:
+  - {fileID: 582576512, guid: f516c939de9c9524484d748a10be4432, type: 3}
+  - {fileID: 1296954202, guid: f516c939de9c9524484d748a10be4432, type: 3}
+  - {fileID: -1752547580, guid: f516c939de9c9524484d748a10be4432, type: 3}
+  - {fileID: 347428861, guid: f516c939de9c9524484d748a10be4432, type: 3}
+  - {fileID: 210683385, guid: f516c939de9c9524484d748a10be4432, type: 3}
+  - {fileID: -933993172, guid: f516c939de9c9524484d748a10be4432, type: 3}
+  - {fileID: -1340576639, guid: f516c939de9c9524484d748a10be4432, type: 3}
+  - {fileID: -604160375, guid: f516c939de9c9524484d748a10be4432, type: 3}
+  Lore: "Une bo\xEEte ? Instantan\xE9ment, il y saute."
+  State: 0

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
+  m_Name: 25_Pamela
+  m_EditorClassIdentifier: 
+  Sprites:
+  - {fileID: -1513508407, guid: 2fe6c9e5f88cd3c40b13b675391d61bd, type: 3}
+  - {fileID: 180141865, guid: 2fe6c9e5f88cd3c40b13b675391d61bd, type: 3}
+  - {fileID: 535096885, guid: 2fe6c9e5f88cd3c40b13b675391d61bd, type: 3}
+  - {fileID: -227871576, guid: 2fe6c9e5f88cd3c40b13b675391d61bd, type: 3}
+  - {fileID: 1138621332, guid: 2fe6c9e5f88cd3c40b13b675391d61bd, type: 3}
+  - {fileID: 1878823293, guid: 2fe6c9e5f88cd3c40b13b675391d61bd, type: 3}
+  - {fileID: -1142342328, guid: 2fe6c9e5f88cd3c40b13b675391d61bd, type: 3}
+  - {fileID: 1824328207, guid: 2fe6c9e5f88cd3c40b13b675391d61bd, type: 3}
+  Lore: Voleur de nourriture et combattant de rue aguerri.
+  State: 0

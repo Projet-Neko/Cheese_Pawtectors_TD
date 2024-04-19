@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 05_Diana
   m_EditorClassIdentifier: 
-  BasePrice: 500
-  Fur: 0
-  Color: 4
-  SpriteAbove: {fileID: 0}
-  SpriteFront: {fileID: 0}
-  Description: 
+  Sprites:
+  - {fileID: 968385726, guid: 86684cdf1c7b6ce40a0c6c421bb94eeb, type: 3}
+  - {fileID: -475321677, guid: 86684cdf1c7b6ce40a0c6c421bb94eeb, type: 3}
+  - {fileID: 505317556, guid: 86684cdf1c7b6ce40a0c6c421bb94eeb, type: 3}
+  - {fileID: -1983166381, guid: 86684cdf1c7b6ce40a0c6c421bb94eeb, type: 3}
+  - {fileID: 172486894, guid: 86684cdf1c7b6ce40a0c6c421bb94eeb, type: 3}
+  - {fileID: 1476492910, guid: 86684cdf1c7b6ce40a0c6c421bb94eeb, type: 3}
+  - {fileID: 369121152, guid: 86684cdf1c7b6ce40a0c6c421bb94eeb, type: 3}
+  - {fileID: 1904338221, guid: 86684cdf1c7b6ce40a0c6c421bb94eeb, type: 3}
+  Lore: Une plume lui procure des heures de divertissement.
+  State: 0

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
+  m_Name: 11_Fluffy
+  m_EditorClassIdentifier: 
+  Sprites:
+  - {fileID: -24683994, guid: 3d3fc3387944b454cb5fac653f60595c, type: 3}
+  - {fileID: 925470574, guid: 3d3fc3387944b454cb5fac653f60595c, type: 3}
+  - {fileID: 1805631660, guid: 3d3fc3387944b454cb5fac653f60595c, type: 3}
+  - {fileID: -1448222553, guid: 3d3fc3387944b454cb5fac653f60595c, type: 3}
+  - {fileID: 434149628, guid: 3d3fc3387944b454cb5fac653f60595c, type: 3}
+  - {fileID: 1504634620, guid: 3d3fc3387944b454cb5fac653f60595c, type: 3}
+  - {fileID: -1197326565, guid: 3d3fc3387944b454cb5fac653f60595c, type: 3}
+  - {fileID: 880170188, guid: 3d3fc3387944b454cb5fac653f60595c, type: 3}
+  Lore: "Collectionneur de jouets sous le canap\xE9."
+  State: 0

@@ -6,27 +6,19 @@ public class Cheese : Entity
 
     private void Awake()
     {
-        M_Wave.OnWaveReload += OnWaveReload;
+        Mod_Waves.OnWaveReload += OnWaveReload;
     }
 
     private void OnWaveReload()
     {
-        _currentHealth = _baseHealth;
+        _currentHealth = 30;
+        base.Init();
     }
 
-    private void Start()
+    public override void Init()
     {
-        _baseHealth = _currentHealth = 3;
+        _baseHealth = _currentHealth = 30;
         OnInit?.Invoke(this);
-    }
-
-    public override void TakeDamage(Entity source) 
-    {
-        if (_currentHealth <= 0) return;
-        _currentHealth--;
-
-        //SetHealth();
-
-        if (_currentHealth <= 0) OnDeathEvent(this);
+        base.Init();
     }
 }

@@ -1,107 +1,98 @@
+using System.Threading;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class Mouse : Entity
 {
-    [SerializeField] private List<Vector3> _checkPoint;
+    [Header("Debug")]
+    [SerializeField] private bool _forceAlbino = false;
+
+    [SerializeField] GameObject _threat;
+
+    //[SerializeField] private bool _forceBoss = false;
+
+    //[SerializeField] private List<Vector3> _checkPoint;
+
+    public Cat Attacker { get; set; }
+    public bool IsBoss => _isBoss;
+    public int WaveIndex { get; set; }
+
 
     private MouseSO _data;
+    private bool _isBoss;
 
-    private int _nextPoint;
+    /*private int _nextPoint;
     private float _distance;
     private Vector2 _destination;
-    private Rigidbody2D _rb;
-    private bool _stop;
-    private Cheese _cheese;
+    private Rigidbody2D _rb;*/
 
-    private void Start()
+    private Vector3 _target;
+    private Vector3 _direction;
+
+    public override void Init()
     {
-
-        _data = GameManager.Instance.Mouses[IsAlbino()];
-
-        // TODO -> is queen if wave % 10
-
-        _level = GameManager.Instance.MouseLevel;
+        Attacker = null;
+        _data = GameManager.Instance.Mouses[MouseType()];
+        _level = GameManager.Instance.Data.MouseLevel;
 
         _baseHealth = _currentHealth = _data.Health + (_level * 1) - 1;
         _damage = _data.SatiationRate;
         _speed = _data.Speed;
 
-        _rb = GetComponent<Rigidbody2D>();
-        _nextPoint = 0;
+        gameObject.name = $"{_data.Name} LVL{_level} [{WaveIndex}/{GameManager.Instance.MaxEnemyNumber}]";
+        //Debug.Log($"Spawning {gameObject.name}");
 
-        
-        _currentHealth = 5;
+        //_rb = GetComponent<Rigidbody2D>();
+        //_nextPoint = 0;
         //_renderer.sprite = _data.Sprite;
-        _cheese = GameManager.Instance.Cheese;
-        SetMaxHealth();
 
-
-        gameObject.name = _data.Name;
-
-        _destination = (_checkPoint[_nextPoint] - transform.position);
+        /*_destination = (_checkPoint[_nextPoint] - transform.position);
         _destination.Normalize();
-        _rb.velocity = _destination.normalized * _speed;
-        
-
-        _stop = false;
-
+        _rb.velocity = _destination.normalized * _speed;*/
+        base.Init();
     }
 
     private int IsAlbino()
     {
-        if (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1)
+        if (_forceAlbino || (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1))
         {
             GameManager.Instance.AlbinoHasSpawned();
+            // 1 = albino mouse
             return 1;
         }
 
         return 0;
     }
-    private void FixedUpdate()
+
+    private int MouseType()
     {
-        if (!_stop) Move();
-       
-    }
-    private void Move()
-    {
-        _distance = Vector2.Distance(transform.position, _checkPoint[_nextPoint]);
-
-        _rb.velocity = _destination * _speed ;
-        
-
-
-
-        if (_distance < 0.05f)
+        if (GameManager.Instance.IsBossWave())
         {
-            _nextPoint++;
-
-            if (_nextPoint == _checkPoint.Count) //arrivé au fromage 
-            {
-                _rb.velocity = new Vector2(0, 0);
-                _stop = true;
-                
-                Attack();
-            }
-            else
-            {
-                _destination = (_checkPoint[_nextPoint] - transform.position);
-                _destination.Normalize();
-                _rb.velocity = _destination.normalized * _speed;
-
-            }
+            _isBoss = true;
+            // 3 = boss
+            return 3;
         }
-
+        else
+        {
+            return IsAlbino();
+        }
     }
 
-    public void Stop()
+    //public override void TakeDamage(Entity source)
+    //{
+    //    _targetedBy = source as Cat;
+    //    base.TakeDamage(source);
+    //}
+
+    protected override void DeathAnimation()
     {
-        _stop = true;
+        //Debug.Log("Mouse is dead");
+        Vector3 spawnPos = transform.position;
+        for (int i = 0; i < Level; i++)
+        {
+            GameObject threat = _threat;
+            Vector3 pos = new Vector3(spawnPos.x , spawnPos.y , spawnPos.z-5);
+            Instantiate(threat, pos , Quaternion.Euler(90, 0, 0));
+            threat.GetComponent<Rigidbody>().velocity = new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), 0).normalized;
+        }
     }
-
-    private void Attack()
-    {
-        _cheese?.TakeDamage(this);
-    }
-
 }

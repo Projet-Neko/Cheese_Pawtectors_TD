@@ -513,15 +513,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7026789102367359029, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: mouse
-      value: 
-      objectReference: {fileID: 732585812547385431, guid: 1c4d78e56a21db14eba23b39d26d78ab, type: 3}
-    - target: {fileID: 7026789102367359029, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: catPrefab
+      propertyPath: _catPrefab
       value: 
       objectReference: {fileID: 6983453442427492931, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
     - target: {fileID: 7026789102367359029, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: mousePrefab
+      propertyPath: _mousePrefab
       value: 
       objectReference: {fileID: 732585812547385431, guid: 1c4d78e56a21db14eba23b39d26d78ab, type: 3}
     m_RemovedComponents: []

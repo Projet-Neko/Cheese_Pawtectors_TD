@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
+  m_Name: 31_Chestnut
+  m_EditorClassIdentifier: 
+  Sprites:
+  - {fileID: -2083978087, guid: 4ce3b89b2335c014c97bf7e0b41c03bc, type: 3}
+  - {fileID: -1081542014, guid: 4ce3b89b2335c014c97bf7e0b41c03bc, type: 3}
+  - {fileID: -1153084901, guid: 4ce3b89b2335c014c97bf7e0b41c03bc, type: 3}
+  - {fileID: 2122529946, guid: 4ce3b89b2335c014c97bf7e0b41c03bc, type: 3}
+  - {fileID: -1151836509, guid: 4ce3b89b2335c014c97bf7e0b41c03bc, type: 3}
+  - {fileID: -909516468, guid: 4ce3b89b2335c014c97bf7e0b41c03bc, type: 3}
+  - {fileID: -1445589506, guid: 4ce3b89b2335c014c97bf7e0b41c03bc, type: 3}
+  - {fileID: -1046813697, guid: 4ce3b89b2335c014c97bf7e0b41c03bc, type: 3}
+  Lore: "Son regard per\xE7ant dissimule un esprit malicieux."
+  State: 0

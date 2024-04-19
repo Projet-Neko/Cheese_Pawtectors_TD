@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
+  m_Name: 13_Minnie
+  m_EditorClassIdentifier: 
+  Sprites:
+  - {fileID: 896131808, guid: ee3f90383d1ee334fa8aca8a3f300bf9, type: 3}
+  - {fileID: 680767658, guid: ee3f90383d1ee334fa8aca8a3f300bf9, type: 3}
+  - {fileID: -1427514444, guid: ee3f90383d1ee334fa8aca8a3f300bf9, type: 3}
+  - {fileID: 560466627, guid: ee3f90383d1ee334fa8aca8a3f300bf9, type: 3}
+  - {fileID: -1577107097, guid: ee3f90383d1ee334fa8aca8a3f300bf9, type: 3}
+  - {fileID: -907591646, guid: ee3f90383d1ee334fa8aca8a3f300bf9, type: 3}
+  - {fileID: -1795510117, guid: ee3f90383d1ee334fa8aca8a3f300bf9, type: 3}
+  - {fileID: -960202999, guid: ee3f90383d1ee334fa8aca8a3f300bf9, type: 3}
+  Lore: Aime boire au robinet plus que dans sa gamelle.
+  State: 0

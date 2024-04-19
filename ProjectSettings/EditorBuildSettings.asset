@@ -6,34 +6,73 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_TitleScreen.unity
-    guid: 518344aa865ee7a4f88b598eb2301364
-  - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_LoadingPopup.unity
-    guid: e80709bd327fd0b4fb618ea59bb043d5
-  - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_LoginPopup.unity
-    guid: 705bebcd24893cf42a4d4a981ea99315
+    path: Assets/Scenes/TitleScreen.unity
+    guid: 58ffcc25278f987469d33061f5885e21
   - enabled: 1
     path: Assets/Scenes/MainScreen.unity
     guid: a6e91c5e48376f74f866e1f81acfd4ba
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_Profil.unity
-    guid: bf07bb36ff760f6488cfd4f0ff1cf082
-  - enabled: 1
-    path: Assets/Scenes/BlockOut/BO_LeaderBoard.unity
-    guid: 72eaa0f111d48124599429e4905bda1b
-  - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_Settings.unity
-    guid: 979153e39fd53e34489c2a65468774e8
-  - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_Build.unity
+    path: Assets/Scenes/Build.unity
     guid: 5f7927bcda7adec4daa218c7070b3052
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_Catalog.unity
+    path: Assets/Scenes/Catalog.unity
     guid: a07c302f78c5ba34b9f6900bd3baca89
   - enabled: 1
-    path: Assets/Scenes/BlockOut/BlockOut_Shop.unity
+    path: Assets/Scenes/HeadBand.unity
+    guid: 976db888d08beee4eb09c0e9566d8ae0
+  - enabled: 1
+    path: Assets/Scenes/Phone/Profile.unity
+    guid: bf07bb36ff760f6488cfd4f0ff1cf082
+  - enabled: 1
+    path: Assets/Scenes/Phone/Settings.unity
+    guid: 979153e39fd53e34489c2a65468774e8
+  - enabled: 1
+    path: Assets/Scenes/Phone/Phone.unity
     guid: a4a8c528f449a4c49a7c22b9e9df6e73
+  - enabled: 1
+    path: Assets/Scenes/Phone/Currency Shop.unity
+    guid: 56c19e60b6f44bd4ca371b41845adb59
+  - enabled: 1
+    path: Assets/Scenes/Phone/Leaderboards.unity
+    guid: ee2e32761b225c741832c5b85caac99e
+  - enabled: 1
+    path: Assets/Scenes/Phone/Success.unity
+    guid: 053158783d5dfa642a111244b83cae43
+  - enabled: 1
+    path: Assets/Scenes/Phone/Pull/Pull.unity
+    guid: d08eec563de4fc54ebfef25535c39856
+  - enabled: 1
+    path: Assets/Scenes/Phone/Pull/Classic Pull.unity
+    guid: 700e6d2a6622f60439069d19466cef1c
+  - enabled: 1
+    path: Assets/Scenes/Phone/Pull/Event Pull.unity
+    guid: 1f6dd389754c8da4f8e0e40902297d4c
+  - enabled: 1
+    path: Assets/Scenes/PopUp/UpdatePopup.unity
+    guid: 10d69fe75cdb98b48953ba28d3bfa159
+  - enabled: 1
+    path: Assets/Scenes/PopUp/StatsProfilPopup.unity
+    guid: 2afb077f0a20e2a41abe8e7a7ee22c63
+  - enabled: 1
+    path: Assets/Scenes/PopUp/LoginPopup.unity
+    guid: 705bebcd24893cf42a4d4a981ea99315
+  - enabled: 1
+    path: Assets/Scenes/PopUp/QuitBuildScene.unity
+    guid: 7074bb17f6d341f42b64da4384848618
+  - enabled: 1
+    path: Assets/Scenes/PopUp/NewRoom.unity
+    guid: 600e7265840aae54996a3f7458639843
+  - enabled: 1
+    path: Assets/Scenes/PopUp/NewCat.unity
+    guid: 7e22026dfcb970147ac142ee33e4430c
+  - enabled: 1
+    path: Assets/Scenes/PopUp/NameAlreadyUsed.unity
+    guid: b7591d52da78e7e42bfa5e0089f3c36b
+  - enabled: 1
+    path: Assets/Scenes/PopUp/CatManagerPopup.unity
+    guid: fa5221481e22f8943ad57e21abca0731
+  - enabled: 1
+    path: Assets/Scenes/PopUp/LoadingPopup.unity
+    guid: 3219a4dc5a4f98e4093348043aca6b81
   m_configObjects:
-    com.unity.addressableassets: {fileID: 11400000, guid: 3afdfc6cdb377694baa248452ddf0abb, type: 2}
+    com.unity.addressableassets: {fileID: 11400000, guid: 0380f4a0585d14a4da582eeab6df6ff1, type: 2}

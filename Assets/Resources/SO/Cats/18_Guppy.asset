@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
+  m_Name: 18_Guppy
+  m_EditorClassIdentifier: 
+  Sprites:
+  - {fileID: -832453415, guid: da9643cdec6d2334e9fee5a651021cdb, type: 3}
+  - {fileID: -934047366, guid: da9643cdec6d2334e9fee5a651021cdb, type: 3}
+  - {fileID: 1943723472, guid: da9643cdec6d2334e9fee5a651021cdb, type: 3}
+  - {fileID: -632827517, guid: da9643cdec6d2334e9fee5a651021cdb, type: 3}
+  - {fileID: -1994299341, guid: da9643cdec6d2334e9fee5a651021cdb, type: 3}
+  - {fileID: 1581505235, guid: da9643cdec6d2334e9fee5a651021cdb, type: 3}
+  - {fileID: 331291865, guid: da9643cdec6d2334e9fee5a651021cdb, type: 3}
+  - {fileID: 1256704056, guid: da9643cdec6d2334e9fee5a651021cdb, type: 3}
+  Lore: 
+  State: 0

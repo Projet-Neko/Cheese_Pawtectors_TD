@@ -440,6 +440,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
+--- !u!114 &226287011 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2513913717346125373, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
+  m_PrefabInstance: {fileID: 226287010}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098e7a1116a1cf8418edfea0b3bd16c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &280097427
 GameObject:
   m_ObjectHideFlags: 0
@@ -3085,6 +3096,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 226287011}
+        m_TargetAssemblyTypeName: House, Assembly-CSharp
+        m_MethodName: DestroyInvalidRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1713938796}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadScene
@@ -3494,6 +3517,7 @@ GameObject:
   - component: {fileID: 1893059033}
   - component: {fileID: 1893059032}
   - component: {fileID: 1893059035}
+  - component: {fileID: 1893059036}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -3565,10 +3589,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1695244891}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1893059036}
+        m_TargetAssemblyTypeName: QuitButton, Assembly-CSharp
+        m_MethodName: CheckPathHouse
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3629,6 +3653,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scene: QuitBuildScene
   _isAdditive: 1
+--- !u!114 &1893059036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893059030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191ce92747aac5f4db7af6642a493698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _closePopupBackground: {fileID: 1695244891}
+  _house: {fileID: 226287011}
 --- !u!1 &1938338965
 GameObject:
   m_ObjectHideFlags: 0

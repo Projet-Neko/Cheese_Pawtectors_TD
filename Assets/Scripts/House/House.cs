@@ -23,6 +23,9 @@ public class House : MonoBehaviour
     private IdRoom _idStartRoom;
     private bool _pathBuilt = false;
 
+    private readonly Color _invalidColor = Color.red;
+    private readonly Color _validColor = Color.white;
+
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */
@@ -379,7 +382,6 @@ public class House : MonoBehaviour
 
     private void BuildPath()
     {
-        Debug.Log("Build path");
         InitBuildPath();                                                                                                    // Define the ID of each room in its junctions
 
         Room startRoom = _roomsGrid[_idStartRoom.x, _idStartRoom.z];                                                        // Get the start room
@@ -388,23 +390,11 @@ public class House : MonoBehaviour
         IdRoom idRoomNext = junctionStart.GetIdRoomConnected();                                                             // Get the ID of the room connected to the junction of the start room
 
         if (idRoomNext.IsNull())                                                                                            // If the start room is not connected to another room
-        {
-            Debug.Log("Start room not connected");
-            ColorInvalidRoom(Color.red);                                                                                        // Color the rooms that are not connected to the path in red
-            return;
-        }
-
-        _pathBuilt = BuildPath(idRoomNext, _idStartRoom);                                                                   // Build the path from the next room and check if it is valid
-        ColorInvalidRoom(Color.red);                                                                                        // Color the rooms that are not connected to the path in red
-
-        if (BuildPath(idRoomNext, _idStartRoom))                                                                            // Build the path from the next room and check if it is valid
-        {
-            startRoom.NextRooms.Add(idRoomNext);                                                                            // Add the next room to the list of next rooms of the start room
-            ColorInvalidRoom(Color.red);                                                                                    // Color the rooms that are not connected to the path in red
-            junctionStart.ActivateArrow(true);                                                                              // Activate the arrow of the junction of the start room
-        }
+            _pathBuilt = false;                                                                                             // Initialize the path as not valid
         else
-            Debug.Log("Path not valid");
+            _pathBuilt = BuildPath(idRoomNext, _idStartRoom);                                                               // Build the path from the next room and check if it is valid
+        
+        ColorInvalidRoom();                                                                                                 // Color the rooms that are not connected to the path in red
     }
 
     public bool ValidatePath()
@@ -412,7 +402,6 @@ public class House : MonoBehaviour
         if (_pathBuilt)
         {
             Room startRoom = _roomsGrid[_idStartRoom.x, _idStartRoom.z];                                                    // Get the start room
-            startRoom.ValidatePath();                                                                                       // Validate the path of the start room
             Junction junctionStart = startRoom.Opening[0];                                                                  // Get the junction of the start room
             IdRoom idRoomNext = junctionStart.GetIdRoomConnected();                                                         // Get the ID of the room connected to the junction of the start room
 
@@ -445,7 +434,7 @@ public class House : MonoBehaviour
         }
     }
 
-    private void ColorInvalidRoom(Color color)
+    private void ColorInvalidRoom()
     {
         int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
 
@@ -457,14 +446,14 @@ public class House : MonoBehaviour
                     continue;
 
                 if (!_roomsGrid[i, j].CorrectPath)
-                    _roomsGrid[i, j].ColorRoom(color);
+                    _roomsGrid[i, j].ColorRoom(_invalidColor);
                 else
-                    _roomsGrid[i, j].ColorRoom(Color.white);
+                    _roomsGrid[i, j].ColorRoom(_validColor);
             }
         }
     }
 
-    private void DestroyInvalidRoom()
+    public void DestroyInvalidRoom()
     {
         int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
 

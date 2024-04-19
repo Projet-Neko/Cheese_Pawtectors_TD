@@ -56,7 +56,11 @@ public class Mod_Waves : Module
         if (mode == LoadSceneMode.Additive) return;
         _wavesStarted = false;
 
-        if (scene.name == _buildScene) _enableWaves = false;
+        if (scene.name == _buildScene)
+        {
+            _enableWaves = false;
+            StopCoroutine(_spawn);
+        }
         else if (scene.name == _mainScreenScene) _enableWaves = true;
     }
 

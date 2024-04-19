@@ -38,7 +38,9 @@ public abstract class Entity : MonoBehaviour
     {
         SetMaxHealth();
         SetHealth();
-        _slider.gameObject.SetActive(false);
+
+        if (_slider != null)
+            _slider.gameObject.SetActive(false);
     }
 
     public virtual void TakeDamage(Entity source)

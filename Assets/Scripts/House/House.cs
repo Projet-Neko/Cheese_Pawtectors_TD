@@ -1,10 +1,11 @@
 using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class House : MonoBehaviour
 {
+    public static House Instance { get; private set; }
+
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
     [SerializeField] private GameObject _mousePrefab;
     [SerializeField] private GameObject _linePrefab;
@@ -29,6 +30,19 @@ public class House : MonoBehaviour
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */
+
+    private bool CreateInstance()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return false;
+        }
+        Instance = this;
+        DontDestroyOnLoad(this);
+        return true;
+    }
+
     private void AddLine(float x, float z, float xEnd, float zEnd)
     {
         int indice1 = 1;
@@ -68,6 +82,8 @@ public class House : MonoBehaviour
 
     void Start()
     {
+        if (!CreateInstance()) return;
+
         // Create the Void Rooms and one Start Room, visible in the beginning
         _currentRoomNumber = _minRooms;
 

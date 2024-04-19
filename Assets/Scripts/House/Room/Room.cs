@@ -92,7 +92,7 @@ public class Room : MonoBehaviour
 
     private string _sceneHUD;
 
-    private Material[] _materials;
+    private List<Material> _materials = new();
 
     // Constants
     private const int _maxLevel = 3;
@@ -116,7 +116,8 @@ public class Room : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _materials = GetComponent<Renderer>().materials;
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            _materials.AddRange(renderer.materials);
     }
 
     void Start()

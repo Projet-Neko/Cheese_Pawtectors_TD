@@ -97,6 +97,7 @@ public class Room : MonoBehaviour
     // Constants
     private const int _maxLevel = 3;
     private Plane _plane = new Plane(Vector3.up, 0);
+    private Vector3 _height;
 
 
     //change OnMouseDown to Button to avoid click error
@@ -125,6 +126,8 @@ public class Room : MonoBehaviour
 
         _canMove = false;
         _moveModBool = false;
+
+        _height = 3 * Camera.main.transform.forward.normalized;
     }
 
     private void FixedUpdate()
@@ -149,8 +152,9 @@ public class Room : MonoBehaviour
     {
         Vector3 position = startPosition;
         position.x = Mathf.Round(position.x);
-        position.y = 0;                                // To be sure the room is on the same line
+        position.y = 0;
         position.z = Mathf.Round(position.z);
+        position -= _height;
 
         return position;
     }
@@ -219,6 +223,8 @@ public class Room : MonoBehaviour
         _HUDCanva.SetActive(false);                 // Hide the HUD
         _moveModCanva.SetActive(true);              // Show the Move Canvas
         _oldPosition = _room.transform.position;    // Save the currently position
+        Debug.Log("Move Room : " + _height);
+        _room.transform.position -= _height;
         TileMoved?.Invoke();
     }
 
@@ -237,6 +243,7 @@ public class Room : MonoBehaviour
     // When user click on Canvas/Move Arrow/Done button
     public void StopMove()
     {
+        _room.transform.position += _height;
         LineActivated?.Invoke(false); // Invoke the event to hide the lines of the house
 
         _moveModBool = false;
@@ -245,7 +252,6 @@ public class Room : MonoBehaviour
         ChangeTilePosition?.Invoke(_oldPosition, _room.transform.position, true);       //true because the room ask for position validation
         TileSelected?.Invoke(false); // Invoke the event to deselect the other rooms
         _isSelected = false;
-
     }
 
     /*private void ChangePosition(bool validate)

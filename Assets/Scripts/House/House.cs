@@ -119,7 +119,7 @@ public class House : MonoBehaviour
 
         // Subscribe to events
         Room.ChangeTilePosition += CheckRoomPosition;
-        Room.TileDestroyed += CreateRoom;
+        Room.TileDestroyed += ReplaceRoom;
         Room.LineActivated += ActiveLine;
         Junction.TileChanged += BuildPath;
         MouseBrain.VisitedNextRoom += GetNextTarget;
@@ -129,7 +129,7 @@ public class House : MonoBehaviour
     {
         // Unsubscribe to events
         Room.ChangeTilePosition -= CheckRoomPosition;
-        Room.TileDestroyed -= CreateRoom;
+        Room.TileDestroyed -= ReplaceRoom;
         Room.LineActivated -= ActiveLine;
         Junction.TileChanged -= BuildPath;
         MouseBrain.VisitedNextRoom -= GetNextTarget;
@@ -230,25 +230,30 @@ public class House : MonoBehaviour
      *              NEW ROOM
      * * * * * * * * * * * * * * * * * * * */
 
+    private void ReplaceRoom(int x, int z, RoomPattern pattern)
+    {
+        // Destroy the old room in the grid
+        _roomsGrid[x, z].Delete();
+
+        // Create the new room
+        CreateRoom(x, z, pattern);
+
+        // Build the new path
+        BuildPath();
+    }
+
     private void AddRoom(int x, int z, RoomPattern pattern)
     {
         if (_roomsGrid[x, z].Security == RoomSecurity.Overwritten)
         {
-            // Destroy the old room (void)
-            _roomsGrid[x, z].Delete();
-
-            // Create the new room
-            CreateRoom(x, z, pattern);
-
-            BuildPath();
+            ReplaceRoom(x, z, pattern);
         }
         else if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            //Ajout de la vieille piece dans l'inventaire
-            CreateRoom(x, z, pattern);
+            // Add old room to the inventory
+            // TO DO
 
-            BuildPath();
-
+            ReplaceRoom(x, z, pattern);
         }
         else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, z].Security);
     }
@@ -383,6 +388,7 @@ public class House : MonoBehaviour
 
     private void BuildPath()
     {
+        Debug.Log("Build path");
         InitBuildPath();                                                                                                    // Define the ID of each room in its junctions
 
         Room startRoom = _roomsGrid[_idStartRoom.x, _idStartRoom.z];                                                        // Get the start room
@@ -418,17 +424,10 @@ public class House : MonoBehaviour
     {
         if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            // Destroy the old room
-            _roomsGrid[x, z].Delete();
+            // Add old room to the inventory
+            // TO DO
 
-            //Ajout dans l'inventaire
-
-            // Create the new room
-            CreateRoom(x, z, RoomPattern.VoidRoom);
-        }
-        else
-        {
-            //Debug.Log("Room not MovedAndRemoved, security = " + _roomsGrid[x, z].Security);
+            ReplaceRoom(x, z, RoomPattern.VoidRoom);
         }
     }
 

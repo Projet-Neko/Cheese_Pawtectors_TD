@@ -4,5 +4,6 @@ public class VoidRoom : Room
     {
         base.Awake();
         _security = RoomSecurity.Overwritten;
+        _pattern = RoomPattern.VoidRoom;
     }
 }

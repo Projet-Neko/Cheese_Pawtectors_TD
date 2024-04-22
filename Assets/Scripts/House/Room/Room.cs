@@ -68,16 +68,18 @@ public class Room : MonoBehaviour
     public static event Action<int, int, RoomPattern> TileDestroyed;        // Notify the house that a room is destroyed
     public static event Action<bool> LineActivated;                         // Enable or disable the lines of the house
     private static event Action<bool> TileSelected;                         // Deselect the other rooms when a room is selected
-    public static event Action TileMoved;                         // Event For Modify House success
+    public static event Action TileMoved;                                   // Event For Modify House success
 
     // Getters
     public List<Junction> Opening => _opening;
     public bool CorrectPath => _correctPath;
     public RoomSecurity Security => _security;
+    public RoomPattern Pattern => _pattern;
     public List<IdRoom> PreviousRooms => _previousRooms;
     public List<IdRoom> NextRooms => _nextRooms;
 
     protected RoomSecurity _security;
+    protected RoomPattern _pattern;
     protected bool _correctPath = false;                                    // True if the room is in a correct path
 
     private Vector3 _oldPosition;

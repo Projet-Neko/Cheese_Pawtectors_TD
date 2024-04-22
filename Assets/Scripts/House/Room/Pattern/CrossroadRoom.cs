@@ -4,5 +4,6 @@ public class CrossroadRoom : Room
     {
         base.Awake();
         _security = RoomSecurity.MovedAndRemoved;
+        _pattern = RoomPattern.CrossraodRoom;
     }
 }

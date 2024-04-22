@@ -4,6 +4,7 @@ public class CheeseRoom : Room
     {
         base.Awake();
         _security = RoomSecurity.Moved;
+        _pattern = RoomPattern.CheeseRoom;
         GameManager.Instance.SpawnCheese(transform);
     }
 }

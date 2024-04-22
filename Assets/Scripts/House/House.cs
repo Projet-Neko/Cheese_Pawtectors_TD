@@ -148,35 +148,6 @@ public class House : MonoBehaviour
         _roomsGrid[x, z].SceneForHUD(_sceneHUD);
     }
 
-    private void CreateRandomRoom()
-    {
-        /*int random = UnityEngine.Random.Range(0, 2);
-        RoomPattern roomPattern;
-        switch (random)
-        {
-            case 0:
-                roomPattern = RoomPattern.CorridorRoom;
-                break;
-                
-            case 1:
-                roomPattern = RoomPattern.TurnRoom;
-                break;
-
-            case 2:
-                roomPattern= RoomPattern.CrossraodRoom;
-                break;
-
-            default:
-                roomPattern = RoomPattern.CorridorRoom;
-                break;
-        }
-        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity); // TO DO : Change the position to inventaire
-        roomObject.transform.parent = transform;
-        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();*/
-
-        // TO DO : Add the (image of the) room to the inventory 
-    }
-
     /* * * * * * * * * * * * * * * * * * * *
      *          HUD INTERACTIONS
      * * * * * * * * * * * * * * * * * * * */
@@ -250,8 +221,7 @@ public class House : MonoBehaviour
         }
         else if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            // Add old room to the inventory
-            // TO DO
+            AddRoomInInventory(_roomsGrid[x, z].Pattern);// Add old room in inventory
 
             ReplaceRoom(x, z, pattern);
         }
@@ -308,6 +278,8 @@ public class House : MonoBehaviour
 
         UpdateLineRight();
         AddLine(_currentRoomNumber, zStart, _currentRoomNumber, zStart + _currentRoomNumber);
+
+        AddRandomRoomInInventory(); // Give new room to the player
     }
 
     /* * * * * * * * * * * * * * * * * * * *
@@ -424,8 +396,7 @@ public class House : MonoBehaviour
     {
         if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            // Add old room to the inventory
-            // TO DO
+            AddRoomInInventory(_roomsGrid[x, z].Pattern);// Add old room to the inventory
 
             ReplaceRoom(x, z, RoomPattern.VoidRoom);
         }
@@ -496,6 +467,45 @@ public class House : MonoBehaviour
         int random = Random.Range(0, numberNextRooms);
         IdRoom idRoom = currentRoom.NextRooms[random];
         return _roomsGrid[idRoom.x, idRoom.z].gameObject;
+    }
+
+
+    /* * * * * * * * * * * * * * * * * * * *
+    *           INVENTORY ROOM
+    * * * * * * * * * * * * * * * * * * * */
+
+    private void AddRandomRoomInInventory()
+    {
+        RoomPattern roomPattern;
+        int random;
+            random = Random.Range(0, 100);
+
+        switch(random)
+        {
+            case int n when n < 10:
+                roomPattern = RoomPattern.CrossraodRoom;
+                break;
+            case int n when n < 30:
+                roomPattern = RoomPattern.IntersectionRoom;
+                break;
+            case int n when n < 60:
+                roomPattern = RoomPattern.TurnRoom;
+                break;
+            default:
+                roomPattern = RoomPattern.CorridorRoom;
+                break;
+        }
+
+        AddRoomInInventory(roomPattern);
+
+        /*GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity);
+        roomObject.transform.parent = transform;
+        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();*/
+    }
+
+    private void AddRoomInInventory(RoomPattern roomPattern)
+    {
+        // TO DO : Check if cats are in room
     }
 
 

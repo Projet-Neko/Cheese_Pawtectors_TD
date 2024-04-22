@@ -4,5 +4,6 @@ public class IntersectionRoom : Room
     {
         base.Awake();
         _security = RoomSecurity.MovedAndRemoved;
+        _pattern = RoomPattern.IntersectionRoom;
     }
 }

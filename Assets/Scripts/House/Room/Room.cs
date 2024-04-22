@@ -70,6 +70,9 @@ public class Room : MonoBehaviour
     [Header("Room")]
     [SerializeField] private GameObject _room;
 
+    [Header("Sprite Inventory")]
+    [SerializeField] private Sprite _spriteInventory;
+
     [Header("Room Canva")]
     [SerializeField] private GameObject _HUDCanva;
     [SerializeField] private GameObject _moveModCanva;

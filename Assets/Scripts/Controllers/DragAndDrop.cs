@@ -1,14 +1,16 @@
-using System.ComponentModel;
 using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
 {
-    [Header("Dependencies")]
+    [Header("Cat dependencies")]
+    [SerializeField] private Cat _cat;
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private GameObject _hud;
-    [SerializeField] private Cat _cat;
+    [SerializeField] private Collider2D _collider2D;
+
+    [Header("Room dependencies")]
     [SerializeField] private Room _room;
-    [SerializeField] private Collider2D _collider;
+    [SerializeField] private Collider _collider3D;
 
     private bool _isBeingDragged = false;
     private Vector3 _initialPosition;
@@ -16,6 +18,7 @@ public class DragAndDrop : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        if (_room != null) return;
         if (!_isBeingDragged) return;
         transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + _offset;
     }
@@ -24,6 +27,7 @@ public class DragAndDrop : MonoBehaviour
     {
         if (GameManager.Instance.IsPopupSceneLoaded) return;
         Grab(true);
+        if (_room != null) return;
         _offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
@@ -43,7 +47,7 @@ public class DragAndDrop : MonoBehaviour
 
     private void HandleRaycast(GameObject go)
     {
-        //Debug.Log("Objet touché : " + go.name);
+        Debug.Log("Objet touché : " + go.name);
 
         if (go.TryGetComponent(out DragAndDropHandler component))
         {
@@ -56,8 +60,9 @@ public class DragAndDrop : MonoBehaviour
     {
         if (isGrabbed) _initialPosition = transform.position;
         _isBeingDragged = isGrabbed;
-        _hud.SetActive(!isGrabbed);
-        _collider.enabled = isGrabbed ? false : true;
-        _sprite.sortingOrder = isGrabbed ? 99 : 6;
+        if (_hud  != null) _hud.SetActive(!isGrabbed);
+        if (_collider2D != null) _collider2D.enabled = !isGrabbed;
+        if (_collider3D != null) _collider3D.enabled = !isGrabbed;
+        if (_sprite != null) _sprite.sortingOrder = isGrabbed ? 99 : 6;
     }
 }

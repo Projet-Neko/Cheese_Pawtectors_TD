@@ -1,7 +1,8 @@
 using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class House : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class House : MonoBehaviour
     [SerializeField, Scene] private string _sceneHUD;
 
     public SerializedDictionary<RoomPattern, GameObject> Rooms => _rooms;
-    public Room[,] RoomsGrid => _roomsGrid;
+    public Dictionary<Tuple<RoomPattern, RoomDesign>, int> RoomsStorage => _roomsStorage;
     public int MaxRooms => _maxRooms;
 
     private const int _maxRooms = 30;
@@ -31,6 +32,8 @@ public class House : MonoBehaviour
     private LineRenderer[,] _lineGrid = new LineRenderer[2, _maxRooms+1];
     private IdRoom _idStartRoom;
     private bool _pathBuilt = false;
+
+    private Dictionary<Tuple<RoomPattern, RoomDesign>, int> _roomsStorage = new();
 
     private readonly Color _invalidColor = Color.red;
     private readonly Color _validColor = Color.white;
@@ -131,7 +134,10 @@ public class House : MonoBehaviour
         Room.LineActivated += ActiveLine;
         Junction.TileChanged += BuildPath;
         MouseBrain.VisitedNextRoom += GetNextTarget;
-    }
+
+        // Debug Only
+        _roomsStorage.Add(new(RoomPattern.CorridorRoom, RoomDesign.Bedroom), 1);
+}
 
     private void OnDestroy()
     {
@@ -472,7 +478,7 @@ public class House : MonoBehaviour
         if (numberNextRooms == 0)
             return GameManager.Instance.Cheese.gameObject;
 
-        int random = Random.Range(0, numberNextRooms);
+        int random = UnityEngine.Random.Range(0, numberNextRooms);
         IdRoom idRoom = currentRoom.NextRooms[random];
         return _roomsGrid[idRoom.x, idRoom.z].gameObject;
     }
@@ -486,7 +492,7 @@ public class House : MonoBehaviour
     {
         RoomPattern roomPattern;
         int random;
-            random = Random.Range(0, 100);
+            random = UnityEngine.Random.Range(0, 100);
 
         switch(random)
         {

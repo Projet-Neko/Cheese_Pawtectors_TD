@@ -14,13 +14,13 @@ public class StorageSlot : DragAndDropHandler
 
     private void Awake()
     {
-        _slotIndex = int.Parse(name.Split('_')[1]);
+        if (name.Split('_').Length == 2) _slotIndex = int.Parse(name.Split('_')[1]);
     }
 
     private void Update()
     {
         if (transform.childCount == 0) _currentCat = null;
-        _collider.enabled = _currentCat == null ? true : false;
+        _collider.enabled = _currentCat == null;
     }
 
     public void InitSlot(Cat cat)
@@ -67,6 +67,7 @@ public class StorageSlot : DragAndDropHandler
     private void Move(Room room)
     {
         InitSlot(room);
+        room.SetStorageMod();
 
         _currentRoom.transform.SetParent(transform);
         _currentRoom.transform.position = transform.position;

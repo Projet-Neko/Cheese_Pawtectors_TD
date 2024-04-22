@@ -12,28 +12,20 @@ public class HouseStorage : MonoBehaviour
     private void Start()
     {
         _slots = new();
-        /*foreach (var set in Enum.GetValues(typeof(RoomSet)))
-        {
-            foreach (var design in Enum.GetValues(typeof(RoomDesign)))
-            {
-                GameObject go = Instantiate(_slotPrefab, _container.transform);
-                _slots.Add(go.transform);
-            }
-        }*/
 
         // Temporary inventory without tags
-        /*for (int i = 0; i < House.Instance.MaxRooms; i++)
+        foreach (var room in House.Instance.RoomsStorage)
         {
-            for (int j = 0; j < House.Instance.MaxRooms; j++)
-            {
+            if (room.Key.Item1 is RoomPattern.VoidRoom) continue;
+            CreateSlot();
+        }
+    }
 
-                Room room = House.Instance.RoomsGrid[i, j];
-                if (room == null || room is VoidRoom) continue;
-                Debug.Log(room.name);
-                GameObject go = Instantiate(_slotPrefab, _container.transform);
-                _slots.Add(go.transform);
-            }
+    public void CreateSlot()
+    {
+        GameObject go = Instantiate(_slotPrefab, _container.transform);
+        _slots.Add(go.transform);
 
-        }*/
+        // TODO -> create room as slot child
     }
 }

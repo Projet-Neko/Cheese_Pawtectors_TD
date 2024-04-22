@@ -231,6 +231,7 @@ MonoBehaviour:
   _loadingPopup: LoginPopup
   _loadingSlider: {fileID: 0}
   _loadingText: {fileID: 0}
+  _headBandScene: HeadBand
 --- !u!114 &8386388096323966852
 MonoBehaviour:
   m_ObjectHideFlags: 0

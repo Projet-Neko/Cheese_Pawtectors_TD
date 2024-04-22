@@ -92,11 +92,12 @@ public class Room : MonoBehaviour
 
     private string _sceneHUD;
 
-    private Material[] _materials;
+    private List<Material> _materials = new();
 
     // Constants
     private const int _maxLevel = 3;
     private Plane _plane = new Plane(Vector3.up, 0);
+    private Vector3 _height;
 
 
     //change OnMouseDown to Button to avoid click error
@@ -113,6 +114,12 @@ public class Room : MonoBehaviour
         TileSelected -= DeselectTile;
     }
 
+    protected virtual void Awake()
+    {
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            _materials.AddRange(renderer.materials);
+    }
+
     void Start()
     {
         // Subscribe to events
@@ -121,7 +128,7 @@ public class Room : MonoBehaviour
         _canMove = false;
         _moveModBool = false;
 
-        _materials = GetComponent<Renderer>().materials;
+        _height = 3 * Camera.main.transform.forward.normalized;
     }
 
     private void FixedUpdate()
@@ -146,8 +153,9 @@ public class Room : MonoBehaviour
     {
         Vector3 position = startPosition;
         position.x = Mathf.Round(position.x);
-        position.y = 0;                                // To be sure the room is on the same line
+        position.y = 0;
         position.z = Mathf.Round(position.z);
+        position -= _height;
 
         return position;
     }
@@ -163,7 +171,7 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (true || _sceneHUD == SceneManager.GetActiveScene().name)
+        if (_sceneHUD == SceneManager.GetActiveScene().name)
         {
             if (_security == RoomSecurity.Protected)
             {
@@ -216,6 +224,8 @@ public class Room : MonoBehaviour
         _HUDCanva.SetActive(false);                 // Hide the HUD
         _moveModCanva.SetActive(true);              // Show the Move Canvas
         _oldPosition = _room.transform.position;    // Save the currently position
+        Debug.Log("Move Room : " + _height);
+        _room.transform.position -= _height;
         TileMoved?.Invoke();
     }
 
@@ -234,6 +244,7 @@ public class Room : MonoBehaviour
     // When user click on Canvas/Move Arrow/Done button
     public void StopMove()
     {
+        _room.transform.position += _height;
         LineActivated?.Invoke(false); // Invoke the event to hide the lines of the house
 
         _moveModBool = false;
@@ -242,7 +253,6 @@ public class Room : MonoBehaviour
         ChangeTilePosition?.Invoke(_oldPosition, _room.transform.position, true);       //true because the room ask for position validation
         TileSelected?.Invoke(false); // Invoke the event to deselect the other rooms
         _isSelected = false;
-
     }
 
     /*private void ChangePosition(bool validate)
@@ -344,12 +354,6 @@ public class Room : MonoBehaviour
     {
         foreach (Junction junction in _opening)
             junction.SetIdRoom(x, z);
-    }
-
-    public void ResetArrows()
-    {
-        foreach (Junction junction in _opening)
-            junction.ActivateArrow(false);
     }
 
     public void ColorRoom(Color color)

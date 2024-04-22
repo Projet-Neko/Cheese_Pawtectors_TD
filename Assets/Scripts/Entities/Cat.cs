@@ -83,7 +83,7 @@ public class Cat : Entity
             _currentHealth += source.Damage;
 
             Mathf.Clamp(_currentHealth, 0f, _baseHealth);
-            Debug.Log($"Cat current satiety : {_currentHealth}/{_baseHealth}");
+            //Debug.Log($"Cat current satiety : {_currentHealth}/{_baseHealth}");
 
             SetHealth();
 

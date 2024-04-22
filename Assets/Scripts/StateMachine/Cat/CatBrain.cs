@@ -64,4 +64,16 @@ public class CatBrain : Brain
             yield return new WaitForSeconds(Random.Range(1f, 3f));
         }
     }
+
+    public void SetRoom()
+    {
+        do
+        {
+            if (Entity.transform.parent.gameObject.TryGetComponent(out BoxCollider collider))
+            {
+                Room = collider;
+            }
+        }
+        while (Room == null);
+    }
 }

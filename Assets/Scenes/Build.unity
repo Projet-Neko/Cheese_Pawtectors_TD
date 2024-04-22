@@ -383,74 +383,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172310686}
   m_CullTransparentMesh: 1
---- !u!1001 &226287010
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4887360354738087906, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887360354738087906, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887360354738087906, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.02789
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887360354738087906, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887360354738087906, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887360354738087906, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887360354738087906, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887360354738087906, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887360354738087906, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4887360354738087906, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6363237601309247973, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
-      propertyPath: m_Name
-      value: GridHouse
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
---- !u!114 &226287011 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2513913717346125373, guid: c76ebab4b343f7943b7e513cf8ba2d67, type: 3}
-  m_PrefabInstance: {fileID: 226287010}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 098e7a1116a1cf8418edfea0b3bd16c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &280097427
 GameObject:
   m_ObjectHideFlags: 0
@@ -3025,6 +2957,7 @@ GameObject:
   - component: {fileID: 1713938794}
   - component: {fileID: 1713938793}
   - component: {fileID: 1713938796}
+  - component: {fileID: 1713938797}
   m_Layer: 5
   m_Name: YesButton
   m_TagString: Untagged
@@ -3096,8 +3029,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 226287011}
-        m_TargetAssemblyTypeName: House, Assembly-CSharp
+      - m_Target: {fileID: 1713938797}
+        m_TargetAssemblyTypeName: QuitButtonYes, Assembly-CSharp
         m_MethodName: DestroyInvalidRoom
         m_Mode: 1
         m_Arguments:
@@ -3172,6 +3105,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scene: MainScreen
   _isAdditive: 0
+--- !u!114 &1713938797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713938791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce735fb4d10d5da498f99c6cb3ee04c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1745265992
 GameObject:
   m_ObjectHideFlags: 0
@@ -3666,7 +3611,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closePopupBackground: {fileID: 1695244891}
-  _house: {fileID: 226287011}
 --- !u!1 &1938338965
 GameObject:
   m_ObjectHideFlags: 0
@@ -4313,6 +4257,5 @@ SceneRoots:
   - {fileID: 1663114803}
   - {fileID: 982620920}
   - {fileID: 61990388}
-  - {fileID: 226287010}
   - {fileID: 1695244895}
   - {fileID: 355685094}

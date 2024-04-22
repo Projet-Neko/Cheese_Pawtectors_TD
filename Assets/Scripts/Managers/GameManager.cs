@@ -256,7 +256,7 @@ public class GameManager : MonoBehaviour
     private void OnApplicationPause(bool pause)
     {
         if (!_isInitCompleted) return;
-        Debug.Log("Updating local data on application pause...");
+        //Debug.Log("Updating local data on application pause...");
         Data.Update();
     }
 

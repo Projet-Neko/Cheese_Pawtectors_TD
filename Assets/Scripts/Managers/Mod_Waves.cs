@@ -30,7 +30,7 @@ public class Mod_Waves : Module
     private List<GameObject> _enemyObjects = new();
     private bool _hasCompleteSpawning = false;
     private IEnumerator _spawn;
-    private bool _cheeseDead = false;
+    private bool _cheeseDead;
     private Vector3 _spawningRoomPosition = new(-1, -1, -1);
     private bool _wavesStarted = false;
     private bool _cheeseInitialized = false;
@@ -54,23 +54,29 @@ public class Mod_Waves : Module
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (mode == LoadSceneMode.Additive) return;
-        _wavesStarted = false;
 
-        if (scene.name == _buildScene) _enableWaves = false;
-        else if (scene.name == _mainScreenScene) _enableWaves = true;
+        if (scene.name == _buildScene)
+        {
+            Debug.Log("Waves disabled");
+            _enableWaves = false;
+            _wavesStarted = false;
+            StopCoroutine(_spawn);
+        }
+        else if (scene.name == _mainScreenScene)
+        {
+            Debug.Log("Waves enabled");
+            _enableWaves = true;
+        }
     }
 
     private void StartRoom_OnInit(Room obj)
     {
         _spawningRoomPosition = obj.transform.position;
-        //_spawningRoomPosition.z = -4; // Necessary ?
-        if (!_wavesStarted && _cheeseInitialized) StartWaves();
     }
 
     private void Cheese_OnInit(Cheese obj)
     {
         _cheeseInitialized = true;
-        if (!_wavesStarted && _spawningRoomPosition != new Vector3(-1, -1, -1)) StartWaves();
     }
 
     public override void Init(GameManager gm)
@@ -79,27 +85,40 @@ public class Mod_Waves : Module
         InitComplete();
     }
 
+    private void Update()
+    {
+        if (_enableWaves && !_wavesStarted && _cheeseInitialized && _spawningRoomPosition != new Vector3(-1, -1, -1))
+        {
+            StartWaves();
+        }
+    }
+
     public void StartWaves()
     {
         _wavesStarted = true;
-        _maxEnemyNumber = _killedEnemiesNumber = 0;
+        _maxEnemyNumber = 0;
         _spawn = SpawnEnemies(false);
         if (_enableWaves) StartCoroutine(_spawn);
     }
 
     public IEnumerator SpawnEnemies(bool cooldown)
     {
-        int index = 0;
         _hasCompleteSpawning = false;
+        _spawnedEnemyNumber = _killedEnemiesNumber = 0;
         _maxEnemyNumber = IsBossWave() ? 1 : 10;
+
         if (cooldown) yield return new WaitForSeconds(.5f);
+        _cheeseDead = false;
+
+        int index = 0;
+
         while (_spawnedEnemyNumber < _maxEnemyNumber)
         {
             Mouse m = Instantiate(_gm.MousePrefab, _spawningRoomPosition, Quaternion.identity).GetComponent<Mouse>();
             m.WaveIndex = index + 1;
             _spawnedEnemyNumber++;
-            index++;
             _enemyObjects.Add(m.gameObject);
+            index++;
             yield return new WaitForSeconds(1);
         }
 
@@ -117,14 +136,10 @@ public class Mod_Waves : Module
         else if (entity is Mouse && !_cheeseDead)
         {
             _killedEnemiesNumber++;
-            _spawnedEnemyNumber--;
+            //Debug.Log($"{_killedEnemiesNumber} mouse killed");
 
-            if (entity is Mouse m && m.IsBoss)
-            {
-                OnBossDefeated?.Invoke();
-            }
+            if ((entity as Mouse).IsBoss) OnBossDefeated?.Invoke();
             if (_hasCompleteSpawning && _killedEnemiesNumber == _maxEnemyNumber) NextWave();
-
         }
     }
 
@@ -154,17 +169,10 @@ public class Mod_Waves : Module
 
         if (!_hasCompleteSpawning) StopCoroutine(_spawn);
 
-        if (_spawnedEnemyNumber != 0)
-        {
-            Debug.Log($"Destroying remaining {_spawnedEnemyNumber} enemies...");
-
-            foreach (var enemy in _enemyObjects) if (enemy != null) Destroy(enemy);
-            _enemyObjects.Clear();
-        }
+        foreach (var enemy in _enemyObjects) if (enemy != null) Destroy(enemy);
+        _enemyObjects.Clear();
 
         OnWaveReload?.Invoke();
-        _spawnedEnemyNumber = _killedEnemiesNumber = 0;
-        _cheeseDead = false;
         _spawn = SpawnEnemies(true);
         StartCoroutine(_spawn);
     }

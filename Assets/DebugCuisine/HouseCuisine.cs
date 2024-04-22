@@ -205,15 +205,6 @@ public class HouseCuisine : MonoBehaviour
         }
     }
 
-    public void ResetArrows()
-    {
-        for (int x = 0; x < _currentRoomNumber; x++)
-        {
-            for (int z = 0; z < _currentRoomNumber; z++)
-                _roomsGrid[x, z].ResetArrows();
-        }
-    }
-
     private bool IsPreviousRoom(IdRoom idRoom, IdRoom idRoomSearch)
     {
         foreach (IdRoom idRoomPrevious in _roomsGrid[idRoom.x, idRoom.z].PreviousRooms)
@@ -253,14 +244,12 @@ public class HouseCuisine : MonoBehaviour
                 continue;
 
             room.NextRooms.Add(idRoomNext);                                                                                 // Add the next room to the list of next rooms
-            junction.ActivateArrow(true);                                                                                   // Activate the arrow of the junction
 
             bool validPath = BuildPath(idRoomNext, idRoom);                                                                 // Build the path from the next room and check if it is valid
 
             if (!validPath)                                                                                                 // If the path is not valid...
             {
                 room.NextRooms.RemoveAt(room.NextRooms.Count - 1);                                                          // ... remove the next room from the list of next rooms and ...
-                junction.ActivateArrow(false);                                                                              // ... deactivate the arrow of the junction
             }
         }
 
@@ -294,7 +283,6 @@ public class HouseCuisine : MonoBehaviour
         {
             startRoom.NextRooms.Add(idRoomNext);                                                                            // Add the next room to the list of next rooms of the start room
             DestroyInvalidRoom();                                                                                           // Destroy the rooms that are not connected to the path
-            junctionStart.ActivateArrow(true);                                                                              // Activate the arrow of the junction of the start room
         }
         else
             Debug.Log("Path not valid");

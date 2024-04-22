@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Junction : MonoBehaviour
 {
-    [SerializeField] GameObject _arrow;
-
     public static event Action TileChanged;// Notify the house that a room has changed
 
     private IdRoom _idRoom;
@@ -46,10 +44,5 @@ public class Junction : MonoBehaviour
             return _junctionConnected.IdRoom;
         else
             return new IdRoom(-1, -1);
-    }
-
-    public void ActivateArrow(bool activate)
-    {
-        _arrow.SetActive(activate);
     }
 }

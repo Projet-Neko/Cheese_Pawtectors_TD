@@ -1,10 +1,11 @@
 using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class House : MonoBehaviour
 {
+    public static House Instance { get; private set; }
+
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
     [SerializeField] private GameObject _mousePrefab;
     [SerializeField] private GameObject _linePrefab;
@@ -29,6 +30,19 @@ public class House : MonoBehaviour
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */
+
+    private bool CreateInstance()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return false;
+        }
+        Instance = this;
+        DontDestroyOnLoad(this);
+        return true;
+    }
+
     private void AddLine(float x, float z, float xEnd, float zEnd)
     {
         int indice1 = 1;
@@ -68,6 +82,8 @@ public class House : MonoBehaviour
 
     void Start()
     {
+        if (!CreateInstance()) return;
+
         // Create the Void Rooms and one Start Room, visible in the beginning
         _currentRoomNumber = _minRooms;
 
@@ -103,7 +119,7 @@ public class House : MonoBehaviour
 
         // Subscribe to events
         Room.ChangeTilePosition += CheckRoomPosition;
-        Room.TileDestroyed += CreateRoom;
+        Room.TileDestroyed += ReplaceRoom;
         Room.LineActivated += ActiveLine;
         Junction.TileChanged += BuildPath;
         MouseBrain.VisitedNextRoom += GetNextTarget;
@@ -113,7 +129,7 @@ public class House : MonoBehaviour
     {
         // Unsubscribe to events
         Room.ChangeTilePosition -= CheckRoomPosition;
-        Room.TileDestroyed -= CreateRoom;
+        Room.TileDestroyed -= ReplaceRoom;
         Room.LineActivated -= ActiveLine;
         Junction.TileChanged -= BuildPath;
         MouseBrain.VisitedNextRoom -= GetNextTarget;
@@ -130,35 +146,6 @@ public class House : MonoBehaviour
         roomObject.transform.parent = transform;
         _roomsGrid[x, z] = roomObject.GetComponentInChildren<Room>();
         _roomsGrid[x, z].SceneForHUD(_sceneHUD);
-    }
-
-    private void CreateRandomRoom()
-    {
-        /*int random = UnityEngine.Random.Range(0, 2);
-        RoomPattern roomPattern;
-        switch (random)
-        {
-            case 0:
-                roomPattern = RoomPattern.CorridorRoom;
-                break;
-                
-            case 1:
-                roomPattern = RoomPattern.TurnRoom;
-                break;
-
-            case 2:
-                roomPattern= RoomPattern.CrossraodRoom;
-                break;
-
-            default:
-                roomPattern = RoomPattern.CorridorRoom;
-                break;
-        }
-        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity); // TO DO : Change the position to inventaire
-        roomObject.transform.parent = transform;
-        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();*/
-
-        // TO DO : Add the (image of the) room to the inventory 
     }
 
     /* * * * * * * * * * * * * * * * * * * *
@@ -214,25 +201,29 @@ public class House : MonoBehaviour
      *              NEW ROOM
      * * * * * * * * * * * * * * * * * * * */
 
+    private void ReplaceRoom(int x, int z, RoomPattern pattern)
+    {
+        // Destroy the old room in the grid
+        _roomsGrid[x, z].Delete();
+
+        // Create the new room
+        CreateRoom(x, z, pattern);
+
+        // Build the new path
+        BuildPath();
+    }
+
     private void AddRoom(int x, int z, RoomPattern pattern)
     {
         if (_roomsGrid[x, z].Security == RoomSecurity.Overwritten)
         {
-            // Destroy the old room (void)
-            _roomsGrid[x, z].Delete();
-
-            // Create the new room
-            CreateRoom(x, z, pattern);
-
-            BuildPath();
+            ReplaceRoom(x, z, pattern);
         }
         else if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            //Ajout de la vieille piece dans l'inventaire
-            CreateRoom(x, z, pattern);
+            AddRoomInInventory(_roomsGrid[x, z].Pattern);// Add old room in inventory
 
-            BuildPath();
-
+            ReplaceRoom(x, z, pattern);
         }
         else Debug.Log("Room not overwritable, security = " + _roomsGrid[x, z].Security);
     }
@@ -287,6 +278,8 @@ public class House : MonoBehaviour
 
         UpdateLineRight();
         AddLine(_currentRoomNumber, zStart, _currentRoomNumber, zStart + _currentRoomNumber);
+
+        AddRandomRoomInInventory(); // Give new room to the player
     }
 
     /* * * * * * * * * * * * * * * * * * * *
@@ -304,17 +297,6 @@ public class House : MonoBehaviour
                 _roomsGrid[x, z].DefineIdRoom(x, z);
                 _roomsGrid[x, z].ResetPath();
             }
-        }
-    }
-
-    public void ResetArrows()
-    {
-        int zStart = _maxRooms / 2 - _currentRoomNumber / 2;
-
-        for (int x = 0; x < _currentRoomNumber; x++)
-        {
-            for (int z = zStart; z < zStart + _currentRoomNumber; z++)
-                _roomsGrid[x, z].ResetArrows();
         }
     }
 
@@ -357,15 +339,11 @@ public class House : MonoBehaviour
                 continue;
 
             room.NextRooms.Add(idRoomNext);                                                                                 // Add the next room to the list of next rooms
-            junction.ActivateArrow(true);                                                                                   // Activate the arrow of the junction
 
             bool validPath = BuildPath(idRoomNext, idRoom);                                                                 // Build the path from the next room and check if it is valid
 
             if (!validPath)                                                                                                 // If the path is not valid...
-            {
-                room.NextRooms.RemoveAt(room.NextRooms.Count - 1);                                                          // ... remove the next room from the list of next rooms and ...
-                junction.ActivateArrow(false);                                                                              // ... deactivate the arrow of the junction
-            }
+                room.NextRooms.RemoveAt(room.NextRooms.Count - 1);                                                          // ... remove the next room from the list of next rooms
         }
 
         if (room.NextRooms.Count == 0)                                                                                      // If the room is not connected to any room
@@ -382,6 +360,7 @@ public class House : MonoBehaviour
 
     private void BuildPath()
     {
+        Debug.Log("Build path");
         InitBuildPath();                                                                                                    // Define the ID of each room in its junctions
 
         Room startRoom = _roomsGrid[_idStartRoom.x, _idStartRoom.z];                                                        // Get the start room
@@ -402,11 +381,8 @@ public class House : MonoBehaviour
         if (_pathBuilt)
         {
             Room startRoom = _roomsGrid[_idStartRoom.x, _idStartRoom.z];                                                    // Get the start room
-            Junction junctionStart = startRoom.Opening[0];                                                                  // Get the junction of the start room
-            IdRoom idRoomNext = junctionStart.GetIdRoomConnected();                                                         // Get the ID of the room connected to the junction of the start room
-
-            startRoom.NextRooms.Add(idRoomNext);                                                                            // Add the next room to the list of next rooms of the start room                                                                                         
-            junctionStart.ActivateArrow(true);                                                                              // Activate the arrow of the junction of the start room
+            IdRoom idRoomNext = startRoom.Opening[0].GetIdRoomConnected();                                                  // Get the ID of the room connected to the junction of the start room
+            startRoom.NextRooms.Add(idRoomNext);                                                                            // Add the next room to the list of next rooms of the start room
             return true;
         }
         else
@@ -420,17 +396,9 @@ public class House : MonoBehaviour
     {
         if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            // Destroy the old room
-            _roomsGrid[x, z].Delete();
+            AddRoomInInventory(_roomsGrid[x, z].Pattern);// Add old room to the inventory
 
-            //Ajout dans l'inventaire
-
-            // Create the new room
-            CreateRoom(x, z, RoomPattern.VoidRoom);
-        }
-        else
-        {
-            //Debug.Log("Room not MovedAndRemoved, security = " + _roomsGrid[x, z].Security);
+            ReplaceRoom(x, z, RoomPattern.VoidRoom);
         }
     }
 
@@ -499,6 +467,45 @@ public class House : MonoBehaviour
         int random = Random.Range(0, numberNextRooms);
         IdRoom idRoom = currentRoom.NextRooms[random];
         return _roomsGrid[idRoom.x, idRoom.z].gameObject;
+    }
+
+
+    /* * * * * * * * * * * * * * * * * * * *
+    *           INVENTORY ROOM
+    * * * * * * * * * * * * * * * * * * * */
+
+    private void AddRandomRoomInInventory()
+    {
+        RoomPattern roomPattern;
+        int random;
+            random = Random.Range(0, 100);
+
+        switch(random)
+        {
+            case int n when n < 10:
+                roomPattern = RoomPattern.CrossraodRoom;
+                break;
+            case int n when n < 30:
+                roomPattern = RoomPattern.IntersectionRoom;
+                break;
+            case int n when n < 60:
+                roomPattern = RoomPattern.TurnRoom;
+                break;
+            default:
+                roomPattern = RoomPattern.CorridorRoom;
+                break;
+        }
+
+        AddRoomInInventory(roomPattern);
+
+        /*GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity);
+        roomObject.transform.parent = transform;
+        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();*/
+    }
+
+    private void AddRoomInInventory(RoomPattern roomPattern)
+    {
+        // TO DO : Check if cats are in room
     }
 
 

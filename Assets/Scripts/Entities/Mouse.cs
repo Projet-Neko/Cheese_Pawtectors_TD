@@ -84,7 +84,7 @@ public class Mouse : Entity
     //}
     public override void Die(Entity source)
     {
-        if (CanSplit())
+        if (_isBoss && CanSplit())
         {
             Split();
         }

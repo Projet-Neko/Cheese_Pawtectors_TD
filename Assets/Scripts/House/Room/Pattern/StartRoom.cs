@@ -8,6 +8,7 @@ public class StartRoom : Room
     {
         base.Awake();
         _security = RoomSecurity.Protected;
+        _pattern = RoomPattern.StartRoom;
         OnInit?.Invoke(this);
     }
 }

@@ -4,5 +4,6 @@ public class TurnRoom : Room
     {
         base.Awake();
         _security = RoomSecurity.MovedAndRemoved;
+        _pattern = RoomPattern.TurnRoom;
     }
 }

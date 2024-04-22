@@ -17,7 +17,8 @@ public class RoomDrop : DragAndDropHandler
 
         if (_currentCat != null)
         {
-            if (_currentCat.Level == cat.Level) _currentCat.GetComponent<DragAndDropHandler>().HandleDragAndDrop(cat, initialPosition);
+            if (cat == _currentCat) base.HandleDragAndDrop(cat, initialPosition);
+            else if (_currentCat.Level == cat.Level) _currentCat.GetComponent<DragAndDropHandler>().HandleDragAndDrop(cat, initialPosition);
             else base.HandleDragAndDrop(cat, initialPosition);
             return;
         }

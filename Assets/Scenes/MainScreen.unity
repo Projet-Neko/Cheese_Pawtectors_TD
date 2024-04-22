@@ -1592,7 +1592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneHeadBand: HeadBand
-  _sceneLoginPopup: TitleScreen
+  _sceneLoginPopup: OfflineRewards
 --- !u!114 &493263710
 MonoBehaviour:
   m_ObjectHideFlags: 0

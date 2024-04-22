@@ -105,8 +105,8 @@ public class Mod_Waves : Module
     {
         _hasCompleteSpawning = false;
         _spawnedEnemyNumber = _killedEnemiesNumber = 0;
-        _maxEnemyNumber = IsBossWave() ? 1 : 10;
-
+        /*_maxEnemyNumber = IsBossWave() ? 1 : 10;*/
+        _maxEnemyNumber = 1;
         if (cooldown) yield return new WaitForSeconds(.5f);
         _cheeseDead = false;
 

@@ -518,6 +518,7 @@ GameObject:
   - component: {fileID: 485791641114014304}
   - component: {fileID: 8976586023322844997}
   - component: {fileID: 7018049124374938761}
+  - component: {fileID: 167094506515191126}
   m_Layer: 10
   m_Name: Room
   m_TagString: Untagged
@@ -555,6 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _room: {fileID: 4366641987968570484}
+  _spriteInventory: {fileID: 0}
   _HUDCanva: {fileID: 9097125527900312068}
   _moveModCanva: {fileID: 2770497106009272327}
   _cantMoveThisRoomCanvas: {fileID: 0}
@@ -597,6 +599,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentCat: {fileID: 0}
+--- !u!114 &167094506515191126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7467558841059730933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 687cc80963b25204f9b4a737907b3430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cat: {fileID: 0}
+  _sprite: {fileID: 0}
+  _hud: {fileID: 0}
+  _collider2D: {fileID: 0}
+  _room: {fileID: 485791641114014304}
+  _collider3D: {fileID: 8976586023322844997}
 --- !u!1 &7488220483637364528
 GameObject:
   m_ObjectHideFlags: 0

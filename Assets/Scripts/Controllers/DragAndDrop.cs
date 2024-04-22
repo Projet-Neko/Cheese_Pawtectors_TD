@@ -18,7 +18,7 @@ public class DragAndDrop : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (_room != null) return;
+        if (_room != null && !_room.IsInStorageMode) return;
         if (!_isBeingDragged) return;
         transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + _offset;
     }
@@ -26,8 +26,8 @@ public class DragAndDrop : MonoBehaviour
     private void OnMouseDown()
     {
         if (GameManager.Instance.IsPopupSceneLoaded) return;
+        if (_room != null && !_room.IsInStorageMode) return;
         Grab(true);
-        if (_room != null) return;
         _offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
@@ -51,8 +51,16 @@ public class DragAndDrop : MonoBehaviour
 
         if (go.TryGetComponent(out DragAndDropHandler component))
         {
-            if (_cat != null) component.HandleDragAndDrop(_cat, _initialPosition);
-            else if (_room != null) component.HandleDragAndDrop(_room, _initialPosition);
+            if (_cat != null)
+            {
+                Debug.Log("component found, cat is not null");
+                component.HandleDragAndDrop(_cat, _initialPosition);
+            }
+            else if (_room != null)
+            {
+                Debug.Log("component found, room is not null");
+                component.HandleDragAndDrop(_room, _initialPosition);
+            }
         }
     }
 
@@ -64,5 +72,7 @@ public class DragAndDrop : MonoBehaviour
         if (_collider2D != null) _collider2D.enabled = !isGrabbed;
         if (_collider3D != null) _collider3D.enabled = !isGrabbed;
         if (_sprite != null) _sprite.sortingOrder = isGrabbed ? 99 : 6;
+
+        if (_room != null) House.Instance.ActiveLine(isGrabbed);
     }
 }

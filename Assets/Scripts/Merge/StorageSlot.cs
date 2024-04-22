@@ -4,7 +4,6 @@ using UnityEngine;
 public class StorageSlot : DragAndDropHandler
 {
     [SerializeField] private Cat _currentCat;
-    [SerializeField] private Room _currentRoom;
     [SerializeField] private BoxCollider2D _collider;
 
     public static event Action RemoveCat; //Event for the Cat in house Success
@@ -28,11 +27,6 @@ public class StorageSlot : DragAndDropHandler
         _currentCat = cat;
     }
 
-    public void InitSlot(Room room)
-    {
-        _currentRoom = room;
-    }
-
     public override void HandleDragAndDrop(Cat cat, Vector3 initialPosition)
     {
         //Debug.Log(_currentCat == null ? $"{name} is empty" : $"{name} is full with {_currentCat.gameObject.name}");
@@ -40,12 +34,6 @@ public class StorageSlot : DragAndDropHandler
         if (_currentCat == null) Move(cat);
         else if (_currentCat.Level == cat.Level) MergeCat(cat);
         else base.HandleDragAndDrop(cat, initialPosition);
-    }
-
-    public override void HandleDragAndDrop(Room room, Vector3 initialPosition)
-    {
-        if (_currentRoom == null) Move(room);
-        else base.HandleDragAndDrop(room, initialPosition);
     }
 
     private void Move(Cat cat)
@@ -62,15 +50,6 @@ public class StorageSlot : DragAndDropHandler
 
         //Debug.Log($"Position du slot : {transform.position}");
         //Debug.Log($"Position du chat : {_currentCat.transform.position}");
-    }
-
-    private void Move(Room room)
-    {
-        InitSlot(room);
-        room.SetStorageMode();
-
-        _currentRoom.transform.SetParent(transform);
-        _currentRoom.transform.position = transform.position;
     }
 
     private void MergeCat(Cat cat)

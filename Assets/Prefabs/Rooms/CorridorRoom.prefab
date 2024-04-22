@@ -554,6 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _room: {fileID: 104032388545238699}
+  _spriteInventory: {fileID: 0}
   _HUDCanva: {fileID: 6285127139490752415}
   _moveModCanva: {fileID: 8002742664615557043}
   _cantMoveThisRoomCanvas: {fileID: 0}
@@ -594,6 +595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentCat: {fileID: 0}
+  _room: {fileID: 1636404361455639622}
 --- !u!114 &8459218760697352481
 MonoBehaviour:
   m_ObjectHideFlags: 0

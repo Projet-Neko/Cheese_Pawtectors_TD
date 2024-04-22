@@ -95,6 +95,7 @@ public class Room : MonoBehaviour
     public RoomPattern Pattern => _pattern;
     public List<IdRoom> PreviousRooms => _previousRooms;
     public List<IdRoom> NextRooms => _nextRooms;
+    public bool IsInStorageMode => _isInStorageMode;
 
     protected RoomSecurity _security;
     protected RoomPattern _pattern;
@@ -113,6 +114,8 @@ public class Room : MonoBehaviour
     private string _sceneHUD;
 
     private List<Material> _materials = new();
+
+    private bool _isInStorageMode = false;
 
     // Constants
     private const int _maxLevel = 3;
@@ -169,7 +172,7 @@ public class Room : MonoBehaviour
      *          UTILITIES FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */
 
-    private Vector3 RoundPosition(Vector3 startPosition)
+    public Vector3 RoundPosition(Vector3 startPosition)
     {
         Vector3 position = startPosition;
         position.x = Mathf.Round(position.x);
@@ -220,15 +223,15 @@ public class Room : MonoBehaviour
         }*/
     }
 
-    public void SetStorageMode()
+    public void SetStorageMode(bool mode)
     {
-        //
+        _isInStorageMode = mode;
     }
 
     private void Selected()
     {
         _isSelected = !_isSelected;
-        _HUDCanva.SetActive(_isSelected);
+        if (_HUDCanva != null) _HUDCanva.SetActive(_isSelected);
         TileSelected?.Invoke(_isSelected); // Invoke the event to deselect the other rooms
     }
 

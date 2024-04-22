@@ -34,7 +34,7 @@ public class Success_Manager : MonoBehaviour
         Mod_Economy.ThreatWin += ThreatSuccess;
         Room.TileMoved += ModifyHouseSuccess;
         Storage.OnCatSpawn += CatAdoptedSuccess;
-        DropCat.CatDroped += AddCatInHouse;
+        RoomDrop.CatDroped += AddCatInHouse;
         StorageSlot.RemoveCat += RemoveCatInHouse;
         Discard.OnCatDiscard += CatGivenSuccess;
 
@@ -51,7 +51,7 @@ public class Success_Manager : MonoBehaviour
         Mod_Economy.ThreatWin -= ThreatSuccess;
         Room.TileMoved -= ModifyHouseSuccess;
         Storage.OnCatSpawn -= CatAdoptedSuccess;
-        DropCat.CatDroped -= AddCatInHouse;
+        RoomDrop.CatDroped -= AddCatInHouse;
         StorageSlot.RemoveCat -= RemoveCatInHouse;
         Discard.OnCatDiscard -= CatGivenSuccess;
 

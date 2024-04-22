@@ -245,6 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _catPrefab: {fileID: 6983453442427492931, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
   _mousePrefab: {fileID: 732585812547385431, guid: 1c4d78e56a21db14eba23b39d26d78ab, type: 3}
+  _blackMousePrefab: {fileID: 732585812547385431, guid: ea8647174b2017840a87a8e21a8c61d2, type: 3}
   _mouseRatPrefab: {fileID: 732585812547385431, guid: d4fb8abfcf944b0459e0765474381c9c, type: 3}
   _mouseBallPrefab: {fileID: 732585812547385431, guid: 25f377ce032df8e4c9959ced64cf5f9c, type: 3}
   _cheesePrefab: {fileID: 9112299513364551935, guid: 9d79b2703c23b1c4cbe0cfa987ade26c, type: 3}

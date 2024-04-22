@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     #region Modules
     // EntitiesMod
     public GameObject MousePrefab => Mod<Mod_Entities>().MousePrefab;
+    public GameObject BlackMousePrefab => Mod<Mod_Entities>().BlackMousePrefab;
     public GameObject MouseRatPrefab => Mod<Mod_Entities>().MouseRatPrefab;
     public GameObject MouseBallPrefab => Mod<Mod_Entities>().MouseBallPrefab;
     public GameObject CheesePrefab => Mod<Mod_Entities>().CheesePrefab;
@@ -63,7 +64,9 @@ public class GameManager : MonoBehaviour
     public MouseSO[] Mouses => Mod<Mod_Entities>().Mouses;
     public Cheese Cheese => Mod<Mod_Entities>().Cheese;
     public bool CanSpawnAlbino => Mod<Mod_Entities>().CanSpawnAlbino;
+    public bool BlackMouseHasSpawned => Mod<Mod_Entities>().BlackMouseHasSpawned;
 
+    public void SpawnBlackMouse() => Mod<Mod_Entities>().SpawnBlackMouse();
     public void AlbinoHasSpawned() => Mod<Mod_Entities>().AlbinoHasSpawned();
     public void SpawnCheese(Transform room) => Mod<Mod_Entities>().SpawnCheese(room);
 
@@ -73,6 +76,7 @@ public class GameManager : MonoBehaviour
     public int SpawnTime => Mod<Mod_Waves>().SpawnTime;
 
     public bool IsBossWave() => Mod<Mod_Waves>().IsBossWave();
+    public bool CanSpawnBlackMouse() => Mod<Mod_Waves>().CanSpawnBlackMouse();
 
     // EconomyMod
     public List<int> CatPrices => Mod<Mod_Economy>().CatPrices;

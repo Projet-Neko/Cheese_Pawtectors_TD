@@ -6,11 +6,13 @@ public class Mod_Entities : Module
     [Header("Prefabs")]
     [SerializeField] private GameObject _catPrefab;
     [SerializeField] private GameObject _mousePrefab;
+    [SerializeField] private GameObject _blackMousePrefab;
     [SerializeField] private GameObject _mouseRatPrefab;
     [SerializeField] private GameObject _mouseBallPrefab;
     [SerializeField] private GameObject _cheesePrefab;
 
     public GameObject MousePrefab => _mousePrefab;
+    public GameObject BlackMousePrefab => _blackMousePrefab;
     public GameObject MouseRatPrefab => _mouseRatPrefab;
     public GameObject MouseBallPrefab => _mouseBallPrefab;
     public GameObject CheesePrefab => _cheesePrefab;
@@ -18,11 +20,13 @@ public class Mod_Entities : Module
     public MouseSO[] Mouses => _mouses;
     public Cheese Cheese => _cheese;
     public bool CanSpawnAlbino => _canSpawnAlbino;
+    public bool BlackMouseHasSpawned => _blackMouseHasSpawned;
 
     private CatSO[] _cats;
     private MouseSO[] _mouses;
     private Cheese _cheese;
     private bool _canSpawnAlbino = true;
+    private bool _blackMouseHasSpawned = false;
 
     private void Awake()
     {
@@ -64,6 +68,11 @@ public class Mod_Entities : Module
     public void AlbinoHasSpawned()
     {
         _canSpawnAlbino = false;
+    }
+
+    public void SpawnBlackMouse()
+    {
+        _blackMouseHasSpawned = true;
     }
 
     public void SpawnCheese(Transform room)

@@ -105,13 +105,16 @@ public class Mod_Waves : Module
     {
         if (GameManager.Instance.IsBossWave())// Check if it's a boss wave
         {
-            //IsBoss = true;
             // 3 = MouseBallBoss , 4 = RatBoss
             return UnityEngine.Random.Range(3, 5);
         }
-
-
-        if ((GameManager.Instance.CanSpawnAlbino && UnityEngine.Random.Range(0, 100) <= 1))// Check if we can spawn Albinos
+        if (GameManager.Instance.CanSpawnBlackMouse())
+        {
+            GameManager.Instance.SpawnBlackMouse();
+            // 2 = black mouse
+            return 2;
+        }
+        if (GameManager.Instance.CanSpawnAlbino && UnityEngine.Random.Range(0, 100) <= 1)// Check if we can spawn Albinos
         {
             GameManager.Instance.AlbinoHasSpawned();
             // 1 = albino mouse
@@ -121,6 +124,19 @@ public class Mod_Waves : Module
 
         // 0 = classic mouse
         return 0;
+    }
+
+    public bool CanSpawnBlackMouse()
+    {
+        if (GameManager.Instance.BlackMouseHasSpawned)
+        {
+            return false;
+        }
+        if (_gm.Data.WaveNumber > 20)
+        {
+            return true;
+        }
+        return false;
     }
 
     public IEnumerator SpawnEnemies(bool cooldown)
@@ -140,6 +156,9 @@ public class Mod_Waves : Module
             int mouseType = MouseType();
             switch (mouseType)
             {
+                case 2:
+                    m = Instantiate(_gm.BlackMousePrefab, _spawningRoomPosition, Quaternion.identity).GetComponent<Mouse>();
+                    break;
                 case 3:
                     m = Instantiate(_gm.MouseBallPrefab, _spawningRoomPosition, Quaternion.identity).GetComponent<Mouse>();
                     break;

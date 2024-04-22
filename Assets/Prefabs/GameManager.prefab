@@ -228,10 +228,11 @@ MonoBehaviour:
   - {fileID: 2843526968020932932}
   - {fileID: 7459078949945384106}
   - {fileID: 704567818242211448}
-  _loadingPopup: LoginPopup
+  _loadingPopup: TitleScreen
   _loadingSlider: {fileID: 0}
   _loadingText: {fileID: 0}
   _headBandScene: HeadBand
+  _errorPopupScene: ErrorPopup
 --- !u!114 &8386388096323966852
 MonoBehaviour:
   m_ObjectHideFlags: 0

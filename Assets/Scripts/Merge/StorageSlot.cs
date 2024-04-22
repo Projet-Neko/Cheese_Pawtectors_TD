@@ -67,7 +67,7 @@ public class StorageSlot : DragAndDropHandler
     private void Move(Room room)
     {
         InitSlot(room);
-        room.SetStorageMod();
+        room.SetStorageMode();
 
         _currentRoom.transform.SetParent(transform);
         _currentRoom.transform.position = transform.position;

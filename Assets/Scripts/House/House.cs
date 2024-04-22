@@ -1,18 +1,26 @@
 using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class House : MonoBehaviour
 {
     public static House Instance { get; private set; }
 
+    [Header("Prefabs")]
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
     [SerializeField] private GameObject _mousePrefab;
     [SerializeField] private GameObject _linePrefab;
+
+    [Header("Dependencies")]
     [SerializeField] private GameObject _lineObject;
 
     [Header("Scene where player can use HUD")]
     [SerializeField, Scene] private string _sceneHUD;
+
+    public SerializedDictionary<RoomPattern, GameObject> Rooms => _rooms;
+    public Room[,] RoomsGrid => _roomsGrid;
+    public int MaxRooms => _maxRooms;
 
     private const int _maxRooms = 30;
     private const int _minRooms = 5;

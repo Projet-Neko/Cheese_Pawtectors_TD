@@ -14,6 +14,21 @@ public enum RoomPattern
     VoidRoom            // Overwritten
 }
 
+public enum RoomDesign
+{
+    Bedroom,
+    Kitchen,
+    Livingroom,
+    Bathroom
+}
+
+public enum RoomSet
+{
+    Classical,
+    Modern,
+    Japanese
+}
+
 public enum RoomSecurity
 {
     Protected,          // The room can't be moved or removed

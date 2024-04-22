@@ -49,7 +49,7 @@ public class AdoptButton : MonoBehaviour
 
         if (!GameManager.Instance.Data.CatsUnlocked[catLevel - 1])
         {
-            Debug.LogError("Cat is lock"); // TODO -> show error popup
+            GameManager.Instance.LogError("Cat is not unlock yet !");
             return;
         }
 

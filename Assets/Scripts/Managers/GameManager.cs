@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Scenes")]
     [SerializeField, Scene] private string _headBandScene;
+    [SerializeField, Scene] private string _errorPopupScene;
 
     // --- Requests events ---
     public static event Action<string> OnError;
@@ -38,10 +39,14 @@ public class GameManager : MonoBehaviour
     public static event Action OnEndRequest;
 
     // --- Requests ---
+    public string ErrorMessage => _errorMessage;
+
     private int _requests;
     public string Token { get; set; }
     public PlayFab.ClientModels.EntityKey Entity => Mod<Mod_Account>().Entity;
     private bool _isLoadingPopupOpen;
+
+    private string _errorMessage;
 
     // --- Datas ---
     public Data Data => _data;
@@ -162,7 +167,7 @@ public class GameManager : MonoBehaviour
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == _headBandScene) return;
+        if (scene.name == _headBandScene || scene.name == _errorPopupScene) return;
 
         if (mode != LoadSceneMode.Additive)
         {
@@ -319,12 +324,18 @@ public class GameManager : MonoBehaviour
         Debug.LogError(error);
         OnError?.Invoke(error);
         EndRequest();
+        LogError(error);
     }
     public void OnRequestError(PlayFabError error)
     {
         Debug.LogError(error.GenerateErrorReport());
         OnError?.Invoke(error.GenerateErrorReport());
         EndRequest();
+    }
+    public void LogError(string error)
+    {
+        _errorMessage = error;
+        SceneManager.LoadSceneAsync(_errorPopupScene, LoadSceneMode.Additive);
     }
     #endregion
 

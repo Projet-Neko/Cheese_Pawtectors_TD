@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     #region Modules
     // EntitiesMod
     public GameObject MousePrefab => Mod<Mod_Entities>().MousePrefab;
+    public GameObject MouseRatPrefab => Mod<Mod_Entities>().MouseRatPrefab;
+    public GameObject MouseBallPrefab => Mod<Mod_Entities>().MouseBallPrefab;
     public GameObject CheesePrefab => Mod<Mod_Entities>().CheesePrefab;
     public CatSO[] Cats => Mod<Mod_Entities>().Cats;
     public MouseSO[] Mouses => Mod<Mod_Entities>().Mouses;

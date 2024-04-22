@@ -15,5 +15,5 @@ MonoBehaviour:
   Health: 15
   Speed: 0.25
   SatiationRate: 50
-  Sprite: {fileID: 21300000, guid: 40952408e4e7c6f4e9959a18f4213b16, type: 3}
+  Sprite: {fileID: 21300000, guid: a191fa2b2e82266409fca132f99ec02c, type: 3}
   MouseBossType: 2

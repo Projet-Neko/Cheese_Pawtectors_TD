@@ -6,9 +6,13 @@ public class Mod_Entities : Module
     [Header("Prefabs")]
     [SerializeField] private GameObject _catPrefab;
     [SerializeField] private GameObject _mousePrefab;
+    [SerializeField] private GameObject _mouseRatPrefab;
+    [SerializeField] private GameObject _mouseBallPrefab;
     [SerializeField] private GameObject _cheesePrefab;
 
     public GameObject MousePrefab => _mousePrefab;
+    public GameObject MouseRatPrefab => _mouseRatPrefab;
+    public GameObject MouseBallPrefab => _mouseBallPrefab;
     public GameObject CheesePrefab => _cheesePrefab;
     public CatSO[] Cats => _cats;
     public MouseSO[] Mouses => _mouses;

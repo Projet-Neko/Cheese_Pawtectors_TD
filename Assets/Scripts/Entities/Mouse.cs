@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class Mouse : Entity
 {
-    [Header("Debug")]
-    [SerializeField] private bool _forceAlbino = false;
-
     [SerializeField] GameObject _threat;
 
     //[SerializeField] private bool _forceBoss = false;
@@ -31,7 +28,6 @@ public class Mouse : Entity
     public override void Init()
     {
         Attacker = null;
-        _data = GameManager.Instance.Mouses[MouseType()];
         _level = GameManager.Instance.Data.MouseLevel;
 
         _baseHealth = _currentHealth = _data.Health + (_level * 1) - 1;
@@ -51,26 +47,11 @@ public class Mouse : Entity
         base.Init();
     }
 
-    private int MouseType()
+    public void InitData(int mouseType)
     {
-        if (GameManager.Instance.IsBossWave())// Check if it's a boss wave
-        {
-            _isBoss = true;
-            // 3 = MouseBallBoss , 4 = RatBoss
-            return Random.Range(3, 5);
-        }
+        _data = GameManager.Instance.Mouses[mouseType];
 
-
-        if (_forceAlbino || (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1))// Check if we can spawn Albinos
-        {
-            GameManager.Instance.AlbinoHasSpawned();
-            // 1 = albino mouse
-            return 1;
-        }
-
-
-        // 0 = classic mouse
-        return 0;
+        _isBoss = (mouseType == 3 || mouseType == 4);
     }
 
     //public override void TakeDamage(Entity source)

@@ -14,6 +14,21 @@ public enum RoomPattern
     VoidRoom            // Overwritten
 }
 
+public enum RoomDesign
+{
+    Bedroom,
+    Kitchen,
+    Livingroom,
+    Bathroom
+}
+
+public enum RoomSet
+{
+    Classical,
+    Modern,
+    Japanese
+}
+
 public enum RoomSecurity
 {
     Protected,          // The room can't be moved or removed
@@ -54,6 +69,9 @@ public class Room : MonoBehaviour
 {
     [Header("Room")]
     [SerializeField] private GameObject _room;
+
+    [Header("Sprite Inventory")]
+    [SerializeField] private Sprite _spriteInventory;
 
     [Header("Room Canva")]
     [SerializeField] private GameObject _HUDCanva;
@@ -192,6 +210,19 @@ public class Room : MonoBehaviour
     public void OnMouseUp()
     {
         _canMove = false;
+
+        /*Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit3D) && hit3D.collider.gameObject.TryGetComponent(out DragAndDropHandler component))
+        {
+            Debug.Log("Handle Room Drag and Drop");
+            component.HandleDragAndDrop(this, _oldPosition);
+        }*/
+    }
+
+    public void SetStorageMode()
+    {
+        //
     }
 
     private void Selected()
@@ -240,7 +271,6 @@ public class Room : MonoBehaviour
         _isSelected = false;
         _room.transform.position = _oldPosition;
         TileSelected?.Invoke(false);
-
     }
 
     // When user click on Canvas/Move Arrow/Done button

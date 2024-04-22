@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Slider _loadingSlider;
     [SerializeField] private TMP_Text _loadingText;
 
+    [Header("Scenes")]
+    [SerializeField, Scene] private string _headBandScene;
+
     // --- Requests events ---
     public static event Action<string> OnError;
     public static event Action<string> OnSuccessMessage;
@@ -165,14 +168,22 @@ public class GameManager : MonoBehaviour
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (mode != LoadSceneMode.Additive) return;
-        //if (IsPopupSceneLoaded) SceneManager.UnloadSceneAsync(_popupSceneName);
+        if (scene.name == _headBandScene) return;
+
+        if (mode != LoadSceneMode.Additive)
+        {
+            _popupSceneName = null;
+            return;
+        }
+
+        //Debug.Log("<color=lime>enabling popup mode</color>");
         _popupSceneName = scene.name;
     }
 
     private void SceneManager_sceneUnloaded(Scene scene)
     {
         if (scene.name != _popupSceneName) return;
+        //Debug.Log("<color=red>disabling popup mode</color>");
         _popupSceneName = null;
     }
 

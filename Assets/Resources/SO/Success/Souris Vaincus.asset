@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d341664ca1203e94c9afba7c1c3cf046, type: 3}
   m_Name: Souris Vaincus
   m_EditorClassIdentifier: 
-  _successame: Souris vaincus
-  _step: 0
-  _stepMax: 5
-  _progression: 
+  _successame: Mice defeated
+  _step: 2
+  _progression: 181
   _steps: 3200000064000000c8000000f4010000e8030000
+  _complete: 0

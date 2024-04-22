@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class Mouse : Entity
 {
-    [SerializeField] GameObject _threat;
+  
+
+    [SerializeField] GameObject _treat;
 
     //[SerializeField] private bool _forceBoss = false;
 
@@ -95,10 +97,11 @@ public class Mouse : Entity
         Vector3 spawnPos = transform.position;
         for (int i = 0; i < Level; i++)
         {
-            GameObject threat = _threat;
-            Vector3 pos = new Vector3(spawnPos.x , spawnPos.y , spawnPos.z-5);
-            Instantiate(threat, pos , Quaternion.Euler(90, 0, 0));
-            threat.GetComponent<Rigidbody>().velocity = new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), 0).normalized;
+            GameObject treat = _treat;
+            Vector3 pos = new Vector3(spawnPos.x , spawnPos.y , spawnPos.z);
+            Instantiate(treat, pos , Quaternion.Euler(90, 0, 0));
+            treat.GetComponent<Rigidbody>().velocity = new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), 0).normalized;
+            Destroy(treat.gameObject, 2f);
         }
     }
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d341664ca1203e94c9afba7c1c3cf046, type: 3}
   m_Name: Modifier sa maison
   m_EditorClassIdentifier: 
-  _successame: Modifier sa maison
-  _description: "Vous avez modifi\xE9 votre maison"
+  _successame: Modify your house
   _step: 0
-  _stepMax: 1
-  _progression: 
+  _progression: 1
+  _steps: 
+  _complete: 1

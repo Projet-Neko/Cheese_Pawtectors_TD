@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThreatsAnimation : MonoBehaviour
+public class treatsAnimation : MonoBehaviour
 {
     [SerializeField] private GameObject _destinationGO;
     [SerializeField] private float _speed;
@@ -14,7 +14,7 @@ public class ThreatsAnimation : MonoBehaviour
     {
         _destination = _destinationGO.transform.position;
         rb = GetComponent<Rigidbody>();
-        StartCoroutine(ThreatAnimation());
+        StartCoroutine(treatAnimation());
     }
 
     private void Update()
@@ -24,17 +24,19 @@ public class ThreatsAnimation : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     
     }
 
 
-    private IEnumerator ThreatAnimation()
+    private IEnumerator treatAnimation()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         rb.velocity = new Vector3(0, 0, 0);
-        yield return new WaitForSeconds(0.7f);
-        rb.velocity = (_destination - transform.position).normalized * _speed;
-        //Destroy(gameObject, 2f);
+        //yield return new WaitForSeconds(0.7f);
+        ////rb.velocity = (_destination - transform.position);
+        //rb.velocity = (transform.position - _destination);
+        ////Destroy(gameObject, 2f);
     }
 
 }

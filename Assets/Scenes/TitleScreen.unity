@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731713, g: 0.13414738, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1095,6 +1095,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5202285765949947382, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7026789102367359029, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
       propertyPath: _loadingText
       value: 
@@ -1103,14 +1107,6 @@ PrefabInstance:
       propertyPath: _loadingSlider
       value: 
       objectReference: {fileID: 1346184816}
-    - target: {fileID: 7030047405026936483, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: _enableWaves
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7405251898123990541, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: _successBanner
-      value: 
-      objectReference: {fileID: 512024753923745885, guid: 38511fc0de1e7494eabc7428c9e7ba8f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -53,39 +53,35 @@ public class Mouse : Entity
 
     private int MouseType()
     {
-        if (GameManager.Instance.IsBossWave())
+        if (GameManager.Instance.IsBossWave())// Check if it's a boss wave
         {
             _isBoss = true;
-            // 3 = boss
-            return 3;
+            // 3 = MouseBallBoss , 4 = RatBoss
+            return Random.Range(3, 5);
         }
-        else
-        {
-            return IsAlbino();
-        }
-    }
 
-    private int IsAlbino()
-    {
-        if (_forceAlbino || (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1))
+
+        if (_forceAlbino || (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1))// Check if we can spawn Albinos
         {
             GameManager.Instance.AlbinoHasSpawned();
             // 1 = albino mouse
             return 1;
         }
+
+
         // 0 = classic mouse
         return 0;
     }
-
 
     //public override void TakeDamage(Entity source)
     //{
     //    _targetedBy = source as Cat;
     //    base.TakeDamage(source);
     //}
+
     public override void Die(Entity source)
     {
-        if (_isBoss && CanSplit())
+        if (_data.MouseBossType == MouseBossType.MouseBallBoss && CanSplit())
         {
             Split();
         }

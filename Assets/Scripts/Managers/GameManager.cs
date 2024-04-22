@@ -154,18 +154,22 @@ public class GameManager : MonoBehaviour
 
         Mod<Mod_Account>().Init(this);
 
-        FindObjectOfType<Mod_Audio>().StartTitleMusic();
+        Mod<Mod_Audio>().PlayLoadingSound();
     }
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Mod<Mod_Audio>().StartMusic(scene.name);
+
         if (mode != LoadSceneMode.Additive) return;
         //if (IsPopupSceneLoaded) SceneManager.UnloadSceneAsync(_popupSceneName);
         _popupSceneName = scene.name;
+
     }
 
     private void SceneManager_sceneUnloaded(Scene scene)
     {
+        Mod<Mod_Audio>().StartMusic(scene.name);
         if (scene.name != _popupSceneName) return;
         _popupSceneName = null;
     }
@@ -187,7 +191,8 @@ public class GameManager : MonoBehaviour
         }
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
 
-        FindObjectOfType<Mod_Audio>().StartMainMusic();
+        //Mod<Mod_Audio>().StartMainMusic();
+   
     }
 
     private void OnDestroy()

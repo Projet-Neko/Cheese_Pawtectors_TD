@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class Mod_Waves : Module
 {
     public static event Action OnWaveReload;
+    public static event Action BossWave;
     public static event Action OnBossDefeated;
     public static event Action WaveCompleted;
 
@@ -105,8 +106,13 @@ public class Mod_Waves : Module
     {
         _hasCompleteSpawning = false;
         _spawnedEnemyNumber = _killedEnemiesNumber = 0;
-        _maxEnemyNumber = IsBossWave() ? 1 : 10;
-
+        if (IsBossWave())
+        {
+            BossWave?.Invoke();
+            _maxEnemyNumber = 1;
+        }
+        else _maxEnemyNumber = 10;
+        
         if (cooldown) yield return new WaitForSeconds(.5f);
         _cheeseDead = false;
 

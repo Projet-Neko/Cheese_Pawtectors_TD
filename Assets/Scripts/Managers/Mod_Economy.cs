@@ -15,7 +15,7 @@ public class Mod_Economy : Module
     [SerializeField] private GameObject _currencyPrefab;
 
     public static event Action<bool, int> OnAdoptCheck;
-    public static event Action<int> ThreatWin; //Evet for the ThreatSuccess 
+    public static event Action<int> treatWin; //Evet for the treatSuccess 
 
 
     public List<int> CatPrices => _catPrices;
@@ -232,7 +232,7 @@ public class Mod_Economy : Module
         _gm.Data.Currencies[(int)currency].Amount += amount;
         //Debug.Log($"<color=lime>Added {amount} {currency} ! Current {currency} = {_gm.Data.Currencies[(int)currency].Amount}</color>");
         _gm.Data.Update();
-        if (currency == Currency.Treats) ThreatWin?.Invoke(amount);
+        if (currency == Currency.Treats) treatWin?.Invoke(amount);
     }
     public void RemoveCurrency(Currency currency, int amount)
     {

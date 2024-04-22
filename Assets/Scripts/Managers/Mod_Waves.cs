@@ -108,9 +108,9 @@ public class Mod_Waves : Module
             // 3 = MouseBallBoss , 4 = RatBoss
             return UnityEngine.Random.Range(3, 5);
         }
-        if (GameManager.Instance.CanSpawnBlackMouse())
+        if (GameManager.Instance.CanSpawnBlackMouse)
         {
-            GameManager.Instance.SpawnBlackMouse();
+            GameManager.Instance.BlackMouseHasSpawned();
             // 2 = black mouse
             return 2;
         }
@@ -124,19 +124,6 @@ public class Mod_Waves : Module
 
         // 0 = classic mouse
         return 0;
-    }
-
-    public bool CanSpawnBlackMouse()
-    {
-        if (GameManager.Instance.BlackMouseHasSpawned)
-        {
-            return false;
-        }
-        if (_gm.Data.WaveNumber > 20)
-        {
-            return true;
-        }
-        return false;
     }
 
     public IEnumerator SpawnEnemies(bool cooldown)

@@ -67,10 +67,10 @@ public class GameManager : MonoBehaviour
     public MouseSO[] Mouses => Mod<Mod_Entities>().Mouses;
     public Cheese Cheese => Mod<Mod_Entities>().Cheese;
     public bool CanSpawnAlbino => Mod<Mod_Entities>().CanSpawnAlbino;
-    public bool BlackMouseHasSpawned => Mod<Mod_Entities>().BlackMouseHasSpawned;
+    public bool CanSpawnBlackMouse => Mod<Mod_Entities>().CanSpawnBlackMouse;
 
-    public void SpawnBlackMouse() => Mod<Mod_Entities>().SpawnBlackMouse();
     public void AlbinoHasSpawned() => Mod<Mod_Entities>().AlbinoHasSpawned();
+    public void BlackMouseHasSpawned() => Mod<Mod_Entities>().BlackMouseHasSpawned();
     public void SpawnCheese(Transform room) => Mod<Mod_Entities>().SpawnCheese(room);
 
     // WaveMod
@@ -79,7 +79,6 @@ public class GameManager : MonoBehaviour
     public int SpawnTime => Mod<Mod_Waves>().SpawnTime;
 
     public bool IsBossWave() => Mod<Mod_Waves>().IsBossWave();
-    public bool CanSpawnBlackMouse() => Mod<Mod_Waves>().CanSpawnBlackMouse();
 
     // EconomyMod
     public List<int> CatPrices => Mod<Mod_Economy>().CatPrices;

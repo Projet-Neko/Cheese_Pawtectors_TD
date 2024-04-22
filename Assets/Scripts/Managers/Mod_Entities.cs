@@ -20,13 +20,13 @@ public class Mod_Entities : Module
     public MouseSO[] Mouses => _mouses;
     public Cheese Cheese => _cheese;
     public bool CanSpawnAlbino => _canSpawnAlbino;
-    public bool BlackMouseHasSpawned => _blackMouseHasSpawned;
+    public bool CanSpawnBlackMouse => _canSpawnBlackMouse;
 
     private CatSO[] _cats;
     private MouseSO[] _mouses;
     private Cheese _cheese;
     private bool _canSpawnAlbino = true;
-    private bool _blackMouseHasSpawned = false;
+    private bool _canSpawnBlackMouse = true;
 
     private void Awake()
     {
@@ -63,6 +63,10 @@ public class Mod_Entities : Module
     private void M_Wave_OnWaveReload()
     {
         _canSpawnAlbino = true;
+        if(_gm.Data.WaveNumber > 20)
+        {
+            _canSpawnBlackMouse = true;
+        }
     }
 
     public void AlbinoHasSpawned()
@@ -70,9 +74,9 @@ public class Mod_Entities : Module
         _canSpawnAlbino = false;
     }
 
-    public void SpawnBlackMouse()
+    public void BlackMouseHasSpawned()
     {
-        _blackMouseHasSpawned = true;
+        _canSpawnBlackMouse = false;
     }
 
     public void SpawnCheese(Transform room)

@@ -7,7 +7,7 @@ public abstract class Entity : MonoBehaviour
     public static event Action<Entity, bool> OnDeath;
 
     [Header("Data")]
-    [SerializeField] protected SpriteRenderer _renderer;
+    [SerializeField] public SpriteRenderer _renderer;
     [SerializeField] protected int _level = 1;
 
     [Header("HUD")]
@@ -20,6 +20,7 @@ public abstract class Entity : MonoBehaviour
     public int Level => _level;
     public float Speed => _speed;
     public bool IsAttacked => _isAttacked;
+    public SpriteRenderer Renderer => _renderer;
 
     protected float _speed;
     protected float _baseHealth;
@@ -37,7 +38,9 @@ public abstract class Entity : MonoBehaviour
     {
         SetMaxHealth();
         SetHealth();
-        _slider.gameObject.SetActive(false);
+
+        if (_slider != null)
+            _slider.gameObject.SetActive(false);
     }
 
     public virtual void TakeDamage(Entity source)
@@ -80,6 +83,7 @@ public abstract class Entity : MonoBehaviour
         OnDeath?.Invoke(this, source != null);
         if (this is not Mouse) return;
         if (source is Cat) source.TakeDamage(this); // When a mouse die add satiety to cat
+        DeathAnimation();
         Destroy(gameObject);
     }
 
@@ -95,4 +99,6 @@ public abstract class Entity : MonoBehaviour
     }
 
     public virtual bool IsAlive() => _currentHealth > 0;
+
+    protected virtual void DeathAnimation() { }
 }

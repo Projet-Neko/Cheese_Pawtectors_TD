@@ -12,7 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 10_Oreo
   m_EditorClassIdentifier: 
-  SpriteAbove: {fileID: 0}
-  SpriteFront: {fileID: 0}
+  Sprites:
+  - {fileID: 326939117, guid: 3a80765b9354ae9478e5ac7a6c5c17d2, type: 3}
+  - {fileID: 2142424916, guid: 3a80765b9354ae9478e5ac7a6c5c17d2, type: 3}
+  - {fileID: 229174484, guid: 3a80765b9354ae9478e5ac7a6c5c17d2, type: 3}
+  - {fileID: -600041740, guid: 3a80765b9354ae9478e5ac7a6c5c17d2, type: 3}
+  - {fileID: -1207045605, guid: 3a80765b9354ae9478e5ac7a6c5c17d2, type: 3}
+  - {fileID: -1994300693, guid: 3a80765b9354ae9478e5ac7a6c5c17d2, type: 3}
+  - {fileID: 21498161, guid: 3a80765b9354ae9478e5ac7a6c5c17d2, type: 3}
+  - {fileID: 256431525, guid: 3a80765b9354ae9478e5ac7a6c5c17d2, type: 3}
   Lore: "Capable de faire fondre n'importe quel c\u0153ur."
   State: 0

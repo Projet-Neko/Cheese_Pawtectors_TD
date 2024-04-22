@@ -8,22 +8,33 @@ public class Merge : DragAndDropHandler
     [SerializeField] private Cat _cat;
     [SerializeField] AudioClip _merge;
 
-    private int _slotIndex;
-    private int _previousSlotIndex;
-
     public override void HandleDragAndDrop(Cat cat, Vector3 initialPosition)
     {
-        _slotIndex = int.Parse(transform.parent.name.Split('_')[1]);
-        _previousSlotIndex = int.Parse(cat.transform.parent.name.Split('_')[1]);
-
         if (_cat.Level == cat.Level) MergeCat(cat);
         else base.HandleDragAndDrop(cat, initialPosition);
     }
 
     private void MergeCat(Cat cat)
     {
-        OnCatMerge?.Invoke(_previousSlotIndex, -1);
-        OnCatMerge?.Invoke(_slotIndex, _cat.Level);
+        if (_cat.IsInStorageMode)
+        {
+            int slotIndex = int.Parse(transform.parent.name.Split('_')[1]);
+            OnCatMerge?.Invoke(slotIndex, _cat.Level);
+        }
+        else
+        {
+            // Save current room data
+        }
+
+        if (cat.IsInStorageMode)
+        {
+            int previousSlotIndex = int.Parse(cat.transform.parent.name.Split('_')[1]);
+            OnCatMerge?.Invoke(previousSlotIndex, -1);
+        }
+        else
+        {
+            // Save previous room data
+        }
 
         //Add sound
         GameManager.Instance.SoundEffect(_merge);

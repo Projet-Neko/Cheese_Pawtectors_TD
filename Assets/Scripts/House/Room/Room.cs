@@ -63,27 +63,24 @@ public class Room : MonoBehaviour
     [Header("Junction")]
     [SerializeField] protected List<Junction> _opening;
 
-    //Audio
-    [Header("Audio")]
-    [SerializeField] AudioClip _selectRoom;
-    [SerializeField] AudioClip _moveRoomCheck;
-
     // Events
     public static event Action<Vector3, Vector3, bool> ChangeTilePosition;  // Old position, new position, Still in motion or not (false if the room is still moving)
     public static event Action<int, int, RoomPattern> TileDestroyed;        // Notify the house that a room is destroyed
+    public static event Action<bool> LineActivated;                         // Enable or disable the lines of the house
+    private static event Action<bool> TileSelected;                         // Deselect the other rooms when a room is selected
+    public static event Action TileMoved;                                   // Event For Modify House success
 
     // Getters
     public List<Junction> Opening => _opening;
     public bool CorrectPath => _correctPath;
     public RoomSecurity Security => _security;
+    public RoomPattern Pattern => _pattern;
     public List<IdRoom> PreviousRooms => _previousRooms;
     public List<IdRoom> NextRooms => _nextRooms;
 
     protected RoomSecurity _security;
+    protected RoomPattern _pattern;
     protected bool _correctPath = false;                                    // True if the room is in a correct path
-
-    // Events
-    private static event Action<bool> TileSelected;                         // Deselect the other rooms when a room is selected
 
     private Vector3 _oldPosition;
     private bool _canMove;
@@ -97,9 +94,12 @@ public class Room : MonoBehaviour
 
     private string _sceneHUD;
 
+    private List<Material> _materials = new();
+
     // Constants
     private const int _maxLevel = 3;
     private Plane _plane = new Plane(Vector3.up, 0);
+    private Vector3 _height;
 
 
     //change OnMouseDown to Button to avoid click error
@@ -115,7 +115,13 @@ public class Room : MonoBehaviour
         // Unsubscribe from events
         TileSelected -= DeselectTile;
     }
-    
+
+    protected virtual void Awake()
+    {
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            _materials.AddRange(renderer.materials);
+    }
+
     void Start()
     {
         // Subscribe to events
@@ -123,6 +129,8 @@ public class Room : MonoBehaviour
 
         _canMove = false;
         _moveModBool = false;
+
+        _height = 3 * Camera.main.transform.forward.normalized;
     }
 
     private void FixedUpdate()
@@ -146,9 +154,10 @@ public class Room : MonoBehaviour
     private Vector3 RoundPosition(Vector3 startPosition)
     {
         Vector3 position = startPosition;
-        position.x = Mathf.Round(position.x);                        
-        position.y = 0;                                // To be sure the room is on the same line
+        position.x = Mathf.Round(position.x);
+        position.y = 0;
         position.z = Mathf.Round(position.z);
+        position -= _height;
 
         return position;
     }
@@ -164,7 +173,7 @@ public class Room : MonoBehaviour
 
     public void OnMouseDown()
     {
-       if(_sceneHUD == SceneManager.GetActiveScene().name)
+        if (_sceneHUD == SceneManager.GetActiveScene().name)
         {
             if (_security == RoomSecurity.Protected)
             {
@@ -172,8 +181,6 @@ public class Room : MonoBehaviour
             }
             else if (!_anotherTileSelected)
             {
-                //sound effect
-                GameManager.Instance.SoundEffect(_selectRoom);
                 _canMove = true;
 
                 if (!_moveModBool)
@@ -213,32 +220,41 @@ public class Room : MonoBehaviour
     // When user click on Canvas/HUD/Move button
     public void Move()
     {
+        LineActivated?.Invoke(true); // Invoke the event to show the lines of the house
+
         _moveModBool = true;
         _HUDCanva.SetActive(false);                 // Hide the HUD
         _moveModCanva.SetActive(true);              // Show the Move Canvas
         _oldPosition = _room.transform.position;    // Save the currently position
+        Debug.Log("Move Room : " + _height);
+        _room.transform.position -= _height;
+        TileMoved?.Invoke();
     }
 
     public void CancelMove()
     {
+        LineActivated?.Invoke(false); // Invoke the event to hide the lines of the house
+
         _moveModBool = false;
         _moveModCanva.SetActive(false);                                                 // Hide the Move Canvas
         _isSelected = false;
         _room.transform.position = _oldPosition;
-        TileSelected?.Invoke(false); 
+        TileSelected?.Invoke(false);
 
     }
 
     // When user click on Canvas/Move Arrow/Done button
     public void StopMove()
     {
+        _room.transform.position += _height;
+        LineActivated?.Invoke(false); // Invoke the event to hide the lines of the house
+
         _moveModBool = false;
 
         _moveModCanva.SetActive(false);                                                 // Hide the Move Canvas
         ChangeTilePosition?.Invoke(_oldPosition, _room.transform.position, true);       //true because the room ask for position validation
         TileSelected?.Invoke(false); // Invoke the event to deselect the other rooms
         _isSelected = false;
-        GameManager.Instance.SoundEffect(_moveRoomCheck);
     }
 
     /*private void ChangePosition(bool validate)
@@ -277,7 +293,7 @@ public class Room : MonoBehaviour
     /****** ROTATE ROOM ******/
 
     // When user click on Canvas/HUD/Rotate [Clock/AntiClock]
-    public void RotationRoom(bool clockwise) 
+    public void RotationRoom(bool clockwise)
     {
         Vector3 rotation = transform.eulerAngles;
 
@@ -296,6 +312,8 @@ public class Room : MonoBehaviour
         }
 
         transform.eulerAngles = rotation;
+        TileMoved?.Invoke();
+
     }
 
     /****** REMOVE ROOM ******/
@@ -306,11 +324,15 @@ public class Room : MonoBehaviour
         TileDestroyed?.Invoke((int)transform.position.x, (int)transform.position.z, RoomPattern.VoidRoom); // Notify the house that a room will be destroyed and that it must be replaced by a void room
         TileSelected?.Invoke(false);
         Delete();
+        TileMoved?.Invoke();
+
     }
 
     public void Delete()
     {
         Destroy(_room);
+        TileMoved?.Invoke();
+
     }
 
 
@@ -336,10 +358,10 @@ public class Room : MonoBehaviour
             junction.SetIdRoom(x, z);
     }
 
-    public void ResetArrows()
+    public void ColorRoom(Color color)
     {
-        foreach (Junction junction in _opening)
-            junction.ActivateArrow(false);
+        foreach (Material material in _materials)
+            material.color = color;
     }
 
 

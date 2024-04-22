@@ -1,6 +1,8 @@
 using System;
+using System.Threading;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum CatState
 {
@@ -21,15 +23,11 @@ public class Cat : Entity
 
     public Color CatColor => _catColor;
     public bool IsInStorageMode => _isInStorageMode;
+    public Sprite[] Sprites => _data.Sprites;
 
     private CatSO _data;
     private Color _catColor;
-    private bool _isInStorageMode;
-
-    private void Awake()
-    {
-        _isInStorageMode = false;
-    }
+    private bool _isInStorageMode = true;
 
     public override void Init()
     {
@@ -51,15 +49,17 @@ public class Cat : Entity
         _currentHealth = 0;
         _speed = _data.Speed();
 
-        // Appearance
-        _renderer.sprite = _data.SpriteAbove; // TODO -> check sprite to use
+        // Default Appearance
+        _renderer.sprite = _data.Sprites[4];
 
         gameObject.name = _data.Name;
     }
 
     public void SetStorageMode(bool mode)
     {
+        int size = mode ? 55 : 30;
         _isInStorageMode = mode;
+        transform.localScale = new Vector3(size, size, size);
         if (!_isInStorageMode) return;
         _slider.gameObject.SetActive(false);
     }
@@ -86,7 +86,7 @@ public class Cat : Entity
             _currentHealth += source.Damage;
 
             Mathf.Clamp(_currentHealth, 0f, _baseHealth);
-            Debug.Log($"Cat current satiety : {_currentHealth}/{_baseHealth}");
+            //Debug.Log($"Cat current satiety : {_currentHealth}/{_baseHealth}");
 
             SetHealth();
 
@@ -109,4 +109,6 @@ public class Cat : Entity
     }
 
     public override bool IsAlive() => _currentHealth < _baseHealth;
+
+    
 }

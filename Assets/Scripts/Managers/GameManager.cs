@@ -57,12 +57,15 @@ public class GameManager : MonoBehaviour
 
     #region Modules
     // EntitiesMod
+    public GameObject MousePrefab => Mod<Mod_Entities>().MousePrefab;
+    public GameObject CheesePrefab => Mod<Mod_Entities>().CheesePrefab;
     public CatSO[] Cats => Mod<Mod_Entities>().Cats;
     public MouseSO[] Mouses => Mod<Mod_Entities>().Mouses;
     public Cheese Cheese => Mod<Mod_Entities>().Cheese;
     public bool CanSpawnAlbino => Mod<Mod_Entities>().CanSpawnAlbino;
 
     public void AlbinoHasSpawned() => Mod<Mod_Entities>().AlbinoHasSpawned();
+    public void SpawnCheese(Transform room) => Mod<Mod_Entities>().SpawnCheese(room);
 
     // WaveMod
     public int KilledEnemiesNumber => Mod<Mod_Waves>().KilledEnemiesNumber;
@@ -78,6 +81,7 @@ public class GameManager : MonoBehaviour
     public int GetCheapestCatIndex() => Mod<Mod_Economy>().GetCheapestCatIndex();
     public void AddCurrency(Currency currency, int amount) => Mod<Mod_Economy>().AddCurrency(currency, amount);
     public void RemoveCurrency(Currency currency, int amount) => Mod<Mod_Economy>().RemoveCurrency(currency, amount);
+    public int MeatGainedOffline() => Mod<Mod_Economy>().MeatGainedOffline();
 
     // AccountMod
     public bool IsLoggedIn => Mod<Mod_Account>().IsLoggedIn;
@@ -217,6 +221,7 @@ public class GameManager : MonoBehaviour
     public bool HasLoginPopupLoad()
     {
         if (_hasLoginPopupLoad) return true;
+        Debug.Log("<color=yellow>First time loading Login Popup</color>");
         _hasLoginPopupLoad = true;
         return false;
     }
@@ -240,8 +245,8 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(60);
             Debug.Log("Starting auto save...");
-            foreach (var currency in _data.Currencies) yield return Mod<Mod_Economy>().UpdateCurrency((Currency)currency.Index);
-            yield return Mod<Mod_Account>().UpdateData();
+            //foreach (var currency in _data.Currencies) yield return Mod<Mod_Economy>().UpdateCurrency((Currency)currency.Index);
+            //yield return Mod<Mod_Account>().UpdateData();
         }
     }
 
@@ -254,7 +259,7 @@ public class GameManager : MonoBehaviour
     private void OnApplicationPause(bool pause)
     {
         if (!_isInitCompleted) return;
-        Debug.Log("Updating local data on application pause...");
+        //Debug.Log("Updating local data on application pause...");
         Data.Update();
     }
 

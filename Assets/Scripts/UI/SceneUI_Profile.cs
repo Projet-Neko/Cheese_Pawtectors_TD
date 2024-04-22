@@ -1,48 +1,47 @@
-//using TMPro;
-//using UnityEngine;
-//using UnityEngine.InputSystem;
-//using UnityEngine.UI;
-//using static UnityEngine.Rendering.DebugUI;
+using TMPro;
+using UnityEngine;
 
-//public class SceneUI_Profile : MonoBehaviour
-//{
-//    [SerializeField] private TMP_Text _username;
-//    [SerializeField] private TMP_InputField _usernameTyped;
+public class SceneUI_Profile : MonoBehaviour
+{
+    [SerializeField] private TMP_Text _username;
+    [SerializeField] private TMP_InputField _usernameTyped;
 
-//    private TouchScreenKeyboard _keyboard;
+    private TouchScreenKeyboard _keyboard;
 
-//    private void Update()
-//    {
-//        _username.text = GameManager.Instance.Username;
-//    }
+    private void Update()
+    {
+        _username.text = GameManager.Instance.Username;
+    }
 
-//    public void EditUsername()
-//    {
-//        if (string.IsNullOrEmpty(_usernameTyped.text)) return; // TODO -> error feedback
-//        GameManager.Instance.UpdateUsername(_usernameTyped.text);
-//    }
+    public void EditUsername()
+    {
+        if (string.IsNullOrEmpty(_usernameTyped.text)) return; // TODO -> error feedback
+        GameManager.Instance.UpdateUsername(_usernameTyped.text);
+    }
 
-//    public void ModifyName()
-//    {
-//        // Open the native keyboard of the device
-//        _keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, false, false, _usernameTyped.text);
+    public void ModifyName()
+    {
+        _usernameTyped.ActivateInputField();
 
-//        // Subscribe to the onKeyboardClosed event
-//        _keyboard.onKeyboardClosed += HandleKeyboardClosed;
-//    }
+        // Open the native keyboard of the device
+        //_keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, false, false, _usernameTyped.text);
 
-//    private void HandleKeyboardClosed(TouchScreenKeyboard keyboard)
-//    {
-//        if (!string.IsNullOrEmpty(keyboard.text))
-//        {
-//            _usernameTyped.text = keyboard.text;
-//            // Add your logic here to save the name in the player's profile
-//        }
+        // Subscribe to the onKeyboardClosed event
+        //_keyboard.onKeyboardClosed += HandleKeyboardClosed;
+    }
 
-//        // Unsubscribe from the event to avoid memory leaks
-//        keyboard.onKeyboardClosed -= HandleKeyboardClosed;
+    private void HandleKeyboardClosed(TouchScreenKeyboard keyboard)
+    {
+        if (!string.IsNullOrEmpty(keyboard.text))
+        {
+            _usernameTyped.text = keyboard.text;
+            // Add your logic here to save the name in the player's profile
+        }
 
-//        // Reset the keyboard variable
-//        this._keyboard = null;
-//    }
-//}
+        // Unsubscribe from the event to avoid memory leaks
+        //keyboard.onKeyboardClosed -= HandleKeyboardClosed;
+
+        // Reset the keyboard variable
+        //this._keyboard = null;
+    }
+}

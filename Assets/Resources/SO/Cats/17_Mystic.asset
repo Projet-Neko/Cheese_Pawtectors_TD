@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b0b401b47eec7468d8e8a3c422d73e, type: 3}
   m_Name: 17_Mystic
   m_EditorClassIdentifier: 
-  SpriteAbove: {fileID: 0}
-  SpriteFront: {fileID: 0}
+  Sprites:
+  - {fileID: -589896054, guid: 1ad4329755be01940a51c2e8329e5d21, type: 3}
+  - {fileID: 1824777000, guid: 1ad4329755be01940a51c2e8329e5d21, type: 3}
+  - {fileID: -2081263871, guid: 1ad4329755be01940a51c2e8329e5d21, type: 3}
+  - {fileID: 776789799, guid: 1ad4329755be01940a51c2e8329e5d21, type: 3}
+  - {fileID: -1434435847, guid: 1ad4329755be01940a51c2e8329e5d21, type: 3}
+  - {fileID: -684865454, guid: 1ad4329755be01940a51c2e8329e5d21, type: 3}
+  - {fileID: 1717458611, guid: 1ad4329755be01940a51c2e8329e5d21, type: 3}
+  - {fileID: 1694773681, guid: 1ad4329755be01940a51c2e8329e5d21, type: 3}
   Lore: "Le meilleur d\xE9chiqueteur de carton de ton quartier."
+  State: 0

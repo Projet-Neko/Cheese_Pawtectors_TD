@@ -23,6 +23,7 @@ public class MouseBrain : Brain
     {
         base.Update();
 
+        // Boss  keep moving even when attacked by a cat
         if (!(Entity as Mouse).IsBoss)
         {
             if (_currentState is not State_Freeze && Entity.IsAttacked) ChangeState(Freeze);

@@ -51,18 +51,6 @@ public class Mouse : Entity
         base.Init();
     }
 
-    private int IsAlbino()
-    {
-        if (_forceAlbino || (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1))
-        {
-            GameManager.Instance.AlbinoHasSpawned();
-            // 1 = albino mouse
-            return 1;
-        }
-
-        return 0;
-    }
-
     private int MouseType()
     {
         if (GameManager.Instance.IsBossWave())
@@ -76,6 +64,19 @@ public class Mouse : Entity
             return IsAlbino();
         }
     }
+
+    private int IsAlbino()
+    {
+        if (_forceAlbino || (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1))
+        {
+            GameManager.Instance.AlbinoHasSpawned();
+            // 1 = albino mouse
+            return 1;
+        }
+        // 0 = classic mouse
+        return 0;
+    }
+
 
     //public override void TakeDamage(Entity source)
     //{

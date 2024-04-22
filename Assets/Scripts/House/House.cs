@@ -522,6 +522,18 @@ public class House : MonoBehaviour
         // TO DO : Check if cats are in room
     }
 
+    private bool AddRoomInGrid(RoomPattern roomPattern, int x, int z)
+    {
+        RoomPattern oldRoomPattern = _roomsGrid[x, z].Pattern;
+        if (IsInGrid(x, z) && oldRoomPattern != RoomPattern.StartRoom && oldRoomPattern != RoomPattern.CheeseRoom)
+        {
+            AddRoom(x, z, roomPattern);
+            return true;
+        }
+
+        return false;
+    }
+
 
     /* * * * * * * * * * * * * * * * * * * *
     *           ROOM POSITION AUTO

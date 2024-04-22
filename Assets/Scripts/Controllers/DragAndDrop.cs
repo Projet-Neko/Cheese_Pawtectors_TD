@@ -51,16 +51,8 @@ public class DragAndDrop : MonoBehaviour
 
         if (go.TryGetComponent(out DragAndDropHandler component))
         {
-            if (_cat != null)
-            {
-                Debug.Log("component found, cat is not null");
-                component.HandleDragAndDrop(_cat, _initialPosition);
-            }
-            else if (_room != null)
-            {
-                Debug.Log("component found, room is not null");
-                component.HandleDragAndDrop(_room, _initialPosition);
-            }
+            if (_cat != null) component.HandleDragAndDrop(_cat, _initialPosition);
+            else if (_room != null) component.HandleDragAndDrop(_room, _initialPosition);
         }
     }
 

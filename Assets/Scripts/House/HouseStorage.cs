@@ -42,9 +42,4 @@ public class HouseStorage : MonoBehaviour
         room.GetComponentInChildren<Room>().SetStorageMode(true);
         _rooms.Add(room);
     }
-
-    public void RemoveRoom()
-    {
-        //
-    }
 }

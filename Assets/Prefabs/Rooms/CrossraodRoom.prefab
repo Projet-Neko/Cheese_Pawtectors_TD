@@ -599,6 +599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentCat: {fileID: 0}
+  _room: {fileID: 485791641114014304}
 --- !u!114 &167094506515191126
 MonoBehaviour:
   m_ObjectHideFlags: 0

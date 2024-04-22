@@ -526,7 +526,7 @@ public class House : MonoBehaviour
 
     public bool AddRoomInGrid(RoomPattern roomPattern, int x, int z)
     {
-        if (x >= _maxRooms || z >= _maxRooms) return false;
+        //if (_roomsGrid[x, z] == null) return false;
         RoomPattern oldRoomPattern = _roomsGrid[x, z].Pattern;
         if (IsInGrid(x, z) && oldRoomPattern != RoomPattern.StartRoom && oldRoomPattern != RoomPattern.CheeseRoom)
         {

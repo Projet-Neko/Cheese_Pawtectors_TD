@@ -66,7 +66,7 @@ public class StorageSlot : DragAndDropHandler
     {
         if (!cat.IsInStorageMode)
         {
-            cat.transform.parent.gameObject.GetComponent<DropCat>().ResetRoomSlot();
+            cat.transform.parent.gameObject.GetComponent<RoomDrop>().ResetRoomSlot();
             InvokeOnRoomChanged((int)cat.transform.parent.transform.position.x, (int)cat.transform.parent.transform.position.y, -1);
             cat.SetStorageMode(true);
         }

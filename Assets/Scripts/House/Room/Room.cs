@@ -231,7 +231,7 @@ public class Room : MonoBehaviour
     private void Selected()
     {
         _isSelected = !_isSelected;
-        _HUDCanva.SetActive(_isSelected);
+        if (_HUDCanva != null) _HUDCanva.SetActive(_isSelected);
         TileSelected?.Invoke(_isSelected); // Invoke the event to deselect the other rooms
     }
 

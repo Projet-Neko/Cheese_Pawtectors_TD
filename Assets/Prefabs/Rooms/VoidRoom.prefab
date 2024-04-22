@@ -44,7 +44,8 @@ GameObject:
   - component: {fileID: 7750413818396797898}
   - component: {fileID: 237496127294997417}
   - component: {fileID: 7003669912238090999}
-  - component: {fileID: 5394878379037833132}
+  - component: {fileID: 2371106881955923019}
+  - component: {fileID: 5137496044387044839}
   m_Layer: 10
   m_Name: Room
   m_TagString: Untagged
@@ -135,7 +136,7 @@ MonoBehaviour:
   _moveModCanva: {fileID: 0}
   _cantMoveThisRoomCanvas: {fileID: 0}
   _opening: []
---- !u!114 &5394878379037833132
+--- !u!114 &2371106881955923019
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,7 +145,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 4189960559210027102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8c358a0f0ff020419ffacdeaee33476, type: 3}
+  m_Script: {fileID: 11500000, guid: fd1ce4ecf3791a44fb6173cb620ede76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentCat: {fileID: 0}
   _room: {fileID: 7003669912238090999}
+--- !u!65 &5137496044387044839
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4189960559210027102}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.04, y: 0.12, z: 1.04}
+  m_Center: {x: 0, y: 0, z: 0}

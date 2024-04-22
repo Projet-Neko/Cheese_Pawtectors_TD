@@ -819,6 +819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _room: {fileID: 4366641987968570484}
+  _spriteInventory: {fileID: 0}
   _HUDCanva: {fileID: 9097125527900312068}
   _moveModCanva: {fileID: 2770497106009272327}
   _cantMoveThisRoomCanvas: {fileID: 0}
@@ -860,6 +861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentCat: {fileID: 0}
+  _room: {fileID: 9088857665373620218}
 --- !u!1 &7488220483637364528
 GameObject:
   m_ObjectHideFlags: 0

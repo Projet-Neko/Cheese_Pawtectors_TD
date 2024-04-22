@@ -4,5 +4,6 @@ public class CorridorRoom : Room
     {
         base.Awake();
         _security = RoomSecurity.MovedAndRemoved;
+        _pattern = RoomPattern.CorridorRoom;
     }
 }

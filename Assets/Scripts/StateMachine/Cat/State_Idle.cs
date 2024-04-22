@@ -1,11 +1,10 @@
-using UnityEngine;
-
 public class State_Idle : State
 {
     public override void OnEnter(Brain brain)
     {
         base.OnEnter(brain);
-        SetRoom();
+        if (_brain is not CatBrain) return;
+        (_brain as CatBrain).SetRoom();
         (_brain as CatBrain).StartIdleMovement();
     }
 
@@ -25,16 +24,5 @@ public class State_Idle : State
         base.OnExit();
 
         (_brain as CatBrain).StopIdleMovement();
-    }
-
-    private void SetRoom()
-    {
-        while (_brain.Room == null)
-        {
-            if (_brain.Entity.transform.parent.gameObject.TryGetComponent(out BoxCollider collider))
-            {
-                _brain.Room = collider;
-            }
-        }
     }
 }

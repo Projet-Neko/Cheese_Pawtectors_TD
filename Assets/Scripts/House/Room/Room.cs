@@ -14,6 +14,21 @@ public enum RoomPattern
     VoidRoom            // Overwritten
 }
 
+public enum RoomDesign
+{
+    Bedroom,
+    Kitchen,
+    Livingroom,
+    Bathroom
+}
+
+public enum RoomSet
+{
+    Classical,
+    Modern,
+    Japanese
+}
+
 public enum RoomSecurity
 {
     Protected,          // The room can't be moved or removed
@@ -55,6 +70,9 @@ public class Room : MonoBehaviour
     [Header("Room")]
     [SerializeField] private GameObject _room;
 
+    [Header("Sprite Inventory")]
+    [SerializeField] private Sprite _spriteInventory;
+
     [Header("Room Canva")]
     [SerializeField] private GameObject _HUDCanva;
     [SerializeField] private GameObject _moveModCanva;
@@ -68,16 +86,19 @@ public class Room : MonoBehaviour
     public static event Action<int, int, RoomPattern> TileDestroyed;        // Notify the house that a room is destroyed
     public static event Action<bool> LineActivated;                         // Enable or disable the lines of the house
     private static event Action<bool> TileSelected;                         // Deselect the other rooms when a room is selected
-    public static event Action TileMoved;                         // Event For Modify House success
+    public static event Action TileMoved;                                   // Event For Modify House success
 
     // Getters
     public List<Junction> Opening => _opening;
     public bool CorrectPath => _correctPath;
     public RoomSecurity Security => _security;
+    public RoomPattern Pattern => _pattern;
     public List<IdRoom> PreviousRooms => _previousRooms;
     public List<IdRoom> NextRooms => _nextRooms;
+    public bool IsInStorageMode => _isInStorageMode;
 
     protected RoomSecurity _security;
+    protected RoomPattern _pattern;
     protected bool _correctPath = false;                                    // True if the room is in a correct path
 
     private Vector3 _oldPosition;
@@ -93,6 +114,8 @@ public class Room : MonoBehaviour
     private string _sceneHUD;
 
     private List<Material> _materials = new();
+
+    private bool _isInStorageMode = false;
 
     // Constants
     private const int _maxLevel = 3;
@@ -149,7 +172,7 @@ public class Room : MonoBehaviour
      *          UTILITIES FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */
 
-    private Vector3 RoundPosition(Vector3 startPosition)
+    public Vector3 RoundPosition(Vector3 startPosition)
     {
         Vector3 position = startPosition;
         position.x = Mathf.Round(position.x);
@@ -190,12 +213,25 @@ public class Room : MonoBehaviour
     public void OnMouseUp()
     {
         _canMove = false;
+
+        /*Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit3D) && hit3D.collider.gameObject.TryGetComponent(out DragAndDropHandler component))
+        {
+            Debug.Log("Handle Room Drag and Drop");
+            component.HandleDragAndDrop(this, _oldPosition);
+        }*/
+    }
+
+    public void SetStorageMode(bool mode)
+    {
+        _isInStorageMode = mode;
     }
 
     private void Selected()
     {
         _isSelected = !_isSelected;
-        _HUDCanva.SetActive(_isSelected);
+        if (_HUDCanva != null) _HUDCanva.SetActive(_isSelected);
         TileSelected?.Invoke(_isSelected); // Invoke the event to deselect the other rooms
     }
 
@@ -238,7 +274,6 @@ public class Room : MonoBehaviour
         _isSelected = false;
         _room.transform.position = _oldPosition;
         TileSelected?.Invoke(false);
-
     }
 
     // When user click on Canvas/Move Arrow/Done button

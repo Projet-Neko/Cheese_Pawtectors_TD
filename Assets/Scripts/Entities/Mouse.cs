@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class Mouse : Entity
 {
-    [Header("Debug")]
-    [SerializeField] private bool _forceAlbino = false;
+  
 
     [SerializeField] GameObject _treat;
 
@@ -31,7 +30,6 @@ public class Mouse : Entity
     public override void Init()
     {
         Attacker = null;
-        _data = GameManager.Instance.Mouses[MouseType()];
         _level = GameManager.Instance.Data.MouseLevel;
 
         _baseHealth = _currentHealth = _data.Health + (_level * 1) - 1;
@@ -51,30 +49,11 @@ public class Mouse : Entity
         base.Init();
     }
 
-    private int IsAlbino()
+    public void InitData(int mouseType)
     {
-        if (_forceAlbino || (GameManager.Instance.CanSpawnAlbino && Random.Range(0, 100) <= 1))
-        {
-            GameManager.Instance.AlbinoHasSpawned();
-            // 1 = albino mouse
-            return 1;
-        }
+        _data = GameManager.Instance.Mouses[mouseType];
 
-        return 0;
-    }
-
-    private int MouseType()
-    {
-        if (GameManager.Instance.IsBossWave())
-        {
-            _isBoss = true;
-            // 3 = boss
-            return 3;
-        }
-        else
-        {
-            return IsAlbino();
-        }
+        _isBoss = (mouseType == 3 || mouseType == 4);
     }
 
     //public override void TakeDamage(Entity source)
@@ -82,6 +61,35 @@ public class Mouse : Entity
     //    _targetedBy = source as Cat;
     //    base.TakeDamage(source);
     //}
+
+    public override void Die(Entity source)
+    {
+        if (_data.MouseBossType == MouseBossType.MouseBallBoss && CanSplit())
+        {
+            Split();
+        }
+        base.Die(source);
+    }
+
+    public bool CanSplit()
+    {
+        return _baseHealth == _data.Health + (_level * 1) - 1;
+    }
+
+    public void Split()
+    {
+        // Create two new instances of the mouse with 50% fewer hit points
+        float newHealth = _baseHealth / 2;
+        Mouse newMouse1 = Instantiate(this, transform.position, transform.rotation);
+        Mouse newMouse2 = Instantiate(this, transform.position, transform.rotation);
+
+        // Update life points on new mice
+        newMouse1._baseHealth = newHealth;
+        newMouse1._currentHealth = newHealth;
+
+        newMouse2._baseHealth = newHealth;
+        newMouse2._currentHealth = newHealth;
+    }
 
     protected override void DeathAnimation()
     {

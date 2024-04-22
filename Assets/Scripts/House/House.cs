@@ -1,18 +1,29 @@
 using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class House : MonoBehaviour
 {
     public static House Instance { get; private set; }
 
+    public static event Action<RoomPattern, RoomDesign> OnRoomStored;
+
+    [Header("Prefabs")]
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
     [SerializeField] private GameObject _mousePrefab;
     [SerializeField] private GameObject _linePrefab;
+
+    [Header("Dependencies")]
     [SerializeField] private GameObject _lineObject;
 
     [Header("Scene where player can use HUD")]
     [SerializeField, Scene] private string _sceneHUD;
+
+    public SerializedDictionary<RoomPattern, GameObject> Rooms => _rooms;
+    public Dictionary<Tuple<RoomPattern, RoomDesign>, int> RoomsStorage => _roomsStorage;
+    public int MaxRooms => _maxRooms;
 
     private const int _maxRooms = 30;
     private const int _minRooms = 5;
@@ -23,6 +34,8 @@ public class House : MonoBehaviour
     private LineRenderer[,] _lineGrid = new LineRenderer[2, _maxRooms+1];
     private IdRoom _idStartRoom;
     private bool _pathBuilt = false;
+
+    private Dictionary<Tuple<RoomPattern, RoomDesign>, int> _roomsStorage = new();
 
     private readonly Color _invalidColor = Color.red;
     private readonly Color _validColor = Color.white;
@@ -123,7 +136,10 @@ public class House : MonoBehaviour
         Room.LineActivated += ActiveLine;
         Junction.TileChanged += BuildPath;
         MouseBrain.VisitedNextRoom += GetNextTarget;
-    }
+
+        // Debug Only
+        _roomsStorage.Add(new(RoomPattern.CorridorRoom, RoomDesign.Bedroom), 1);
+}
 
     private void OnDestroy()
     {
@@ -148,40 +164,11 @@ public class House : MonoBehaviour
         _roomsGrid[x, z].SceneForHUD(_sceneHUD);
     }
 
-    private void CreateRandomRoom()
-    {
-        /*int random = UnityEngine.Random.Range(0, 2);
-        RoomPattern roomPattern;
-        switch (random)
-        {
-            case 0:
-                roomPattern = RoomPattern.CorridorRoom;
-                break;
-                
-            case 1:
-                roomPattern = RoomPattern.TurnRoom;
-                break;
-
-            case 2:
-                roomPattern= RoomPattern.CrossraodRoom;
-                break;
-
-            default:
-                roomPattern = RoomPattern.CorridorRoom;
-                break;
-        }
-        GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity); // TO DO : Change the position to inventaire
-        roomObject.transform.parent = transform;
-        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();*/
-
-        // TO DO : Add the (image of the) room to the inventory 
-    }
-
     /* * * * * * * * * * * * * * * * * * * *
      *          HUD INTERACTIONS
      * * * * * * * * * * * * * * * * * * * */
 
-    private void ActiveLine(bool enable)
+    public void ActiveLine(bool enable)
     {
         _lineObject.SetActive(enable);
     }
@@ -250,8 +237,7 @@ public class House : MonoBehaviour
         }
         else if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            // Add old room to the inventory
-            // TO DO
+            AddRoomInInventory(_roomsGrid[x, z].Pattern);// Add old room in inventory
 
             ReplaceRoom(x, z, pattern);
         }
@@ -308,6 +294,8 @@ public class House : MonoBehaviour
 
         UpdateLineRight();
         AddLine(_currentRoomNumber, zStart, _currentRoomNumber, zStart + _currentRoomNumber);
+
+        AddRandomRoomInInventory(); // Give new room to the player
     }
 
     /* * * * * * * * * * * * * * * * * * * *
@@ -424,8 +412,7 @@ public class House : MonoBehaviour
     {
         if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            // Add old room to the inventory
-            // TO DO
+            AddRoomInInventory(_roomsGrid[x, z].Pattern);// Add old room to the inventory
 
             ReplaceRoom(x, z, RoomPattern.VoidRoom);
         }
@@ -493,9 +480,61 @@ public class House : MonoBehaviour
         if (numberNextRooms == 0)
             return GameManager.Instance.Cheese.gameObject;
 
-        int random = Random.Range(0, numberNextRooms);
+        int random = UnityEngine.Random.Range(0, numberNextRooms);
         IdRoom idRoom = currentRoom.NextRooms[random];
         return _roomsGrid[idRoom.x, idRoom.z].gameObject;
+    }
+
+
+    /* * * * * * * * * * * * * * * * * * * *
+    *           INVENTORY ROOM
+    * * * * * * * * * * * * * * * * * * * */
+
+    private void AddRandomRoomInInventory()
+    {
+        RoomPattern roomPattern;
+        int random;
+            random = UnityEngine.Random.Range(0, 100);
+
+        switch(random)
+        {
+            case int n when n < 10:
+                roomPattern = RoomPattern.CrossraodRoom;
+                break;
+            case int n when n < 30:
+                roomPattern = RoomPattern.IntersectionRoom;
+                break;
+            case int n when n < 60:
+                roomPattern = RoomPattern.TurnRoom;
+                break;
+            default:
+                roomPattern = RoomPattern.CorridorRoom;
+                break;
+        }
+
+        AddRoomInInventory(roomPattern);
+
+        /*GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity);
+        roomObject.transform.parent = transform;
+        _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();*/
+    }
+
+    private void AddRoomInInventory(RoomPattern roomPattern)
+    {
+        // TO DO : Check if cats are in room
+    }
+
+    public bool AddRoomInGrid(RoomPattern roomPattern, int x, int z)
+    {
+        //if (_roomsGrid[x, z] == null) return false;
+        RoomPattern oldRoomPattern = _roomsGrid[x, z].Pattern;
+        if (IsInGrid(x, z) && oldRoomPattern != RoomPattern.StartRoom && oldRoomPattern != RoomPattern.CheeseRoom)
+        {
+            AddRoom(x, z, roomPattern);
+            return true;
+        }
+
+        return false;
     }
 
 

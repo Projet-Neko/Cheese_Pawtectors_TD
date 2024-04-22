@@ -646,11 +646,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687cc80963b25204f9b4a737907b3430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cat: {fileID: 1033424655005935924}
   _sprite: {fileID: 654895726392624424}
   _hud: {fileID: 2299790915040429675}
-  _cat: {fileID: 1033424655005935924}
+  _collider2D: {fileID: 2307053879567043015}
   _room: {fileID: 0}
-  _collider: {fileID: 2307053879567043015}
+  _collider3D: {fileID: 0}
 --- !u!114 &8914369612130805977
 MonoBehaviour:
   m_ObjectHideFlags: 0

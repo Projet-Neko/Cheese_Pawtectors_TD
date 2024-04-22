@@ -64,13 +64,18 @@ public class GameManager : MonoBehaviour
     #region Modules
     // EntitiesMod
     public GameObject MousePrefab => Mod<Mod_Entities>().MousePrefab;
+    public GameObject BlackMousePrefab => Mod<Mod_Entities>().BlackMousePrefab;
+    public GameObject MouseRatPrefab => Mod<Mod_Entities>().MouseRatPrefab;
+    public GameObject MouseBallPrefab => Mod<Mod_Entities>().MouseBallPrefab;
     public GameObject CheesePrefab => Mod<Mod_Entities>().CheesePrefab;
     public CatSO[] Cats => Mod<Mod_Entities>().Cats;
     public MouseSO[] Mouses => Mod<Mod_Entities>().Mouses;
     public Cheese Cheese => Mod<Mod_Entities>().Cheese;
     public bool CanSpawnAlbino => Mod<Mod_Entities>().CanSpawnAlbino;
+    public bool CanSpawnBlackMouse => Mod<Mod_Entities>().CanSpawnBlackMouse;
 
     public void AlbinoHasSpawned() => Mod<Mod_Entities>().AlbinoHasSpawned();
+    public void BlackMouseHasSpawned() => Mod<Mod_Entities>().BlackMouseHasSpawned();
     public void SpawnCheese(Transform room) => Mod<Mod_Entities>().SpawnCheese(room);
 
     // WaveMod

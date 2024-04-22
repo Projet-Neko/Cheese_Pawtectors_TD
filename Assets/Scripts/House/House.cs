@@ -8,6 +8,8 @@ public class House : MonoBehaviour
 {
     public static House Instance { get; private set; }
 
+    public static event Action<RoomPattern, RoomDesign> OnRoomStored;
+
     [Header("Prefabs")]
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
     [SerializeField] private GameObject _mousePrefab;
@@ -166,7 +168,7 @@ public class House : MonoBehaviour
      *          HUD INTERACTIONS
      * * * * * * * * * * * * * * * * * * * */
 
-    private void ActiveLine(bool enable)
+    public void ActiveLine(bool enable)
     {
         _lineObject.SetActive(enable);
     }
@@ -522,8 +524,9 @@ public class House : MonoBehaviour
         // TO DO : Check if cats are in room
     }
 
-    private bool AddRoomInGrid(RoomPattern roomPattern, int x, int z)
+    public bool AddRoomInGrid(RoomPattern roomPattern, int x, int z)
     {
+        //if (_roomsGrid[x, z] == null) return false;
         RoomPattern oldRoomPattern = _roomsGrid[x, z].Pattern;
         if (IsInGrid(x, z) && oldRoomPattern != RoomPattern.StartRoom && oldRoomPattern != RoomPattern.CheeseRoom)
         {

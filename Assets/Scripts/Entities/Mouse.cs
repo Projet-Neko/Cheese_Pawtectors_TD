@@ -97,9 +97,9 @@ public class Mouse : Entity
         Vector3 spawnPos = transform.position;
         for (int i = 0; i < Level; i++)
         {
-            GameObject treat = _treat;
             Vector3 pos = new Vector3(spawnPos.x , spawnPos.y , spawnPos.z);
-            Instantiate(treat, pos , Quaternion.Euler(90, 0, 0));
+            GameObject treat = Instantiate(_treat, pos, Quaternion.Euler(90, 0, 0));
+            
             treat.GetComponent<Rigidbody>().velocity = new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), 0).normalized;
             Destroy(treat.gameObject, 2f);
         }

@@ -664,11 +664,6 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 8870133010511662981, guid: a0234b77fc02e8d449757015d27ed42f, type: 3}
   m_PrefabInstance: {fileID: 790832409}
   m_PrefabAsset: {fileID: 0}
---- !u!82 &1003074203 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 8907380916672490398, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-  m_PrefabInstance: {fileID: 1318986572}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1168311477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1108,40 +1103,7 @@ PrefabInstance:
       propertyPath: _loadingSlider
       value: 
       objectReference: {fileID: 1346184816}
-    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: _music
-      value: 
-      objectReference: {fileID: 1003074203}
-    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: _sound
-      value: 
-      objectReference: {fileID: 1535834311}
-    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: _treat
-      value: 
-      objectReference: {fileID: 8300000, guid: 062af0f8d5c00314ba8b3ae8321da7e7, type: 3}
-    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: _bossMusic
-      value: 
-      objectReference: {fileID: 8300000, guid: cc733cceff0645041b6207517d11377c, type: 3}
-    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: _shopMusic
-      value: 
-      objectReference: {fileID: 8300000, guid: c3a61a0b2652c8a45913be25185549c5, type: 3}
-    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: _blackMouse
-      value: 
-      objectReference: {fileID: 8300000, guid: 61bf2d3180f0f0943a0ada63870e3fa2, type: 3}
-    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: _buildMusic
-      value: 
-      objectReference: {fileID: 8300000, guid: 526c58329ffb0a741b21d052f3ee004d, type: 3}
-    - target: {fileID: 7459078949945384106, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-      propertyPath: _mainScreenMusic
-      value: 
-      objectReference: {fileID: 8300000, guid: 8862f7d4ba9a405479f3b0e940205186, type: 3}
-    m_RemovedComponents:
-    - {fileID: 8336248922547432090, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1498,11 +1460,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418085829}
   m_CullTransparentMesh: 1
---- !u!82 &1535834311 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 8100271233662947009, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}
-  m_PrefabInstance: {fileID: 1318986572}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1552784961 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4534125006970263443, guid: d614cd9b4c4aa334faa0ac59a8e4b5b8, type: 3}

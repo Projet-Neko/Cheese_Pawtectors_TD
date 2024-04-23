@@ -392,8 +392,8 @@ public class Room : MonoBehaviour
 
     public void ColorRoom(Color color)
     {
-        foreach (Material material in _materials)
-            material.color = color;
+        //foreach (Material material in _materials)
+            //material.color = color;
     }
 
 

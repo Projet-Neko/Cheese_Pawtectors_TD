@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 1726628523924709799}
   - component: {fileID: 5494471150628762286}
   - component: {fileID: 1792270081728672623}
+  - component: {fileID: 7331382856037151103}
   m_Layer: 5
   m_Name: Footer
   m_TagString: Untagged
@@ -596,6 +597,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &7331382856037151103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567351767824733980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7544902469bc4154f840ca156e1267c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2240536831929130668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1535,6 +1548,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7331382856037151103}
+        m_TargetAssemblyTypeName: Button, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7776144384912659472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1548,7 +1573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cat: {fileID: 0}
-  _renderer: {fileID: 0}
+  _catSprite: {fileID: 0}
   _catPrice: {fileID: 5524334045311985215}
   _catLevel: {fileID: 0}
 --- !u!1 &5198616902038888214
@@ -2138,6 +2163,18 @@ MonoBehaviour:
       - m_Target: {fileID: 20387060643645383}
         m_TargetAssemblyTypeName: CatalogPopup, Assembly-CSharp
         m_MethodName: ClosePopup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7331382856037151103}
+        m_TargetAssemblyTypeName: Button, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

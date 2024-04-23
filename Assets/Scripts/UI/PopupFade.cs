@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // HOW TO USE :
 // On Animation component : add FadeIn clip as "Animation" + add FadeOut clip in "Animations"
@@ -31,6 +32,6 @@ public class PopupFade : MonoBehaviour
         yield return new WaitForSeconds(_fadeIn.length + _duration);
         _animation.Play(_fadeOut.name);
         yield return new WaitForSeconds(_fadeOut.length);
-        Destroy(gameObject);
+        SceneManager.UnloadSceneAsync(gameObject.scene);
     }
 }

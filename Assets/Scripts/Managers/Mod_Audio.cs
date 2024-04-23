@@ -14,9 +14,9 @@ public class Mod_Audio : Module
 
     [Header("SoundEffects")]
     [SerializeField] private AudioClip _loading;
-    [SerializeField] private AudioClip _meat;
+    [SerializeField] private AudioClip _treat;
     [SerializeField] private AudioClip _merge;
-    [SerializeField] private AudioClip _albinos;
+    [SerializeField] private AudioClip _blackMouse;
     [SerializeField] private AudioClip _button;
     [SerializeField] private AudioClip _newRoomOrCat;
     [SerializeField] private AudioClip _mouse;
@@ -44,9 +44,12 @@ public class Mod_Audio : Module
     private void Awake()
     {
         //Mod_Waves.BossWave += StartBossMusic;
-        Mod_Waves.OnBossDefeated += StartMainMusic;
-        Volume.OnMusicVolumeChange += SetMusicVolume;
-        Volume.OnSoundVolumeChange += SetSoundVolume;
+        Mod_Waves.OnBossDefeated += StartMainMusic; //Done
+        Volume.OnMusicVolumeChange += SetMusicVolume; //Done
+        Volume.OnSoundVolumeChange += SetSoundVolume; //Done
+        Mod_Economy.treatWin += PlayTreatSound; //Done
+        Merge.OnCatMerge += PlayMergeSound; //Done
+        Mod_Waves.BlackMouseSpawned += PlayBlackMouseSound; //Done
     }
 
     private void OnDestroy()
@@ -72,12 +75,12 @@ public class Mod_Audio : Module
         _build.volume = volume;
         _shop.volume = volume;
         _boss.volume = volume;
-    }
+    } //done
 
     public void SetSoundVolume(float volume)
     {
         _soundVolume = volume;
-    }
+    } //done
 
 
     public void StartMusic(string sceneName)
@@ -111,7 +114,7 @@ public class Mod_Audio : Module
             default:
                 break;
         }
-    }
+    } //done
 
     private void StartBossMusic()
     {
@@ -122,7 +125,7 @@ public class Mod_Audio : Module
     private void StartMainMusic()
     {
         StopMusic();
-        _boss.Play();
+        _mainScreen.Play();
     }
 
     private void StopMusic()
@@ -132,19 +135,19 @@ public class Mod_Audio : Module
         _build.Stop();
         _shop.Stop();
         _boss.Stop();
-    }
+    } //Done
 
     public void PlayLoadingSound()
-        => _titleScreen.PlayOneShot(_loading, _soundVolume);
+        => _titleScreen.PlayOneShot(_loading, _soundVolume); //Start du jeu mais à changer ?
 
-    public void PlayMeatSound()
-        => _titleScreen.PlayOneShot(_meat, _soundVolume);
+    public void PlayTreatSound(int arg0)
+        => _titleScreen.PlayOneShot(_treat, _soundVolume); //done
 
-    public void PlayMergeSound()
-        => _titleScreen.PlayOneShot(_merge, _soundVolume);
+    public void PlayMergeSound(int arg0, int arg1)
+        => _titleScreen.PlayOneShot(_merge, _soundVolume); //Done
 
-    public void PlayAlbinosSound()
-        => _titleScreen.PlayOneShot(_albinos, _soundVolume);
+    public void PlayBlackMouseSound()
+        => _titleScreen.PlayOneShot(_blackMouse, _soundVolume); //Done
 
     public void PlayButtonSound()
         => _titleScreen.PlayOneShot(_button, _soundVolume);

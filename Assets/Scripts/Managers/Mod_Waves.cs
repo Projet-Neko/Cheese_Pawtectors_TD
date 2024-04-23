@@ -11,6 +11,7 @@ public class Mod_Waves : Module
     public static event Action BossWave;
     public static event Action OnBossDefeated;
     public static event Action WaveCompleted;
+    public static event Action BlackMouseSpawned;
 
     [SerializeField, Scene] private string _buildScene;
     [SerializeField, Scene] private string _mainScreenScene;
@@ -152,6 +153,7 @@ public class Mod_Waves : Module
             {
                 case 2:
                     m = Instantiate(_gm.BlackMousePrefab, _spawningRoomPosition, Quaternion.identity).GetComponent<Mouse>();
+                    BlackMouseSpawned?.Invoke();
                     break;
                 case 3:
                     m = Instantiate(_gm.MouseBallPrefab, _spawningRoomPosition, Quaternion.identity).GetComponent<Mouse>();

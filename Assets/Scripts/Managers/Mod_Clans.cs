@@ -24,12 +24,10 @@ public class Mod_Clans : Module
     };
 
     private ClanSO[] _clansData;
-    private int[] _quizAnswers;
 
     public override void Init(GameManager gm)
     {
         base.Init(gm);
-        _quizAnswers = new int[_clansId.Count];
         _clansData = Resources.LoadAll<ClanSO>("SO/Clans");
         _clansData.OrderBy(x => x.name);
         StartCoroutine(InitClanList());
@@ -78,18 +76,13 @@ public class Mod_Clans : Module
         }, _gm.OnRequestError);
     }
 
-    private void Answer(int answerIndex)
+    public Clan GetChoosenClan(int[] answers)
     {
-        _quizAnswers[answerIndex]++;
-    }
+        int clan = answers[0];
 
-    public Clan GetChoosenClan()
-    {
-        int clan = _quizAnswers[0];
-
-        for (int i = 1; i < _quizAnswers.Length; i++)
+        for (int i = 1; i < answers.Length; i++)
         {
-            if (_quizAnswers[i] > clan) clan = _quizAnswers[i];
+            if (answers[i] > clan) clan = answers[i];
         }
 
         _gm.Data.UpdateClan(clan);

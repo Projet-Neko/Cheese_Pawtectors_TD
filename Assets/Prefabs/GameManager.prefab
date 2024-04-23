@@ -348,6 +348,8 @@ MonoBehaviour:
   _dragCoin: {fileID: 0}
   _dropCoin: {fileID: 0}
   _full: {fileID: 0}
+  _sliderMusic: 0
+  _soundVolume: 0
 --- !u!82 &8336248922547432090
 AudioSource:
   m_ObjectHideFlags: 0

@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
     public void UpdateUsername(string username) => StartCoroutine(Mod<Mod_Account>().UpdateUsername(username));
 
     // ClanMod
+    public ClanSO[] Clans => Mod<Mod_Clans>().ClansData;
     public Clan GetChoosenClan() => Mod<Mod_Clans>().GetChoosenClan();
     #endregion
 

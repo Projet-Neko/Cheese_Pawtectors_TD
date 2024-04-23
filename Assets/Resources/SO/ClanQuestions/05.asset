@@ -12,5 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 534cd04db9b90334c9516cbd2ffa9bb9, type: 3}
   m_Name: 05
   m_EditorClassIdentifier: 
-  Questions:
-    _serializedList: []
+  Question: "Quelle est ta r\xE9action face \xE0 l'inconnu ?"
+  Answers:
+    _serializedList:
+    - Key: 2
+      Value: Je reste ouvert d'esprit et calme.
+    - Key: 0
+      Value: "Je consid\xE8re \xE7a comme une opportunit\xE9 pour d\xE9couvrir de
+        nouvelles choses."
+    - Key: 1
+      Value: "Je fonce t\xEAte baiss\xE9e, pr\xEAt \xE0 affronter n'importe quel
+        danger."
+    - Key: 3
+      Value: "Je prends le temps d'\xE9valuer la situation avant d'agir."

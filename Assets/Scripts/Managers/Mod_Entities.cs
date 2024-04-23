@@ -26,7 +26,7 @@ public class Mod_Entities : Module
     private MouseSO[] _mouses;
     private Cheese _cheese;
     private bool _canSpawnAlbino = true;
-    private bool _canSpawnBlackMouse = true;
+    private bool _canSpawnBlackMouse = false;
 
     private void Awake()
     {

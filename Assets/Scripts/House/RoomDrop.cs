@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RoomDrop : DragAndDropHandler
 {
     [SerializeField] private Cat _currentCat;
     [SerializeField] private Room _room;
+
+    private Plane _plane = new Plane(Vector3.up, 0);
 
     public static event Action CatDroped; //Event for the Cat in house Success
 
@@ -47,10 +50,17 @@ public class RoomDrop : DragAndDropHandler
 
     public override void HandleDragAndDrop(Room room, Vector3 initialPosition)
     {
-        Vector3 currentPos = _room.RoundPosition(transform.position);
-        Debug.Log($"Dropped {room.Pattern} at {currentPos} [on {_room.Pattern}]");
+        float distance;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (!_plane.Raycast(ray, out distance))
+            return;
+        
+        Vector3 mousePosition = ray.GetPoint(distance);
 
-        if (!room.IsInStorageMode || !House.Instance.AddRoomInGrid(room.Pattern, (int)currentPos.x, (int)currentPos.z))
+        int x = (int)Mathf.Round(mousePosition.x);
+        int z = (int)Mathf.Round(mousePosition.z);
+
+        if (!room.IsInStorageMode || !House.Instance.AddRoomInGrid(room.Pattern, x, z))
         {
             base.HandleDragAndDrop(room, initialPosition);
             return;

@@ -57,14 +57,12 @@ public class HouseCuisine : MonoBehaviour
 
         // Subscribe to events
         Room.ChangeTilePosition += CheckRoomPosition;
-        Room.TileDestroyed += CreateRoom;
     }
 
     private void OnDestroy()
     {
         // Unsubscribe to events
         Room.ChangeTilePosition -= CheckRoomPosition;
-        Room.TileDestroyed -= CreateRoom;
     }
 
 

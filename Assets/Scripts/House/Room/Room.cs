@@ -112,7 +112,8 @@ public class Room : MonoBehaviour
 
     private string _sceneHUD;
 
-    private List<Material> _materials = new();
+    private Material[] _materialsBase;
+    private Material[] _materialsInvalid;
 
     private bool _isInStorageMode = false;
 
@@ -138,8 +139,15 @@ public class Room : MonoBehaviour
 
     protected virtual void Awake()
     {
-        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
-            _materials.AddRange(renderer.materials);
+        _materialsBase = GetComponent<Renderer>().materials;
+        int nbMaterials = _materialsBase.Length;
+        _materialsInvalid = new Material[nbMaterials];
+
+        for (int i = 0; i < nbMaterials; i++)
+        {
+            _materialsInvalid[i] = new Material(_materialsBase[i]);
+            _materialsInvalid[i].color = Color.red;
+        }
     }
 
     void Start()
@@ -390,10 +398,12 @@ public class Room : MonoBehaviour
             junction.SetIdRoom(x, z);
     }
 
-    public void ColorRoom(Color color)
+    public void ColorInvalidRoom(bool enable)
     {
-        //foreach (Material material in _materials)
-            //material.color = color;
+        if (enable)
+            GetComponent<Renderer>().materials = _materialsInvalid;
+        else
+            GetComponent<Renderer>().materials = _materialsBase;
     }
 
 

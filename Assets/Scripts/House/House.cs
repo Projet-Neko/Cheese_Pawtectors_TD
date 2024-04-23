@@ -37,9 +37,6 @@ public class House : MonoBehaviour
 
     private Dictionary<Tuple<RoomPattern, RoomDesign>, int> _roomsStorage = new();
 
-    private readonly Color _invalidColor = Color.red;
-    private readonly Color _validColor = Color.white;
-
     /* * * * * * * * * * * * * * * * * * * *
      *          BASIC FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */
@@ -136,9 +133,6 @@ public class House : MonoBehaviour
         Room.LineActivated += ActiveLine;
         Junction.TileChanged += BuildPath;
         MouseBrain.VisitedNextRoom += GetNextTarget;
-
-        // Debug Only
-        _roomsStorage.Add(new(RoomPattern.CorridorRoom, RoomDesign.Bedroom), 1);
 }
 
     private void OnDestroy()
@@ -430,9 +424,9 @@ public class House : MonoBehaviour
                     continue;
 
                 if (!_roomsGrid[i, j].CorrectPath)
-                    _roomsGrid[i, j].ColorRoom(_invalidColor);
+                    _roomsGrid[i, j].ColorInvalidRoom(true);
                 else
-                    _roomsGrid[i, j].ColorRoom(_validColor);
+                    _roomsGrid[i, j].ColorInvalidRoom(false);
             }
         }
     }

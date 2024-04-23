@@ -81,7 +81,9 @@ public class Mouse : Entity
         // Create two new instances of the mouse with 50% fewer hit points
         float newHealth = _baseHealth / 2;
         Mouse newMouse1 = Instantiate(this, transform.position, transform.rotation);
+        newMouse1.InitData(3);
         Mouse newMouse2 = Instantiate(this, transform.position, transform.rotation);
+        newMouse2.InitData(3);
 
         // Update life points on new mice
         newMouse1._baseHealth = newHealth;

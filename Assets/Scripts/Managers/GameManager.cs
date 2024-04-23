@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     private bool _hasLoginPopupLoad;
 
     private bool _isInitCompleted = false;
+    private bool _errorLoaded = false;
 
     #region Modules
     // EntitiesMod
@@ -174,7 +175,13 @@ public class GameManager : MonoBehaviour
     {
         Mod<Mod_Audio>().StartMusic(scene.name);
 
-        if (scene.name == _headBandScene || scene.name == _errorPopupScene) return;
+        if (scene.name == _headBandScene) return;
+
+        if (scene.name == _errorPopupScene)
+        {
+            _errorLoaded = true;
+            return;
+        }
 
         if (mode != LoadSceneMode.Additive)
         {
@@ -189,6 +196,12 @@ public class GameManager : MonoBehaviour
 
     private void SceneManager_sceneUnloaded(Scene scene)
     {
+        if (scene.name == _errorPopupScene)
+        {
+            _errorLoaded = false;
+            return;
+        }
+
         Mod<Mod_Audio>().StartMusic(scene.name);
         if (scene.name != _popupSceneName) return;
         //Debug.Log("<color=red>disabling popup mode</color>");
@@ -344,6 +357,7 @@ public class GameManager : MonoBehaviour
     }
     public void LogError(string error)
     {
+        if (_errorLoaded) return;
         _errorMessage = error;
         SceneManager.LoadSceneAsync(_errorPopupScene, LoadSceneMode.Additive);
     }

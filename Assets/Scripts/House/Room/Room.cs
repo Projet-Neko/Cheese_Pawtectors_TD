@@ -69,9 +69,7 @@ public class Room : MonoBehaviour
 {
     [Header("Room")]
     [SerializeField] private GameObject _room;
-
-    [Header("Sprite Inventory")]
-    [SerializeField] private Sprite _spriteInventory;
+    [SerializeField] private RoomDesign _roomDesign;
 
     [Header("Room Canva")]
     [SerializeField] private GameObject _HUDCanva;
@@ -96,6 +94,7 @@ public class Room : MonoBehaviour
     public List<IdRoom> PreviousRooms => _previousRooms;
     public List<IdRoom> NextRooms => _nextRooms;
     public bool IsInStorageMode => _isInStorageMode;
+    public RoomDesign RoomDesign => _roomDesign;
 
     protected RoomSecurity _security;
     protected RoomPattern _pattern;

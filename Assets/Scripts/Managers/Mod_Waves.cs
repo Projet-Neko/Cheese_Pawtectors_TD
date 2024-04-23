@@ -136,7 +136,7 @@ public class Mod_Waves : Module
             BossWave?.Invoke();
             _maxEnemyNumber = 1;
         }
-        else _maxEnemyNumber = 2;
+        else _maxEnemyNumber = 10;
         
         /*_maxEnemyNumber = 1;*/
         if (cooldown) yield return new WaitForSeconds(.5f);

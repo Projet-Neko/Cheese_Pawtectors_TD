@@ -151,7 +151,8 @@ public class Mod_Audio : Module
         => _titleScreen.PlayOneShot(_blackMouse, _soundVolume); //Done
 
     public void PlayButtonSound()
-        => _titleScreen.PlayOneShot(_button, _soundVolume);
+        //=> _titleScreen.PlayOneShot(_button, _soundVolume);
+        => _titleScreen.PlayOneShot(_button);
 
     public void PlayNewRoomOrCatSound()
         => _titleScreen.PlayOneShot(_newRoomOrCat, _soundVolume);

@@ -29,8 +29,8 @@ public class Mod_Audio : Module
     [SerializeField] private AudioClip _dropCoin;
     [SerializeField] private AudioClip _full;
 
-    [SerializeField] private float _sliderMusic;
-    [SerializeField] private float _soundVolume;
+    [SerializeField] private float _sliderMusic = 1;
+    [SerializeField] private float _soundVolume = 10;
 
     private string _previousScene = "";
     private string _previousAdditiveScene = "";
@@ -50,6 +50,7 @@ public class Mod_Audio : Module
         Mod_Economy.treatWin += PlayTreatSound; //Done
         Merge.OnCatMerge += PlayMergeSound; //Done
         Mod_Waves.BlackMouseSpawned += PlayBlackMouseSound; //Done
+        Button.OnButtonClicked += PlayButtonSound; //Done
     }
 
     private void OnDestroy()

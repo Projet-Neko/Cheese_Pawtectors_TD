@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41cceaaccfe30f447912c74f9997f076, type: 3}
+  m_Name: 2_Furrocious
+  m_EditorClassIdentifier: 
+  Description: "Bienvenue au sein du clan Furrocious, o\xF9 la fiert\xE9 et l'ind\xE9pendance
+    sont \xE9lev\xE9es au rang de vertus. Sous la direction de Leo, le majestueux
+    chat bengal, ces f\xE9lins intr\xE9pides sont connus pour leur courage in\xE9branlable
+    et leur d\xE9termination sans faille. Leur audace et leur t\xE9m\xE9rit\xE9 les
+    poussent \xE0 affronter tous les d\xE9fis avec une assurance d\xE9concertante,
+    refusant de reculer devant l'adversit\xE9 quelle qu'elle soit."
+  Gem: {fileID: 0}

@@ -416,7 +416,7 @@ MonoBehaviour:
   _animation: {fileID: 1003690017}
   _fadeIn: {fileID: 7400000, guid: 08a45571d182ab247b332aa5e9980e1d, type: 2}
   _fadeOut: {fileID: 7400000, guid: 227cdc485811929409f5f1443367b127, type: 2}
-  _duration: 5
+  _duration: 1
 --- !u!111 &1003690017
 Animation:
   m_ObjectHideFlags: 0
@@ -458,7 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d7ec88cfcdc47a42a751b34554ce41b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _errorMessage: {fileID: 825293478}
+  _errorMessage: {fileID: 1615139135}
 --- !u!1 &1220098028
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,12 +643,48 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6163704431206581318, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
+      propertyPath: m_text
+      value: Error message
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163704431206581318, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e8259a6b956f52f42b483106f5933810, type: 2}
+    - target: {fileID: 6163704431206581318, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163704431206581318, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163704431206581318, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163704431206581318, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163704431206581318, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 9112192638866704787, guid: e8259a6b956f52f42b483106f5933810, type: 2}
+    - target: {fileID: 6163704431206581318, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190335
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163704431206581318, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
       propertyPath: m_VerticalAlignment
       value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 6163704431206581318, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163704431206581318, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6642707212671498741, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
       propertyPath: m_AnchorMax.y
@@ -680,6 +716,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4436021564000081934, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
   m_PrefabInstance: {fileID: 1615139133}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1615139135 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6163704431206581318, guid: 82de5948899d18d48b71eb5057910d5e, type: 3}
+  m_PrefabInstance: {fileID: 1615139133}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1795812640
 GameObject:
   m_ObjectHideFlags: 0

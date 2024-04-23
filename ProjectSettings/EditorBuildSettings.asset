@@ -72,6 +72,9 @@ EditorBuildSettings:
     path: Assets/Scenes/PopUp/NameAlreadyUsed.unity
     guid: b7591d52da78e7e42bfa5e0089f3c36b
   - enabled: 1
+    path: Assets/Scenes/Quiz.unity
+    guid: be2c2f77fc88abd4d91ddc0a1b3317d1
+  - enabled: 1
     path: Assets/Scenes/PopUp/CatManagerPopup.unity
     guid: fa5221481e22f8943ad57e21abca0731
   - enabled: 1

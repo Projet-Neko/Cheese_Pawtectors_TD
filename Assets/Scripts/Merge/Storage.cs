@@ -53,6 +53,7 @@ public class Storage : MonoBehaviour
         }
 
         if (_freeSlot != null) slotIndex = int.Parse(_freeSlot.name.Split('_')[1]);
+        else GameManager.Instance.LogError("Storage is full !");
         OnStorageCheck?.Invoke(slotIndex, catLevel);
     }
 

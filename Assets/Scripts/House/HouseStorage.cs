@@ -34,6 +34,7 @@ public class HouseStorage : MonoBehaviour
 
     public void CreateSlot(RoomPattern pattern, RoomDesign design)
     {
+        Debug.Log("Create SLOT");
         GameObject slot = Instantiate(_slotPrefab, _container.transform);
         GameObject room = Instantiate(House.Instance.Rooms[pattern], slot.transform);
         room.transform.localPosition += new Vector3(0, -2, -20);

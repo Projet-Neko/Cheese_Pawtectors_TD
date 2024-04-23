@@ -195,8 +195,7 @@ public class Mod_Economy : Module
 
         if (_gm.Data.Currencies[(int)Currency.Treats].Amount < _catPrices[catLevel - 1])
         {
-            Debug.LogError(" You can't adopt this cat : not enough money!");
-            // TODO -> show error popup
+            GameManager.Instance.LogError("You don't have enough treats !");
             canAdopt = false;
         }
         else

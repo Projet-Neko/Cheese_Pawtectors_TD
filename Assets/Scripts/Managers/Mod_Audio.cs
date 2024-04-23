@@ -39,7 +39,7 @@ public class Mod_Audio : Module
 
     private void Awake()
     {
-        Mod_Waves.BossWave += StartBossMusic;
+        //Mod_Waves.BossWave += StartBossMusic;
         Mod_Waves.OnBossDefeated+= StartMainMusic;
     }
 

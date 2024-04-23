@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AdoptButton : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class AdoptButton : MonoBehaviour
     [SerializeField] private CatSO _cat;
 
     [Header("HUD")]
-    [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private Image _catSprite;
     [SerializeField] private TMP_Text _catPrice;
     [SerializeField] private TMP_Text _catLevel;
 
@@ -61,6 +62,6 @@ public class AdoptButton : MonoBehaviour
         _cheapestCatIndex = GameManager.Instance.GetCheapestCatIndex();
         _catPrice.text = GameManager.Instance.CatPrices[_cheapestCatIndex].ToString();
         _catLevel.text = (_cheapestCatIndex + 1).ToString();
-        //_renderer.sprite = GameManager.Instance.Cats[_cheapestCatIndex].SpriteFront;
+        _catSprite.sprite = GameManager.Instance.Cats[_cheapestCatIndex].Sprites[4];
     }
 }

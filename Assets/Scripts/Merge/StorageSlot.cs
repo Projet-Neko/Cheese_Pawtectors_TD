@@ -46,6 +46,9 @@ public class StorageSlot : DragAndDropHandler
         _currentCat.transform.SetParent(transform);
         _currentCat.transform.position = transform.position;
 
+        if (_currentCat.IsInStorageMode) return;
+        cat.SetStorageMode(true);
+
         //_currentCat.transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z + 0.1f);
 
         //Debug.Log($"Position du slot : {transform.position}");
@@ -68,7 +71,6 @@ public class StorageSlot : DragAndDropHandler
         {
             cat.transform.parent.gameObject.GetComponent<RoomDrop>().ResetRoomSlot();
             InvokeOnRoomChanged((int)cat.transform.parent.transform.position.x, (int)cat.transform.parent.transform.position.y, -1);
-            cat.SetStorageMode(true);
         }
         else
         {

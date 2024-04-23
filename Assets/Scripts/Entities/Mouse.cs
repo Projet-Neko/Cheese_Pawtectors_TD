@@ -62,7 +62,7 @@ public class Mouse : Entity
     //    base.TakeDamage(source);
     //}
 
-    public override void Die(Entity source)
+    /*public override void Die(Entity source)
     {
         if (_data.MouseBossType == MouseBossType.MouseBallBoss && CanSplit())
         {
@@ -81,7 +81,9 @@ public class Mouse : Entity
         // Create two new instances of the mouse with 50% fewer hit points
         float newHealth = _baseHealth / 2;
         Mouse newMouse1 = Instantiate(this, transform.position, transform.rotation);
+        newMouse1.InitData(3);
         Mouse newMouse2 = Instantiate(this, transform.position, transform.rotation);
+        newMouse2.InitData(3);
 
         // Update life points on new mice
         newMouse1._baseHealth = newHealth;
@@ -89,7 +91,7 @@ public class Mouse : Entity
 
         newMouse2._baseHealth = newHealth;
         newMouse2._currentHealth = newHealth;
-    }
+    }*/
 
     protected override void DeathAnimation()
     {

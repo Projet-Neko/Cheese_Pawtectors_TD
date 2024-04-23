@@ -179,7 +179,7 @@ MonoBehaviour:
   _renderer: {fileID: 4363232312380465801}
   _level: 1
   _slider: {fileID: 5490810214029169719}
-  _threat: {fileID: 1626346135606361170, guid: e3720e9abbffb244b9eec20cbc9ac455, type: 3}
+  _treat: {fileID: 1626346135606361170, guid: e3720e9abbffb244b9eec20cbc9ac455, type: 3}
 --- !u!114 &7562806154012630528
 MonoBehaviour:
   m_ObjectHideFlags: 0

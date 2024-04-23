@@ -132,7 +132,7 @@ public class House : MonoBehaviour
 
         // Subscribe to events
         Room.ChangeTilePosition += CheckRoomPosition;
-        Room.TileDestroyed += ReplaceRoom;
+        Room.TileDestroyed += RemoveRoom;
         Room.LineActivated += ActiveLine;
         Junction.TileChanged += BuildPath;
         MouseBrain.VisitedNextRoom += GetNextTarget;
@@ -145,7 +145,7 @@ public class House : MonoBehaviour
     {
         // Unsubscribe to events
         Room.ChangeTilePosition -= CheckRoomPosition;
-        Room.TileDestroyed -= ReplaceRoom;
+        Room.TileDestroyed -= RemoveRoom;
         Room.LineActivated -= ActiveLine;
         Junction.TileChanged -= BuildPath;
         MouseBrain.VisitedNextRoom -= GetNextTarget;
@@ -521,7 +521,8 @@ public class House : MonoBehaviour
 
     private void AddRoomInInventory(RoomPattern roomPattern)
     {
-        // TO DO : Check if cats are in room
+        Debug.Log("Add room in inventory");
+        OnRoomStored.Invoke(roomPattern, RoomDesign.Bedroom);// TO DO : change RoomDesign
     }
 
     public bool AddRoomInGrid(RoomPattern roomPattern, int x, int z)

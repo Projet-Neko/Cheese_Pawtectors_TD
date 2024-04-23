@@ -83,7 +83,7 @@ public class Room : MonoBehaviour
 
     // Events
     public static event Action<Vector3, Vector3, bool> ChangeTilePosition;  // Old position, new position, Still in motion or not (false if the room is still moving)
-    public static event Action<int, int, RoomPattern> TileDestroyed;        // Notify the house that a room is destroyed
+    public static event Action<int, int> TileDestroyed;                     // Notify the house that a room is destroyed
     public static event Action<bool> LineActivated;                         // Enable or disable the lines of the house
     private static event Action<bool> TileSelected;                         // Deselect the other rooms when a room is selected
     public static event Action TileMoved;                                   // Event For Modify House success
@@ -172,7 +172,7 @@ public class Room : MonoBehaviour
      *          UTILITIES FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */
 
-    public Vector3 RoundPosition(Vector3 startPosition)
+    private Vector3 RoundPosition(Vector3 startPosition)
     {
         Vector3 position = startPosition;
         position.x = Mathf.Round(position.x);
@@ -354,7 +354,7 @@ public class Room : MonoBehaviour
     // When user click on Canvas/HUD/Suppr button
     public void Remove()
     {
-        TileDestroyed?.Invoke((int)transform.position.x, (int)transform.position.z, RoomPattern.VoidRoom); // Notify the house that a room will be destroyed and that it must be replaced by a void room
+        TileDestroyed?.Invoke((int)transform.position.x, (int)transform.position.z); // Notify the house that a room will be destroyed and that it must be replaced by a void room
         TileSelected?.Invoke(false);
         Delete();
         TileMoved?.Invoke();

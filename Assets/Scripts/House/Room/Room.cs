@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -65,11 +67,10 @@ public struct IdRoom
     public override int GetHashCode() { return HashCode.Combine(x, z); }
 }
 
-public class Room : MonoBehaviour
+public abstract class Room : MonoBehaviour
 {
     [Header("Room")]
     [SerializeField] private GameObject _room;
-    [SerializeField] private RoomDesign _roomDesign;
 
     [Header("Room Canva")]
     [SerializeField] private GameObject _HUDCanva;
@@ -85,6 +86,9 @@ public class Room : MonoBehaviour
     public static event Action<bool> LineActivated;                         // Enable or disable the lines of the house
     private static event Action<bool> TileSelected;                         // Deselect the other rooms when a room is selected
     public static event Action TileMoved;                                   // Event For Modify House success
+
+    // Abstract methods
+    public abstract string DefineDesign();
 
     // Getters
     public List<Junction> Opening => _opening;
@@ -117,10 +121,13 @@ public class Room : MonoBehaviour
 
     private bool _isInStorageMode = false;
 
+    private RoomDesign _roomDesign;
+
     // Constants
     private const int _maxLevel = 3;
     private Plane _plane = new Plane(Vector3.up, 0);
     private Vector3 _height;
+    protected string _pathSO = "SO/Room/";
 
 
     //change OnMouseDown to Button to avoid click error
@@ -139,7 +146,33 @@ public class Room : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _materialsBase = GetComponent<Renderer>().materials;
+        string pathSO = DefineDesign();
+
+        if (pathSO == "")
+        {
+            // TO DO : REMOVE WHEN ALL ROOMS ARE IMPLEMENTED
+            _materialsBase = GetComponent<Renderer>().materials;
+
+            int nbMaterials2 = _materialsBase.Length;
+            _materialsInvalid = new Material[nbMaterials2];
+
+            for (int i = 0; i < nbMaterials2; i++)
+            {
+                _materialsInvalid[i] = new Material(_materialsBase[i]);
+                _materialsInvalid[i].color = Color.red;
+            }
+            return;
+        }
+
+        DesignRoomSO design = Resources.Load<DesignRoomSO>(pathSO);
+
+        Debug.Log("Design Room : " + design.name);
+
+        GetComponent<MeshFilter>().mesh = design.mesh;
+
+        _materialsBase = design.materials;
+        GetComponent<Renderer>().materials = _materialsBase;
+
         int nbMaterials = _materialsBase.Length;
         _materialsInvalid = new Material[nbMaterials];
 
@@ -178,6 +211,13 @@ public class Room : MonoBehaviour
     /* * * * * * * * * * * * * * * * * * * *
      *          UTILITIES FUNCTIONS
      * * * * * * * * * * * * * * * * * * * */
+
+    protected string GetRoomDesign()
+    {
+        int random = UnityEngine.Random.Range(0, Enum.GetNames(typeof(RoomDesign)).Length);
+        _roomDesign = (RoomDesign)random;
+        return _roomDesign.ToString();
+    }
 
     private Vector3 RoundPosition(Vector3 startPosition)
     {

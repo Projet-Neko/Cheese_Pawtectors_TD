@@ -28,11 +28,11 @@ public class HouseStorage : MonoBehaviour
         foreach (var room in House.Instance.RoomsStorage)
         {
             if (room.Key.Item1 is RoomPattern.VoidRoom) continue;
-            CreateSlot(room.Key.Item1, room.Key.Item2);
+            CreateSlot(room.Key.Item1);
         }
     }
 
-    public void CreateSlot(RoomPattern pattern, RoomDesign design)
+    public void CreateSlot(RoomPattern pattern)
     {
         Debug.Log("Create SLOT");
         GameObject slot = Instantiate(_slotPrefab, _container.transform);

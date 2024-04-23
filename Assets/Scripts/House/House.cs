@@ -8,7 +8,7 @@ public class House : MonoBehaviour
 {
     public static House Instance { get; private set; }
 
-    public static event Action<RoomPattern, RoomDesign> OnRoomStored;
+    public static event Action<RoomPattern> OnRoomStored;
 
     [Header("Prefabs")]
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
@@ -154,8 +154,9 @@ public class House : MonoBehaviour
     {
         GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(x, 0, z), Quaternion.identity);
         roomObject.transform.parent = transform;
-        _roomsGrid[x, z] = roomObject.GetComponentInChildren<Room>();
-        _roomsGrid[x, z].SceneForHUD(_sceneHUD);
+        Room room = roomObject.GetComponentInChildren<Room>();
+        room.SceneForHUD(_sceneHUD);
+        _roomsGrid[x, z] = room;
     }
 
     /* * * * * * * * * * * * * * * * * * * *
@@ -231,7 +232,7 @@ public class House : MonoBehaviour
         }
         else if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            AddRoomInInventory(_roomsGrid[x, z].Pattern, _roomsGrid[x, z].RoomDesign);// Add old room in inventory
+            AddRoomInInventory(_roomsGrid[x, z].Pattern);// Add old room in inventory
 
             ReplaceRoom(x, z, pattern);
         }
@@ -406,7 +407,7 @@ public class House : MonoBehaviour
     {
         if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            AddRoomInInventory(_roomsGrid[x, z].Pattern, _roomsGrid[x, z].RoomDesign);// Add old room to the inventory
+            AddRoomInInventory(_roomsGrid[x, z].Pattern);// Add old room to the inventory
 
             ReplaceRoom(x, z, RoomPattern.VoidRoom);
         }
@@ -505,19 +506,17 @@ public class House : MonoBehaviour
                 break;
         }
 
-        RoomDesign roomDesign = (RoomDesign)UnityEngine.Random.Range(0, Enum.GetValues(typeof(RoomDesign)).Length);
-
-        AddRoomInInventory(roomPattern, roomDesign);
+        AddRoomInInventory(roomPattern);
 
         /*GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity);
         roomObject.transform.parent = transform;
         _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();*/
     }
 
-    private void AddRoomInInventory(RoomPattern roomPattern, RoomDesign roomDesign)
+    private void AddRoomInInventory(RoomPattern roomPattern)
     {
         Debug.Log("Add room in inventory");
-        OnRoomStored.Invoke(roomPattern, roomDesign);
+        OnRoomStored.Invoke(roomPattern);
     }
 
     public bool AddRoomInGrid(RoomPattern roomPattern, int x, int z)

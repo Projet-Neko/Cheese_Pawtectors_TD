@@ -40,7 +40,14 @@ public class Mod_Audio : Module
     private void Awake()
     {
         //Mod_Waves.BossWave += StartBossMusic;
-        Mod_Waves.OnBossDefeated+= StartMainMusic;
+        Mod_Waves.OnBossDefeated += StartMainMusic;
+    }
+
+    private void OnDestroy()
+    {
+        //Mod_Waves.BossWave -= StartBossMusic;
+        Mod_Waves.OnBossDefeated -= StartMainMusic;
+    
     }
 
     public override void Init(GameManager gm)

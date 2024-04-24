@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CatalogSlot : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class CatalogSlot : MonoBehaviour
     [SerializeField] private TMP_Text _name;
     [SerializeField] private TMP_Text _level;
     [SerializeField] private TMP_Text _price;
-    [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private Image _image;
     [SerializeField] private AdoptButton _adoptButton;
 
     private CatSO _data;
@@ -38,7 +39,7 @@ public class CatalogSlot : MonoBehaviour
         _name.text = catSO.Name;
         _level.text = catSO.Level.ToString();
         _price.text = GameManager.Instance.CatPrices[catSO.Level - 1].ToString();
-        //_renderer.sprite = catSO.SpriteFront;
+        _image.sprite = catSO.Sprites[4];
 
         _adoptButton.Init(catSO);
     }

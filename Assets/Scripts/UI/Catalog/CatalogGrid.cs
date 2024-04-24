@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CatalogGrid : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class CatalogGrid : MonoBehaviour
 
     [Header("Slot Popup")]
     [SerializeField] private GameObject _slotPopup;
-    [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private Image _image;
     [SerializeField] private TMP_Text _name;
     [SerializeField] private TMP_Text _level;
     [SerializeField] private TMP_Text _lore;
@@ -36,7 +37,6 @@ public class CatalogGrid : MonoBehaviour
     private void InitCatalogSlot_OnClick(CatSO cat)
     {
         _slotPopup.SetActive(true);
-        //_renderer.sprite = cat.SpriteFront;
         _name.text = cat.Name;
         _level.text = cat.Level.ToString();
         _lore.text = cat.Lore.ToString();
@@ -45,6 +45,7 @@ public class CatalogGrid : MonoBehaviour
         _speed.text = cat.Speed().ToString();
         _satiety.text = cat.Satiety().ToString();
         _price.text = GameManager.Instance.CatPrices[cat.Level - 1].ToString();
+        _image.sprite = cat.Sprites[4];
 
         _adoptButton.Init(cat);
     }

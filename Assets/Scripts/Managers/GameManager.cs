@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
 
     // ClanMod
     public ClanSO[] Clans => Mod<Mod_Clans>().ClansData;
-    public Clan GetChoosenClan(int[] answers) => Mod<Mod_Clans>().GetChoosenClan(answers);
+    public Clan SetUserClan(int clan) => Mod<Mod_Clans>().SetUserClan(clan);
     #endregion
 
     // PowerUpMod

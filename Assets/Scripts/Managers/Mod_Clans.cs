@@ -76,15 +76,8 @@ public class Mod_Clans : Module
         }, _gm.OnRequestError);
     }
 
-    public Clan GetChoosenClan(int[] answers)
+    public Clan SetUserClan(int clan)
     {
-        int clan = answers[0];
-
-        for (int i = 1; i < answers.Length; i++)
-        {
-            if (answers[i] > clan) clan = answers[i];
-        }
-
         _gm.Data.UpdateClan(clan);
         AddPlayerToClan((Clan)clan);
 

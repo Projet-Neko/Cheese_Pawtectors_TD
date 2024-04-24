@@ -2,7 +2,9 @@ using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class House : MonoBehaviour
 {
@@ -234,7 +236,7 @@ public class House : MonoBehaviour
         }
         else if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            AddRoomInInventory(_roomsGrid[x, z].Pattern);// Add old room in inventory
+            AddRoomInInventory(_roomsGrid[x, z].Pattern, _roomsGrid[x, z].RoomDesign);// Add old room in inventory
 
             ReplaceRoom(x, z, pattern);
         }
@@ -409,7 +411,7 @@ public class House : MonoBehaviour
     {
         if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            AddRoomInInventory(_roomsGrid[x, z].Pattern);// Add old room to the inventory
+            AddRoomInInventory(_roomsGrid[x, z].Pattern, _roomsGrid[x, z].RoomDesign);// Add old room to the inventory
 
             ReplaceRoom(x, z, RoomPattern.VoidRoom);
         }
@@ -518,25 +520,42 @@ public class House : MonoBehaviour
                 break;
         }
 
-        AddRoomInInventory(roomPattern);
+        RoomDesign roomDesign = (RoomDesign)UnityEngine.Random.Range(0, Enum.GetNames(typeof(RoomDesign)).Length);
+
+        AddRoomInInventory(roomPattern, roomDesign);
 
         /*GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity);
         roomObject.transform.parent = transform;
         _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();*/
     }
 
-    private void AddRoomInInventory(RoomPattern roomPattern)
+    private void AddRoomInInventory(RoomPattern roomPattern, RoomDesign roomDesign)
     {
         Debug.Log("Add room in inventory");
+
+        int value;
+        Tuple<RoomPattern, RoomDesign> key = new(roomPattern, roomDesign);
+        if (_roomsStorage.TryGetValue(key, out value))
+            ++_roomsStorage[key];
+        else
+            _roomsStorage.Add(key, 1);
+
         OnRoomStored.Invoke(roomPattern);
     }
 
-    public bool AddRoomInGrid(RoomPattern roomPattern, int x, int z)
+    public bool AddRoomInGrid(RoomPattern roomPattern, RoomDesign roomDesign, int x, int z)
     {
         RoomPattern oldRoomPattern = _roomsGrid[x, z].Pattern;
         if (IsInGrid(x, z) && oldRoomPattern != RoomPattern.StartRoom && oldRoomPattern != RoomPattern.CheeseRoom)
         {
             AddRoom(x, z, roomPattern);
+
+            Tuple<RoomPattern, RoomDesign> key = new(roomPattern, roomDesign);
+            --_roomsStorage[key];
+
+            if (_roomsStorage[key] == 0)
+                _roomsStorage.Remove(key);
+
             return true;
         }
 

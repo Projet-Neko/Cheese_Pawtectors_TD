@@ -62,7 +62,7 @@ public class RoomDrop : DragAndDropHandler
         int x = (int)Mathf.Round(mousePosition.x);
         int z = (int)Mathf.Round(mousePosition.z);
 
-        if (!room.IsInStorageMode || !House.Instance.AddRoomInGrid(room.Pattern, x, z))
+        if (!room.IsInStorageMode || !House.Instance.AddRoomInGrid(room.Pattern, room.RoomDesign, x, z))
         {
             base.HandleDragAndDrop(room, initialPosition);
             return;

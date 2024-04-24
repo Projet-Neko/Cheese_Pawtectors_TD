@@ -42,6 +42,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Phone/Pull/Pull.unity
     guid: d08eec563de4fc54ebfef25535c39856
   - enabled: 1
+    path: Assets/Scenes/PopUp/ErrorPopup.unity
+    guid: 133284549c805824e83a407429317b4f
+  - enabled: 1
     path: Assets/Scenes/Phone/Pull/Classic Pull.unity
     guid: 700e6d2a6622f60439069d19466cef1c
   - enabled: 1
@@ -54,7 +57,7 @@ EditorBuildSettings:
     path: Assets/Scenes/PopUp/StatsProfilPopup.unity
     guid: 2afb077f0a20e2a41abe8e7a7ee22c63
   - enabled: 1
-    path: Assets/Scenes/PopUp/LoginPopup.unity
+    path: Assets/Scenes/PopUp/OfflineRewards.unity
     guid: 705bebcd24893cf42a4d4a981ea99315
   - enabled: 1
     path: Assets/Scenes/PopUp/QuitBuildScene.unity
@@ -68,6 +71,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PopUp/NameAlreadyUsed.unity
     guid: b7591d52da78e7e42bfa5e0089f3c36b
+  - enabled: 1
+    path: Assets/Scenes/Quiz.unity
+    guid: be2c2f77fc88abd4d91ddc0a1b3317d1
   - enabled: 1
     path: Assets/Scenes/PopUp/CatManagerPopup.unity
     guid: fa5221481e22f8943ad57e21abca0731

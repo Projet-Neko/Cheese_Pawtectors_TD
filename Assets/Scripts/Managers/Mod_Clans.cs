@@ -2,6 +2,7 @@ using PlayFab;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum Clan
@@ -11,6 +12,7 @@ public enum Clan
 
 public class Mod_Clans : Module
 {
+    public ClanSO[] ClansData => _clansData;
     private readonly Dictionary<Clan, PlayFab.GroupsModels.EntityKey> _clans = new();
 
     private readonly List<string> _clansId = new()
@@ -21,12 +23,13 @@ public class Mod_Clans : Module
         "8E0E9E265319D702" // Whiskerhood
     };
 
-    private int[] _quizAnswers;
+    private ClanSO[] _clansData;
 
     public override void Init(GameManager gm)
     {
         base.Init(gm);
-        _quizAnswers = new int[_clansId.Count];
+        _clansData = Resources.LoadAll<ClanSO>("SO/Clans");
+        _clansData.OrderBy(x => x.name);
         StartCoroutine(InitClanList());
     }
 
@@ -73,20 +76,8 @@ public class Mod_Clans : Module
         }, _gm.OnRequestError);
     }
 
-    private void Answer(int answerIndex)
+    public Clan SetUserClan(int clan)
     {
-        _quizAnswers[answerIndex]++;
-    }
-
-    public Clan GetChoosenClan()
-    {
-        int clan = _quizAnswers[0];
-
-        for (int i = 1; i < _quizAnswers.Length; i++)
-        {
-            if (_quizAnswers[i] > clan) clan = _quizAnswers[i];
-        }
-
         _gm.Data.UpdateClan(clan);
         AddPlayerToClan((Clan)clan);
 

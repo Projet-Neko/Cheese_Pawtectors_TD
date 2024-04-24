@@ -13,13 +13,13 @@ public class StorageSlot : DragAndDropHandler
 
     private void Awake()
     {
-        _slotIndex = int.Parse(name.Split('_')[1]);
+        if (name.Split('_').Length == 2) _slotIndex = int.Parse(name.Split('_')[1]);
     }
 
     private void Update()
     {
         if (transform.childCount == 0) _currentCat = null;
-        _collider.enabled = _currentCat == null ? true : false;
+        _collider.enabled = _currentCat == null;
     }
 
     public void InitSlot(Cat cat)
@@ -31,12 +31,12 @@ public class StorageSlot : DragAndDropHandler
     {
         //Debug.Log(_currentCat == null ? $"{name} is empty" : $"{name} is full with {_currentCat.gameObject.name}");
 
-        if (_currentCat == null) MoveCat(cat);
+        if (_currentCat == null) Move(cat);
         else if (_currentCat.Level == cat.Level) MergeCat(cat);
         else base.HandleDragAndDrop(cat, initialPosition);
     }
 
-    private void MoveCat(Cat cat)
+    private void Move(Cat cat)
     {
         InitSlot(cat);
         ResetLastSpot(cat);
@@ -45,6 +45,9 @@ public class StorageSlot : DragAndDropHandler
 
         _currentCat.transform.SetParent(transform);
         _currentCat.transform.position = transform.position;
+
+        if (_currentCat.IsInStorageMode) return;
+        cat.SetStorageMode(true);
 
         //_currentCat.transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z + 0.1f);
 
@@ -66,9 +69,8 @@ public class StorageSlot : DragAndDropHandler
     {
         if (!cat.IsInStorageMode)
         {
-            cat.transform.parent.gameObject.GetComponent<DropCat>().ResetRoomSlot();
+            cat.transform.parent.gameObject.GetComponent<RoomDrop>().ResetRoomSlot();
             InvokeOnRoomChanged((int)cat.transform.parent.transform.position.x, (int)cat.transform.parent.transform.position.y, -1);
-            cat.SetStorageMode(true);
         }
         else
         {

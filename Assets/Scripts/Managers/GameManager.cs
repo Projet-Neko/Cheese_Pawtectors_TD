@@ -18,11 +18,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Module> _modules;
     [SerializeField, Scene] private string _loadingPopup;
 
-    [SerializeField] AudioClip _clip;
-
     [Header("Loading Bar")]
     [SerializeField] private Slider _loadingSlider;
     [SerializeField] private TMP_Text _loadingText;
+
+    [Header("Scenes")]
+    [SerializeField, Scene] private string _headBandScene;
+    [SerializeField, Scene] private string _errorPopupScene;
 
     // --- Requests events ---
     public static event Action<string> OnError;
@@ -37,10 +39,14 @@ public class GameManager : MonoBehaviour
     public static event Action OnEndRequest;
 
     // --- Requests ---
+    public string ErrorMessage => _errorMessage;
+
     private int _requests;
     public string Token { get; set; }
     public PlayFab.ClientModels.EntityKey Entity => Mod<Mod_Account>().Entity;
     private bool _isLoadingPopupOpen;
+
+    private string _errorMessage;
 
     // --- Datas ---
     public Data Data => _data;
@@ -54,17 +60,23 @@ public class GameManager : MonoBehaviour
     private bool _hasLoginPopupLoad;
 
     private bool _isInitCompleted = false;
+    private bool _errorLoaded = false;
 
     #region Modules
     // EntitiesMod
     public GameObject MousePrefab => Mod<Mod_Entities>().MousePrefab;
+    public GameObject BlackMousePrefab => Mod<Mod_Entities>().BlackMousePrefab;
+    public GameObject MouseRatPrefab => Mod<Mod_Entities>().MouseRatPrefab;
+    public GameObject MouseBallPrefab => Mod<Mod_Entities>().MouseBallPrefab;
     public GameObject CheesePrefab => Mod<Mod_Entities>().CheesePrefab;
     public CatSO[] Cats => Mod<Mod_Entities>().Cats;
     public MouseSO[] Mouses => Mod<Mod_Entities>().Mouses;
     public Cheese Cheese => Mod<Mod_Entities>().Cheese;
     public bool CanSpawnAlbino => Mod<Mod_Entities>().CanSpawnAlbino;
+    public bool CanSpawnBlackMouse => Mod<Mod_Entities>().CanSpawnBlackMouse;
 
     public void AlbinoHasSpawned() => Mod<Mod_Entities>().AlbinoHasSpawned();
+    public void BlackMouseHasSpawned() => Mod<Mod_Entities>().BlackMouseHasSpawned();
     public void SpawnCheese(Transform room) => Mod<Mod_Entities>().SpawnCheese(room);
 
     // WaveMod
@@ -93,17 +105,14 @@ public class GameManager : MonoBehaviour
     public void UpdateUsername(string username) => StartCoroutine(Mod<Mod_Account>().UpdateUsername(username));
 
     // ClanMod
-    public Clan GetChoosenClan() => Mod<Mod_Clans>().GetChoosenClan();
+    public ClanSO[] Clans => Mod<Mod_Clans>().ClansData;
+    public Clan SetUserClan(int clan) => Mod<Mod_Clans>().SetUserClan(clan);
     #endregion
 
     // PowerUpMod
     public bool IsPowerUpActive(PowerUpType powerUpType) => Mod<Mod_PowerUp>().IsPowerUpActive(powerUpType);
 
-    //Audio
-    public void SoundEffect(AudioClip clip) => Mod<Mod_Audio>().SoundEffect(clip);
-
     private T Mod<T>() where T : Module => _modules.OfType<T>().First();
-
 
     private void Start()
     {
@@ -159,18 +168,44 @@ public class GameManager : MonoBehaviour
         Cat.OnUnlock += _data.UnlockCat;
 
         Mod<Mod_Account>().Init(this);
+
+        Mod<Mod_Audio>().PlayLoadingSound();
     }
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (mode != LoadSceneMode.Additive) return;
-        //if (IsPopupSceneLoaded) SceneManager.UnloadSceneAsync(_popupSceneName);
+        Mod<Mod_Audio>().StartMusic(scene.name);
+
+        if (scene.name == _headBandScene) return;
+
+        if (scene.name == _errorPopupScene)
+        {
+            _errorLoaded = true;
+            return;
+        }
+
+        if (mode != LoadSceneMode.Additive)
+        {
+            _popupSceneName = null;
+            return;
+        }
+
+        //Debug.Log("<color=lime>enabling popup mode</color>");
         _popupSceneName = scene.name;
+
     }
 
     private void SceneManager_sceneUnloaded(Scene scene)
     {
+        if (scene.name == _errorPopupScene)
+        {
+            _errorLoaded = false;
+            return;
+        }
+
+        Mod<Mod_Audio>().StartMusic(scene.name);
         if (scene.name != _popupSceneName) return;
+        //Debug.Log("<color=red>disabling popup mode</color>");
         _popupSceneName = null;
     }
 
@@ -190,6 +225,9 @@ public class GameManager : MonoBehaviour
             Mod<Mod_Clans>().Init(this);
         }
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
+
+        //Mod<Mod_Audio>().StartMainMusic();
+   
     }
 
     private void OnDestroy()
@@ -233,7 +271,6 @@ public class GameManager : MonoBehaviour
         OnInitComplete?.Invoke();
         _isInitCompleted = true;
         DebugOnly();
-        SoundEffect(_clip);
         yield return StartUpdates();
     }
 
@@ -311,12 +348,19 @@ public class GameManager : MonoBehaviour
         Debug.LogError(error);
         OnError?.Invoke(error);
         EndRequest();
+        LogError(error);
     }
     public void OnRequestError(PlayFabError error)
     {
         Debug.LogError(error.GenerateErrorReport());
         OnError?.Invoke(error.GenerateErrorReport());
         EndRequest();
+    }
+    public void LogError(string error)
+    {
+        if (_errorLoaded) return;
+        _errorMessage = error;
+        SceneManager.LoadSceneAsync(_errorPopupScene, LoadSceneMode.Additive);
     }
     #endregion
 

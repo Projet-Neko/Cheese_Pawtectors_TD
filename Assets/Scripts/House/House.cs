@@ -1,18 +1,29 @@
 using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class House : MonoBehaviour
 {
     public static House Instance { get; private set; }
 
+    public static event Action<RoomPattern, RoomDesign> OnRoomStored;
+
+    [Header("Prefabs")]
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
     [SerializeField] private GameObject _mousePrefab;
     [SerializeField] private GameObject _linePrefab;
+
+    [Header("Dependencies")]
     [SerializeField] private GameObject _lineObject;
 
     [Header("Scene where player can use HUD")]
     [SerializeField, Scene] private string _sceneHUD;
+
+    public SerializedDictionary<RoomPattern, GameObject> Rooms => _rooms;
+    public Dictionary<Tuple<RoomPattern, RoomDesign>, int> RoomsStorage => _roomsStorage;
+    public int MaxRooms => _maxRooms;
 
     private const int _maxRooms = 30;
     private const int _minRooms = 5;
@@ -23,6 +34,8 @@ public class House : MonoBehaviour
     private LineRenderer[,] _lineGrid = new LineRenderer[2, _maxRooms+1];
     private IdRoom _idStartRoom;
     private bool _pathBuilt = false;
+
+    private Dictionary<Tuple<RoomPattern, RoomDesign>, int> _roomsStorage = new();
 
     private readonly Color _invalidColor = Color.red;
     private readonly Color _validColor = Color.white;
@@ -119,17 +132,20 @@ public class House : MonoBehaviour
 
         // Subscribe to events
         Room.ChangeTilePosition += CheckRoomPosition;
-        Room.TileDestroyed += ReplaceRoom;
+        Room.TileDestroyed += RemoveRoom;
         Room.LineActivated += ActiveLine;
         Junction.TileChanged += BuildPath;
         MouseBrain.VisitedNextRoom += GetNextTarget;
-    }
+
+        // Debug Only
+        _roomsStorage.Add(new(RoomPattern.CorridorRoom, RoomDesign.Bedroom), 1);
+}
 
     private void OnDestroy()
     {
         // Unsubscribe to events
         Room.ChangeTilePosition -= CheckRoomPosition;
-        Room.TileDestroyed -= ReplaceRoom;
+        Room.TileDestroyed -= RemoveRoom;
         Room.LineActivated -= ActiveLine;
         Junction.TileChanged -= BuildPath;
         MouseBrain.VisitedNextRoom -= GetNextTarget;
@@ -152,7 +168,7 @@ public class House : MonoBehaviour
      *          HUD INTERACTIONS
      * * * * * * * * * * * * * * * * * * * */
 
-    private void ActiveLine(bool enable)
+    public void ActiveLine(bool enable)
     {
         _lineObject.SetActive(enable);
     }
@@ -221,7 +237,7 @@ public class House : MonoBehaviour
         }
         else if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            AddRoomInInventory(_roomsGrid[x, z].Pattern);// Add old room in inventory
+            AddRoomInInventory(_roomsGrid[x, z].Pattern, _roomsGrid[x, z].RoomDesign);// Add old room in inventory
 
             ReplaceRoom(x, z, pattern);
         }
@@ -396,7 +412,7 @@ public class House : MonoBehaviour
     {
         if (_roomsGrid[x, z].Security == RoomSecurity.MovedAndRemoved)
         {
-            AddRoomInInventory(_roomsGrid[x, z].Pattern);// Add old room to the inventory
+            AddRoomInInventory(_roomsGrid[x, z].Pattern, _roomsGrid[x, z].RoomDesign);// Add old room to the inventory
 
             ReplaceRoom(x, z, RoomPattern.VoidRoom);
         }
@@ -464,7 +480,7 @@ public class House : MonoBehaviour
         if (numberNextRooms == 0)
             return GameManager.Instance.Cheese.gameObject;
 
-        int random = Random.Range(0, numberNextRooms);
+        int random = UnityEngine.Random.Range(0, numberNextRooms);
         IdRoom idRoom = currentRoom.NextRooms[random];
         return _roomsGrid[idRoom.x, idRoom.z].gameObject;
     }
@@ -477,8 +493,7 @@ public class House : MonoBehaviour
     private void AddRandomRoomInInventory()
     {
         RoomPattern roomPattern;
-        int random;
-            random = Random.Range(0, 100);
+        int random = UnityEngine.Random.Range(0, 100);
 
         switch(random)
         {
@@ -496,16 +511,31 @@ public class House : MonoBehaviour
                 break;
         }
 
-        AddRoomInInventory(roomPattern);
+        RoomDesign roomDesign = (RoomDesign)UnityEngine.Random.Range(0, Enum.GetValues(typeof(RoomDesign)).Length);
+
+        AddRoomInInventory(roomPattern, roomDesign);
 
         /*GameObject roomObject = Instantiate(_rooms[roomPattern], new Vector3(0, 0, 0), Quaternion.identity);
         roomObject.transform.parent = transform;
         _roomsGrid[0, 0] = roomObject.GetComponentInChildren<Room>();*/
     }
 
-    private void AddRoomInInventory(RoomPattern roomPattern)
+    private void AddRoomInInventory(RoomPattern roomPattern, RoomDesign roomDesign)
     {
-        // TO DO : Check if cats are in room
+        Debug.Log("Add room in inventory");
+        OnRoomStored.Invoke(roomPattern, roomDesign);
+    }
+
+    public bool AddRoomInGrid(RoomPattern roomPattern, int x, int z)
+    {
+        RoomPattern oldRoomPattern = _roomsGrid[x, z].Pattern;
+        if (IsInGrid(x, z) && oldRoomPattern != RoomPattern.StartRoom && oldRoomPattern != RoomPattern.CheeseRoom)
+        {
+            AddRoom(x, z, roomPattern);
+            return true;
+        }
+
+        return false;
     }
 
 

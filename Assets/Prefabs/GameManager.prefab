@@ -79,7 +79,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: cc733cceff0645041b6207517d11377c, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -228,9 +228,11 @@ MonoBehaviour:
   - {fileID: 2843526968020932932}
   - {fileID: 7459078949945384106}
   - {fileID: 704567818242211448}
-  _loadingPopup: LoginPopup
+  _loadingPopup: TitleScreen
   _loadingSlider: {fileID: 0}
   _loadingText: {fileID: 0}
+  _headBandScene: HeadBand
+  _errorPopupScene: ErrorPopup
 --- !u!114 &8386388096323966852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +247,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _catPrefab: {fileID: 6983453442427492931, guid: 291bd20804fb5d74aa252e025286c774, type: 3}
   _mousePrefab: {fileID: 732585812547385431, guid: 1c4d78e56a21db14eba23b39d26d78ab, type: 3}
+  _blackMousePrefab: {fileID: 732585812547385431, guid: ea8647174b2017840a87a8e21a8c61d2, type: 3}
+  _mouseRatPrefab: {fileID: 732585812547385431, guid: d4fb8abfcf944b0459e0765474381c9c, type: 3}
+  _mouseBallPrefab: {fileID: 732585812547385431, guid: 25f377ce032df8e4c9959ced64cf5f9c, type: 3}
   _cheesePrefab: {fileID: 9112299513364551935, guid: 9d79b2703c23b1c4cbe0cfa987ade26c, type: 3}
 --- !u!114 &2732286174534552492
 MonoBehaviour:
@@ -330,19 +335,21 @@ MonoBehaviour:
   _boss: {fileID: 116708990408269481}
   _loading: {fileID: 8300000, guid: 85c8dcc8e9952b44dbe9f6658a08e9c6, type: 3}
   _meat: {fileID: 8300000, guid: 062af0f8d5c00314ba8b3ae8321da7e7, type: 3}
-  _merge: {fileID: 0}
-  _albinos: {fileID: 0}
+  _merge: {fileID: 8300000, guid: 4e3019e1c98d3d24b8bdf6d71b499a81, type: 3}
+  _albinos: {fileID: 8300000, guid: 61bf2d3180f0f0943a0ada63870e3fa2, type: 3}
   _button: {fileID: 8300000, guid: d098bb4cb82bef745834b16875fa47f5, type: 3}
   _newRoomOrCat: {fileID: 8300000, guid: fd692fc7efccbe14a8ba1c351dc6f450, type: 3}
   _mouse: {fileID: 8300000, guid: 06ae5d65fbea42c479ea217ab7dddf6e, type: 3}
-  _chase: {fileID: 0}
+  _chase: {fileID: 8300000, guid: 18482b3c2a5c9c6418c12b438be31789, type: 3}
   _catBox: {fileID: 0}
-  _addCat: {fileID: 0}
+  _addCat: {fileID: 8300000, guid: b74586e3e700d4042b60e85c65b4b723, type: 3}
   _fight: {fileID: 8300000, guid: 122480af25b636a4180e8013ee7fa129, type: 3}
   _catFull: {fileID: 8300000, guid: d2195ae47b7f9394886c7ea58d0cd192, type: 3}
   _dragCoin: {fileID: 0}
   _dropCoin: {fileID: 0}
   _full: {fileID: 0}
+  _sliderMusic: 0
+  _soundVolume: 0
 --- !u!82 &8336248922547432090
 AudioSource:
   m_ObjectHideFlags: 0
@@ -354,7 +361,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -506,7 +513,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8862f7d4ba9a405479f3b0e940205186, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -634,10 +641,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e09c853b5db2eba4db5e6986fc8d4290, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -762,7 +769,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c3a61a0b2652c8a45913be25185549c5, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -890,7 +897,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 526c58329ffb0a741b21d052f3ee004d, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1

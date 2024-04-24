@@ -31,10 +31,10 @@ public class Success_Manager : MonoBehaviour
         Mod_Waves.OnBossDefeated += BossKilledSuccess;
         Mod_Waves.WaveCompleted += WavesSuccess;
         Cat.OnUnlock += CatLevelSuccess;
-        Mod_Economy.ThreatWin += ThreatSuccess;
+        Mod_Economy.treatWin += treatSuccess;
         Room.TileMoved += ModifyHouseSuccess;
         Storage.OnCatSpawn += CatAdoptedSuccess;
-        DropCat.CatDroped += AddCatInHouse;
+        RoomDrop.CatDroped += AddCatInHouse;
         StorageSlot.RemoveCat += RemoveCatInHouse;
         Discard.OnCatDiscard += CatGivenSuccess;
 
@@ -48,10 +48,10 @@ public class Success_Manager : MonoBehaviour
         Mod_Waves.OnBossDefeated -= BossKilledSuccess;
         Mod_Waves.WaveCompleted -= WavesSuccess;
         Cat.OnUnlock -= CatLevelSuccess;
-        Mod_Economy.ThreatWin -= ThreatSuccess;
+        Mod_Economy.treatWin -= treatSuccess;
         Room.TileMoved -= ModifyHouseSuccess;
         Storage.OnCatSpawn -= CatAdoptedSuccess;
-        DropCat.CatDroped -= AddCatInHouse;
+        RoomDrop.CatDroped -= AddCatInHouse;
         StorageSlot.RemoveCat -= RemoveCatInHouse;
         Discard.OnCatDiscard -= CatGivenSuccess;
 
@@ -60,7 +60,10 @@ public class Success_Manager : MonoBehaviour
     private void InitSuccessList()
     {
         allSuccesses.AddRange(Resources.LoadAll<SuccessSO>(successFolderPath));
-
+        foreach (SuccessSO success in allSuccesses)
+        {
+            success._step = success._steps[0];
+        }
         if (allSuccesses == null) Debug.Log("Load SucessList Echec");
         Debug.Log("Load SucessList Okay");
     }
@@ -240,15 +243,15 @@ public class Success_Manager : MonoBehaviour
 
     }
 
-    private void ThreatSuccess(int amount)// Done 
+    private void treatSuccess(int amount)// Done 
     {
-        SuccessSO success = FindSuccess("Threat gagner");
+        SuccessSO success = FindSuccess("Treat gagner");
         if (success._complete == true) return;
         success._progression += amount;
 
         if (success._progression >= 100000000)
         {
-            //Debug.Log($"Vous avez gagné {success._progression} Threats au total");
+            //Debug.Log($"Vous avez gagné {success._progression} treats au total");
             success._complete = true;
             Success();
         }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d341664ca1203e94c9afba7c1c3cf046, type: 3}
   m_Name: "Chat adopt\xE9"
   m_EditorClassIdentifier: 
-  _successame: "Chat adopt\xE9"
+  _successame: Adopted cat
   _step: 0
-  _stepMax: 5
-  _progression: 
+  _progression: 4
   _steps: 0a0000003200000064000000c8000000e8030000
+  _complete: 0

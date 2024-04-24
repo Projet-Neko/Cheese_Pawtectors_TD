@@ -61,6 +61,10 @@ public class Cat : Entity
         _isInStorageMode = mode;
         transform.localScale = new Vector3(size, size, size);
         if (!_isInStorageMode) return;
+
+        // Default Appearance
+        _renderer.sprite = _data.Sprites[4];
+
         _slider.gameObject.SetActive(false);
     }
 

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41cceaaccfe30f447912c74f9997f076, type: 3}
+  m_Name: 3_Purrtopia
+  m_EditorClassIdentifier: 
+  Description: "Dans le paisible royaume du clan Purrtopia, chaque jour est une c\xE9l\xE9bration
+    de la vie. Les f\xE9lins qui y r\xE9sident sont des \xEAtres joyeux et insouciants,
+    dont les ronrons r\xE9sonnent comme une m\xE9lodie enchanteresse \xE0 travers
+    les prairies verdoyantes. Sous la douce empreinte de leur chef Sunny, la rayonnante
+    chatte ragdoll, ils incarnent l'harmonie et le bonheur pur. Leur l\xE9g\xE8ret\xE9
+    d'esprit et leur positivit\xE9 contagieuse illuminent leur monde de leur \xE9clatante
+    lumi\xE8re."
+  Gem: {fileID: 0}

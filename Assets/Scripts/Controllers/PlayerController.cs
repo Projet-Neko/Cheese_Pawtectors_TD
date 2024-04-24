@@ -9,14 +9,14 @@ public class PlayerController : MonoBehaviour
     //private InputAction _inputPosition;
     //private InputAction _inputDelta;
 
-    private MoveCameraAction _moveCameraAction;
-    private bool _isMovingCamera = false;
+    //private MoveCameraAction _moveCameraAction;
+    //private bool _isMovingCamera = false;
 
     // private DragAndDrop _dragAndDrop;
-    private bool _isDragAndDrop = false;
+    //private bool _isDragAndDrop = false;
 
     // private Swipe _swipe;
-    private bool _isSwipe = false;
+    //private bool _isSwipe = false;
 
     //private void Awake()
     //{

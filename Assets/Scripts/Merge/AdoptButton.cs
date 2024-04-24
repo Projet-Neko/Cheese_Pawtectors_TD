@@ -37,8 +37,6 @@ public class AdoptButton : MonoBehaviour
     {
         if (!canAdopt) return;
         if (_cat == null) UpdateCheapestCat();
-
-        // TODO -> show can't adopt modal popup if necessary
     }
 
     public void Buy()

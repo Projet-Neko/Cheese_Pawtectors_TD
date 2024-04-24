@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41cceaaccfe30f447912c74f9997f076, type: 3}
+  m_Name: 1_Meowquest
+  m_EditorClassIdentifier: 
+  Description: "Les f\xE9lins du clan Meowquest sont des explorateurs intr\xE9pides,
+    toujours en qu\xEAte de nouvelles aventures et de myst\xE8res \xE0 d\xE9couvrir.
+    Dirig\xE9s par Jones, le charismatique chat abyssin, ils sont connus pour leur
+    ing\xE9niosit\xE9 et leur esprit vif, capables de trouver des solutions cr\xE9atives
+    \xE0 tout probl\xE8me rencontr\xE9 lors de leurs explorations. Leur curiosit\xE9
+    insatiable les pousse \xE0 repousser sans cesse les limites de leur monde, guid\xE9s
+    par leur spontan\xE9it\xE9 et leur d\xE9sir d'explorer l'inconnu."
+  Gem: {fileID: 0}

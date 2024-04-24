@@ -21,6 +21,7 @@ public class DragAndDrop : MonoBehaviour
         if (_room != null && !_room.IsInStorageMode) return;
         if (!_isBeingDragged) return;
         transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + _offset;
+        House.Instance.ChangeTransparency(0.5f);
     }
 
     private void OnMouseDown()

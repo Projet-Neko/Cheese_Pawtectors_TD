@@ -564,4 +564,21 @@ public class House : MonoBehaviour
         // Choisir une room al�atoire
         // Orienter une jointure de la room vers la room pr�c�dente
     }
+
+    /* * * * * * * * * * * * * * * * * * * *
+    *           ROOM TRANSPARENCY
+    * * * * * * * * * * * * * * * * * * * */
+
+    public void ChangeTransparency(float transparency)
+    {
+        foreach(Room room in _roomsGrid)
+        {
+            if (room.Security == RoomSecurity.Overwritten) continue;
+            if (room.GetComponentInChildren<Cat>() != null)
+            {
+                room.SetTransparency(transparency);
+            }
+        }
+    }
+
 }

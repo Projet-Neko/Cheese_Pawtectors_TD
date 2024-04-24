@@ -459,4 +459,14 @@ public abstract class Room : MonoBehaviour
         if (_currentLevel < _maxLevel)
             ++_currentLevel;
     }
+
+    public void SetTransparency(float transparency)
+    {
+        foreach (Material material in _materialsBase)
+        {
+            Color color = material.color;
+            color.a = transparency;
+            material.color = color;
+        }
+    }
 }

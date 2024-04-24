@@ -172,7 +172,6 @@ public class GameManager : MonoBehaviour
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Mod<Mod_Audio>().StartMusic(scene.name);
 
         if (scene.name == _headBandScene) return;
 
@@ -181,6 +180,7 @@ public class GameManager : MonoBehaviour
             _errorLoaded = true;
             return;
         }
+        Mod<Mod_Audio>().StartMusic(scene.name);
 
         if (mode != LoadSceneMode.Additive)
         {
@@ -224,7 +224,6 @@ public class GameManager : MonoBehaviour
         }
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
 
-        Mod<Mod_Audio>().PlayLoadingSound();
 
     }
 
@@ -268,6 +267,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("<color=yellow>----- GAME MANAGER INIT COMPLETED ! -----</color>");
         OnInitComplete?.Invoke();
         _isInitCompleted = true;
+        Mod<Mod_Audio>().PlayLoadingSound();
         DebugOnly();
         yield return StartUpdates();
     }

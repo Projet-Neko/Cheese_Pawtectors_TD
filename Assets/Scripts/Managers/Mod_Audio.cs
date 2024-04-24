@@ -45,7 +45,7 @@ public class Mod_Audio : Module
         Volume.OnSoundVolumeChange += SetSoundVolume;
         Mod_Economy.treatWin += PlayTreatSound;
         Merge.OnCatMerge += PlayMergeSound;
-        Mod_Waves.BlackMouseSpawned += PlayBlackMouseSound;
+        Mod_Waves.AlbinoSpawned += PlayBlackMouseSound;
         Button.OnButtonClicked += PlayButtonSound;
     }
 
@@ -57,7 +57,7 @@ public class Mod_Audio : Module
         Volume.OnSoundVolumeChange -= SetSoundVolume;
         Mod_Economy.treatWin -= PlayTreatSound;
         Merge.OnCatMerge -= PlayMergeSound;
-        Mod_Waves.BlackMouseSpawned -= PlayBlackMouseSound;
+        Mod_Waves.AlbinoSpawned -= PlayBlackMouseSound;
         Button.OnButtonClicked -= PlayButtonSound;
     }
 

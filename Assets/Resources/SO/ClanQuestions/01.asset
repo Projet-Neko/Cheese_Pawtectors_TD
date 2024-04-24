@@ -16,10 +16,10 @@ MonoBehaviour:
   Answers:
     _serializedList:
     - Key: 0
-      Value: 
-    - Key: 0
-      Value: 
-    - Key: 0
-      Value: 
-    - Key: 0
-      Value: 
+      Value: "Curiosit\xE9 et ing\xE9niosit\xE9."
+    - Key: 3
+      Value: "Solidarit\xE9 et vigilance."
+    - Key: 2
+      Value: Douceur et harmonie.
+    - Key: 1
+      Value: Courage et audace.

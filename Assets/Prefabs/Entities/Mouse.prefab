@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 7288019319597273094}
   - component: {fileID: 7562806154012630528}
   - component: {fileID: 3761325325547743946}
-  - component: {fileID: 4609475984340217094}
+  - component: {fileID: 3237726422068727629}
   m_Layer: 8
   m_Name: Mouse
   m_TagString: Untagged
@@ -104,14 +104,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 732585812547385431}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3, z: -4}
+  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6509222981396055259}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!212 &4363232312380465801
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 4363232312380465801}
-  _collider: {fileID: 4609475984340217094}
+  _collider: {fileID: 3237726422068727629}
   _entity: {fileID: 7288019319597273094}
 --- !u!50 &3761325325547743946
 Rigidbody2D:
@@ -222,8 +222,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &4609475984340217094
-CapsuleCollider2D:
+--- !u!58 &3237726422068727629
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -251,12 +251,12 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.2154788, y: -0.25060278}
-  m_Size: {x: 4.638218, y: 2.7530987}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1 &2380435575385992518
 GameObject:
   m_ObjectHideFlags: 0

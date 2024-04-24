@@ -71,7 +71,7 @@ public abstract class State
         _brain.transform.position = Vector3.MoveTowards(_brain.transform.position, _brain.Target.transform.position, _brain.Entity.Speed * Time.deltaTime);
 
         Vector3 newPosition = _brain.transform.localPosition;
-        newPosition.y = 0.2f;
+        newPosition.y = 0.1f;
         _brain.transform.localPosition = newPosition;
 
         if (_brain.Entity is not Cat) return;

@@ -133,6 +133,7 @@ public class House : MonoBehaviour
         Room.LineActivated += ActiveLine;
         Junction.TileChanged += BuildPath;
         MouseBrain.VisitedNextRoom += GetNextTarget;
+        Mod_Waves.OnBossDefeated += ExtendHouse;
 }
 
     private void OnDestroy()
@@ -143,6 +144,7 @@ public class House : MonoBehaviour
         Room.LineActivated -= ActiveLine;
         Junction.TileChanged -= BuildPath;
         MouseBrain.VisitedNextRoom -= GetNextTarget;
+        Mod_Waves.OnBossDefeated -= ExtendHouse;
     }
 
 

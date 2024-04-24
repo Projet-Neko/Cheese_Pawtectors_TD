@@ -112,7 +112,7 @@ public class Mod_Account : Module
                 CustomId = SystemInfo.deviceUniqueIdentifier,
                 CreateAccount = true,
                 InfoRequestParameters = new() { GetUserAccountInfo = true }
-            }, res => StartCoroutine(OnLoginRequestSuccess(res)), _gm.OnRequestError);
+            }, res => StartCoroutine(OnLoginRequestSuccess(res)), OnLoginRequestAPIError);
             return;
         }
 
@@ -135,6 +135,11 @@ public class Mod_Account : Module
             Password = password,
             InfoRequestParameters = new() { GetUserAccountInfo = true }
         }, res => StartCoroutine(OnLoginRequestSuccess(res)), OnLoginRequestError);
+    }
+    private void OnLoginRequestAPIError(PlayFabError error)
+    {
+        _gm.OnRequestError(error);
+        Login();
     }
     private void OnLoginRequestError(PlayFabError error)
     {

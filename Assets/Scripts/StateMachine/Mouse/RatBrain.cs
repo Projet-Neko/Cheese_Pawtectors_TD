@@ -8,7 +8,7 @@ public class RatBrain : MouseBrain
     protected override void Start()
     {
         base.Start();
-        StartCoroutine(AttackEveryFiveSeconds());
+        //StartCoroutine(AttackEveryFiveSeconds());
     }
 
     protected override void Update()

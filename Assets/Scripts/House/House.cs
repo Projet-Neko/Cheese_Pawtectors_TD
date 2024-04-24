@@ -540,7 +540,10 @@ public class House : MonoBehaviour
         else
             _roomsStorage.Add(key, 1);
 
-        OnRoomStored.Invoke(roomPattern);
+
+        Debug.Log("Room Pattern = " + roomPattern);
+
+        OnRoomStored?.Invoke(roomPattern);
     }
 
     public bool AddRoomInGrid(RoomPattern roomPattern, RoomDesign roomDesign, int x, int z)

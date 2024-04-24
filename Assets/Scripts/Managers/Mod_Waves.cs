@@ -166,7 +166,7 @@ public class Mod_Waves : Module
                     break;
             }
             m.transform.localEulerAngles = new Vector3(50, 35, 0);
-            m.InitData(MouseType());
+            m.InitData(mouseType);
             m.WaveIndex = index + 1;
             _spawnedEnemyNumber++;
             _enemyObjects.Add(m.gameObject);
@@ -191,6 +191,7 @@ public class Mod_Waves : Module
             //Debug.Log($"{_killedEnemiesNumber} mouse killed");
 
             if ((entity as Mouse).IsBoss) OnBossDefeated?.Invoke();
+
             if (_hasCompleteSpawning && _killedEnemiesNumber == _maxEnemyNumber) NextWave();
         }
     }

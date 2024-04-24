@@ -23,28 +23,42 @@ public class SceneUI_Quiz : MonoBehaviour
     private void Awake()
     {
         _questionsData = Resources.LoadAll<ClanQuestionSO>("SO/ClanQuestions");
-        _quizAnswers = new int[_questionsData.Length];
+        _quizAnswers = new int[4];
         SetUI();
     }
 
     public void NextQuestion(int buttonIndex)
     {
         int clan = (int)_questionsData[_questionIndex].Answers.ElementAt(buttonIndex).Key;
+        //Debug.Log($"Clicked on {(Clan)clan} answer");
 
-        if (_questionIndex < _questionsData.Length - 1)
+        _quizAnswers[clan]++;
+
+        for (int i = 0; i < _quizAnswers.Length; i++)
         {
-            _quizAnswers[clan]++;
-            _questionIndex++;
-            SetUI();
+            //Debug.Log($"{(Clan)i} - {_quizAnswers[i]} answers");
         }
-        else
+
+        _questionIndex++;
+
+        if (_questionIndex == _questionsData.Length)
         {
-            GameManager.Instance.GetChoosenClan(_quizAnswers);
+            clan = 0;
+            Debug.Log(_quizAnswers.Length);
+
+            for (int i = 0; i < _quizAnswers.Length; i++)
+            {
+                //Debug.Log($"{(Clan)i} - {_quizAnswers[i]} answers");
+                if (clan > _quizAnswers[i]) clan = _quizAnswers[i];
+            }
+
+            GameManager.Instance.SetUserClan(clan);
             _resultPanel.SetActive(true);
             _resultClanName.text = ((Clan)clan).ToString();
             _resultClanDescription.text = GameManager.Instance.Clans[clan].Description;
             _resultGem = GameManager.Instance.Clans[clan].Gem;
         }
+        else SetUI();
     }
 
     private void SetUI()

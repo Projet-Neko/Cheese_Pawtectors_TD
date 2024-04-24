@@ -1,5 +1,10 @@
 public class CheeseRoom : Room
 {
+    public override string DefineDesign()
+    {
+        return "";
+    }
+
     protected override void Awake()
     {
         base.Awake();

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785dc0ca944425343805994bcdbdc77e, type: 3}
+  m_Name: I_Bathroom
+  m_EditorClassIdentifier: 
+  mesh: {fileID: -5685432985565170323, guid: 1e268d1ccbfcdbd43a6a0a1c690cdfc7, type: 3}
+  materials:
+  - {fileID: 659156084383775010, guid: 1e268d1ccbfcdbd43a6a0a1c690cdfc7, type: 3}
+  - {fileID: 4923384873020713088, guid: 1e268d1ccbfcdbd43a6a0a1c690cdfc7, type: 3}
+  - {fileID: -6767027711356288321, guid: 1e268d1ccbfcdbd43a6a0a1c690cdfc7, type: 3}
+  - {fileID: -3532834624101456839, guid: 1e268d1ccbfcdbd43a6a0a1c690cdfc7, type: 3}
+  - {fileID: 8916833989301674684, guid: 1e268d1ccbfcdbd43a6a0a1c690cdfc7, type: 3}
+  - {fileID: 2690566169628458733, guid: 1e268d1ccbfcdbd43a6a0a1c690cdfc7, type: 3}
+  - {fileID: -7515500915765918837, guid: 1e268d1ccbfcdbd43a6a0a1c690cdfc7, type: 3}
+  - {fileID: -1218150272482584450, guid: 1e268d1ccbfcdbd43a6a0a1c690cdfc7, type: 3}
+  - {fileID: -6870539793252658701, guid: 1e268d1ccbfcdbd43a6a0a1c690cdfc7, type: 3}
+  - {fileID: 4595100902370571416, guid: 1e268d1ccbfcdbd43a6a0a1c690cdfc7, type: 3}
+  - {fileID: 4991306157264457522, guid: 1e268d1ccbfcdbd43a6a0a1c690cdfc7, type: 3}

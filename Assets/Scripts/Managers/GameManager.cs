@@ -168,8 +168,6 @@ public class GameManager : MonoBehaviour
         Cat.OnUnlock += _data.UnlockCat;
 
         Mod<Mod_Account>().Init(this);
-
-        Mod<Mod_Audio>().PlayLoadingSound();
     }
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
@@ -226,8 +224,8 @@ public class GameManager : MonoBehaviour
         }
         else if (mod == typeof(Mod_Clans)) StartCoroutine(CompleteInit());
 
-        //Mod<Mod_Audio>().StartMainMusic();
-   
+        Mod<Mod_Audio>().PlayLoadingSound();
+
     }
 
     private void OnDestroy()

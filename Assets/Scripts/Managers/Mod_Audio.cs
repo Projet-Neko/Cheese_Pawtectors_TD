@@ -39,26 +39,26 @@ public class Mod_Audio : Module
 
     private void Awake()
     {
-        //Mod_Waves.BossWave += StartBossMusic;
-        /* Mod_Waves.OnBossDefeated += StartMainMusic;  
-         Volume.OnMusicVolumeChange += SetMusicVolume;  
-         Volume.OnSoundVolumeChange += SetSoundVolume;  
-         Mod_Economy.treatWin += PlayTreatSound;  
-         Merge.OnCatMerge += PlayMergeSound;  
-         Mod_Waves.BlackMouseSpawned += PlayBlackMouseSound;  
-         Button.OnButtonClicked += PlayButtonSound;  */
+        Mod_Waves.BossWave += StartBossMusic;
+        Mod_Waves.OnBossDefeated += StartMainMusic;
+        Volume.OnMusicVolumeChange += SetMusicVolume;
+        Volume.OnSoundVolumeChange += SetSoundVolume;
+        Mod_Economy.treatWin += PlayTreatSound;
+        Merge.OnCatMerge += PlayMergeSound;
+        Mod_Waves.BlackMouseSpawned += PlayBlackMouseSound;
+        Button.OnButtonClicked += PlayButtonSound;
     }
 
     private void OnDestroy()
     {
-        //Mod_Waves.BossWave -= StartBossMusic;
-        /*Mod_Waves.OnBossDefeated -= StartMainMusic;
+        Mod_Waves.BossWave -= StartBossMusic;
+        Mod_Waves.OnBossDefeated -= StartMainMusic;
         Volume.OnMusicVolumeChange -= SetMusicVolume;
         Volume.OnSoundVolumeChange -= SetSoundVolume;
         Mod_Economy.treatWin -= PlayTreatSound;
         Merge.OnCatMerge -= PlayMergeSound;
         Mod_Waves.BlackMouseSpawned -= PlayBlackMouseSound;
-        Button.OnButtonClicked -= PlayButtonSound;*/
+        Button.OnButtonClicked -= PlayButtonSound;
     }
 
     public override void Init(GameManager gm)
@@ -89,18 +89,21 @@ public class Mod_Audio : Module
                 //StopMusic();
                 _music.clip = _mainScreenMusic;
                 _previousScene = sceneName;
+                _music.Play();
                 break;
 
             case "Build":
                 //StopMusic();
                 _music.clip = _buildMusic;
                 _previousScene = sceneName;
+                _music.Play();
                 break;
 
             case "Catalog":
                 //StopMusic();
                 _music.clip = _shopMusic;
                 _previousAdditiveScene = sceneName;
+                _music.Play();
                 break;
 
             default:
@@ -120,59 +123,94 @@ public class Mod_Audio : Module
         _music.clip = _shopMusic;
     }
 
-    /*private void //StopMusic()
-    {
-        _titleScreen.Stop();
-        _mainScreen.Stop();
-        _build.Stop();
-        _shop.Stop();
-        _boss.Stop();
-    }*/
-
     public void PlayLoadingSound()
-    => _sound.clip = _loading;    
-
+    {
+        _sound.clip = _loading;
+        _sound.Play();
+    }
     public void PlayTreatSound(int arg0)
-    => _sound.clip = _treat;  
+    {
+        _sound.clip = _treat;
+        _sound.Play();
+    }
 
     public void PlayMergeSound(int arg0, int arg1)
-        => _sound.clip = _merge;
+    {
+        _sound.clip = _merge;
+        _sound.Play();
+    }
 
     public void PlayBlackMouseSound()
-        => _sound.clip = _blackMouse;
+    {
+        _sound.clip = _blackMouse;
+        _sound.Play();
+    }
 
     public void PlayButtonSound()
-        => _sound.clip = _button;
+    {
+        _sound.clip = _button;
+        _sound.Play();
+    }
 
     public void PlayNewRoomOrCatSound()
-        => _sound.clip = _newRoomOrCat;
+{
+        _sound.clip = _newRoomOrCat;
+        _sound.Play();
+    }
 
     public void PlayMouseSound()
-        => _sound.clip = _mouse;
+{
+        _sound.clip = _mouse;
+        _sound.Play();
+    }
 
     public void PlayChaseSound()
-        => _sound.clip = _chase;
+{
+        _sound.clip = _chase;
+        _sound.Play();
+    }
 
     public void PlayCatBoxSound()
-        => _sound.clip = _catBox;
+{
+        _sound.clip = _catBox;
+        _sound.Play();
+    }
 
     public void PlayAddCatSound()
-        => _sound.clip = _addCat;
+{
+        _sound.clip = _addCat;
+        _sound.Play();
+    }
 
     public void PlayFightSound()
-             => _sound.clip = _fight;
+{
+        _sound.clip = _fight;
+        _sound.Play();
+    }
 
     public void PlayCatFullSound()
-        => _sound.clip = _catFull;
+{
+        _sound.clip = _catFull;
+        _sound.Play();
+    }
 
     public void PlayDragCoinSound()
-        => _sound.clip = _dragCoin;
+{
+        _sound.clip = _dragCoin;
+        _sound.Play();
+    }
 
     public void PlayDropCoinSound()
-        => _sound.clip = _dropCoin;
+{
+        _sound.clip = _dropCoin;
+        _sound.Play();
+    }
 
     public void PlayFullSound()
-        => _sound.clip = _full;
+{
+        _sound.clip = _full;
+        _sound.Play();
+    }
 
 
 

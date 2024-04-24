@@ -81,7 +81,8 @@ public class Mod_Entities : Module
 
     public void SpawnCheese(Transform room)
     {
-        GameObject cheese = Instantiate(CheesePrefab, room.position, CheesePrefab.transform.rotation, room);
+        GameObject cheese = Instantiate(CheesePrefab, room.position, Quaternion.identity, room);
+        cheese.transform.localEulerAngles = new(0, 0, 0);
         _cheese = cheese.GetComponent<Cheese>();
     }
 }

@@ -17,6 +17,7 @@ public class SceneUI_Profile : MonoBehaviour
         if (GameManager.Instance.Data.Clan == -1) _clanCanvas.SetActive(true);
         else
         {
+            Debug.Log($"Clan is {GameManager.Instance.Data.Clan}");
             _clanPanel.SetActive(true);
             int clan = GameManager.Instance.Data.Clan;
             _clanName.text = ((Clan)clan).ToString();

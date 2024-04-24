@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 237496127294997417}
   - component: {fileID: 7003669912238090999}
   - component: {fileID: 2371106881955923019}
-  - component: {fileID: 5137496044387044839}
+  - component: {fileID: 6915985438210379298}
   m_Layer: 10
   m_Name: Room
   m_TagString: Untagged
@@ -131,7 +131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _room: {fileID: 675617977283199060}
-  _spriteInventory: {fileID: 0}
   _HUDCanva: {fileID: 0}
   _moveModCanva: {fileID: 0}
   _cantMoveThisRoomCanvas: {fileID: 0}
@@ -150,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentCat: {fileID: 0}
   _room: {fileID: 7003669912238090999}
---- !u!65 &5137496044387044839
+--- !u!65 &6915985438210379298
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,5 +168,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.04, y: 0.12, z: 1.04}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.04, y: 0.31501266, z: 1.04}
+  m_Center: {x: 0, y: 0.15750633, z: 0}

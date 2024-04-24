@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 747074594211423549}
   - component: {fileID: 2430439305045054425}
   - component: {fileID: 4602865559846345499}
-  - component: {fileID: 3299811949725779178}
+  - component: {fileID: 1204569153439918291}
   m_Layer: 10
   m_Name: Room
   m_TagString: Untagged
@@ -108,7 +108,7 @@ MonoBehaviour:
   _cantMoveThisRoomCanvas: {fileID: 5725789978324639815}
   _opening:
   - {fileID: 4279068225855028531}
---- !u!65 &3299811949725779178
+--- !u!65 &1204569153439918291
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,8 +127,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.04, y: 0.12, z: 1.04}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.02, y: 0.34152156, z: 1.04}
+  m_Center: {x: -0.00999999, y: 0.17076078, z: 0}
 --- !u!1 &3913000099428562036
 GameObject:
   m_ObjectHideFlags: 0

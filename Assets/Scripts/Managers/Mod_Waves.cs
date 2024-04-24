@@ -73,6 +73,7 @@ public class Mod_Waves : Module
     private void StartRoom_OnInit(Room obj)
     {
         _spawningRoomPosition = obj.transform.position;
+        _spawningRoomPosition.y = 0.1f;
     }
 
     private void Cheese_OnInit(Cheese obj)

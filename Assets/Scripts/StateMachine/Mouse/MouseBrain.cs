@@ -16,7 +16,7 @@ public class MouseBrain : Brain
     // Check if the mouse has reached the target
     private bool TargetReached()
     {
-        return transform.position == Target.transform.position;
+        return transform.position.x == Target.transform.position.x && transform.position.z == Target.transform.position.z;
     }
 
     protected override void Update()
@@ -34,6 +34,10 @@ public class MouseBrain : Brain
             if (Target != GameManager.Instance.Cheese.gameObject)
             {
                 Target = VisitedNextRoom?.Invoke(transform.position);
+            }
+            else
+            {
+                Debug.Log("TEST");
             }
         }
     }

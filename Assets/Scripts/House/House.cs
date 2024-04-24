@@ -475,10 +475,20 @@ public class House : MonoBehaviour
         int numberNextRooms = currentRoom.NextRooms.Count;
 
         if (numberNextRooms == 0)
+        {
             return GameManager.Instance.Cheese.gameObject;
+        }
 
         int random = UnityEngine.Random.Range(0, numberNextRooms);
         IdRoom idRoom = currentRoom.NextRooms[random];
+
+        Room nextRoom = _roomsGrid[idRoom.x, idRoom.z];
+
+        if (nextRoom is CheeseRoom)
+        {
+            return GameManager.Instance.Cheese.gameObject;
+        }
+
         return _roomsGrid[idRoom.x, idRoom.z].gameObject;
     }
 

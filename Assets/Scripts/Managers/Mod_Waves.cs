@@ -146,6 +146,7 @@ public class Mod_Waves : Module
 
         while (_spawnedEnemyNumber < _maxEnemyNumber)
         {
+            //Mouse m = Instantiate(_gm.MousePrefab, _spawningRoomPosition, Quaternion.identity).GetComponent<Mouse>();
             Mouse m;
             int mouseType = MouseType();
             switch (mouseType)
@@ -163,7 +164,8 @@ public class Mod_Waves : Module
                     m = Instantiate(_gm.MousePrefab, _spawningRoomPosition, Quaternion.identity).GetComponent<Mouse>();
                     break;
             }
-            m.InitData(mouseType);
+            m.transform.localEulerAngles = new Vector3(50, 35, 0);
+            m.InitData(MouseType());
             m.WaveIndex = index + 1;
             _spawnedEnemyNumber++;
             _enemyObjects.Add(m.gameObject);

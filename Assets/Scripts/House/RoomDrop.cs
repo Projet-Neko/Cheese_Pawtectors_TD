@@ -44,6 +44,8 @@ public class RoomDrop : DragAndDropHandler
         _currentCat = cat;
         _currentCat.transform.SetParent(transform);
         _currentCat.transform.position = transform.position;
+
+        _currentCat.SetYPosition();
         if (changeRoom) _currentCat.GetComponent<CatBrain>().SetRoom();
         //cat.transform.position = Camera.main.ScreenToWorldPoint(cat.transform.position);
     }

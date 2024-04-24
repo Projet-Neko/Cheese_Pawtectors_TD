@@ -108,5 +108,10 @@ public class Cat : Entity
 
     public override bool IsAlive() => _currentHealth < _baseHealth;
 
-    
+    public void SetYPosition()
+    {
+        Vector3 position = transform.localPosition;
+        position.y += 0.2f;
+        transform.localPosition = position;
+    }
 }

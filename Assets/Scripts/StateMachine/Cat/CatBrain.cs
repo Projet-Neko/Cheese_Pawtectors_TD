@@ -40,24 +40,15 @@ public class CatBrain : Brain
 
         while (true)
         {
-            Vector3 center = Room.bounds.center;
             Vector3 size = Room.bounds.size;
 
-            //Debug.Log(center);
-            //Debug.Log(size);
+            Vector3 randomPointInBoxLocal = new Vector3(Random.Range(-size.x / 2f, size.x / 2f), 0.2f, Random.Range(-size.z / 2f, size.z / 2f));
+            Vector3 randomPointInBoxWorld = transform.parent.TransformPoint(randomPointInBoxLocal);
 
-            Vector3 randomPointInBox = new (
-            Random.Range(center.x - size.x / 2f, center.x + size.x / 2f),
-            Random.Range(center.y - size.y / 2f, center.y + size.y / 2f),
-            Random.Range(center.z - size.z / 2f, center.z + size.z / 2f)
-        );
-
-            //Debug.Log(randomPointInBox);
-
-            while (Vector3.Distance(transform.position, randomPointInBox) > 0.01f)
+            while (Vector3.Distance(transform.position, randomPointInBoxWorld) > 0.01f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, randomPointInBox, Entity.Speed * Time.deltaTime);
-                SpriteDirection(randomPointInBox);
+                transform.position = Vector3.MoveTowards(transform.position, randomPointInBoxWorld, Entity.Speed * Time.deltaTime);
+                SpriteDirection(randomPointInBoxWorld);
                 yield return null;
             }
 

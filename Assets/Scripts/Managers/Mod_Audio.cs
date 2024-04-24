@@ -7,7 +7,7 @@ public class Mod_Audio : Module
 {
     [Header("AudioSource")]
     [SerializeField] private AudioSource _music;
-    [SerializeField] private AudioSource _sound; 
+    [SerializeField] private AudioSource _sound;
 
     [Header("Sound")]
     [SerializeField] private AudioClip _mainScreenMusic;
@@ -40,13 +40,13 @@ public class Mod_Audio : Module
     private void Awake()
     {
         //Mod_Waves.BossWave += StartBossMusic;
-       /* Mod_Waves.OnBossDefeated += StartMainMusic;  
-        Volume.OnMusicVolumeChange += SetMusicVolume;  
-        Volume.OnSoundVolumeChange += SetSoundVolume;  
-        Mod_Economy.treatWin += PlayTreatSound;  
-        Merge.OnCatMerge += PlayMergeSound;  
-        Mod_Waves.BlackMouseSpawned += PlayBlackMouseSound;  
-        Button.OnButtonClicked += PlayButtonSound;  */
+        /* Mod_Waves.OnBossDefeated += StartMainMusic;  
+         Volume.OnMusicVolumeChange += SetMusicVolume;  
+         Volume.OnSoundVolumeChange += SetSoundVolume;  
+         Mod_Economy.treatWin += PlayTreatSound;  
+         Merge.OnCatMerge += PlayMergeSound;  
+         Mod_Waves.BlackMouseSpawned += PlayBlackMouseSound;  
+         Button.OnButtonClicked += PlayButtonSound;  */
     }
 
     private void OnDestroy()
@@ -68,14 +68,11 @@ public class Mod_Audio : Module
     }
 
     public void SetMusicVolume(float volume)
-    {
-        _music.volume = volume;
-    } 
+    => _music.volume = volume;
 
     public void SetSoundVolume(float volume)
-    {
-        _sound.volume = volume;
-    }  
+    => _sound.volume = volume;
+
 
 
     public void StartMusic(string sceneName)
@@ -109,7 +106,7 @@ public class Mod_Audio : Module
             default:
                 break;
         }
-    }  
+    }
 
     private void StartBossMusic()
     {
@@ -133,55 +130,49 @@ public class Mod_Audio : Module
     }*/
 
     public void PlayLoadingSound()
-    //=> _titleScreen.PlayOneShot(_loading, _soundVolume); //Start du jeu mais à changer ?
-    //=>_sound.PlayOneShot(_loading, _soundVolume);
-    {
-        _music.PlayOneShot(_loading, _soundVolume);
-    }
+    => _sound.clip = _loading;    
 
     public void PlayTreatSound(int arg0)
-    { }
-    //=> _sound.PlayOneShot(_treat, _soundVolume);  
+    => _sound.clip = _treat;  
 
     public void PlayMergeSound(int arg0, int arg1)
-        => _sound.PlayOneShot(_merge, _soundVolume);  
+        => _sound.clip = _merge;
 
     public void PlayBlackMouseSound()
-        => _sound.PlayOneShot(_blackMouse, _soundVolume);  
+        => _sound.clip = _blackMouse;
 
     public void PlayButtonSound()
-        => _sound.PlayOneShot(_button, _soundVolume);
-        //=> _sound.PlayOneShot(_button);
+        => _sound.clip = _button;
 
     public void PlayNewRoomOrCatSound()
-        => _sound.PlayOneShot(_newRoomOrCat, _soundVolume);
+        => _sound.clip = _newRoomOrCat;
 
     public void PlayMouseSound()
-        => _sound.PlayOneShot(_mouse, _soundVolume);
+        => _sound.clip = _mouse;
 
     public void PlayChaseSound()
-        => _sound.PlayOneShot(_chase, _soundVolume);
+        => _sound.clip = _chase;
 
     public void PlayCatBoxSound()
-        => _sound.PlayOneShot(_catBox, _soundVolume);
+        => _sound.clip = _catBox;
 
     public void PlayAddCatSound()
-        => _sound.PlayOneShot(_addCat, _soundVolume);
+        => _sound.clip = _addCat;
 
     public void PlayFightSound()
-        => _sound.PlayOneShot(_fight, _soundVolume);
+             => _sound.clip = _fight;
 
     public void PlayCatFullSound()
-        => _sound.PlayOneShot(_catFull, _soundVolume);
+        => _sound.clip = _catFull;
 
     public void PlayDragCoinSound()
-        => _sound.PlayOneShot(_dragCoin, _soundVolume);
+        => _sound.clip = _dragCoin;
 
     public void PlayDropCoinSound()
-        => _sound.PlayOneShot(_dropCoin, _soundVolume);
+        => _sound.clip = _dropCoin;
 
     public void PlayFullSound()
-        => _sound.PlayOneShot(_full, _soundVolume);
+        => _sound.clip = _full;
 
 
 

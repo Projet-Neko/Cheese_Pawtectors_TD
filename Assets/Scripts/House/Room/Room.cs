@@ -243,6 +243,9 @@ public abstract class Room : MonoBehaviour
     {
         if (_sceneHUD == SceneManager.GetActiveScene().name)
         {
+            if (_security == RoomSecurity.Overwritten)
+                return;
+
             if (_security == RoomSecurity.Protected)
             {
                 _cantMoveThisRoomCanvas.SetActive(!_cantMoveThisRoomCanvas.activeSelf);

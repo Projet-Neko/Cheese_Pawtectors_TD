@@ -56,7 +56,7 @@ public class SceneUI_Quiz : MonoBehaviour
             _resultPanel.SetActive(true);
             _resultClanName.text = ((Clan)clan).ToString();
             _resultClanDescription.text = GameManager.Instance.Clans[clan].Description;
-            _resultGem = GameManager.Instance.Clans[clan].Gem;
+            _resultGem.sprite = GameManager.Instance.Clans[clan].Gem;
         }
         else SetUI();
     }

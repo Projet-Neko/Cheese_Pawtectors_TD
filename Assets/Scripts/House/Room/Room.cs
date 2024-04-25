@@ -98,7 +98,7 @@ public abstract class Room : MonoBehaviour
     public List<IdRoom> PreviousRooms => _previousRooms;
     public List<IdRoom> NextRooms => _nextRooms;
     public bool IsInStorageMode => _isInStorageMode;
-    public RoomDesign RoomDesign => _roomDesign;
+    public RoomDesign RoomDesign { get => _roomDesign; set => _roomDesign = value; }
 
     protected RoomSecurity _security;
     protected RoomPattern _pattern;

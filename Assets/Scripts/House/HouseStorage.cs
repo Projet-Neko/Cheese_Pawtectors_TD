@@ -28,11 +28,11 @@ public class HouseStorage : MonoBehaviour
         foreach (var room in House.Instance.RoomsStorage)
         {
             if (room.Key.Item1 is RoomPattern.VoidRoom) continue;
-            CreateSlot(room.Key.Item1);
+            CreateSlot(room.Key.Item1, room.Key.Item2);
         }
     }
 
-    public void CreateSlot(RoomPattern pattern)
+    public void CreateSlot(RoomPattern pattern, RoomDesign roomDesign)
     {
         Debug.Log("Create SLOT");
         GameObject slot = Instantiate(_slotPrefab, _container.transform);
@@ -40,7 +40,9 @@ public class HouseStorage : MonoBehaviour
         room.transform.localPosition += new Vector3(0, -2, -20);
         room.transform.localScale = new(200, 200, 200);
         room.transform.localEulerAngles = new Vector3(-95, 0, 0);
-        room.GetComponentInChildren<Room>().SetStorageMode(true);
+        Room tmp = room.GetComponentInChildren<Room>();
+        tmp.SetStorageMode(true);
+        tmp.RoomDesign = roomDesign;
         _rooms.Add(room);
     }
 }

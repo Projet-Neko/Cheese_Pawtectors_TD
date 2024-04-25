@@ -10,7 +10,7 @@ public class House : MonoBehaviour
 {
     public static House Instance { get; private set; }
 
-    public static event Action<RoomPattern> OnRoomStored;
+    public static event Action<RoomPattern, RoomDesign> OnRoomStored;
 
     [Header("Prefabs")]
     [SerializeField] private SerializedDictionary<RoomPattern, GameObject> _rooms;
@@ -86,10 +86,10 @@ public class House : MonoBehaviour
         /** TEST WITH PATH MORE COMPLEXE **/
         /*AddRoom(1, _maxRooms / 2, RoomPattern.CrossraodRoom);
         AddRoom(2, _maxRooms / 2, RoomPattern.CrossraodRoom);
-        AddRoom(1, _maxRooms / 2 - 1, RoomPattern.CrossraodRoom);
-        AddRoom(2, _maxRooms / 2 - 1, RoomPattern.CrossraodRoom);
+        AddRoom(1, _maxRooms / 2 - 1, RoomPattern.TurnRoom);
+        AddRoom(2, _maxRooms / 2 - 1, RoomPattern.CorridorRoom);
         AddRoom(1, _maxRooms / 2 + 1, RoomPattern.CrossraodRoom);
-        AddRoom(2, _maxRooms / 2 + 1, RoomPattern.CrossraodRoom);*/
+        AddRoom(2, _maxRooms / 2 + 1, RoomPattern.IntersectionRoom);*/
     }
 
     void Start()
@@ -126,8 +126,6 @@ public class House : MonoBehaviour
 
         AddLine(_currentRoomNumber, startZ, _currentRoomNumber, startZ + _currentRoomNumber);
         AddLine(0, startZ + _currentRoomNumber, _currentRoomNumber, startZ + _currentRoomNumber);
-        AddRandomRoomInInventory();
-        AddRandomRoomInInventory();
         AddRandomRoomInInventory();
         StartPath();
 
@@ -545,7 +543,7 @@ public class House : MonoBehaviour
 
         Debug.Log("Room Pattern = " + roomPattern);
 
-        OnRoomStored?.Invoke(roomPattern);
+        OnRoomStored?.Invoke(roomPattern, roomDesign);
     }
 
     public bool AddRoomInGrid(RoomPattern roomPattern, RoomDesign roomDesign, int x, int z)

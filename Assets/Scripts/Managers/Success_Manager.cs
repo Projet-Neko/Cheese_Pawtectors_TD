@@ -60,9 +60,11 @@ public class Success_Manager : MonoBehaviour
     private void InitSuccessList()
     {
         allSuccesses.AddRange(Resources.LoadAll<SuccessSO>(successFolderPath));
+
         foreach (SuccessSO success in allSuccesses)
         {
-            success._step = success._steps[0];
+            if  (success._steps.Count > 0) success._step = success._steps[0];
+            else success._step = 1;
         }
         if (allSuccesses == null) Debug.Log("Load SucessList Echec");
         Debug.Log("Load SucessList Okay");

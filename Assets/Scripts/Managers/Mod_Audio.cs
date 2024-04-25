@@ -5,18 +5,19 @@ using UnityEngine.UI;
 
 public class Mod_Audio : Module
 {
-    [Header("Musics")]
-    [SerializeField] private AudioSource _titleScreen;
-    [SerializeField] private AudioSource _mainScreen; // droit d'auteur ? 
-    [SerializeField] private AudioSource _build;
-    [SerializeField] private AudioSource _shop; // droit d'auteur
-    [SerializeField] private AudioSource _boss;
+    [Header("AudioSource")]
+    [SerializeField] private AudioSource _music;
+    [SerializeField] private AudioSource _sound;
 
-    [Header("SoundEffects")]
+    [Header("Sound")]
+    [SerializeField] private AudioClip _mainScreenMusic;
+    [SerializeField] private AudioClip _shopMusic;
+    [SerializeField] private AudioClip _buildMusic;
+    [SerializeField] private AudioClip _bossMusic;
     [SerializeField] private AudioClip _loading;
-    [SerializeField] private AudioClip _meat;
+    [SerializeField] private AudioClip _treat;
     [SerializeField] private AudioClip _merge;
-    [SerializeField] private AudioClip _albinos;
+    [SerializeField] private AudioClip _blackMouse;
     [SerializeField] private AudioClip _button;
     [SerializeField] private AudioClip _newRoomOrCat;
     [SerializeField] private AudioClip _mouse;
@@ -29,55 +30,51 @@ public class Mod_Audio : Module
     [SerializeField] private AudioClip _dropCoin;
     [SerializeField] private AudioClip _full;
 
-    [SerializeField] private float _sliderMusic;
-    [SerializeField] private float _soundVolume;
+    [SerializeField] private float _musicVolume = 0.5f;
+    [SerializeField] private float _soundVolume = 5;
 
     private string _previousScene = "";
     private string _previousAdditiveScene = "";
 
-    private bool _titleIsPlaying = false;
-    private bool _mainIsPlaying = false;
-    private bool _buildIsPlaying = false;
-    private bool _shopIsPlaying = false;
-    private bool _bossIsPlaying = false;
 
     private void Awake()
     {
-        //Mod_Waves.BossWave += StartBossMusic;
+        Mod_Waves.BossWave += StartBossMusic;
         Mod_Waves.OnBossDefeated += StartMainMusic;
         Volume.OnMusicVolumeChange += SetMusicVolume;
         Volume.OnSoundVolumeChange += SetSoundVolume;
+        Mod_Economy.treatWin += PlayTreatSound;
+        Merge.OnCatMerge += PlayMergeSound;
+        Mod_Waves.AlbinoSpawned += PlayBlackMouseSound;
+        Button.OnButtonClicked += PlayButtonSound;
     }
 
     private void OnDestroy()
     {
-        //Mod_Waves.BossWave -= StartBossMusic;
+        Mod_Waves.BossWave -= StartBossMusic;
         Mod_Waves.OnBossDefeated -= StartMainMusic;
         Volume.OnMusicVolumeChange -= SetMusicVolume;
         Volume.OnSoundVolumeChange -= SetSoundVolume;
-
+        Mod_Economy.treatWin -= PlayTreatSound;
+        Merge.OnCatMerge -= PlayMergeSound;
+        Mod_Waves.AlbinoSpawned -= PlayBlackMouseSound;
+        Button.OnButtonClicked -= PlayButtonSound;
     }
 
     public override void Init(GameManager gm)
     {
         base.Init(gm);
         InitComplete();
+        SetMusicVolume(_musicVolume);
+        //SetSoundVolume(_soundVolume);
     }
 
     public void SetMusicVolume(float volume)
-    {
-        //float volume = _sliderMusic.value ;
-        _titleScreen.volume = volume;
-        _mainScreen.volume = volume;
-        _build.volume = volume;
-        _shop.volume = volume;
-        _boss.volume = volume;
-    }
+    => _music.volume = volume;
 
     public void SetSoundVolume(float volume)
-    {
-        _soundVolume = volume;
-    }
+    => _sound.volume = volume;
+
 
 
     public void StartMusic(string sceneName)
@@ -91,21 +88,24 @@ public class Mod_Audio : Module
         switch (sceneName)
         {
             case "MainScreen":
-                StopMusic();
-                _mainScreen.Play();
+                //StopMusic();
+                _music.clip = _mainScreenMusic;
                 _previousScene = sceneName;
+                _music.Play();
                 break;
 
             case "Build":
-                StopMusic();
-                _build.Play();
+                //StopMusic();
+                _music.clip = _buildMusic;
                 _previousScene = sceneName;
+                _music.Play();
                 break;
 
             case "Catalog":
-                StopMusic();
-                _shop.Play();
+                //StopMusic();
+                _music.clip = _shopMusic;
                 _previousAdditiveScene = sceneName;
+                _music.Play();
                 break;
 
             default:
@@ -115,69 +115,106 @@ public class Mod_Audio : Module
 
     private void StartBossMusic()
     {
-        StopMusic();
-        _boss.Play();
+        //StopMusic();
+        _music.clip = _bossMusic;
+        _sound.Play();
     }
 
     private void StartMainMusic()
     {
-        StopMusic();
-        _boss.Play();
-    }
-
-    private void StopMusic()
-    {
-        _titleScreen.Stop();
-        _mainScreen.Stop();
-        _build.Stop();
-        _shop.Stop();
-        _boss.Stop();
+        //StopMusic();
+        _music.clip = _shopMusic;
+        _sound.Play();
     }
 
     public void PlayLoadingSound()
-        => _titleScreen.PlayOneShot(_loading, _soundVolume);
+    {
+        _sound.clip = _loading;
+        _sound.Play();
+    }
+    public void PlayTreatSound(int arg0)
+    {
+        _sound.clip = _treat;
+        _sound.Play();
+    }
 
-    public void PlayMeatSound()
-        => _titleScreen.PlayOneShot(_meat, _soundVolume);
+    public void PlayMergeSound(int arg0, int arg1)
+    {
+        _sound.clip = _merge;
+        _sound.Play();
+    }
 
-    public void PlayMergeSound()
-        => _titleScreen.PlayOneShot(_merge, _soundVolume);
-
-    public void PlayAlbinosSound()
-        => _titleScreen.PlayOneShot(_albinos, _soundVolume);
+    public void PlayBlackMouseSound()
+    {
+        _sound.clip = _blackMouse;
+        _sound.Play();
+    }
 
     public void PlayButtonSound()
-        => _titleScreen.PlayOneShot(_button, _soundVolume);
+    {
+        _sound.clip = _button;
+        _sound.Play();
+    }
 
     public void PlayNewRoomOrCatSound()
-        => _titleScreen.PlayOneShot(_newRoomOrCat, _soundVolume);
+{
+        _sound.clip = _newRoomOrCat;
+        _sound.Play();
+    }
 
     public void PlayMouseSound()
-        => _titleScreen.PlayOneShot(_mouse, _soundVolume);
+{
+        _sound.clip = _mouse;
+        _sound.Play();
+    }
 
     public void PlayChaseSound()
-        => _titleScreen.PlayOneShot(_chase, _soundVolume);
+{
+        _sound.clip = _chase;
+        _sound.Play();
+    }
 
     public void PlayCatBoxSound()
-        => _titleScreen.PlayOneShot(_catBox, _soundVolume);
+{
+        _sound.clip = _catBox;
+        _sound.Play();
+    }
 
     public void PlayAddCatSound()
-        => _titleScreen.PlayOneShot(_addCat, _soundVolume);
+{
+        _sound.clip = _addCat;
+        _sound.Play();
+    }
 
     public void PlayFightSound()
-        => _titleScreen.PlayOneShot(_fight, _soundVolume);
+{
+        _sound.clip = _fight;
+        _sound.Play();
+    }
 
     public void PlayCatFullSound()
-        => _titleScreen.PlayOneShot(_catFull, _soundVolume);
+{
+        _sound.clip = _catFull;
+        _sound.Play();
+    }
 
     public void PlayDragCoinSound()
-        => _titleScreen.PlayOneShot(_dragCoin, _soundVolume);
+{
+        _sound.clip = _dragCoin;
+        _sound.Play();
+    }
 
     public void PlayDropCoinSound()
-        => _titleScreen.PlayOneShot(_dropCoin, _soundVolume);
+{
+        _sound.clip = _dropCoin;
+        _sound.Play();
+    }
 
     public void PlayFullSound()
-        => _titleScreen.PlayOneShot(_full, _soundVolume);
+{
+        _sound.clip = _full;
+        _sound.Play();
+    }
 
 
 

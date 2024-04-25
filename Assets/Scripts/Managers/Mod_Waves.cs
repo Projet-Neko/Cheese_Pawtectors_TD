@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,7 @@ public class Mod_Waves : Module
     public static event Action BossWave;
     public static event Action OnBossDefeated;
     public static event Action WaveCompleted;
+    public static event Action AlbinoSpawned;
 
     [SerializeField, Scene] private string _buildScene;
     [SerializeField, Scene] private string _mainScreenScene;
@@ -73,6 +75,7 @@ public class Mod_Waves : Module
     private void StartRoom_OnInit(Room obj)
     {
         _spawningRoomPosition = obj.transform.position;
+        _spawningRoomPosition.y = 0.1f;
     }
 
     private void Cheese_OnInit(Cheese obj)
@@ -118,6 +121,7 @@ public class Mod_Waves : Module
         if (GameManager.Instance.CanSpawnAlbino && UnityEngine.Random.Range(0, 100) <= 1)// Check if we can spawn Albinos
         {
             GameManager.Instance.AlbinoHasSpawned();
+            AlbinoSpawned?.Invoke();
             // 1 = albino mouse
             return 1;
         }
@@ -165,7 +169,7 @@ public class Mod_Waves : Module
                     break;
             }
             m.transform.localEulerAngles = new Vector3(50, 35, 0);
-            m.InitData(MouseType());
+            m.InitData(mouseType);
             m.WaveIndex = index + 1;
             _spawnedEnemyNumber++;
             _enemyObjects.Add(m.gameObject);
@@ -190,6 +194,7 @@ public class Mod_Waves : Module
             //Debug.Log($"{_killedEnemiesNumber} mouse killed");
 
             if ((entity as Mouse).IsBoss) OnBossDefeated?.Invoke();
+
             if (_hasCompleteSpawning && _killedEnemiesNumber == _maxEnemyNumber) NextWave();
         }
     }

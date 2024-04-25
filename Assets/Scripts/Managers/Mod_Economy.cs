@@ -15,7 +15,7 @@ public class Mod_Economy : Module
     [SerializeField] private GameObject _currencyPrefab;
 
     public static event Action<bool, int> OnAdoptCheck;
-    public static event Action<int> treatWin; //Evet for the treatSuccess 
+    public static event Action<int> treatWin; //Evet for the treatSuccess && sound effect
 
 
     public List<int> CatPrices => _catPrices;

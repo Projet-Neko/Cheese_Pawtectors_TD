@@ -126,7 +126,7 @@ public class House : MonoBehaviour
 
         AddLine(_currentRoomNumber, startZ, _currentRoomNumber, startZ + _currentRoomNumber);
         AddLine(0, startZ + _currentRoomNumber, _currentRoomNumber, startZ + _currentRoomNumber);
-
+        AddRandomRoomInInventory();
         StartPath();
 
         // Subscribe to events

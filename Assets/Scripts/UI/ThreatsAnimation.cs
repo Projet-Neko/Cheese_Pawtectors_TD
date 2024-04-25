@@ -10,20 +10,20 @@ public class treatsAnimation : MonoBehaviour
 
     private Rigidbody rb;
 
-    void Start()
+    void Awake()
     {
-        _destination = _destinationGO.transform.position;
+        //_destination = _destinationGO.transform.position;
         rb = GetComponent<Rigidbody>();
         StartCoroutine(treatAnimation());
     }
 
     private void Update()
     {
-        float distance = Vector3.Distance(transform.position, _destination);
+        /*float distance = Vector3.Distance(transform.position, _destination);
         if (distance < 1f)
         {
             Destroy(gameObject);
-        }
+        }*/
 
     
     }

@@ -2,9 +2,7 @@ using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class House : MonoBehaviour
 {
@@ -143,7 +141,7 @@ public class House : MonoBehaviour
         Room.ChangeTilePosition += CheckRoomPosition;
         Room.TileDestroyed += RemoveRoom;
         Room.LineActivated += ActiveLine;
-        Junction.TileChanged += BuildPath;
+        //Junction.TileChanged += BuildPath;
         MouseBrain.VisitedNextRoom += GetNextTarget;
         Mod_Waves.OnBossDefeated += ExtendHouse;
 }
@@ -154,7 +152,7 @@ public class House : MonoBehaviour
         Room.ChangeTilePosition -= CheckRoomPosition;
         Room.TileDestroyed -= RemoveRoom;
         Room.LineActivated -= ActiveLine;
-        Junction.TileChanged -= BuildPath;
+        //Junction.TileChanged -= BuildPath;
         MouseBrain.VisitedNextRoom -= GetNextTarget;
         Mod_Waves.OnBossDefeated -= ExtendHouse;
     }
@@ -235,7 +233,7 @@ public class House : MonoBehaviour
         CreateRoom(x, z, pattern);
 
         // Build the new path
-        BuildPath();
+        //BuildPath();
     }
 
     private void AddRoom(int x, int z, RoomPattern pattern)
@@ -398,7 +396,7 @@ public class House : MonoBehaviour
         else
             _pathBuilt = BuildPath(idRoomNext, _idStartRoom);                                                               // Build the path from the next room and check if it is valid
         
-        ColorInvalidRoom();                                                                                                 // Color the rooms that are not connected to the path in red
+        //ColorInvalidRoom();                                                                                                 // Color the rooms that are not connected to the path in red
     }
 
     public bool ValidatePath()

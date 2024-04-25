@@ -28,7 +28,7 @@ public class House : MonoBehaviour
     public int MaxRooms => _maxRooms;
 
     private const int _maxRooms = 30;
-    private const int _minRooms = 5;
+    private const int _minRooms = 6;
 
     private int _currentRoomNumber;
 
@@ -80,16 +80,17 @@ public class House : MonoBehaviour
 
     void StartPath()
     {
-        AddRoom(1, _maxRooms / 2, RoomPattern.CorridorRoom);
-        AddRoom(2, _maxRooms / 2, RoomPattern.CorridorRoom);
+        //AddRoom(1, _maxRooms / 2, RoomPattern.CorridorRoom);
+        //AddRoom(2, _maxRooms / 2, RoomPattern.CorridorRoom);
 
         /** TEST WITH PATH MORE COMPLEXE **/
-        /*AddRoom(1, _maxRooms / 2, RoomPattern.CrossraodRoom);
+        AddRoom(1, _maxRooms / 2, RoomPattern.CrossraodRoom);
         AddRoom(2, _maxRooms / 2, RoomPattern.CrossraodRoom);
-        AddRoom(1, _maxRooms / 2 - 1, RoomPattern.TurnRoom);
-        AddRoom(2, _maxRooms / 2 - 1, RoomPattern.CorridorRoom);
-        AddRoom(1, _maxRooms / 2 + 1, RoomPattern.CrossraodRoom);
-        AddRoom(2, _maxRooms / 2 + 1, RoomPattern.IntersectionRoom);*/
+        AddRoom(3, _maxRooms / 2, RoomPattern.CorridorRoom);
+        AddRoom(1, _maxRooms / 2 - 1, RoomPattern.CrossraodRoom);
+        AddRoom(2, _maxRooms / 2 - 1, RoomPattern.CrossraodRoom);
+        AddRoom(1, _maxRooms / 2 + 1, RoomPattern.IntersectionRoom);
+        AddRoom(2, _maxRooms / 2 + 1, RoomPattern.TurnRoom);
     }
 
     void Start()

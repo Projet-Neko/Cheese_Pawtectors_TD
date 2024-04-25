@@ -7,6 +7,7 @@ public class QuitButton : MonoBehaviour
     // Called when the player clicks the "Quit" button in Build scene
     public void CheckPathHouse()
     {
+        House.Instance.BuildPath();
         bool validPath = House.Instance.ValidatePath();
 
         if (validPath)

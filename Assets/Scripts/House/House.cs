@@ -83,6 +83,16 @@ public class House : MonoBehaviour
         AddRoom(1, _maxRooms / 2, RoomPattern.CorridorRoom);
         AddRoom(2, _maxRooms / 2, RoomPattern.CorridorRoom);
 
+        RoomDesign roomDesign = (RoomDesign)UnityEngine.Random.Range(0, Enum.GetNames(typeof(RoomDesign)).Length);
+        AddRoomInInventory(RoomPattern.TurnRoom, roomDesign);
+
+        roomDesign = (RoomDesign)UnityEngine.Random.Range(0, Enum.GetNames(typeof(RoomDesign)).Length);
+        AddRoomInInventory(RoomPattern.CrossraodRoom, roomDesign);
+
+        roomDesign = (RoomDesign)UnityEngine.Random.Range(0, Enum.GetNames(typeof(RoomDesign)).Length);
+        AddRoomInInventory(RoomPattern.IntersectionRoom, roomDesign);
+
+
         /** TEST WITH PATH MORE COMPLEXE **/
         /*AddRoom(1, _maxRooms / 2, RoomPattern.CrossraodRoom);
         AddRoom(2, _maxRooms / 2, RoomPattern.CrossraodRoom);
@@ -373,7 +383,7 @@ public class House : MonoBehaviour
         }
     }
 
-    private void BuildPath()
+    public void BuildPath()
     {
         Debug.Log("Build path");
         InitBuildPath();                                                                                                    // Define the ID of each room in its junctions

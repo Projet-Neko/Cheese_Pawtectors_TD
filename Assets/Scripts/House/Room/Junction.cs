@@ -30,7 +30,7 @@ public class Junction : MonoBehaviour
         gameObject.SetActive(false);
         gameObject.SetActive(true);
 
-        TileChanged?.Invoke();// Notify the house that a room has changed
+        //TileChanged?.Invoke();// Notify the house that a room has changed
     }
 
     public void SetIdRoom(int x, int z)

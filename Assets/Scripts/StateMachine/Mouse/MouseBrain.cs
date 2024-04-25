@@ -35,10 +35,6 @@ public class MouseBrain : Brain
             {
                 Target = VisitedNextRoom?.Invoke(transform.position);
             }
-            else
-            {
-                Debug.Log("TEST");
-            }
         }
     }
 

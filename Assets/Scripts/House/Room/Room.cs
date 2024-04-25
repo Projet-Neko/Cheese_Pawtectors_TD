@@ -164,6 +164,8 @@ public abstract class Room : MonoBehaviour
             return;
         }
 
+        Debug.Log("Design Room SO : " + pathSO);
+
         DesignRoomSO design = Resources.Load<DesignRoomSO>(pathSO);
 
         Debug.Log("Design Room : " + design.name);

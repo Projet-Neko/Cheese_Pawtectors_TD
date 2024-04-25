@@ -103,7 +103,7 @@ public class Mouse : Entity
             GameObject treat = Instantiate(_treat, pos, Quaternion.Euler(90, 0, 0));
             
             treat.GetComponent<Rigidbody>().velocity = new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), 0).normalized;
-            Destroy(treat.gameObject, 2f);
+            Destroy(treat.gameObject, Random.Range(0,0.5f));
         }
     }
 }

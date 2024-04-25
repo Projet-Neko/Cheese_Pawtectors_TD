@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,7 @@ public class Mod_Waves : Module
     public static event Action BossWave;
     public static event Action OnBossDefeated;
     public static event Action WaveCompleted;
+    public static event Action AlbinoSpawned;
 
     [SerializeField, Scene] private string _buildScene;
     [SerializeField, Scene] private string _mainScreenScene;
@@ -119,6 +121,7 @@ public class Mod_Waves : Module
         if (GameManager.Instance.CanSpawnAlbino && UnityEngine.Random.Range(0, 100) <= 1)// Check if we can spawn Albinos
         {
             GameManager.Instance.AlbinoHasSpawned();
+            AlbinoSpawned?.Invoke();
             // 1 = albino mouse
             return 1;
         }

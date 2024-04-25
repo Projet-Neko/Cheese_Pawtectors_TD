@@ -462,11 +462,22 @@ public abstract class Room : MonoBehaviour
 
     public void SetTransparency(float transparency)
     {
-        foreach (Material material in _materialsBase)
+        //private Material[] _materialsBase;
+        _materialsBase = GetComponent<Renderer>().materials;
+        for (int i = 0; i < _materialsBase.Length; i++)
         {
-            Color color = material.color;
+
+            /*Color oldColor = _materialsBase[i].color;
+            Color newColor = new Color(oldColor.r, oldColor.g, oldColor.b, transparency);
+            _materialsBase[i].SetColor("_Color", newColor);*/
+
+            Color color = _materialsBase[i].color;
             color.a = transparency;
-            material.color = color;
+            _materialsBase[i].color = color;
+            Debug.Log("Couleur" + transparency);
+            Debug.Log("Couleur" + _materialsBase[i].color);
         }
+        Debug.Log("ROOM TRANSPARENCE");
+        //GetComponent<Renderer>().materials = _materialsBase;
     }
 }

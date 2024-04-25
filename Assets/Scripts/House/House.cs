@@ -571,12 +571,19 @@ public class House : MonoBehaviour
 
     public void ChangeTransparency(float transparency)
     {
-        foreach(Room room in _roomsGrid)
+        int startZ = _maxRooms / 2 - _currentRoomNumber / 2;
+
+        for (int x = 0; x < _currentRoomNumber; x++)
         {
-            if (room.Security == RoomSecurity.Overwritten) continue;
-            if (room.GetComponentInChildren<Cat>() != null)
+            for (int z = startZ; z < startZ + _currentRoomNumber; z++)
             {
-                room.SetTransparency(transparency);
+                if (_roomsGrid[x, z].Security == RoomSecurity.Overwritten) continue;
+
+                if (_roomsGrid[x, z].GetComponentInChildren<Cat>() != null)
+                {
+                    Debug.Log("TRANSPARENCE = " + transparency);
+                    _roomsGrid[x, z].SetTransparency(transparency);
+                }
             }
         }
     }

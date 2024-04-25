@@ -706,7 +706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scene: Quiz
-  _isAdditive: 0
+  _isAdditive: 1
 --- !u!114 &558550490
 MonoBehaviour:
   m_ObjectHideFlags: 0

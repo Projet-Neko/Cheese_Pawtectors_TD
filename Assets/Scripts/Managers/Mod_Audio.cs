@@ -30,8 +30,8 @@ public class Mod_Audio : Module
     [SerializeField] private AudioClip _dropCoin;
     [SerializeField] private AudioClip _full;
 
-    [SerializeField] private float _sliderMusic = 1;
-    [SerializeField] private float _soundVolume = 1;
+    [SerializeField] private float _musicVolume = 0.5f;
+    [SerializeField] private float _soundVolume = 5;
 
     private string _previousScene = "";
     private string _previousAdditiveScene = "";
@@ -65,6 +65,8 @@ public class Mod_Audio : Module
     {
         base.Init(gm);
         InitComplete();
+        SetMusicVolume(_musicVolume);
+        //SetSoundVolume(_soundVolume);
     }
 
     public void SetMusicVolume(float volume)
@@ -115,12 +117,14 @@ public class Mod_Audio : Module
     {
         //StopMusic();
         _music.clip = _bossMusic;
+        _sound.Play();
     }
 
     private void StartMainMusic()
     {
         //StopMusic();
         _music.clip = _shopMusic;
+        _sound.Play();
     }
 
     public void PlayLoadingSound()

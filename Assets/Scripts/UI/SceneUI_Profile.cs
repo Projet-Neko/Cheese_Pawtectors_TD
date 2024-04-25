@@ -22,7 +22,7 @@ public class SceneUI_Profile : MonoBehaviour
             int clan = GameManager.Instance.Data.Clan;
             _clanName.text = ((Clan)clan).ToString();
             _clanDescription.text = GameManager.Instance.Clans[clan].Description;
-            _clanGem = GameManager.Instance.Clans[clan].Gem;
+            _clanGem.sprite = GameManager.Instance.Clans[clan].Gem;
         }
     }
 

@@ -68,9 +68,14 @@ public abstract class State
 
     protected void FollowTarget()
     {
-        _brain.transform.position = Vector3.MoveTowards(_brain.transform.position, _brain.Target.transform.position, _brain.Entity.Speed * Time.deltaTime);
-        if (_brain.Entity is not Cat) return;
-        _brain.SpriteDirection(_brain.Target.transform.position);
+        Vector3 newPosition = _brain.Target.transform.position;
+        if (_brain.Entity is not Cat)
+            newPosition.y = 0.1f;
+
+        _brain.transform.position = Vector3.MoveTowards(_brain.transform.position, newPosition, _brain.Entity.Speed * Time.deltaTime);
+
+        if (_brain.Entity is Cat)
+            _brain.SpriteDirection(_brain.Target.transform.position);
     }
 
     protected void M_Wave_OnWaveReload()

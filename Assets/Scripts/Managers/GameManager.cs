@@ -9,8 +9,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-// TODO -> v�rifier si le jeu est � jour
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }

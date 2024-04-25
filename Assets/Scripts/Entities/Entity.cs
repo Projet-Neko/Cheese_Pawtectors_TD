@@ -104,4 +104,11 @@ public abstract class Entity : MonoBehaviour
     public virtual bool IsAlive() => _currentHealth > 0;
 
     protected virtual void DeathAnimation() { }
+
+    public void SetYPosition()
+    {
+        Vector3 position = transform.localPosition;
+        position.y += 0.2f;
+        transform.localPosition = position;
+    }
 }

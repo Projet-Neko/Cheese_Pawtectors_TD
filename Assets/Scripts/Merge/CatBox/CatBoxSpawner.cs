@@ -63,7 +63,7 @@ public class CatBoxSpawner : MonoBehaviour
     private void SpawnBox(Transform slot)
     {
         GameObject go = Instantiate(_catBoxPrefab, slot);
-        go.transform.localScale = new Vector3(50, 50, 50);
+        go.transform.localScale = new Vector3(40, 40, 40);
         OnBoxSpawn?.Invoke(int.Parse(slot.name.Split('_')[1]));
     }
 }

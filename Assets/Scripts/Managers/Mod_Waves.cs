@@ -75,6 +75,7 @@ public class Mod_Waves : Module
     private void StartRoom_OnInit(Room obj)
     {
         _spawningRoomPosition = obj.transform.position;
+        _spawningRoomPosition.y = 0.1f;
     }
 
     private void Cheese_OnInit(Cheese obj)
@@ -149,6 +150,7 @@ public class Mod_Waves : Module
 
         while (_spawnedEnemyNumber < _maxEnemyNumber)
         {
+            //Mouse m = Instantiate(_gm.MousePrefab, _spawningRoomPosition, Quaternion.identity).GetComponent<Mouse>();
             Mouse m;
             int mouseType = MouseType();
             switch (mouseType)
@@ -166,6 +168,7 @@ public class Mod_Waves : Module
                     m = Instantiate(_gm.MousePrefab, _spawningRoomPosition, Quaternion.identity).GetComponent<Mouse>();
                     break;
             }
+            m.transform.localEulerAngles = new Vector3(50, 35, 0);
             m.InitData(mouseType);
             m.WaveIndex = index + 1;
             _spawnedEnemyNumber++;
@@ -191,6 +194,7 @@ public class Mod_Waves : Module
             //Debug.Log($"{_killedEnemiesNumber} mouse killed");
 
             if ((entity as Mouse).IsBoss) OnBossDefeated?.Invoke();
+
             if (_hasCompleteSpawning && _killedEnemiesNumber == _maxEnemyNumber) NextWave();
         }
     }

@@ -44,6 +44,8 @@ public class RoomDrop : DragAndDropHandler
         _currentCat = cat;
         _currentCat.transform.SetParent(transform);
         _currentCat.transform.position = transform.position;
+
+        _currentCat.SetYPosition();
         if (changeRoom) _currentCat.GetComponent<CatBrain>().SetRoom();
         //cat.transform.position = Camera.main.ScreenToWorldPoint(cat.transform.position);
     }
@@ -60,7 +62,7 @@ public class RoomDrop : DragAndDropHandler
         int x = (int)Mathf.Round(mousePosition.x);
         int z = (int)Mathf.Round(mousePosition.z);
 
-        if (!room.IsInStorageMode || !House.Instance.AddRoomInGrid(room.Pattern, x, z))
+        if (!room.IsInStorageMode || !House.Instance.AddRoomInGrid(room.Pattern, room.RoomDesign, x, z))
         {
             base.HandleDragAndDrop(room, initialPosition);
             return;

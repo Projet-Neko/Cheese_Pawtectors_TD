@@ -86,6 +86,7 @@ public abstract class Room : MonoBehaviour
     public static event Action<bool> LineActivated;                         // Enable or disable the lines of the house
     private static event Action<bool> TileSelected;                         // Deselect the other rooms when a room is selected
     public static event Action TileMoved;                                   // Event For Modify House success
+    public static event Action OnMovingRoom;
 
     // Abstract methods
     public abstract string DefineDesign();
@@ -201,6 +202,7 @@ public abstract class Room : MonoBehaviour
         if (_moveModBool && _canMove)
         {
             float distance;
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (_plane.Raycast(ray, out distance))
             {
@@ -255,7 +257,7 @@ public abstract class Room : MonoBehaviour
             else if (!_anotherTileSelected)
             {
                 _canMove = true;
-
+                OnMovingRoom?.Invoke();
                 if (!_moveModBool)
                     Selected();
             }
@@ -264,8 +266,11 @@ public abstract class Room : MonoBehaviour
 
     public void OnMouseUp()
     {
-        _canMove = false;
-
+        if (_canMove)
+        {
+            _canMove = false;
+            OnMovingRoom?.Invoke();
+        }
         /*Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit3D) && hit3D.collider.gameObject.TryGetComponent(out DragAndDropHandler component))

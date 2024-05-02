@@ -10,12 +10,18 @@ public class RoomDrop : DragAndDropHandler
     private Plane _plane = new Plane(Vector3.up, 0);
 
     public static event Action CatDroped; //Event for the Cat in house Success
+    public static event Action OnCatMoving; 
 
     public override void HandleDragAndDrop(Cat cat, Vector3 initialPosition)
     {
+        OnCatMoving?.Invoke();
         //Debug.Log(_currentCat == null ? "Room is empty" : "Room is full");
-        if (_room.Pattern == RoomPattern.VoidRoom) return;
+        if (_room.Pattern == RoomPattern.VoidRoom)
+        {
+            OnCatMoving?.Invoke();
+            return;
 
+        }
         bool changeRoom = false;
 
         if (_currentCat != null)
@@ -23,6 +29,7 @@ public class RoomDrop : DragAndDropHandler
             if (cat == _currentCat) base.HandleDragAndDrop(cat, initialPosition);
             else if (_currentCat.Level == cat.Level) _currentCat.GetComponent<DragAndDropHandler>().HandleDragAndDrop(cat, initialPosition);
             else base.HandleDragAndDrop(cat, initialPosition);
+            OnCatMoving?.Invoke();
             return;
         }
 
@@ -47,6 +54,7 @@ public class RoomDrop : DragAndDropHandler
 
         _currentCat.SetYPosition();
         if (changeRoom) _currentCat.GetComponent<CatBrain>().SetRoom();
+        OnCatMoving?.Invoke();
         //cat.transform.position = Camera.main.ScreenToWorldPoint(cat.transform.position);
     }
 

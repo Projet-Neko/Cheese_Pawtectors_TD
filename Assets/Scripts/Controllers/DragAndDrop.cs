@@ -12,6 +12,8 @@ public class DragAndDrop : MonoBehaviour
     [SerializeField] private Room _room;
     [SerializeField] private Collider _collider3D;
 
+    public static event System.Action OnDragAndDrop;
+
     private bool _isBeingDragged = false;
     private Vector3 _initialPosition;
     private Vector3 _offset;
@@ -41,7 +43,7 @@ public class DragAndDrop : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit3D)) HandleRaycast(hit3D.collider.gameObject); // Raycast en 3D pour les pièces
         else if (hit2D.collider != null) HandleRaycast(hit2D.collider.gameObject); // Raycast en 2D pour l'entrepôt
         else transform.position = _initialPosition;
-
+        
         Grab(false);
     }
 
@@ -66,5 +68,6 @@ public class DragAndDrop : MonoBehaviour
         if (_sprite != null) _sprite.sortingOrder = isGrabbed ? 99 : 6;
 
         if (_room != null) House.Instance.ActiveLine(isGrabbed);
+        OnDragAndDrop?.Invoke();
     }
 }
